@@ -1,0 +1,18 @@
+.burger-menu-inactive {
+    width: 100%;
+    display: none;
+}
+
+.burger-menu-active {
+    display: block;
+}
+
+.burger-item {
+  cursor: pointer;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.burger-item:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}

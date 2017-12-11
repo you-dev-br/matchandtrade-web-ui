@@ -1,0 +1,40 @@
+<nav
+  class="navbar is-primary"
+  role="navigation"
+  aria-label="main navigation"
+  (window:resize)="onResize(navigationBar)"
+  #navigationBar>
+
+  <div class="navbar-brand" *ngIf="!isSmallScreenSize()">
+    <a class="navbar-item">
+      Matching and Trade
+    </a>
+    <a class="navbar-item">
+      <span class="router-link" routerLink="/trades" routerLinkActive="active">Trades</span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start">
+    </div>
+    <div class="navbar-end">
+        <span class="navbar-item router-link" routerLink="/sign-in" routerLinkActive="active">Sign-in</span>
+    </div>
+  </div>
+
+  <div class="navbar-brand" *ngIf="isSmallScreenSize()">
+    <a class="navbar-item">
+      Matching and Trade
+    </a>
+    <button class="button navbar-burger is-primary" (click)="onClickBurger()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <div [ngClass]="burgerClass">
+    <div class="burger-item router-link" routerLink="/trades" routerLinkActive="active">Trades</div>
+    <div class="burger-item router-link" routerLink="/sign-in" routerLinkActive="active">Sign-in</div>
+  </div>
+
+</nav>
