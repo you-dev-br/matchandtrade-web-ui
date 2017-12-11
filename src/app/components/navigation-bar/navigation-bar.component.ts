@@ -17,7 +17,7 @@ export class NavigationBarComponent {
     this.navigationBarWidth = navigationBarHtmlElement.clientWidth;
   }
 
-  onClickBurger() {
+  toggleBurgerMenu() {
     if (this.burgerClass == "burger-menu-inactive") {
       this.burgerClass = "burger-menu-active";
     } else {

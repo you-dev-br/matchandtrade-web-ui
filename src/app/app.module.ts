@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { TradesComponent } from './components/trades/trades.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
+import { TradeListComponent } from './components/trades/trade-list/trade-list.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
     AppComponent,
     NavigationBarComponent,
     TradesComponent,
-    SignInComponent
+    SignInComponent,
+    TradeListComponent
   ],
   imports: [
     BrowserModule,
