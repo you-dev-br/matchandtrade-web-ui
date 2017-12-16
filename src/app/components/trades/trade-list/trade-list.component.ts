@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { Pagination } from '../../../classes/search/pagination';
 import { TradeService } from '../../../services/trade.service';
-import { Trade } from '../../../pojo/trade';
+import { Trade } from '../../../classes/pojo/trade';
 
 @Component({
   selector: 'app-trade-list',
@@ -13,45 +13,26 @@ import { Trade } from '../../../pojo/trade';
 export class TradeListComponent {
   trades:Trade[];
   pagination: Pagination;
-  pageNumber: number = 1;
-  pageSize: number = 10;
 
   constructor(private tradeService: TradeService) {
+    this.pagination = new Pagination(1, 10);
     this.search();
   }
 
   nextPage() {
-    if (this.hasNextPage()) {
-      this.pageNumber++;
+      this.pagination.pageNumber++;
       this.search();
-    }
   }
 
   previousPage() {
-    if (this.hasPreviousPage()) {
-      this.pageNumber--;
+      this.pagination.pageNumber--;
       this.search();
-    }
   }
 
-  hasNextPage():boolean {
-    if (this.pagination && this.pageNumber * this.pageSize < this.pagination.totalEntries ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  hasPreviousPage():boolean {
-    if (this.pagination && this.pageNumber > 1) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  private search(): void {
-    let searchResult = this.tradeService.search(this.pageNumber, this.pageSize);
+  search(): void {
+    let searchResult = this.tradeService.search(
+      this.pagination.pageNumber,
+      this.pagination.pageSize);
     this.trades = searchResult.results;
     this.pagination = searchResult.pagination;
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Trade } from '../pojo/trade';
+import { Trade } from '../classes/pojo/trade';
 import { SearchResult } from '../classes/search/search-result';
 import { Pagination } from '../classes/search/pagination';
 
@@ -21,7 +21,6 @@ export class TradeService {
         tradesForCurrentPage.push(this.trades[i]);
       }
     }
-    console.log(this.trades);
     return new SearchResult(tradesForCurrentPage, new Pagination(pageNumber, pageSize, this.trades.length));
   }
 

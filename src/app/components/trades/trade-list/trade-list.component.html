@@ -7,10 +7,4 @@
   </tbody>
 </table>
 
-<nav class="pagination is-small" role="navigation" aria-label="pagination">
-  <a class="pagination-previous" (click)="previousPage()" [attr.disabled]="hasPreviousPage() ? null : true">Previous</a>
-  <a class="pagination-next" (click)="nextPage()" [attr.disabled]="hasNextPage() ? null : true" >Next page</a>
-  <ul class="pagination-list">
-    <li>Page <b>{{pagination.pageNumber}}</b> of <b>{{pagination.totalPages}}</b></li>
-  </ul>
-</nav>
+<app-pagination [pagination]="pagination" (onNextPage)="nextPage()" (onPreviousPage)="previousPage()"></app-pagination>

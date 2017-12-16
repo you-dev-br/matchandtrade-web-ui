@@ -5,10 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
-import { TradesComponent } from './components/trades/trades.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
+import { TradesComponent } from './components/trades/trades.component';
 import { TradeListComponent } from './components/trades/trade-list/trade-list.component';
-
 
 @NgModule({
   declarations: [
@@ -16,7 +16,8 @@ import { TradeListComponent } from './components/trades/trade-list/trade-list.co
     NavigationBarComponent,
     TradesComponent,
     SignInComponent,
-    TradeListComponent
+    TradeListComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
