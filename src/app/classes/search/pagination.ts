@@ -1,15 +1,18 @@
+import { Page } from './page';
+
 export class Pagination {
-  pageSize: number;
-	pageNumber: number;
+  page: Page;
 	totalEntries: number;
   totalPages: number;
 
-  constructor(pageNumber: number, size: number, total?: number) {
-    this.pageNumber = pageNumber;
-    this.pageSize = size;
-    this.totalEntries = total;
-    if (total > size || size > 0) {
-      this.totalPages = Math.trunc(total/size)+1;
+  constructor(pageNumber: number, pageSize: number, totalEntries?: number) {
+    this.page = new Page(pageNumber, pageSize);
+    this.totalEntries = totalEntries;
+
+    if (pageSize > 0 && totalEntries > pageSize) {
+      this.totalPages = Math.trunc(totalEntries/pageSize) + 1;
+    } else {
+      this.totalPages = 0;
     }
   }
 

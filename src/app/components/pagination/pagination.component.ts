@@ -29,16 +29,17 @@ export class PaginationComponent {
     }
   }
 
-  private hasNextPage():boolean {
-    if (this.pagination && this.pagination.pageNumber * this.pagination.pageSize < this.pagination.totalEntries ) {
+  private hasNextPage(): boolean {
+    if (this.pagination
+        && this.pagination.page.number * this.pagination.page.size < this.pagination.totalEntries ) {
       return true;
     } else {
       return false;
     }
   }
 
-  private hasPreviousPage():boolean {
-    if (this.pagination && this.pagination.pageNumber > 1) {
+  private hasPreviousPage(): boolean {
+    if (this.pagination && this.pagination.page.number > 1) {
       return true;
     } else {
       return false;

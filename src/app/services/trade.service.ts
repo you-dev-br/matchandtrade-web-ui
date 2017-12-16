@@ -7,6 +7,7 @@ import { Pagination } from '../classes/search/pagination';
 @Injectable()
 export class TradeService {
   trades: Trade[];
+
   constructor() {
     this.trades = new Array<Trade>();
     for (let i = 0; i < 37; i++) {

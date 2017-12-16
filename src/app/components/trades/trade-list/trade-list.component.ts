@@ -11,7 +11,7 @@ import { Trade } from '../../../classes/pojo/trade';
   providers: [TradeService]
 })
 export class TradeListComponent {
-  trades:Trade[];
+  trades: Trade[];
   pagination: Pagination;
 
   constructor(private tradeService: TradeService) {
@@ -20,20 +20,21 @@ export class TradeListComponent {
   }
 
   nextPage() {
-      this.pagination.pageNumber++;
+      this.pagination.page.number++;
       this.search();
   }
 
   previousPage() {
-      this.pagination.pageNumber--;
+      this.pagination.page.number--;
       this.search();
   }
 
   search(): void {
     let searchResult = this.tradeService.search(
-      this.pagination.pageNumber,
-      this.pagination.pageSize);
+      this.pagination.page.number,
+      this.pagination.page.size);
     this.trades = searchResult.results;
     this.pagination = searchResult.pagination;
   }
+
 }
