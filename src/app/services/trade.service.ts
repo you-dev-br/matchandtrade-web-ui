@@ -15,6 +15,13 @@ export class TradeService {
     }
   }
 
+  get(tradeId: number): Trade {
+    let result: Trade = new Trade();
+    result.name = "Trade number " + tradeId;
+    result.tradeId = tradeId;
+    return result;
+  }
+
   search(pageNumber: number, pageSize: number, name?: string): SearchResult<Trade> {
     let tradesForCurrentPage = new Array<Trade>();
     for(let i=(pageNumber * pageSize) - pageSize; i < pageSize * pageNumber; i++) {

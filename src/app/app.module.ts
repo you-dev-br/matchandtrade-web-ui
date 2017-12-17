@@ -9,6 +9,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { TradesComponent } from './components/trades/trades.component';
 import { TradeListComponent } from './components/trades/trade-list/trade-list.component';
+import { TradeComponent } from './components/trades/trade/trade.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { TradeListComponent } from './components/trades/trade-list/trade-list.co
     TradesComponent,
     SignInComponent,
     TradeListComponent,
-    PaginationComponent
+    PaginationComponent,
+    TradeComponent
   ],
   imports: [
     BrowserModule,

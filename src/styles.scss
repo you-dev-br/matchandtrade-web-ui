@@ -5,3 +5,13 @@ caption {
   font-weight: bolder;
   font-size: small;
 }
+
+.table-row-clickable:hover {
+  background-color: Grey;
+  cursor: pointer;
+}
+
+.table-row-clickable:active {
+  background-color: Green;
+  cursor: progress;
+}

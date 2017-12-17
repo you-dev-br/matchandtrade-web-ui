@@ -2,9 +2,12 @@
   <caption>Trades</caption>
   <tbody>
     <tr *ngFor="let t of trades">
-      <td>{{t.name}}</td>
+      <td class="table-row-clickable" routerLink="/trades/{{t.tradeId}}">{{t.name}}</td>
     </tr>
   </tbody>
 </table>
 
-<app-pagination [pagination]="pagination" (onNextPage)="nextPage()" (onPreviousPage)="previousPage()"></app-pagination>
+<app-pagination
+  [pagination]="pagination"
+  (onNextPage)="nextPage()"
+  (onPreviousPage)="previousPage()"></app-pagination>
