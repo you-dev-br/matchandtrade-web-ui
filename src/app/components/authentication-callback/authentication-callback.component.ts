@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Http } from '@angular/http';
 import { AuthenticationService } from '../../services/authentication.service';
+import { AUTHORIZATION_HEADER_OBSERVABLE, AUTHORIZATION_HEADER_SUBJECT } from '../../classes/state/global-state';
 
 @Component({
   selector: 'app-authentication-callback',
@@ -9,17 +9,15 @@ import { AuthenticationService } from '../../services/authentication.service';
   providers: [AuthenticationService]
 })
 export class AuthenticationCallbackComponent {
-  authenticationHeader: string;
+  authorizationHeader: string;
+  userId: number;
 
-  constructor(private http: Http, private authenticationService: AuthenticationService ) {
-    authenticationService.getAuthorizationHeader().subscribe(
-      response => {
-        this.authenticationHeader = response;
-      },
-      errr => {
-        // TODO: Change to a logging service
-        console.log(errr);
-      });
+  constructor(private authenticationService: AuthenticationService ) {
+    AUTHORIZATION_HEADER_OBSERVABLE.subscribe((v) => {
+      this.authorizationHeader = v.authorizationHeader;
+      this.userId = v.userId;
+    });
+    authenticationService.getAuthorization();
   }
 
 }

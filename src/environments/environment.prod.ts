@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  authenticateGoogleUrl: "/api/authenticate?callbackUrl=http://matchandtrade.com/authenticate/callback"
 };
