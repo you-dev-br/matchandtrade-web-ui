@@ -42,7 +42,9 @@ export class TradeService {
             let trades = TradeTransformer.toPojosFromList(v.json());
             return new SearchResult<Trade>(trades, pagination);
           })
-          .subscribe((v) => resolve(v));
+          .toPromise()
+          .then((v) => resolve(v))
+          .catch((e) => reject(e));
 
       })
     });

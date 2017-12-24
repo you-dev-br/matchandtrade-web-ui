@@ -1,13 +1,19 @@
-<table class="table is-bordered is-striped is-hoverable is-fullwidth">
-  <caption>Trades</caption>
-  <tbody>
-    <tr *ngFor="let t of trades">
-      <td class="table-row-clickable" routerLink="/trades/{{t.tradeId}}">{{t.name}}</td>
-    </tr>
-  </tbody>
-</table>
+<div *ngIf="!pagination.totalEntries">No trades available at this time :(</div>
 
-<app-pagination
-  [pagination]="pagination"
-  (onNextPage)="nextPage()"
-  (onPreviousPage)="previousPage()"></app-pagination>
+<div *ngIf="pagination.totalEntries">
+  <div >
+    <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+      <caption>Trades</caption>
+      <tbody>
+        <tr *ngFor="let t of trades">
+          <td class="table-row-clickable" routerLink="/trades/{{t.tradeId}}">{{t.name}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <app-pagination
+      [pagination]="pagination"
+      (onNextPage)="nextPage()"
+      (onPreviousPage)="previousPage()"></app-pagination>
+  </div>
+</div>
