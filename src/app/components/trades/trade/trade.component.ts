@@ -11,12 +11,14 @@ import { TradeService } from '../../../services/trade.service'
   providers: [ TradeService ]
 })
 export class TradeComponent {
-  trade: Trade;
+  trade: Trade = new Trade();
 
   constructor(private route: ActivatedRoute, private tradeService: TradeService) {
     route.params.subscribe(params => {
       let tradeId = params['tradeId'];
-      this.trade = tradeService.get(tradeId);
+      tradeService.get(tradeId).then((v) => {
+        this.trade = v;
+      });
     });
   }
 

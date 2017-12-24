@@ -4,43 +4,48 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Authentication } from '../classes/pojo/authentication';
 
-import { AUTHORIZATION_HEADER_OBSERVABLE, AUTHORIZATION_HEADER_SUBJECT } from '../classes/state/global-state';
-
 @Injectable()
 export class AuthenticationService {
+  authentication: Authentication = new Authentication();
+
   constructor(private http: Http) { }
 
-  public getAuthorization(): Observable<Authentication> {
-    this.http
-      .get('/api/authenticate/info')
-      .map((response: Response) => {
-        return response.json().authenticationHeader;
-      })
-      .subscribe((v) => {
-        let a = new Authentication();
-        a.authorizationHeader = v;
-        this.getUserId(v);
+  public authorizationOptions(): Promise<RequestOptions> {
+    if(this.authentication.authorizationHeader) {
+      return new Promise<RequestOptions>((resolve, reject) => {
+        resolve(this.buildRequestOptions(this.authentication.authorizationHeader));
       });
-    return AUTHORIZATION_HEADER_OBSERVABLE;
+    } else {
+      return new Promise<RequestOptions>((resolve, reject) => {
+        this.getAuthorization().then((authentication) => {
+          resolve(this.buildRequestOptions(authentication.authorizationHeader));
+        });
+      });
+    }
   }
 
- private getUserId(authorizationHeader: string): void {
+  public buildRequestOptions(authorizationHeader: string): RequestOptions {
     let headers = new Headers();
     headers.append('Authorization', authorizationHeader);
     let requestOptions = new RequestOptions();
     requestOptions.headers = headers;
+    return requestOptions;
+  }
 
-    this.http
-      .get('/api/rest/v1/authentications/', requestOptions)
+  public getAuthorization(): Promise<Authentication> {
+    return this.http
+      .get('/api/authenticate/info')
       .map((response: Response) => {
-        return response.json().userId;
+        let result = new Authentication();
+        result.authorizationHeader = response.json().authenticationHeader
+        return result;
       })
-      .subscribe((v) => {
-        let authentication = new Authentication();
-        authentication.authorizationHeader = authorizationHeader;
-        authentication.userId = v;
-        AUTHORIZATION_HEADER_SUBJECT.next(authentication);
-      });
-  }  
+      .toPromise()
+      .then((v) => {
+        this.authentication.authorizationHeader = v.authorizationHeader;
+        return this.authentication;
+      })
+      .then();
+  }
 
 }

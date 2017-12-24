@@ -1,41 +1,51 @@
 import { Injectable } from '@angular/core';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 import { Trade } from '../classes/pojo/trade';
 import { SearchResult } from '../classes/search/search-result';
 import { Pagination } from '../classes/search/pagination';
+import { AuthenticationService } from '../services/authentication.service';
+import { URLSearchParams } from '@angular/http';
+import { TradeTransformer } from '../classes/transformers/trade-transformer';
+import { HttpUtil } from '../classes/util/http-util';
+import { Page } from '../classes/search/page';
 
 @Injectable()
 export class TradeService {
-  trades: Trade[];
+  trades: Trade[] = new Array<Trade>();
 
-  constructor() {
-    this.trades = new Array<Trade>();
-    for (let i = 0; i < 37; i++) {
-      this.trades.push(this.newTrade(i+1));
-    }
-  }
+  constructor(private authenticationService: AuthenticationService, private http: Http) { }
 
-  get(tradeId: number): Trade {
-    let result: Trade = new Trade();
-    result.name = "Trade number " + tradeId;
-    result.tradeId = tradeId;
+  get(tradeId: number): Promise<Trade> {
+    let result = new Promise<Trade>( (resolve, reject) => {
+      this.authenticationService.authorizationOptions().then((requestOptions) => {
+        this.http.get('/api/rest/v1/trades/' + tradeId, requestOptions)
+          .map((v) => {
+            console.log('service', v);
+            return TradeTransformer.toPojoFromJson(v.json());
+          })
+          .subscribe((v) => resolve(v));
+      })
+    });
     return result;
   }
 
-  search(pageNumber: number, pageSize: number, name?: string): SearchResult<Trade> {
-    let tradesForCurrentPage = new Array<Trade>();
-    for(let i=(pageNumber * pageSize) - pageSize; i < pageSize * pageNumber; i++) {
-      if (this.trades[i]) {
-        tradesForCurrentPage.push(this.trades[i]);
-      }
-    }
-    return new SearchResult(tradesForCurrentPage, new Pagination(pageNumber, pageSize, this.trades.length));
-  }
+  search(page: Page, name?: string): Promise<SearchResult<Trade>> {
+    let result = new Promise<SearchResult<Trade>>( (resolve, reject) => {
+      this.authenticationService.authorizationOptions().then((requestOptions) => {
+        requestOptions.params = HttpUtil.buildPaginationParameters(page);
+        
+        this.http.get('/api/rest/v1/trades', requestOptions)
+          .map((v) => {
+            let pagination = HttpUtil.buildPagination(page, v);
+            let trades = TradeTransformer.toPojosFromList(v.json());
+            return new SearchResult<Trade>(trades, pagination);
+          })
+          .subscribe((v) => resolve(v));
 
-  private newTrade(lastTradeId: number): Trade {
-    let result: Trade = new Trade();
-    result.tradeId = lastTradeId;
-    result.name = "Trade number " + lastTradeId;
+      })
+    });
     return result;
   }
 

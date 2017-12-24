@@ -12,6 +12,7 @@ import { TradesComponent } from './components/trades/trades.component';
 import { TradeListComponent } from './components/trades/trade-list/trade-list.component';
 import { TradeComponent } from './components/trades/trade/trade.component';
 import { AuthenticationCallbackComponent } from './components/authentication-callback/authentication-callback.component';
+import { AuthenticationService } from './services/authentication.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AuthenticationCallbackComponent } from './components/authentication-cal
     HttpModule,
     AppRoutingModule
   ],
+  providers: [AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

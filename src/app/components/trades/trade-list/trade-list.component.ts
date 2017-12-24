@@ -15,7 +15,7 @@ export class TradeListComponent {
   pagination: Pagination;
 
   constructor(private tradeService: TradeService) {
-    this.pagination = new Pagination(1, 10);
+    this.pagination = new Pagination(1, 3);
     this.search();
   }
 
@@ -30,11 +30,11 @@ export class TradeListComponent {
   }
 
   search(): void {
-    let searchResult = this.tradeService.search(
-      this.pagination.page.number,
-      this.pagination.page.size);
-    this.trades = searchResult.results;
-    this.pagination = searchResult.pagination;
+    let searchResult = this.tradeService.search(this.pagination.page)
+      .then((v) => {
+        this.trades = v.results;
+        this.pagination = v.pagination;    
+      });
   }
 
 }
