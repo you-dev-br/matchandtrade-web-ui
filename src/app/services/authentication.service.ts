@@ -17,9 +17,11 @@ export class AuthenticationService {
       });
     } else {
       return new Promise<RequestOptions>((resolve, reject) => {
-        this.getAuthorization().then((authentication) => {
-          resolve(this.buildRequestOptions(authentication.authorizationHeader));
-        });
+        this.getAuthorization()
+          .then((authentication) => {
+            resolve(this.buildRequestOptions(authentication.authorizationHeader));
+          })
+          .catch((e) => reject(e));
       });
     }
   }

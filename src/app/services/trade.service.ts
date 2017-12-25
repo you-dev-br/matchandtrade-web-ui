@@ -33,8 +33,7 @@ export class TradeService {
   search(page: Page, name?: string): Promise<SearchResult<Trade>> {
     let result = new Promise<SearchResult<Trade>>( (resolve, reject) => {
       this.authenticationService.authorizationOptions().then((requestOptions) => {
-        requestOptions.params = HttpUtil.buildPaginationParameters(page);
-        
+        requestOptions.params = HttpUtil.buildPaginationParameters(page);  
         this.http.get('/api/rest/v1/trades', requestOptions)
           .map((v) => {
             return TradeTransformer.toSearchResult(v, page);
@@ -42,8 +41,8 @@ export class TradeService {
           .toPromise()
           .then((v) => resolve(v))
           .catch((e) => reject(e));
-
       })
+      .catch((e) => reject(e));
     });
 
     return result;
