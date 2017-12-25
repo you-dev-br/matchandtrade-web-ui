@@ -13,6 +13,7 @@ import { TradeListComponent } from './components/trades/trade-list/trade-list.co
 import { TradeComponent } from './components/trades/trade/trade.component';
 import { AuthenticationCallbackComponent } from './components/authentication-callback/authentication-callback.component';
 import { AuthenticationService } from './services/authentication.service';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AuthenticationService } from './services/authentication.service';
     TradeListComponent,
     PaginationComponent,
     TradeComponent,
-    AuthenticationCallbackComponent
+    AuthenticationCallbackComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

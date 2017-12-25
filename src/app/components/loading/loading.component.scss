@@ -1,0 +1,15 @@
+// See vertical alignment strategy: http://jsfiddle.net/kizu/4RPFa/4570/
+.app-loading {
+    width: 100%;
+    text-align: center;
+}
+
+.app-loading img {
+    vertical-align: middle;
+}
+
+.app-loading-align-helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}

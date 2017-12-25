@@ -1,19 +1,28 @@
-<div *ngIf="!pagination.totalEntries">No trades available at this time :(</div>
+<app-loading [isLoading]="isLoading" [containerHeight]="15" [imageHeight]="5"></app-loading>
 
-<div *ngIf="pagination.totalEntries">
-  <div >
-    <table class="table is-bordered is-striped is-hoverable is-fullwidth">
-      <caption>Trades</caption>
-      <tbody>
-        <tr *ngFor="let t of trades">
-          <td class="table-row-clickable" routerLink="/trades/{{t.tradeId}}">{{t.name}}</td>
-        </tr>
-      </tbody>
-    </table>
+<div *ngIf='!isLoading'>
 
-    <app-pagination
-      [pagination]="pagination"
-      (onNextPage)="nextPage()"
-      (onPreviousPage)="previousPage()"></app-pagination>
+  <div *ngIf="!pagination.totalEntries" class="trades-not-found">
+    <span class="align-helper"></span>
+    <span>No trades available at this time :(</span>
   </div>
+
+  <div *ngIf="pagination.totalEntries">
+    <div >
+      <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+        <caption>Trades</caption>
+        <tbody>
+          <tr *ngFor="let t of trades">
+            <td class="table-row-clickable" routerLink="/trades/{{t.tradeId}}">{{t.name}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <app-pagination
+        [pagination]="pagination"
+        (onNextPage)="nextPage()"
+        (onPreviousPage)="previousPage()"></app-pagination>
+    </div>
+  </div>
+
 </div>

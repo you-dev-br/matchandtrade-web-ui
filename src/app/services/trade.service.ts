@@ -22,8 +22,7 @@ export class TradeService {
       this.authenticationService.authorizationOptions().then((requestOptions) => {
         this.http.get('/api/rest/v1/trades/' + tradeId, requestOptions)
           .map((v) => {
-            console.log('service', v);
-            return TradeTransformer.toPojoFromJson(v.json());
+            return TradeTransformer.toPojo(v.json());
           })
           .subscribe((v) => resolve(v));
       })
@@ -38,9 +37,7 @@ export class TradeService {
         
         this.http.get('/api/rest/v1/trades', requestOptions)
           .map((v) => {
-            let pagination = HttpUtil.buildPagination(page, v);
-            let trades = TradeTransformer.toPojosFromList(v.json());
-            return new SearchResult<Trade>(trades, pagination);
+            return TradeTransformer.toSearchResult(v, page);
           })
           .toPromise()
           .then((v) => resolve(v))
@@ -48,6 +45,7 @@ export class TradeService {
 
       })
     });
+
     return result;
   }
 
