@@ -7,16 +7,14 @@ export class Pagination {
 
   constructor(pageNumber: number, pageSize: number, totalEntries?: number) {
     this.page = new Page(pageNumber, pageSize);
-    if (totalEntries) {
-      this.totalEntries = totalEntries;
-    } else {
-      this.totalEntries = 0;
-    }
+    this.totalPages = 0;
+    this.totalEntries = totalEntries ? totalEntries : 0;
 
-    if (pageSize > 0 && totalEntries > pageSize) {
-      this.totalPages = Math.trunc(totalEntries/pageSize) + 1;
-    } else {
-      this.totalPages = 0;
+    if (pageSize > 0 && this.totalEntries >= pageSize) {
+      this.totalPages = Math.trunc(this.totalEntries/pageSize);
+    }
+    if (this.totalEntries % pageSize > 0) {
+      this.totalPages++;
     }
   }
 

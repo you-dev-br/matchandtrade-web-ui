@@ -1,3 +1,12 @@
 .pagination-list {
   padding: 1em;
 }
+
+.pagination-loading {
+  background-image: url('/assets/svg/bars.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 100%;
+  color: transparent;
+}

@@ -1,14 +1,12 @@
-<app-loading [isLoading]="isLoading" [containerHeight]="15" [imageHeight]="5"></app-loading>
+<app-loading [loading]="loading && !pagination.totalEntries" [containerHeight]="15" [imageHeight]="5"></app-loading>
 
-<div *ngIf='!isLoading'>
-
-  <div *ngIf="!pagination.totalEntries" class="trades-not-found">
+  <div *ngIf="!loading && !pagination.totalEntries" class="trades-not-found">
     <span class="align-helper"></span>
     <span>No trades available at this time :(</span>
   </div>
 
   <div *ngIf="pagination.totalEntries">
-    <div >
+    <div>
       <table class="table is-bordered is-striped is-hoverable is-fullwidth">
         <caption>Trades</caption>
         <tbody>
@@ -19,10 +17,10 @@
       </table>
 
       <app-pagination
+        [loading]="loading"
         [pagination]="pagination"
         (onNextPage)="nextPage()"
         (onPreviousPage)="previousPage()"></app-pagination>
     </div>
-  </div>
 
 </div>

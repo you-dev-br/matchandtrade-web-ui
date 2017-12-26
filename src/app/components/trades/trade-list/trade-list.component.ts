@@ -13,7 +13,7 @@ import { Trade } from '../../../classes/pojo/trade';
 export class TradeListComponent {
   trades: Trade[];
   pagination: Pagination;
-  isLoading: boolean = true;
+  loading: boolean = true;
 
   constructor(private tradeService: TradeService) {
     this.pagination = new Pagination(1, 3, 0);
@@ -22,13 +22,13 @@ export class TradeListComponent {
 
   nextPage() {
       this.pagination.page.number++;
-      this.isLoading = true;
+      this.loading = true;
       this.search();
   }
 
   previousPage() {
       this.pagination.page.number--;
-      this.isLoading = true;
+      this.loading = true;
       this.search();
   }
 
@@ -37,9 +37,9 @@ export class TradeListComponent {
       .then((v) => {
         this.trades = v.results;
         this.pagination = v.pagination;    
-        this.isLoading = false;
+        this.loading = false;
       }).catch((e) =>
-        this.isLoading = false
+        this.loading = false
       );
   }
 
