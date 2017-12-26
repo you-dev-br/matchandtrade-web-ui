@@ -11,23 +11,7 @@ export class AuthenticationService {
 
   constructor(private http: Http) { }
 
-  public authorizationOptions(): Promise<RequestOptions> {
-    if(this.authentication.authorizationHeader) {
-      return new Promise<RequestOptions>((resolve, reject) => {
-        resolve(this.buildRequestOptions(this.authentication.authorizationHeader));
-      });
-    } else {
-      return new Promise<RequestOptions>((resolve, reject) => {
-        this.getAuthorization()
-          .then((authentication) => {
-            resolve(this.buildRequestOptions(authentication.authorizationHeader));
-          })
-          .catch((e) => reject(e));
-      });
-    }
-  }
-
-  public authHeaders(): Promise<Headers> {
+  public authorizationHeaders(): Promise<Headers> {
     let result = new Promise<Headers>((resolve, reject) => {
       if(this.authentication.authorizationHeader) {
         let headers = new Headers();
@@ -41,33 +25,17 @@ export class AuthenticationService {
         }).catch((e) => reject(e));
       }
     });
-
     return result;
-  }
- 
-
-  public buildRequestOptions(authorizationHeader: string): RequestOptions {
-    let headers = new Headers();
-    headers.append('Authorization', authorizationHeader);
-    let requestOptions = new RequestOptions();
-    requestOptions.headers = headers;
-    return requestOptions;
   }
 
   public getAuthorization(): Promise<Authentication> {
-    return this.http
-      .get('/api/authenticate/info')
+    return this.http.get('/api/authenticate/info')
       .map((response: Response) => {
         let result = new Authentication();
         result.authorizationHeader = response.json().authenticationHeader
+        this.authentication.authorizationHeader = result.authorizationHeader;
         return result;
-      })
-      .toPromise()
-      .then((v) => {
-        this.authentication.authorizationHeader = v.authorizationHeader;
-        return this.authentication;
-      })
-      .then();
+      }).toPromise();
   }
 
 }

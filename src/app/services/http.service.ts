@@ -16,7 +16,7 @@ export class HttpService {
   public buildRequestOptions(authorized?: boolean, page?: Page): Promise<RequestOptions> {
     if(authorized == true) {
       let result = new Promise<RequestOptions>((resolve, reject) => {
-        this.authenticationService.authHeaders().then((v) => {
+        this.authenticationService.authorizationHeaders().then((v) => {
           let requestOptions = new RequestOptions();
           requestOptions.headers = v;
           requestOptions.params = new URLSearchParams();
@@ -37,8 +37,10 @@ export class HttpService {
   }
 
   private static addPageParametersToUrlSearchParms(searchParams: URLSearchParams, page: Page) {
-    searchParams.append('_pageNumber', page.number.toString());
-    searchParams.append('_pageSize', page.size.toString());
+    if (page) {
+      searchParams.append('_pageNumber', page.number.toString());
+      searchParams.append('_pageSize', page.size.toString());
+    }
   }
 
 }

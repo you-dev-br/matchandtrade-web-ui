@@ -19,12 +19,10 @@ export class TradeService {
 
   get(tradeId: number): Promise<Trade> {
     let result = new Promise<Trade>( (resolve, reject) => {
-      this.authenticationService.authorizationOptions().then((requestOptions) => {
-        this.http.get('/api/rest/v1/trades/' + tradeId, requestOptions)
-          .map((v) => {
+      this.httpService.buildRequestOptions(true).then((requestOptions) => {
+        this.http.get('/api/rest/v1/trades/' + tradeId, requestOptions).map((v) => {
             return this.tradeTransformer.toPojo(v.json());
-          })
-          .subscribe((v) => resolve(v));
+          }).subscribe((v) => resolve(v));
       })
     });
     return result;
