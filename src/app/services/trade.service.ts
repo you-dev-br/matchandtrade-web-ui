@@ -1,28 +1,28 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Headers, Http, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { Trade } from '../classes/pojo/trade';
-import { SearchResult } from '../classes/search/search-result';
-import { Pagination } from '../classes/search/pagination';
 import { AuthenticationService } from '../services/authentication.service';
-import { URLSearchParams } from '@angular/http';
-import { TradeTransformer } from '../classes/transformers/trade-transformer';
-import { HttpUtil } from '../classes/util/http-util';
+import { HttpService } from '../services/http.service';
+import { Pagination } from '../classes/search/pagination';
 import { Page } from '../classes/search/page';
+import { SearchResult } from '../classes/search/search-result';
+import { Trade } from '../classes/pojo/trade';
+import { TradeTransformer } from '../classes/transformers/trade-transformer';
 
 @Injectable()
 export class TradeService {
   trades: Trade[] = new Array<Trade>();
+  tradeTransformer = new TradeTransformer();
 
-  constructor(private authenticationService: AuthenticationService, private http: Http) { }
+  constructor(private authenticationService: AuthenticationService, private http: Http, private httpService: HttpService) { }
 
   get(tradeId: number): Promise<Trade> {
     let result = new Promise<Trade>( (resolve, reject) => {
       this.authenticationService.authorizationOptions().then((requestOptions) => {
         this.http.get('/api/rest/v1/trades/' + tradeId, requestOptions)
           .map((v) => {
-            return TradeTransformer.toPojo(v.json());
+            return this.tradeTransformer.toPojo(v.json());
           })
           .subscribe((v) => resolve(v));
       })
@@ -32,19 +32,16 @@ export class TradeService {
 
   search(page: Page, name?: string): Promise<SearchResult<Trade>> {
     let result = new Promise<SearchResult<Trade>>( (resolve, reject) => {
-      this.authenticationService.authorizationOptions().then((requestOptions) => {
-        requestOptions.params = HttpUtil.buildPaginationParameters(page);  
+      this.httpService.buildRequestOptions(true, page).then((requestOptions) => {
         this.http.get('/api/rest/v1/trades', requestOptions)
           .map((v) => {
-            return TradeTransformer.toSearchResult(v, page);
+            return this.tradeTransformer.toSearchResult(v, page);
           })
           .toPromise()
           .then((v) => resolve(v))
           .catch((e) => reject(e));
-      })
-      .catch((e) => reject(e));
+      }).catch((e) => reject(e));
     });
-
     return result;
   }
 

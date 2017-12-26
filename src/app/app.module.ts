@@ -14,6 +14,7 @@ import { TradeComponent } from './components/trades/trade/trade.component';
 import { AuthenticationCallbackComponent } from './components/authentication-callback/authentication-callback.component';
 import { AuthenticationService } from './services/authentication.service';
 import { LoadingComponent } from './components/loading/loading.component';
+import { HttpService } from './services/http.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
