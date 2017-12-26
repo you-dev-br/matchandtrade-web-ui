@@ -5,12 +5,12 @@ import { Pagination } from '../../classes/search/pagination';
 import { SearchResult } from '../search/search-result';
 import { Trade } from '../pojo/trade';
 
-export abstract class Transformer {
+export abstract class Transformer<T> {
 
-    public toSearchResult(response: Response, page: Page): SearchResult<Trade> {
+    public toSearchResult(response: Response, page: Page): SearchResult<T> {
         let pagination = this.buildPagination(page, response);
-        let trades = this.toPojos(response.json());
-        return new SearchResult<Trade>(trades, pagination);
+        let results = this.toPojos(response.json());
+        return new SearchResult<T>(results, pagination);
     }
 
     private buildPagination(page: Page, response: Response) {
@@ -18,6 +18,6 @@ export abstract class Transformer {
         return new Pagination(page.number, page.size, paginationTotalCount)
     }
 
-    public abstract toPojo(json: any): Trade;
-    public abstract toPojos(list: any): Array<Trade>;
+    public abstract toPojo(json: any): T;
+    public abstract toPojos(list: any): Array<T>;
 }

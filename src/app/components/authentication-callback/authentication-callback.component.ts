@@ -11,7 +11,7 @@ export class AuthenticationCallbackComponent {
   userId: number;
 
   constructor(private authenticationService: AuthenticationService ) {
-    authenticationService.getAuthorization().then((v) => {
+    authenticationService.get().then((v) => {
       this.authorizationHeader = v.authorizationHeader;
       this.userId = v.userId;
     });

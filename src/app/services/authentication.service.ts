@@ -4,21 +4,23 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { Authentication } from '../classes/pojo/authentication';
+import { AuthenticationTransformer } from '../classes/transformers/authentication-transformer';
 
 @Injectable()
 export class AuthenticationService {
-  authentication: Authentication = new Authentication();
+  private lastAuthentication: Authentication;
+  private authenticationTransformer = new AuthenticationTransformer();
 
   constructor(private http: Http) { }
 
   public authorizationHeaders(): Promise<Headers> {
     let result = new Promise<Headers>((resolve, reject) => {
-      if(this.authentication.authorizationHeader) {
+      if(this.lastAuthentication) {
         let headers = new Headers();
-        headers.append('Authorization', this.authentication.authorizationHeader);
+        headers.append('Authorization', this.lastAuthentication.authorizationHeader);
         resolve(headers);
       } else {
-        this.getAuthorization().then((v) => {
+        this.get().then((v) => {
           let headers = new Headers();          
           headers.append("Authorization", v.authorizationHeader);
           resolve(headers);
@@ -28,14 +30,18 @@ export class AuthenticationService {
     return result;
   }
 
-  public getAuthorization(): Promise<Authentication> {
-    return this.http.get('/api/authenticate/info')
-      .map((response: Response) => {
-        let result = new Authentication();
-        result.authorizationHeader = response.json().authenticationHeader
-        this.authentication.authorizationHeader = result.authorizationHeader;
-        return result;
-      }).toPromise();
+  public get(): Promise<Authentication> {
+    if (this.lastAuthentication) {
+      return new Promise<Authentication>((resolve, reject) => {
+        resolve(this.lastAuthentication);
+      });
+    } else {
+      return this.http.get('/api/authenticate/info')
+        .map((response: Response) => {
+          this.lastAuthentication = this.authenticationTransformer.toPojo(response.json());
+          return this.lastAuthentication;
+        }).toPromise();
+    }
   }
 
 }

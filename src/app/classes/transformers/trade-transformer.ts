@@ -5,7 +5,7 @@ import { SearchResult } from '../search/search-result';
 import { Trade } from '../pojo/trade';
 import { Transformer } from './transformer';    
 
-export class TradeTransformer extends Transformer {
+export class TradeTransformer extends Transformer<Trade> {
 
     public toPojo(json: any): Trade {
         let result = new Trade();
