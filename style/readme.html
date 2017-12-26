@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .color-container {
+      height: 4em;
+      width: 30em;
+      margin: 2em 2em 2em 2em;
+    }
+    .color-label {
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+      width: 5em;
+    }
+    .color-tag {
+      padding: 1.5em 20em 0em 0em;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Building Bulma</h1>
+
+<pre>
+  cd $MATCH_AND_TRADE_ROOT_FOLDER/style
+  npm install
+  npm run build
+  cp dist/matchandtrade-bulma.min.css ../src/assets/css/
+</pre>
+
+<h2>References</h2>
+<p><a href='https://bulma.io/documentation/overview/customize/'>Customize Bulma</a></p>
+<p><a href='https://github.com/sass/node-sass'>node-sass</a></p>
+
+<h1>Color Schema</h1>
+
+<div class="color-container">
+    <span class="color-label">primary-10<br>#331500</span>
+    <span class="color-tag" style="background-color: #331500"></span>
+</div>
+
+<div class="color-container">
+    <span class="color-label">primary-9<br>#662b00</span>
+    <span class="color-tag" style="background-color: #662b00"></span>
+</div>
+
+<div class="color-container">
+    <span class="color-label">primary-8<br>#994000</span>
+    <span class="color-tag" style="background-color: #994000"></span>
+</div>
+
+<div class="color-container">
+    <span class="color-label">primary-7<br>#cc5600</span>
+    <span class="color-tag" style="background-color: #cc5600"></span>
+</div>
+
+<div class="color-container">
+    <span class="color-label">primary-6<br>#f57600</span>
+    <span class="color-tag" style="background-color: #f57600"></span>
+</div>
+
+<div class="color-container">
+  <span class="color-label">primary<br>#ff8000<br>aka primary-5</span>
+  <span class="color-tag" style="background-color: #ff8000"></span>
+</div>
+
+<div class="color-container">
+    <span class="color-label">primary-4<br>#ffa64d</span>
+    <span class="color-tag" style="background-color: #ffa64d"></span>
+</div>
+
+<div class="color-container">
+    <span class="color-label">primary-3<br>#ffda99</span>
+    <span class="color-tag" style="background-color: #ffda99"></span>
+</div>
+
+<div class="color-container">
+    <span class="color-label">primary-2<br>#ffeccc</span>
+    <span class="color-tag" style="background-color: #ffeccc"></span>
+</div>
+
+<div class="color-container">
+    <span class="color-label">primary-1<br>#ffeccc</span>
+    <span class="color-tag" style="background-color: #fffde6"></span>
+</div>
+
+
+
+
+
+</body>
+</html>

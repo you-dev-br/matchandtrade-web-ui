@@ -1,0 +1,15 @@
+{
+  "name": "matchandtrade-web-ui-style",
+  "version": "1.0.0",
+  "description": "Styles for Match And Trade Website",
+  "main": "index.js",
+  "scripts": {
+    "build": "node-sass --output-style compressed --include-path node_modules/bulma matchandtrade-bulma.scss dist/matchandtrade-bulma.min.css"
+  },
+  "author": "Rafael Santos",
+  "license": "MIT",
+  "dependencies": {
+    "bulma": "^0.6.1",
+    "npm-sass": "^2.2.1"
+  }
+}

@@ -1,0 +1,29 @@
+// 1. Import the initial variables
+@import "sass/utilities/initial-variables";
+@import "sass/utilities/functions";
+
+// 2. Set your own initial variables
+// Add new colors
+$primary-5: #ff8000;
+
+// 3. Set the derived variables
+// Use the new pink as the primary color
+$primary: $primary-5;
+$primary-invert: findColorInvert($primary);
+
+// Use the existing orange as the danger color
+$danger: $orange;
+
+// 4. Setup your Custom Colors
+$primary-4: #ffa64d;
+$primary-4-invert: findColorInvert($primary-4);
+
+// 5. Add new color variables to the color map.
+@import "sass/utilities/derived-variables.sass";
+$addColors: (
+  "primary-4":($primary-4, $primary-4-invert),
+);
+$colors: map-merge($colors, $addColors);
+
+// 6. Import the rest of Bulma
+@import "bulma";
