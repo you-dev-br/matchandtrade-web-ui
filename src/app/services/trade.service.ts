@@ -20,17 +20,23 @@ export class TradeService {
   get(tradeId: number): Promise<Trade> {
     let result = new Promise<Trade>( (resolve, reject) => {
       this.httpService.buildRequestOptions(true).then((requestOptions) => {
-        this.http.get('/api/rest/v1/trades/' + tradeId, requestOptions).map((v) => {
+
+        this.http.get('/api/rest/v1/trades/' + tradeId, requestOptions)
+          .map((v) => {
             return this.tradeTransformer.toPojo(v.json());
-          }).subscribe((v) => resolve(v));
-      })
-    });
+          }).subscribe(
+            (v) => resolve(v),
+            (e) => reject(e)
+          );
+
+      }).catch((e) => reject(e)); // end of buildRequestOptions()
+    }); // end of new Promise<Trade>
     return result;
   }
 
   search(page: Page, name?: string): Promise<SearchResult<Trade>> {
     let result = new Promise<SearchResult<Trade>>( (resolve, reject) => {
-      this.httpService.buildRequestOptions(true, page).then((requestOptions) => {
+      this.httpService.buildRequestOptions(false, page).then((requestOptions) => {
         this.http.get('/api/rest/v1/trades', requestOptions)
           .map((v) => {
             return this.tradeTransformer.toSearchResult(v, page);
