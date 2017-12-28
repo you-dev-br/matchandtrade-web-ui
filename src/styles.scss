@@ -1,17 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+
+$primary-10: #331500;
+$primary-9: #662b00;
+$primary-8: #994000;
+$primary-7: #cc5600;
+$primary-5: #ff8000;
+$primary-6: #f57600;
+$primary-4: #ffa64d;
+$primary-3: #ffda99;
+$primary-2: #ffeccc;
+$primary-1: #ffeccc;
+
 caption {
-  background-color: WhiteSmoke;
-  border: 1px solid Gainsboro ;
+  background-color: $primary-7;
+  border: 1px solid $primary-8;
+  color: white;
   font-weight: bolder;
   font-size: small;
 }
 
-.table-row-clickable:hover {
-  background-color: Grey;
+.mt-table-row-clickable:hover {
+  background-color: $primary-1;
   cursor: pointer;
 }
 
-.table-row-clickable:active {
-  background-color: Green;
+.mt-table-row-clickable:active {
+  background-color: $primary-4;
+  border-color: $primary-6;
   cursor: progress;
 }

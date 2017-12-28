@@ -16,7 +16,7 @@ export class TradeListComponent {
   loading: boolean = true;
 
   constructor(private tradeService: TradeService) {
-    this.pagination = new Pagination(1, 3, 0);
+    this.pagination = new Pagination(1, 10, 0);
     this.search();
   }
 
