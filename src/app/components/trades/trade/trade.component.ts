@@ -18,7 +18,7 @@ export class TradeComponent {
       let tradeId = params['tradeId'];
       tradeService.get(tradeId).then((v) => {
         this.trade = v;
-      });
+      }).catch((e) => console.log('TradeComponent', e));
     });
   }
 
