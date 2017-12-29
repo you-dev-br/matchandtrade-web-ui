@@ -15,6 +15,7 @@ import { AuthenticationCallbackComponent } from './components/authentication-cal
 import { AuthenticationService } from './services/authentication.service';
 import { LoadingComponent } from './components/loading/loading.component';
 import { HttpService } from './services/http.service';
+import { ErratumComponent } from './components/erratum/erratum.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HttpService } from './services/http.service';
     PaginationComponent,
     TradeComponent,
     AuthenticationCallbackComponent,
-    LoadingComponent
+    LoadingComponent,
+    ErratumComponent
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,9 @@
+<app-erratum [errata]="errata"></app-erratum>
 <app-loading [loading]="loading && !pagination.totalEntries" [containerHeight]="15" [imageHeight]="5"></app-loading>
 
   <div *ngIf="!loading && !pagination.totalEntries" class="trades-not-found">
     <span class="align-helper"></span>
-    <span>No trades available at this time :(</span>
+    <span>No trades available at this time <i class="fa fa-frown-o" aria-hidden="true"></i></span>
   </div>
 
   <div *ngIf="pagination.totalEntries">
