@@ -16,3 +16,11 @@
 .burger-item:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
+
+#user-profile::after {
+  content: "\F2BE"; 
+  font-family: FontAwesome;
+  font-size: 1.5em;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+}
