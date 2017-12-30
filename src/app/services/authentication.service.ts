@@ -14,20 +14,13 @@ export class AuthenticationService {
   constructor(private http: Http) { }
 
   public authorizationHeaders(): Promise<Headers> {
-    let result = new Promise<Headers>((resolve, reject) => {
-      if(this.lastAuthentication) {
-        let headers = new Headers();
-        headers.append('Authorization', this.lastAuthentication.authorizationHeader);
+    return new Promise<Headers>((resolve, reject) => {
+      this.get().then((v) => {
+        let headers = new Headers();          
+        headers.append("Authorization", v.authorizationHeader);
         resolve(headers);
-      } else {
-        this.get().then((v) => {
-          let headers = new Headers();          
-          headers.append("Authorization", v.authorizationHeader);
-          resolve(headers);
-        }).catch((e) => reject(e));
-      }
+      }).catch((e) => reject(e));
     });
-    return result;
   }
 
   public get(): Promise<Authentication> {
