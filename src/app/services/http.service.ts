@@ -13,6 +13,13 @@ export class HttpService {
 
   constructor(private authenticationService: AuthenticationService, private http: Http) { }
 
+  /**
+   * Build RequestOptions.
+   * If <code>authorized</code> is true, then it will add appropriated <code>Authorization</code> headers.
+   * If truthy <code>page</code>, then it will add pagination query parameters.
+   * @param authorized 
+   * @param page 
+   */
   public buildRequestOptions(authorized?: boolean, page?: Page): Promise<RequestOptions> {
     if(authorized == true) {
       return new Promise<RequestOptions>((resolve, reject) => {
