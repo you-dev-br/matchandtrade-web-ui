@@ -5,16 +5,18 @@ import { AuthenticationCallbackComponent } from './components/authentication-cal
 import { TradeComponent } from './components/trades/trade/trade.component';
 import { TradesComponent } from './components/trades/trades.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
+import { LoggedInGuard } from './classes/permission/logged-in.guard';
 
 const routes: Routes = [
   { path: 'authenticate/callback', component: AuthenticationCallbackComponent },
-  { path: 'trades/:tradeId', component: TradeComponent },
+  { path: 'trades/:tradeId', component: TradeComponent, canActivate: [ LoggedInGuard ] },
   { path: 'trades', component: TradesComponent },
   { path: 'sign-in', component: SignInComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [LoggedInGuard]
 })
 export class AppRoutingModule { }
