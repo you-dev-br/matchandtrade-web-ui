@@ -40,11 +40,10 @@ export class TradeListComponent {
     this.tradeService.search(this.pagination.page)
       .then((v) => {
         this.trades = v.results;
-        this.pagination = v.pagination;    
+        this.pagination = v.pagination;
         this.loading = false;
       }).catch((e) => {
         this.loading = false;
-        console.log('errata', e.status, e);
         if (e instanceof Response && e.status != 404) {
           this.errata.push(new Erratum(e));
         }

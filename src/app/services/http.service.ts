@@ -15,32 +15,28 @@ export class HttpService {
 
   public buildRequestOptions(authorized?: boolean, page?: Page): Promise<RequestOptions> {
     if(authorized == true) {
-      let result = new Promise<RequestOptions>((resolve, reject) => {
+      return new Promise<RequestOptions>((resolve, reject) => {
         this.authenticationService.authorizationHeaders().then((v) => {
-          let requestOptions = new RequestOptions();
+          let requestOptions = HttpService.buildPaginatedRequestOptions(page);
           requestOptions.headers = v;
-          requestOptions.params = new URLSearchParams();
-          HttpService.addPageParametersToUrlSearchParms(requestOptions.params, page);
           resolve(requestOptions);
         }).catch((e) => reject(e));
       });
-      return result;
     } else {
-      let result = new Promise<RequestOptions>((resolve, reject) => {
-        let requestOptions = new RequestOptions();
-        requestOptions.params = new URLSearchParams();
-        HttpService.addPageParametersToUrlSearchParms(requestOptions.params, page);
-        resolve(requestOptions);
+      return new Promise<RequestOptions>((resolve, reject) => {
+        resolve(HttpService.buildPaginatedRequestOptions(page));
       });
-      return result;
     }
   }
 
-  private static addPageParametersToUrlSearchParms(searchParams: URLSearchParams, page: Page) {
+  private static buildPaginatedRequestOptions(page?: Page): RequestOptions {
+    let result = new RequestOptions();
+    result.params = new URLSearchParams();
     if (page) {
-      searchParams.append('_pageNumber', page.number.toString());
-      searchParams.append('_pageSize', page.size.toString());
+      result.params.append('_pageNumber', page.number.toString());
+      result.params.append('_pageSize', page.size.toString());
     }
+    return result;
   }
 
 }
