@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Response } from '@angular/http';
+import { Router } from '@angular/router';
 
 import { Pagination } from '../../../classes/search/pagination';
 import { TradeService } from '../../../services/trade.service';
@@ -18,9 +19,13 @@ export class TradeListComponent {
   pagination: Pagination;
   loading: boolean = true;
 
-  constructor(private tradeService: TradeService) {
+  constructor(private router: Router, private tradeService: TradeService) {
     this.pagination = new Pagination(1, 10, 0);
     this.search();
+  }
+
+  createTrade() {
+    this.router.navigate(['trades-create']);
   }
 
   nextPage() {

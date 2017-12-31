@@ -1,1 +1,17 @@
-<h4 class="title is-4">{{trade.name}}</h4>
+<app-erratum [errata]="errata"></app-erratum>
+<app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
+
+<form *ngIf="!loading">
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control has-icons-right">
+      <input class="input" id="trade-name" type="text" placeholder="Trade name" (keyup)="triggerValidation(tradeName)" [value]="trade.name" #tradeName>
+    </div>
+    <p [class]="validationStyle.tradeName"><i class="fa fa-warning"></i>{{validationMessage.tradeName}}</p>
+  </div>
+
+  <div class="mt-control-panel is-pulled-right">
+      <a class="button is-primary" (click)="saveTrade(tradeName)"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</a>
+  </div>
+
+</form>

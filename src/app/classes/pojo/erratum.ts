@@ -7,7 +7,13 @@ export class Erratum {
   constructor(error: any) {
     if (error instanceof Response) {
       let e = <Response> error;
-      this.setProperties(e.text(), e.statusText);
+
+      // Let's use the description field if it exists
+      if (e.json().description) {
+        this.setProperties(e.json().description, e.statusText);
+      } else {
+        this.setProperties(e.text(), e.statusText);
+      }
     } else {
       this.setProperties(error, "Not able to identify error instance. " + error);
     }

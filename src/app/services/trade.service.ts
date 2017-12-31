@@ -21,13 +21,38 @@ export class TradeService {
     let result = new Promise<Trade>( (resolve, reject) => {
       this.httpService.buildRequestOptions(true).then((requestOptions) => {
 
-        this.http.get('/api/rest/v1/trades/' + tradeId, requestOptions)
-          .map((v) => {
+        this.http.get('/api/rest/v1/trades/' + tradeId, requestOptions).map((v) => {
             return this.tradeTransformer.toPojo(v.json());
           }).subscribe(
             (v) => resolve(v),
             (e) => reject(e)
           );
+
+      }).catch((e) => reject(e)); // end of buildRequestOptions()
+    }); // end of new Promise<Trade>
+    return result;
+  }
+
+  save(trade: Trade): Promise<Trade> {
+    let result = new Promise<Trade>( (resolve, reject) => {
+      this.httpService.buildRequestOptions(true).then((requestOptions) => {
+        
+        if (trade.tradeId) {
+          this.http.put('/api/rest/v1/trades/' + trade.tradeId, trade, requestOptions).map((v) => {
+            return this.tradeTransformer.toPojo(v.json());
+          }).subscribe(
+            (v) => resolve(v),
+            (e) => reject(e)
+          );
+        } else {
+          this.http.post('/api/rest/v1/trades/', trade, requestOptions).map((v) => {
+            console.log('service', v.json())
+            return this.tradeTransformer.toPojo(v.json());
+          }).subscribe(
+            (v) => resolve(v),
+            (e) => reject(e)
+          );          
+        }
 
       }).catch((e) => reject(e)); // end of buildRequestOptions()
     }); // end of new Promise<Trade>

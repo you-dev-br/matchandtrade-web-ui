@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
+import { RouteAction } from '../../../classes/route/route-action';
 import { Trade } from '../../../classes/pojo/trade';
 import { TradeService } from '../../../services/trade.service'
+import { Erratum } from '../../../classes/pojo/erratum';
 
 @Component({
   selector: 'app-trade',
@@ -11,15 +14,61 @@ import { TradeService } from '../../../services/trade.service'
   providers: [ TradeService ]
 })
 export class TradeComponent {
+  loading: boolean = true;
+  errata = new Array<Erratum>();
+  newEntry: boolean = true;
   trade: Trade = new Trade();
+  validationMessage = {
+    tradeName: null
+  };
+  validationStyle = {
+    tradeName: "help is-clear"
+  };
 
   constructor(private route: ActivatedRoute, private tradeService: TradeService) {
-    route.params.subscribe(params => {
-      let tradeId = params['tradeId'];
-      tradeService.get(tradeId).then((v) => {
+    this.route.data.subscribe((v) => {
+      if (v.routeAction == RouteAction.CREATE) {
+        this.loading = false;
+      } else {
+        this.newEntry = false;
+        this.loadTrade(this.route.params);
+      }
+    });
+  }
+
+  private loadTrade(params: Observable<Params>) {
+    this.loading = true;
+    params.subscribe((v) => {
+      let tradeId = v['tradeId'];
+      this.tradeService.get(tradeId).then((v) => {
         this.trade = v;
+        this.loading = false;
       }).catch((e) => console.log('TradeComponent', e));
     });
+  }
+
+  saveTrade(tradeName: HTMLInputElement) {
+    this.errata.length = 0;
+    this.trade.name = tradeName.value;
+    this.tradeService.save(this.trade).then((v) => {
+      console.log('asdffffffffff', v);
+      Object.assign(this.trade, v);
+    }).catch((e) => {
+      this.errata.push(new Erratum(e));
+    });
+  }
+
+  triggerValidation(s: HTMLInputElement) {
+    if (s.id = 'trade-name') {
+      this.trade.name = s.value;
+      if (s.value && s.value.length > 3 && s.value.length < 150) {
+        this.validationMessage.tradeName = null;
+        this.validationStyle.tradeName = "help is-clear";
+      } else {
+        this.validationMessage.tradeName = "Trade name is mandatory and its length must be between 3 and 150.";
+        this.validationStyle.tradeName = "help is-danger";
+      }
+    }
   }
 
 }

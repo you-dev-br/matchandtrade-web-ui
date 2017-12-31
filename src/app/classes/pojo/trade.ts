@@ -1,4 +1,4 @@
 export class Trade {
-  tradeId: number;
-  name: string;
+  tradeId: number = null;
+  name: string = null;
 }
