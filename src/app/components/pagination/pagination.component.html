@@ -1,12 +1,18 @@
 <nav class="pagination is-small" role="navigation" aria-label="pagination">
   
-  <a [class]="previousPageClass()"
+  <a class="pagination-previous"
     (click)="previousPage()"
-    [attr.disabled]="isPreviousPageButtonEnabled() ? null : true">Previous</a>
+    [attr.disabled]="isPreviousPageButtonEnabled() ? null : true">
+    <span *ngIf="!isPreviousPageLoading()">Previous</span>
+    <span *ngIf="isPreviousPageLoading()"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>    
+  </a>
   
-  <a [class]="nextPageClass()"
+  <a class="pagination-next"
     (click)="nextPage()"
-    [attr.disabled]="isNextPageButtonEnabled() ? null : true" >Next page</a>
+    [attr.disabled]="isNextPageButtonEnabled() ? null : true" >
+    <span *ngIf="!isNextPageLoading()">Next</span>
+    <span *ngIf="isNextPageLoading()"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
+  </a>
   
   <ul class="pagination-list">
     <li>Page <b>{{pagination.page.number}}</b> of <b>{{pagination.totalPages}}</b></li>

@@ -52,21 +52,21 @@ export class PaginationComponent {
     }
     return false;
   }
-
-  nextPageClass(): string {
-    let result = 'pagination-next';
+ 
+  isNextPageLoading(): boolean {
     if(this.loading && this.lastButton == PaginationButton.NEXT) {
-      result += ' pagination-loading';
+      return true;
+    } else {
+      return false;
     }
-    return result;
   }
 
-  previousPageClass(): string {
-    let result = 'pagination-previous';
+  isPreviousPageLoading(): boolean {
     if(this.loading && this.lastButton == PaginationButton.PREVIOUS) {
-      result += ' pagination-loading';
+      return true;
+    } else {
+      return false;
     }
-    return result;
   }
 
 }
