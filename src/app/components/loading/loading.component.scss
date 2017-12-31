@@ -1,11 +1,10 @@
 // See vertical alignment strategy: http://jsfiddle.net/kizu/4RPFa/4570/
+@import '~variables.scss';
+
 .app-loading {
     width: 100%;
     text-align: center;
-}
-
-.app-loading img {
-    vertical-align: middle;
+    color: $primary-5;
 }
 
 .app-loading-align-helper {
