@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-import { RouteAction } from '../../../classes/route/route-action';
+import { RouteAction, RouteActionFactory } from '../../../classes/route/route-action';
 import { Trade } from '../../../classes/pojo/trade';
 import { TradeService } from '../../../services/trade.service'
 import { Erratum } from '../../../classes/pojo/erratum';
@@ -26,14 +26,13 @@ export class TradeComponent {
   };
 
   constructor(private route: ActivatedRoute, private tradeService: TradeService) {
-    this.route.data.subscribe((v) => {
-      if (v.routeAction == RouteAction.CREATE) {
-        this.loading = false;
-      } else {
-        this.newEntry = false;
-        this.loadTrade(this.route.params);
-      }
-    });
+    let routeAction = route.snapshot.queryParamMap.get(RouteAction.ACTION_PARAMETER);
+    if (routeAction == RouteAction.CREATE) {
+      this.loading = false;
+    } else {
+      this.newEntry = false;
+      this.loadTrade(this.route.params);
+    }
   }
 
   private loadTrade(params: Observable<Params>) {
@@ -43,7 +42,7 @@ export class TradeComponent {
       this.tradeService.get(tradeId).then((v) => {
         this.trade = v;
         this.loading = false;
-      }).catch((e) => console.log('TradeComponent', e));
+      }).catch((e) => this.errata.push(new Erratum(e)));
     });
   }
 
@@ -51,7 +50,6 @@ export class TradeComponent {
     this.errata.length = 0;
     this.trade.name = tradeName.value;
     this.tradeService.save(this.trade).then((v) => {
-      console.log('asdffffffffff', v);
       Object.assign(this.trade, v);
     }).catch((e) => {
       this.errata.push(new Erratum(e));
