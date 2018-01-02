@@ -9,10 +9,10 @@
     <a class="navbar-item">
       Matching and Trade
     </a>
-    <a class="navbar-item" routerLink="/trades" routerLinkActive="active">
+    <a class="navbar-item" routerLink="/trades" routerLinkActive="active" tabindex="1">
       <span class="router-link">Trades</span>
     </a>
-    <a class="navbar-item" routerLink="/sign-in" routerLinkActive="active">
+    <a class="navbar-item" routerLink="/sign-in" routerLinkActive="active" tabindex="1">
       <span class="router-link">Sign-in</span>
     </a>
   </div>
@@ -20,7 +20,7 @@
     <div class="navbar-start">
     </div>
     <div class="navbar-end">
-        <a class="navbar-item" id="user-profile" routerLink="/sign-in" routerLinkActive="active" title="User Profile"></a>
+        <a class="navbar-item" id="user-profile" routerLink="/sign-in" routerLinkActive="active" title="User Profile" tabindex="1"></a>
     </div>
   </div>
 
@@ -28,7 +28,7 @@
     <a class="navbar-item">
       Matching and Trade
     </a>
-    <button class="button navbar-burger is-primary" (click)="toggleBurgerMenu()">
+    <button class="button navbar-burger is-primary" (click)="toggleBurgerMenu()" tabindex="1">
       <span></span>
       <span></span>
       <span></span>
@@ -36,8 +36,8 @@
   </div>
 
   <div [ngClass]="burgerClass">
-    <div class="burger-item router-link" routerLink="/trades" routerLinkActive="active" (click)="toggleBurgerMenu()">Trades</div>
-    <div class="burger-item router-link" routerLink="/sign-in" routerLinkActive="active" (click)="toggleBurgerMenu()">Sign-in</div>
+    <div class="burger-item router-link" routerLink="/trades" routerLinkActive="active" (click)="toggleBurgerMenu()" tabindex="1">Trades</div>
+    <div class="burger-item router-link" routerLink="/sign-in" routerLinkActive="active" (click)="toggleBurgerMenu()" tabindex="1">Sign-in</div>
   </div>
 
 </nav>

@@ -28,6 +28,11 @@ export class TradeListComponent {
     this.router.navigate(['trades-create']);
   }
 
+  navigateToTrade(tradeId: number) {
+    this.router.navigate(['trades/'+tradeId]);
+  }
+
+
   nextPage() {
       this.pagination.page.number++;
       this.loading = true;
