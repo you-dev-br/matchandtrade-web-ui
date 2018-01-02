@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Rx';
   styleUrls: ['./loading.component.scss']
 })
 export class LoadingComponent {
-  @Input() loading: boolean;
+  @Input() loading: boolean = false;
   @Input() containerHeight: number = 5;
   @Input() imageHeight: number = 5;  
 

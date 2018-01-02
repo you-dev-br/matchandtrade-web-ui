@@ -19,7 +19,20 @@ describe('LoadingComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('when not loading, then it should not display the loading component', () => {
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(fixture.nativeElement.querySelector('.app-loading')).toBeNull();
+    });
   });
+
+  it('when loading, then it should display the loading component', () => {
+    component.loading = true;
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(fixture.nativeElement.querySelector('.app-loading')).toBeTruthy();
+      expect(fixture.nativeElement.querySelector('.app-loading').offsetWidth).toBeGreaterThan(5);
+    });
+  });
+
 });
