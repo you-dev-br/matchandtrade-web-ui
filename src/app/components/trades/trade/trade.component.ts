@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-import { RouteAction, RouteActionFactory } from '../../../classes/route/route-action';
+import { RouteAction } from '../../../classes/route/route-action';
 import { Trade } from '../../../classes/pojo/trade';
 import { TradeService } from '../../../services/trade.service'
 import { Erratum } from '../../../classes/pojo/erratum';
@@ -26,8 +26,7 @@ export class TradeComponent {
   };
 
   constructor(private route: ActivatedRoute, private tradeService: TradeService) {
-    let routeAction = route.snapshot.queryParamMap.get(RouteAction.ACTION_PARAMETER);
-    if (routeAction == RouteAction.CREATE) {
+    if (route.snapshot.params['tradeId'] == RouteAction.CREATE) {
       this.loading = false;
     } else {
       this.newEntry = false;

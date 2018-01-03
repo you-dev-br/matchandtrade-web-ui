@@ -6,7 +6,7 @@ import { Pagination } from '../../../classes/search/pagination';
 import { TradeService } from '../../../services/trade.service';
 import { Trade } from '../../../classes/pojo/trade';
 import { Erratum } from '../../../classes/pojo/erratum';
-import { RouteAction, RouteActionFactory } from '../../../classes/route/route-action';
+import { RouteAction } from '../../../classes/route/route-action';
 
 @Component({
   selector: 'app-trade-list',
@@ -27,7 +27,7 @@ export class TradeListComponent {
 
   createTrade() {
     // Sadly we need to append something to 'trades/' or router.navigate will navigate remove the last '/' and therefore navigate to the trade-list page.
-    this.router.navigate(['trades/' + RouteAction.CREATE], {queryParams: RouteActionFactory.makeCreateAction()});
+    this.router.navigate(['trades/' + RouteAction.CREATE]);
   }
 
   navigateToTrade(tradeId: number) {
