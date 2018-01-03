@@ -16,7 +16,6 @@ import { Erratum } from '../../../classes/pojo/erratum';
 export class TradeComponent {
   loading: boolean = true;
   errata = new Array<Erratum>();
-  newEntry: boolean = true;
   trade: Trade = new Trade();
   validationMessage = {
     tradeName: null
@@ -26,23 +25,15 @@ export class TradeComponent {
   };
 
   constructor(private route: ActivatedRoute, private tradeService: TradeService) {
-    if (route.snapshot.params['tradeId'] == RouteAction.CREATE) {
+    let tradeId = route.snapshot.params['tradeId'];
+    if (tradeId == RouteAction.CREATE) {
       this.loading = false;
     } else {
-      this.newEntry = false;
-      this.loadTrade(this.route.params);
-    }
-  }
-
-  private loadTrade(params: Observable<Params>) {
-    this.loading = true;
-    params.subscribe((v) => {
-      let tradeId = v['tradeId'];
       this.tradeService.get(tradeId).then((v) => {
         this.trade = v;
         this.loading = false;
       }).catch((e) => this.errata.push(new Erratum(e)));
-    });
+    }
   }
 
   saveTrade(tradeName: HTMLInputElement) {
