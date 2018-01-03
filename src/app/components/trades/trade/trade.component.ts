@@ -37,7 +37,7 @@ export class TradeComponent {
   }
 
   saveTrade(tradeName: HTMLInputElement) {
-    this.errata.length = 0;
+    this.errata.forEach(() => this.errata.pop());
     this.trade.name = tradeName.value;
     this.tradeService.save(this.trade).then((v) => {
       Object.assign(this.trade, v);
