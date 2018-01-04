@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -31,9 +32,10 @@ import { ErratumComponent } from './components/erratum/erratum.component';
     ErratumComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
-    HttpModule,
-    AppRoutingModule
+    ReactiveFormsModule, // Refrain of using FormsModule and favor ReactiveFormModule which is more explicit and powerful than FormsModule.
+    HttpModule
   ],
   providers: [AuthenticationService, HttpService],
   bootstrap: [AppComponent]

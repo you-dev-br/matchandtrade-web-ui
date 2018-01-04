@@ -1,27 +1,31 @@
 <app-erratum [errata]="errata"></app-erratum>
 <app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
 
-<form *ngIf="!loading">
+<form *ngIf="!loading" [formGroup]="tradeFormGroup" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label class="label">Name</label>
+    <label class="label" for="trade-name">Name</label>
     <div class="control has-icons-right">
       <input
         id="trade-name"
         class="input"
-        (keyup)="triggerValidation(tradeName)"
-        [value]="trade.name"
+        [formControl]="tradeFormGroup.controls['name']"
         type="text"
         placeholder="Trade name"
-        tabindex="2"
-        #tradeName>
+        tabindex="2">
     </div>
-    <p [class]="validationStyle.tradeName"><i class="fa fa-warning"></i>{{validationMessage.tradeName}}</p>
+    <p *ngIf="!nameFormControl.valid && nameFormControl.touched" class="help is-danger">
+        <i class="fa fa-warning"></i>Trade name is mandatory and its length must be between 3 and 150.
+    </p>
   </div>
 
   <div class="mt-control-panel is-pulled-right">
-      <a class="button is-primary" (click)="saveTrade(tradeName)" (keyup.enter)="saveTrade(tradeName)" tabindex="3">
+      <button
+        class="button is-primary"
+        type="submit"
+        [disabled]="(tradeFormGroup.valid && tradeFormGroup.touched) ? null : 'disabled'"
+        tabindex="3">
         <i class="fa fa-floppy-o" aria-hidden="true"></i>Save
-      </a>
+      </button>
   </div>
 
 </form>

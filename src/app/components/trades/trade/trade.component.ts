@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 
 import { RouteAction } from '../../../classes/route/route-action';
 import { Trade } from '../../../classes/pojo/trade';
 import { TradeService } from '../../../services/trade.service'
 import { Erratum } from '../../../classes/pojo/erratum';
+import { FormControl } from '@angular/forms/src/model';
 
 @Component({
   selector: 'app-trade',
@@ -14,49 +16,48 @@ import { Erratum } from '../../../classes/pojo/erratum';
   providers: [ TradeService ]
 })
 export class TradeComponent {
+  tradeFormGroup: FormGroup;
+  nameFormControl: AbstractControl;
   loading: boolean = true;
   errata = new Array<Erratum>();
   trade: Trade = new Trade();
-  validationMessage = {
-    tradeName: null
-  };
-  validationStyle = {
-    tradeName: "help is-clear"
-  };
 
-  constructor(private route: ActivatedRoute, private tradeService: TradeService) {
+  constructor(private route: ActivatedRoute, formBuilder: FormBuilder, private tradeService: TradeService) {
+    this.buildForm(formBuilder);
+
     let tradeId = route.snapshot.params['tradeId'];
     if (tradeId == RouteAction.CREATE) {
       this.loading = false;
     } else {
       this.tradeService.get(tradeId).then((v) => {
         this.trade = v;
+        this.nameFormControl.setValue(v.name);
         this.loading = false;
       }).catch((e) => this.errata.push(new Erratum(e)));
     }
   }
 
-  saveTrade(tradeName: HTMLInputElement) {
+  private buildForm(formBuilder: FormBuilder): void {
+    this.tradeFormGroup = formBuilder.group({
+      'name': ['',Validators.compose([Validators.required, this.nameValidator])]
+    });
+    this.nameFormControl = this.tradeFormGroup.controls['name'];
+  }
+  
+  nameValidator(control: FormControl): {[s: string]: boolean} {
+    if (control.value && (control.value.length < 3 || control.value.length > 150)) {
+      return {invalid: true};
+    }
+  }
+
+  onSubmit() {
     this.errata.forEach(() => this.errata.pop());
-    this.trade.name = tradeName.value;
+    this.trade.name = this.tradeFormGroup.controls['name'].value;
     this.tradeService.save(this.trade).then((v) => {
       Object.assign(this.trade, v);
     }).catch((e) => {
       this.errata.push(new Erratum(e));
     });
-  }
-
-  triggerValidation(s: HTMLInputElement) {
-    if (s.id = 'trade-name') {
-      this.trade.name = s.value;
-      if (s.value && s.value.length > 3 && s.value.length < 150) {
-        this.validationMessage.tradeName = null;
-        this.validationStyle.tradeName = "help is-clear";
-      } else {
-        this.validationMessage.tradeName = "Trade name is mandatory and its length must be between 3 and 150.";
-        this.validationStyle.tradeName = "help is-danger";
-      }
-    }
   }
 
 }
