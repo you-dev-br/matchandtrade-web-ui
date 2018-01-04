@@ -4,7 +4,7 @@
 <form *ngIf="!loading" [formGroup]="tradeFormGroup" (ngSubmit)="onSubmit()">
   <div class="field">
     <label class="label" for="trade-name">Name</label>
-    <div class="control has-icons-right">
+    <div class="control">
       <input
         id="trade-name"
         class="input"
@@ -17,6 +17,15 @@
         <i class="fa fa-warning"></i>Trade name is mandatory and its length must be between 3 and 150.
     </p>
   </div>
+
+  <div>
+
+    <select [formControl]="tradeFormGroup.controls['state']">
+      <option
+       *ngFor="let s of states" [value]='s.key'>{{s.value}}</option>
+    </select>
+
+  </div>  
 
   <div class="mt-control-panel is-pulled-right">
       <button

@@ -11,6 +11,7 @@ export class TradeTransformer extends Transformer<Trade> {
         let result = new Trade();
         result.name = json.name;
         result.tradeId = json.tradeId;
+        result.state = json.state;
         return result;
     }
 

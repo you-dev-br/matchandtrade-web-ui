@@ -3,11 +3,12 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 
-import { RouteAction } from '../../../classes/route/route-action';
-import { Trade } from '../../../classes/pojo/trade';
-import { TradeService } from '../../../services/trade.service'
 import { Erratum } from '../../../classes/pojo/erratum';
 import { FormControl } from '@angular/forms/src/model';
+import { KeyValuePair } from '../../../classes/pojo/key-value-pair';
+import { RouteAction } from '../../../classes/route/route-action';
+import { Trade, TradeState } from '../../../classes/pojo/trade';
+import { TradeService } from '../../../services/trade.service';
 
 @Component({
   selector: 'app-trade',
@@ -18,6 +19,8 @@ import { FormControl } from '@angular/forms/src/model';
 export class TradeComponent {
   tradeFormGroup: FormGroup;
   nameFormControl: AbstractControl;
+  stateFormControl: AbstractControl;
+  states: KeyValuePair[] = [];
   loading: boolean = true;
   errata = new Array<Erratum>();
   trade: Trade = new Trade();
@@ -39,9 +42,14 @@ export class TradeComponent {
 
   private buildForm(formBuilder: FormBuilder): void {
     this.tradeFormGroup = formBuilder.group({
-      'name': ['',Validators.compose([Validators.required, this.nameValidator])]
+      'name': ['',Validators.compose([Validators.required, this.nameValidator])],
+      'state': []
     });
     this.nameFormControl = this.tradeFormGroup.controls['name'];
+    this.stateFormControl = this.tradeFormGroup.controls['state'];
+    for(let v in TradeState) {
+      this.states.push(new KeyValuePair(v, TradeState[v].toString()));
+    }
   }
   
   nameValidator(control: FormControl): {[s: string]: boolean} {
@@ -53,6 +61,7 @@ export class TradeComponent {
   onSubmit() {
     this.errata.forEach(() => this.errata.pop());
     this.trade.name = this.tradeFormGroup.controls['name'].value;
+    this.trade.state = this.stateFormControl.value;
     this.tradeService.save(this.trade).then((v) => {
       Object.assign(this.trade, v);
     }).catch((e) => {
