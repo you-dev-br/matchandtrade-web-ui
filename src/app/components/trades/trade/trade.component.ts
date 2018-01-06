@@ -26,16 +26,16 @@ export class TradeComponent {
   trade: Trade = new Trade();
 
   constructor(private route: ActivatedRoute, formBuilder: FormBuilder, private tradeService: TradeService) {
-    this.buildForm(formBuilder);
-
     let tradeId = route.snapshot.params['tradeId'];
     if (tradeId == RouteAction.CREATE) {
       this.loading = false;
+      this.buildForm(formBuilder);
     } else {
       this.tradeService.get(tradeId).then((v) => {
         this.trade = v;
-        this.nameFormControl.setValue(v.name);
         this.loading = false;
+        this.buildForm(formBuilder);
+        this.populateForm(v);
       }).catch((e) => this.errata.push(new Erratum(e)));
     }
   }
@@ -50,6 +50,14 @@ export class TradeComponent {
     for(let v in TradeState) {
       this.states.push(new KeyValuePair(v, TradeState[v].toString()));
     }
+    this.stateFormControl.setValue(TradeState[TradeState.SUBMITTING_ITEMS]);
+    this.stateFormControl.disable();
+  }
+
+  private populateForm(trade: Trade) {
+    this.nameFormControl.setValue(trade.name);
+    this.stateFormControl.setValue(trade.state);
+    this.stateFormControl.enable();
   }
   
   nameValidator(control: FormControl): {[s: string]: boolean} {

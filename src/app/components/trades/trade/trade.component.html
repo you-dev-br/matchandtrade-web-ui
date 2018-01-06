@@ -10,31 +10,30 @@
         class="input"
         [formControl]="tradeFormGroup.controls['name']"
         type="text"
-        placeholder="Trade name"
-        tabindex="2">
+        placeholder="Trade name">
     </div>
-    <p *ngIf="!nameFormControl.valid && nameFormControl.touched" class="help is-danger">
+    <p class="help is-danger" *ngIf="!nameFormControl.valid && nameFormControl.touched">
         <i class="fa fa-warning"></i>Trade name is mandatory and its length must be between 3 and 150.
     </p>
   </div>
 
-  <div>
-
-    <select [formControl]="tradeFormGroup.controls['state']">
-      <option
-       *ngFor="let s of states" [value]='s.key'>{{s.value}}</option>
-    </select>
-
+  <div class="field">
+    <label class="label" for="trade-state">State</label>
+    <div class="control">
+      <div class="select">
+        <select id="trade-state" class="select" [formControl]="tradeFormGroup.controls['state']">
+          <option *ngFor="let s of states" [value]='s.key'>{{s.value}}</option>
+        </select>
+      </div>
+    </div>
   </div>  
 
   <div class="mt-control-panel is-pulled-right">
       <button
         class="button is-primary"
         type="submit"
-        [disabled]="(tradeFormGroup.valid && tradeFormGroup.touched) ? null : 'disabled'"
-        tabindex="3">
+        [disabled]="(tradeFormGroup.valid && tradeFormGroup.dirty) ? null : 'disabled'">
         <i class="fa fa-floppy-o" aria-hidden="true"></i>Save
       </button>
   </div>
-
 </form>
