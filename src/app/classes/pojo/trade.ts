@@ -6,6 +6,7 @@ export enum TradeState {
 };
 
 export class Trade {
+  _href: string;
   tradeId: number = null;
   name: string = null;
   state: TradeState = null;

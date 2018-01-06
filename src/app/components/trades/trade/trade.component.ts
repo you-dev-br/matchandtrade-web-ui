@@ -31,7 +31,8 @@ export class TradeComponent {
       this.loading = false;
       this.buildForm(formBuilder);
     } else {
-      this.tradeService.get(tradeId).then((v) => {
+      const href = route.snapshot.paramMap.get('href');
+      this.tradeService.get(href).then((v) => {
         this.trade = v;
         this.loading = false;
         this.buildForm(formBuilder);

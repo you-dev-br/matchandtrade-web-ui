@@ -1,1 +1,1 @@
-export enum RouteAction {CREATE='CREATE'}
+export enum RouteAction {CREATE='CREATE', VIEW='VIEW'}

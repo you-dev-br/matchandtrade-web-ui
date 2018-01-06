@@ -26,12 +26,11 @@ export class TradeListComponent {
   }
 
   createTrade() {
-    // Sadly we need to append something to 'trades/' or router.navigate will navigate remove the last '/' and therefore navigate to the trade-list page.
     this.router.navigate(['trades/' + RouteAction.CREATE]);
   }
 
-  navigateToTrade(tradeId: number) {
-    this.router.navigate(['trades/'+tradeId]);
+  navigateToTrade(trade: Trade) {
+    this.router.navigate(['trades/' + RouteAction.VIEW, {href: trade._href}]);
   }
 
   nextPage() {
@@ -55,7 +54,7 @@ export class TradeListComponent {
         this.loading = false;
       }).catch((e) => {
         this.loading = false;
-        if (e instanceof Response && e.status != 404) {
+        if (e.status != 404) {
           this.errata.push(new Erratum(e));
         }
       });

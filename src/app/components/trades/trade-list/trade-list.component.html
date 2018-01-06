@@ -12,7 +12,7 @@
       <caption>Trades</caption>
       <tbody>
         <tr *ngFor="let t of trades">
-          <td class="mt-table-row-clickable" (keyup.enter)="navigateToTrade(t.tradeId)" (click)="navigateToTrade(t.tradeId)" tabindex="2">{{t.name}}</td>
+          <td class="mt-table-row-clickable" (keyup.enter)="navigateToTrade(t)" (click)="navigateToTrade(t)" tabindex="2">{{t.name}}</td>
         </tr>
       </tbody>
     </table>
