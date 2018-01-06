@@ -6,10 +6,16 @@ export class Erratum {
 
   constructor(error: any) {
     if (error instanceof Response) {
-      let e = <Response> error;
+      const e = <Response> error;
+      let description;
+      try {
+        description = e.json().description;
+      } catch(ex) {
+        // Not able to parse json. Do nothing.
+      }
 
       // Let's use the description field if it exists
-      if (e.json().description) {
+      if (description) {
         this.setProperties(e.json().description, e.statusText);
       } else {
         this.setProperties(e.text(), e.statusText);
