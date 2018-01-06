@@ -67,13 +67,18 @@ export class TradeComponent {
   }
 
   onSubmit() {
+    this.loading = true;
     this.errata.forEach(() => this.errata.pop());
     this.trade.name = this.tradeFormGroup.controls['name'].value;
     this.trade.state = this.stateFormControl.value;
     this.tradeService.save(this.trade).then((v) => {
       Object.assign(this.trade, v);
+      this.loading = false;
+      this.tradeFormGroup.markAsPristine();
     }).catch((e) => {
       this.errata.push(new Erratum(e));
+      this.loading = false;
+      this.tradeFormGroup.markAsPristine();
     });
   }
 
