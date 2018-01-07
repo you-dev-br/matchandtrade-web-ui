@@ -8,7 +8,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "cd .. && cd matchandtrade && mvn clean spring-boot:run & cd .. && cd matchandtrade-web-ui && ng e2e --proxy-config proxy.config.json --host localhost --port 4200 ; kill $(ps -ef | grep 'spring-boot' | awk '{print $2}')"
   },
   "private": true,
   "dependencies": {

@@ -7,8 +7,8 @@ describe('matchandtrade-web-ui App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display navigation bar', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getNavigationBar()).toBeDefined();
   });
 });
