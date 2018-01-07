@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { Pagination } from '../../../classes/search/pagination';
 import { TradeService } from '../../../services/trade.service';
 import { Trade } from '../../../classes/pojo/trade';
-import { Erratum } from '../../../classes/pojo/erratum';
 import { RouteAction } from '../../../classes/route/route-action';
+import { Message } from '../../message/message';
 
 @Component({
   selector: 'app-trade-list',
@@ -15,7 +15,7 @@ import { RouteAction } from '../../../classes/route/route-action';
   providers: [TradeService]
 })
 export class TradeListComponent {
-  errata = new Array<Erratum>();
+  message: Message = new Message();
   trades: Trade[];
   pagination: Pagination;
   loading: boolean = true;
@@ -46,7 +46,6 @@ export class TradeListComponent {
   }
 
   search(): void {
-    this.errata.length = 0;
     this.tradeService.search(this.pagination.page)
       .then((v) => {
         this.trades = v.results;
@@ -55,7 +54,7 @@ export class TradeListComponent {
       }).catch((e) => {
         this.loading = false;
         if (e.status != 404) {
-          this.errata.push(new Erratum(e));
+          this.message.setErrorItems(e);
         }
       });
   }

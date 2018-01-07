@@ -1,0 +1,8 @@
+<article [class]="messageClass()" *ngIf="hasMessages()">
+  <div [class]="messageBodyClass()">
+    <div *ngFor="let i of message.items">
+      <i [class]="messageIconClass()" aria-hidden="true"></i>
+      {{i}}
+    </div>
+  </div>
+</article>

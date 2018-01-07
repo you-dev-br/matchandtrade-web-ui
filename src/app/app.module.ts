@@ -16,7 +16,7 @@ import { AuthenticationCallbackComponent } from './components/authentication-cal
 import { AuthenticationService } from './services/authentication.service';
 import { LoadingComponent } from './components/loading/loading.component';
 import { HttpService } from './services/http.service';
-import { ErratumComponent } from './components/erratum/erratum.component';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { ErratumComponent } from './components/erratum/erratum.component';
     TradeComponent,
     AuthenticationCallbackComponent,
     LoadingComponent,
-    ErratumComponent
+    MessageComponent
   ],
   imports: [
     AppRoutingModule,

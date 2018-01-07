@@ -3,9 +3,9 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 
-import { Erratum } from '../../../classes/pojo/erratum';
 import { FormControl } from '@angular/forms/src/model';
 import { KeyValuePair } from '../../../classes/pojo/key-value-pair';
+import { Message, MessageType } from '../../../components/message/message';
 import { RouteAction } from '../../../classes/route/route-action';
 import { Trade, TradeState } from '../../../classes/pojo/trade';
 import { TradeService } from '../../../services/trade.service';
@@ -20,9 +20,10 @@ export class TradeComponent {
   tradeFormGroup: FormGroup;
   nameFormControl: AbstractControl;
   stateFormControl: AbstractControl;
-  states: KeyValuePair[] = [];
+
   loading: boolean = true;
-  errata = new Array<Erratum>();
+  message: Message = new Message();
+  states: KeyValuePair[] = [];
   trade: Trade = new Trade();
 
   constructor(private route: ActivatedRoute, formBuilder: FormBuilder, private tradeService: TradeService) {
@@ -32,12 +33,12 @@ export class TradeComponent {
       this.buildForm(formBuilder);
     } else {
       const href = route.snapshot.paramMap.get('href');
-      this.tradeService.get(href).then((v) => {
+      this.tradeService.get(href).then(v => {
         this.trade = v;
         this.loading = false;
         this.buildForm(formBuilder);
-        this.populateForm(v);
-      }).catch((e) => this.errata.push(new Erratum(e)));
+        this.populateForm();
+      }).catch(e => this.message.setErrorItems(e));
     }
   }
 
@@ -55,9 +56,9 @@ export class TradeComponent {
     this.stateFormControl.disable();
   }
 
-  private populateForm(trade: Trade) {
-    this.nameFormControl.setValue(trade.name);
-    this.stateFormControl.setValue(trade.state);
+  private populateForm() {
+    this.nameFormControl.setValue(this.trade.name);
+    this.stateFormControl.setValue(this.trade.state);
     this.stateFormControl.enable();
   }
   
@@ -69,15 +70,16 @@ export class TradeComponent {
 
   onSubmit() {
     this.loading = true;
-    this.errata.forEach(() => this.errata.pop());
-    this.trade.name = this.tradeFormGroup.controls['name'].value;
+    this.trade.name = this.nameFormControl.value;
     this.trade.state = this.stateFormControl.value;
-    this.tradeService.save(this.trade).then((v) => {
-      Object.assign(this.trade, v);
+    this.tradeService.save(this.trade).then(v => {
       this.loading = false;
+      this.trade = v;
+      this.populateForm();
       this.tradeFormGroup.markAsPristine();
-    }).catch((e) => {
-      this.errata.push(new Erratum(e));
+      this.message.setInfoItems("Trade saved.");      
+    }).catch(e => {
+      this.message.setErrorItems(e);
       this.loading = false;
       this.tradeFormGroup.markAsPristine();
     });
