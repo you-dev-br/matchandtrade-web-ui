@@ -1,11 +1,16 @@
 import { browser, by, element } from 'protractor';
 
 export class AppPage {
-  navigateTo() {
+  navigateToHome() {
     return browser.get('/');
   }
 
-  getNavigationBar() {
-    return element(by.className('navbar')).getText();
+  elementTrades() {
+    return element(by.cssContainingText('.router-link', 'Trades'));
   }
+
+  elementSignin() {
+    return element(by.cssContainingText('.router-link', 'Sign-in'));
+  }
+
 }

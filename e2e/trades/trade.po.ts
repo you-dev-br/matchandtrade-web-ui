@@ -2,42 +2,38 @@ import { browser, by, element } from 'protractor';
 
 export class TradePage {
   navigateToSignIn() {
-    return browser.getCurrentUrl().then(v => {
-      browser.driver.get(v + 'sign-in').then(v =>{
-        // browser.driver.sleep(100);
-      });
-    });
+    return browser.get('/sign-in');
   }
 
-  signIn() {
-    return element(by.cssContainingText('a', 'Sign-in with Google')).click();
+  elementSignInLink() {
+    return element(by.cssContainingText('a', 'Sign-in with Google'));
   }
 
-  navigateToTradeList() {
-    return browser.get('/trades');
+  elementNavigationBarTrades() {
+    return element(by.cssContainingText('.router-link', 'Trades'));
   }
 
-  clickOnCreate() {
-    return element(by.cssContainingText('button', 'Create')).click();
+  elementCreateTradeButton() {
+    return element(by.cssContainingText('button', 'Create'));
   }
 
-  enterTradeName(text: string) {
-    return element(by.id('trade-name')).sendKeys(text);
+  elementTradeName() {
+    return element(by.id('trade-name'));
   }
 
   enterTradeState(text: string) {
     return element(by.cssContainingText('option', '')).click();
   }
 
-  clickOnSaveTrade() {
-    return element(by.className('button')).click();
+  elementSaveTradeButton() {
+    return element(by.cssContainingText('button', 'Save'));
   }
 
-  clickOnTrade(tradeName: string) {
-    return element(by.cssContainingText('.mt-table-row-clickable', tradeName)).click();
+  elementSavedMessage() {
+    return element(by.cssContainingText('.message-body', 'Trade saved.'));
   }
 
-  tradeElement(tradeName: string) {
+  elementTradeRow(tradeName: string) {
     return element(by.cssContainingText('.mt-table-row-clickable', tradeName));
   }
 

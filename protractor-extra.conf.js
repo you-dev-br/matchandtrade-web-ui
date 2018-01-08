@@ -6,7 +6,7 @@ var originalControlFlowExecution = browser.driver.controlFlow().execute;
 browser.driver.controlFlow().execute = function () {
     var args = arguments;
     originalControlFlowExecution.call(browser.driver.controlFlow(), function () {
-        // this log will output a lot o information use it only when
+        // this 'console.log()' will output a lot o information, use with caution.
         // console.log(args);
         // increase or reduce execution speed in millisecond
         return protractor.promise.delayed(0);

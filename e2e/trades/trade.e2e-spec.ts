@@ -9,17 +9,33 @@ describe('matchandtrade-web-ui App', () => {
   });
 
   it('should create new trade', () => {
+    // Sign-in
     page.navigateToSignIn();
-    page.signIn();
-    page.navigateToTradeList();
-    page.clickOnCreate();
-    page.enterTradeName('Alpha');
-    page.clickOnSaveTrade();
-    page.navigateToTradeList();
-    page.clickOnTrade('Alpha');
-    page.enterTradeName('Beta');
-    page.clickOnSaveTrade();
-    page.navigateToTradeList();
-    expect(page.tradeElement('AlphaBeta').getText()).toBe('AlphaBeta');
+    expect(page.elementSignInLink()).toBeDefined();
+    page.elementSignInLink().click();
+
+    // Create Trade
+    page.elementNavigationBarTrades().click();
+    expect(page.elementCreateTradeButton()).toBeDefined();
+    page.elementCreateTradeButton().click();
+    page.elementTradeName().sendKeys('Alpha');
+    expect(page.elementSaveTradeButton()).toBeDefined();
+    page.elementSaveTradeButton().click();
+    expect(page.elementSavedMessage().getText()).toBe('Trade saved.');
+
+    // Update Trade
+    page.elementNavigationBarTrades().click();
+    expect(page.elementTradeRow('Alpha')).toBeDefined();
+    page.elementTradeRow('Alpha').click();
+
+    page.elementTradeName().sendKeys('Beta');
+    expect(page.elementSaveTradeButton()).toBeDefined();
+    page.elementSaveTradeButton().click();
+    expect(page.elementSavedMessage().getText()).toBe('Trade saved.');
+
+    page.elementNavigationBarTrades().click();
+
+    expect(page.elementTradeRow('AlphaBeta').getText()).toBe('AlphaBeta');
   });
+
 });

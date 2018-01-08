@@ -8,7 +8,9 @@ describe('matchandtrade-web-ui App', () => {
   });
 
   it('should display navigation bar', () => {
-    page.navigateTo();
-    expect(page.getNavigationBar()).toBeDefined();
+    page.navigateToHome();
+    expect(page.elementTrades()).toBeDefined();
+    expect(page.elementSignin()).toBeDefined();
   });
+
 });
