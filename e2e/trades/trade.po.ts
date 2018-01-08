@@ -1,13 +1,6 @@
 import { browser, by, element } from 'protractor';
 
 export class TradePage {
-  navigateToSignIn() {
-    return browser.get('/sign-in');
-  }
-
-  elementSignInLink() {
-    return element(by.cssContainingText('a', 'Sign-in with Google'));
-  }
 
   elementNavigationBarTrades() {
     return element(by.cssContainingText('.router-link', 'Trades'));
@@ -33,8 +26,16 @@ export class TradePage {
     return element(by.cssContainingText('.message-body', 'Trade saved.'));
   }
 
+  elementMessageBody() {
+    return element(by.className('message-body'));
+  }
+
   elementTradeRow(tradeName: string) {
     return element(by.cssContainingText('.mt-table-row-clickable', tradeName));
+  }
+
+  elementTradeState(state: string) {
+    return element(by.cssContainingText('option', state));
   }
 
 }
