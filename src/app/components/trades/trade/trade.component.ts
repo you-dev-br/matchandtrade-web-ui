@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
@@ -16,7 +16,7 @@ import { TradeService } from '../../../services/trade.service';
   styleUrls: ['./trade.component.scss'],
   providers: [ TradeService ]
 })
-export class TradeComponent {
+export class TradeComponent implements OnInit {
   tradeFormGroup: FormGroup;
   nameFormControl: AbstractControl;
   stateFormControl: AbstractControl;
@@ -26,18 +26,22 @@ export class TradeComponent {
   states: KeyValuePair[] = [];
   trade: Trade = new Trade();
 
-  constructor(private route: ActivatedRoute, formBuilder: FormBuilder, private tradeService: TradeService) {
-    let tradeId = route.snapshot.params['tradeId'];
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private tradeService: TradeService) {
+
+  }
+
+  ngOnInit() {
+    let tradeId = this.route.snapshot.params['tradeId'];
     if (tradeId == RouteAction.CREATE) {
       this.loading = false;
-      this.buildForm(formBuilder);
+      this.buildForm(this.formBuilder);
     } else {
-      const href = route.snapshot.paramMap.get('href');
+      const href = this.route.snapshot.paramMap.get('href');
       this.tradeService.get(href).then(v => {
         this.trade = v;
         this.loading = false;
-        this.buildForm(formBuilder);
-        this.populateForm();
+        this.buildForm(this.formBuilder);
+        this.populateForm(v);
       }).catch(e => this.message.setErrorItems(e));
     }
   }
@@ -56,10 +60,10 @@ export class TradeComponent {
     this.stateFormControl.disable();
   }
 
-  private populateForm() {
-    this.nameFormControl.setValue(this.trade.name);
-    this.stateFormControl.setValue(this.trade.state);
+  private populateForm(trade: Trade) {
+    this.nameFormControl.setValue(trade.name);
     this.stateFormControl.enable();
+    this.stateFormControl.setValue(trade.state);
   }
   
   nameValidator(control: FormControl): {[s: string]: boolean} {
@@ -75,7 +79,7 @@ export class TradeComponent {
     this.tradeService.save(this.trade).then(v => {
       this.loading = false;
       this.trade = v;
-      this.populateForm();
+      this.populateForm(v);
       this.tradeFormGroup.markAsPristine();
       this.message.setInfoItems("Trade saved.");      
     }).catch(e => {
