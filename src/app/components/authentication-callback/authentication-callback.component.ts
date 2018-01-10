@@ -8,12 +8,10 @@ import { AuthenticationService } from '../../services/authentication.service';
 })
 export class AuthenticationCallbackComponent {
   authorizationHeader: string;
-  userId: number;
 
   constructor(private authenticationService: AuthenticationService ) {
     authenticationService.get().then((v) => {
       this.authorizationHeader = v.authorizationHeader;
-      this.userId = v.userId;
     });
   }
 

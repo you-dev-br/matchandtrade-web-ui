@@ -12,7 +12,6 @@ export class AuthenticationTransformer extends Transformer<Authentication> {
     public toPojo(json: any): Authentication {
         let result = new Authentication();
         result.authorizationHeader = json.authenticationHeader;
-        result.userId = json.userId;
         return result;
     }
 
