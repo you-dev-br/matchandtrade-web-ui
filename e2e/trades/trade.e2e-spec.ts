@@ -11,54 +11,56 @@ describe('matchandtrade-web-ui App', () => {
   beforeEach(() => {
     page = new TradePage();
   });
-
+  
   it('should create new trade', () => {
     // Sign-in
     signInUtil.signIn();
+    let tradeName = 'Alpha';
 
     // Create Trade
     page.elementNavigationBarTrades().click();
     expect(page.elementCreateTradeButton()).toBeDefined();
     page.elementCreateTradeButton().click();
-    page.elementTradeName().sendKeys('Alpha');
+    page.elementTradeName().sendKeys(tradeName);
     expect(page.elementSaveTradeButton()).toBeDefined();
     page.elementSaveTradeButton().click();
     expect(page.elementSavedMessage().getText()).toBe('Trade saved.');
 
     // Update Trade
     page.elementNavigationBarTrades().click();
-    expect(page.elementTradeRow('Alpha')).toBeDefined();
-    page.elementTradeRow('Alpha').click();
+    expect(page.elementTradeRow(tradeName)).toBeDefined();
+    page.elementTradeRow(tradeName).click();
 
-    page.elementTradeName().sendKeys('Beta');
+    page.elementTradeName().sendKeys("Updated");
     expect(page.elementSaveTradeButton()).toBeDefined();
     page.elementSaveTradeButton().click();
     expect(page.elementSavedMessage().getText()).toBe('Trade saved.');
 
     page.elementNavigationBarTrades().click();
 
-    expect(page.elementTradeRow('AlphaBeta').getText()).toBe('AlphaBeta');
+    expect(page.elementTradeRow(tradeName + 'Updated').getText()).toBe(tradeName + 'Updated');
   });
 
   it('should update trade name', () => {
     // Sign-in
     signInUtil.signIn();
+    let tradeName = 'Beta';
     
     // Create Trade
     let tradeUtil = new TradeUtil(page);
-    tradeUtil.createTrade('PleaseUpdateMe');
+    tradeUtil.createTrade(tradeName);
 
     // Update Trade
     page.elementNavigationBarTrades().click();
-    expect(page.elementTradeRow('PleaseUpdateMe')).toBeDefined();
-    page.elementTradeRow('PleaseUpdateMe').click();
+    expect(page.elementTradeRow(tradeName)).toBeDefined();
+    page.elementTradeRow(tradeName).click();
     page.elementTradeName().clear();
-    page.elementTradeName().sendKeys('Updated');
+    page.elementTradeName().sendKeys(tradeName + 'Updated');
     expect(page.elementSaveTradeButton()).toBeDefined();
     page.elementSaveTradeButton().click();
     expect(page.elementSavedMessage().getText()).toBe('Trade saved.');
     page.elementNavigationBarTrades().click();
-    expect(page.elementTradeRow('Updated').getText()).toBe('Updated');
+    expect(page.elementTradeRow(tradeName + 'Updated').getText()).toBe(tradeName + 'Updated');
   });
 
   it('should update trade state', () => {
