@@ -35,7 +35,7 @@ const activatedRouteMock = {
     }
 }
 
-describe('TradeComponent', () => {
+describe('TradeComponent-VIEW', () => {
   let component: TradeComponent;
   let fixture: ComponentFixture<TradeComponent>;
   let tradeService: TradeServiceMock;

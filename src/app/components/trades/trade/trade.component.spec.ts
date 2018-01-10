@@ -21,7 +21,7 @@ const activatedRouteMock = {
     }
 }
 
-describe('TradeComponent', () => {
+describe('TradeComponent-CREATE', () => {
   let component: TradeComponent;
   let fixture: ComponentFixture<TradeComponent>;
 
@@ -57,8 +57,7 @@ describe('TradeComponent', () => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(fixture.nativeElement.querySelector('#trade-name').value).toBe('');        
-      expect(fixture.nativeElement.querySelector('#trade-state').value).toBe('');
-      expect(fixture.nativeElement.querySelector('#trade-state').disabled).toBeTruthy();        
+      expect(fixture.nativeElement.querySelector('#trade-state')).toBeFalsy();
     });
   })));
 

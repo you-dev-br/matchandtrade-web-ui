@@ -9,6 +9,7 @@ import { Message, MessageType } from '../../../components/message/message';
 import { RouteAction } from '../../../classes/route/route-action';
 import { Trade, TradeState } from '../../../classes/pojo/trade';
 import { TradeService } from '../../../services/trade.service';
+import { TradesComponent } from '../trades.component';
 
 @Component({
   selector: 'app-trade',
@@ -57,13 +58,14 @@ export class TradeComponent implements OnInit {
     for(let v in TradeState) {
       this.states.push(new KeyValuePair(v, TradeState[v].toString()));
     }
-    this.stateFormControl.setValue(TradeState[TradeState.SUBMITTING_ITEMS]);
-    this.stateFormControl.disable();
+  }
+
+  isStateDisplayable() {
+    return (this.routeAction == RouteAction.VIEW || this.stateFormControl.value != null);
   }
 
   private populateForm(trade: Trade) {
     this.nameFormControl.setValue(trade.name);
-    this.stateFormControl.enable();
     this.stateFormControl.setValue(trade.state);
   }
   
