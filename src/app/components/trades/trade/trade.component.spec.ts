@@ -11,6 +11,7 @@ import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, Activat
 import { TradeComponent } from './trade.component';
 import { Trade } from '../../../classes/pojo/trade';
 import { TradeService } from '../../../services/trade.service';
+import { UserService } from '../../../services/user.service';
 
 const activatedRouteMock = {
     snapshot: {
@@ -40,7 +41,8 @@ describe('TradeComponent-CREATE', () => {
       set: {
         providers:[
           {provide: ActivatedRoute, useValue: activatedRouteMock},
-          {provide: TradeService, useValue: 'tradeServiceDummy'}
+          {provide: TradeService, useValue: 'tradeServiceDummy'},
+          {provide: UserService, useValue: 'userServiceDummy'}
         ]
       }
     })

@@ -13,6 +13,7 @@ import { LoadingComponent } from '../../loading/loading.component';
 import { TradeService } from '../../../services/trade.service';
 import { RouterStateSnapshot } from '@angular/router';
 import { SearchResult } from '../../../classes/search/search-result';
+import { UserService } from '../../../services/user.service';
 
 class TradeServiceMock {
   get() {
@@ -57,7 +58,9 @@ describe('TradeComponent-VIEW', () => {
           providers:[
             {provide: Router, useClass: RouterStub },
             {provide: ActivatedRoute, useValue: activatedRouteMock},
-            {provide: TradeService, useClass: TradeServiceMock}]            
+            {provide: TradeService, useClass: TradeServiceMock},
+            {provide: UserService, useValue: 'userServiceDummy'}
+          ]
         }
       }).compileComponents();
       

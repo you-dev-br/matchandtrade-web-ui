@@ -10,12 +10,13 @@ import { RouteAction } from '../../../classes/route/route-action';
 import { Trade, TradeState } from '../../../classes/pojo/trade';
 import { TradeService } from '../../../services/trade.service';
 import { TradesComponent } from '../trades.component';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-trade',
   templateUrl: './trade.component.html',
   styleUrls: ['./trade.component.scss'],
-  providers: [ TradeService ]
+  providers: [ TradeService, UserService ]
 })
 export class TradeComponent implements OnInit {
   trade: Trade = new Trade();
@@ -28,11 +29,12 @@ export class TradeComponent implements OnInit {
   message: Message = new Message();
   states: KeyValuePair[] = [];
 
-  constructor(private route: ActivatedRoute, formBuilder: FormBuilder, private tradeService: TradeService) {
+  constructor(private route: ActivatedRoute, formBuilder: FormBuilder, private tradeService: TradeService, private userService: UserService) {
     this.buildForm(formBuilder);
     this.routeAction = this.route.snapshot.params['routeAction'];
   }
 
+  userId: number;
   ngOnInit() {
     if (this.routeAction == RouteAction.CREATE) {
       this.loading = false;
