@@ -15,9 +15,6 @@ import { RouterStateSnapshot } from '@angular/router';
 import { SearchResult } from '../../../classes/search/search-result';
 
 class TradeServiceMock {
-  search(){
-    return new Promise<SearchResult<Trade>>(() => {});
-  };
   get() {
     return new Promise<Trade>((resolve, reject) => {
       let trade = new Trade();
@@ -63,8 +60,8 @@ describe('TradeComponent', () => {
             {provide: TradeService, useClass: TradeServiceMock}]            
         }
       }).compileComponents();
+      
     this.tradeService = TestBed.get(TradeServiceMock);
-
   }));
 
   beforeEach(() => {
@@ -80,9 +77,10 @@ describe('TradeComponent', () => {
 
     fixture.whenStable().then(() => {
       fixture.detectChanges();
+      console.log(component.stateFormControl.value);
+      console.log(fixture.nativeElement.querySelector('#trade-state').returnValue);
       expect(fixture.nativeElement.querySelector('#trade-name').value).toBe('name');
-      // TODO figure out how to text the state drop-down
-      // expect(fixture.nativeElement.querySelector('#trade-state').value).toBe('Submitting Items');
+      expect(component.stateFormControl.value).toBe(TradeState.SUBMITTING_ITEMS);
       expect(fixture.nativeElement.querySelector('#trade-state').disabled).toBeFalsy();    
     });
   }));
