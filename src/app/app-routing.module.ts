@@ -10,7 +10,7 @@ import { LoggedInGuard } from './classes/permission/logged-in.guard';
 const routes: Routes = [
   { path: 'authenticate/callback', component: AuthenticationCallbackComponent },
   { path: 'trades', component: TradesComponent },
-  { path: 'trades/:tradeId',
+  { path: 'trades/:routeAction',
     component: TradeComponent,
     canActivate: [ LoggedInGuard ],
     data: {

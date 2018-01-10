@@ -25,7 +25,7 @@ class TradeServiceMock {
 
 const activatedRouteMock = {
     snapshot: {
-        params: {tradeId: 'CREATE'},
+        params: {routeAction: 'CREATE'},
         paramMap: {
             get: function(){ return 'hrefMock'}
         }

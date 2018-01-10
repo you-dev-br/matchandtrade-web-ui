@@ -19,30 +19,29 @@ import { TradeService } from '../../../services/trade.service';
 export class TradeComponent implements OnInit {
   tradeFormGroup: FormGroup;
   nameFormControl: AbstractControl;
+  routeAction: string;
   stateFormControl: AbstractControl;
 
   loading: boolean = true;
   message: Message = new Message();
   states: KeyValuePair[] = [];
-  trade: Trade = new Trade();
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private tradeService: TradeService) {
-
+  constructor(private route: ActivatedRoute, formBuilder: FormBuilder, private tradeService: TradeService) {
+    this.buildForm(formBuilder);
+    this.routeAction = this.route.snapshot.params['routeAction'];
   }
 
   ngOnInit() {
-    let tradeId = this.route.snapshot.params['tradeId'];
-    if (tradeId == RouteAction.CREATE) {
+    if (this.routeAction == RouteAction.CREATE) {
       this.loading = false;
-      this.buildForm(this.formBuilder);
-    } else {
+    } else if (this.routeAction == RouteAction.VIEW) {
       const href = this.route.snapshot.paramMap.get('href');
       this.tradeService.get(href).then(v => {
-        this.trade = v;
         this.loading = false;
-        this.buildForm(this.formBuilder);
         this.populateForm(v);
       }).catch(e => this.message.setErrorItems(e));
+    } else {
+      this.message.setErrorItems("Unknown route action: " + this.routeAction);
     }
   }
 
@@ -66,7 +65,7 @@ export class TradeComponent implements OnInit {
     this.stateFormControl.setValue(trade.state);
   }
   
-  nameValidator(control: FormControl): {[s: string]: boolean} {
+  private nameValidator(control: FormControl): {[s: string]: boolean} {
     if (control.value && (control.value.length < 3 || control.value.length > 150)) {
       return {invalid: true};
     }
@@ -74,11 +73,11 @@ export class TradeComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    this.trade.name = this.nameFormControl.value;
-    this.trade.state = this.stateFormControl.value;
-    this.tradeService.save(this.trade).then(v => {
+    let trade = new Trade();
+    trade.name = this.nameFormControl.value;
+    trade.state = this.stateFormControl.value;
+    this.tradeService.save(trade).then(v => {
       this.loading = false;
-      this.trade = v;
       this.populateForm(v);
       this.tradeFormGroup.markAsPristine();
       this.message.setInfoItems("Trade saved.");      
