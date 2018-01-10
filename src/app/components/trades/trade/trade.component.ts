@@ -17,6 +17,7 @@ import { TradeService } from '../../../services/trade.service';
   providers: [ TradeService ]
 })
 export class TradeComponent implements OnInit {
+  trade: Trade = new Trade();
   tradeFormGroup: FormGroup;
   nameFormControl: AbstractControl;
   routeAction: string;
@@ -35,10 +36,11 @@ export class TradeComponent implements OnInit {
     if (this.routeAction == RouteAction.CREATE) {
       this.loading = false;
     } else if (this.routeAction == RouteAction.VIEW) {
-      const href = this.route.snapshot.paramMap.get('href');
-      this.tradeService.get(href).then(v => {
+      let tradeHref = this.route.snapshot.paramMap.get('href');
+      this.tradeService.get(tradeHref).then(v => {
         this.loading = false;
-        this.populateForm(v);
+        this.trade = v;
+        this.populateForm(this.trade);
       }).catch(e => this.message.setErrorItems(e));
     } else {
       this.message.setErrorItems("Unknown route action: " + this.routeAction);
@@ -73,12 +75,12 @@ export class TradeComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    let trade = new Trade();
-    trade.name = this.nameFormControl.value;
-    trade.state = this.stateFormControl.value;
-    this.tradeService.save(trade).then(v => {
+    this.trade.name = this.nameFormControl.value;
+    this.trade.state = this.stateFormControl.value;
+    this.tradeService.save(this.trade).then(v => {
       this.loading = false;
-      this.populateForm(v);
+      this.trade = v;
+      this.populateForm(this.trade);
       this.tradeFormGroup.markAsPristine();
       this.message.setInfoItems("Trade saved.");      
     }).catch(e => {

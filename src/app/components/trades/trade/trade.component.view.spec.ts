@@ -77,8 +77,6 @@ describe('TradeComponent', () => {
 
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      console.log(component.stateFormControl.value);
-      console.log(fixture.nativeElement.querySelector('#trade-state').returnValue);
       expect(fixture.nativeElement.querySelector('#trade-name').value).toBe('name');
       expect(component.stateFormControl.value).toBe(TradeState.SUBMITTING_ITEMS);
       expect(fixture.nativeElement.querySelector('#trade-state').disabled).toBeFalsy();    
