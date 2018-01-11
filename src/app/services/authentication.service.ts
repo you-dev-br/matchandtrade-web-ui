@@ -33,7 +33,11 @@ export class AuthenticationService {
     } else {
       return this.http
         .get('/api/authenticate/info')
-        .map(v => this.authenticationTransformer.toPojo(v.json()))
+        .map(v => {
+          let result = this.authenticationTransformer.toPojo(v.json());
+          this.lastAuthentication = result;
+          return result;
+        })
         .toPromise();
     }
   }
