@@ -59,7 +59,7 @@ describe('TradeComponent-VIEW', () => {
             {provide: Router, useClass: RouterStub },
             {provide: ActivatedRoute, useValue: activatedRouteMock},
             {provide: TradeService, useClass: TradeServiceMock},
-            {provide: UserService, useValue: 'userServiceDummy'}
+            {provide: UserService, useValue: 'userServiceDummy'},
           ]
         }
       }).compileComponents();

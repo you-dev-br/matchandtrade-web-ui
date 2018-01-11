@@ -18,19 +18,12 @@ export class TradeService {
   constructor(private authenticationService: AuthenticationService, private http: Http, private httpService: HttpService) { }
 
   get(href: string): Promise<Trade> {
-    let result = new Promise<Trade>( (resolve, reject) => {
-      this.httpService.buildRequestOptions(true).then((requestOptions) => {
-
-        this.http.get(href, requestOptions).map((v) => {
-            return this.tradeTransformer.toPojo(v.json());
-          }).subscribe(
-            (v) => resolve(v),
-            (e) => reject(e)
-          );
-
-      }).catch((e) => reject(e)); // end of buildRequestOptions()
-    }); // end of new Promise<Trade>
-    return result;
+    return new Promise<Trade>( (resolve, reject) => {
+      this.httpService
+        .getWithDefaultOptions(href)
+        .then(v => resolve(this.tradeTransformer.toPojo(v.json())))
+        .catch(err => reject(err));
+    });
   }  
 
   save(trade: Trade): Promise<Trade> {
@@ -59,18 +52,12 @@ export class TradeService {
   }
 
   search(page: Page, name?: string): Promise<SearchResult<Trade>> {
-    let result = new Promise<SearchResult<Trade>>( (resolve, reject) => {
-      this.httpService.buildRequestOptions(false, page).then((requestOptions) => {
-        this.http.get('/api/rest/v1/trades', requestOptions)
-          .map((v) => {
-            return this.tradeTransformer.toSearchResult(v, page);
-          })
-          .toPromise()
-          .then((v) => resolve(v))
-          .catch((e) => reject(e));
-      }).catch((e) => reject(e));
+    return new Promise<SearchResult<Trade>>( (resolve, reject) => {
+      this.httpService
+        .getWithDefaultOptions('/api/rest/v1/trades', false)
+        .then(o => resolve(this.tradeTransformer.toSearchResult(o, page)))
+        .catch(err => reject(err));
     });
-    return result;
   }
 
 }
