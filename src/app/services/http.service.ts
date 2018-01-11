@@ -9,6 +9,8 @@ import { SearchResult } from '../classes/search/search-result';
 import { Trade } from '../classes/pojo/trade';
 import { Observable } from 'rxjs/Observable';
 
+export enum HttpMethod {POST='POST', PUT='PUT'};
+
 @Injectable()
 export class HttpService {
 
@@ -16,19 +18,25 @@ export class HttpService {
 
   /**
    * Build RequestOptions.
-   * If <code>authorized</code> is true, then it will add appropriated <code>Authorization</code> headers.
    * If truthy <code>page</code>, then it will add pagination query parameters.
+   * If <code>authorized</code> is true (or not present), then it will add appropriated <code>Authorization</code> headers.
    * @param authorized 
    * @param page 
    */
-  public buildRequestOptions(authorized?: boolean, page?: Page): Promise<RequestOptions> {
-    if(authorized == true) {
+  public buildRequestOptions(page?: Page, authorized?: boolean): Promise<RequestOptions> {
+    let shouldAuthenticate = authorized;
+    if (!authorized) {
+      shouldAuthenticate = true;
+    }
+    if(shouldAuthenticate == true) {
       return new Promise<RequestOptions>((resolve, reject) => {
-        this.authenticationService.authorizationHeaders().then((v) => {
-          let requestOptions = HttpService.buildPaginatedRequestOptions(page);
-          requestOptions.headers = v;
-          resolve(requestOptions);
-        }).catch((e) => reject(e));
+        this.authenticationService.authorizationHeaders()
+          .then((v) => {
+            let requestOptions = HttpService.buildPaginatedRequestOptions(page);
+            requestOptions.headers = v;
+            resolve(requestOptions);
+          })
+          .catch((e) => reject(e));
       });
     } else {
       return new Promise<RequestOptions>((resolve, reject) => {
@@ -49,25 +57,44 @@ export class HttpService {
 
   /**
    * Performs a request with `get` http method.
-   */
-  public get(url: string, options?: RequestOptionsArgs): Observable<Response>{
-    return this.http.get(url, options);
-  }
-
-  /**
-   * Performs a request with `get` http method.
    * It is an authenticated request by default.
    */
-  public getWithDefaultOptions(url: string, authenticated?: boolean, page?: Page ): Promise<Response>{
-    let shouldAuthenticate = authenticated;
-    if (!authenticated) {
-      shouldAuthenticate = true;
-    }
+  public get(url: string, authenticated?: boolean, page?: Page ): Promise<Response>{
     return new Promise<Response>((resolve, reject) => {
-      this.buildRequestOptions(shouldAuthenticate, page).then(o => {
-        this.get(url, o).subscribe(r => resolve(r), err => reject(err));
+      this.buildRequestOptions(page, authenticated).then(o => {
+        this.http.get(url, o).subscribe(r => resolve(r), e => reject(e));
       });
     });
   }
+  
+  /**
+   * Performs a request with `post` http method.
+   * It is an authenticated request by default.
+   */
+  public post(url: string, body?: any, authenticated?: boolean): Promise<Response>{
+    return this.putOrPost(HttpMethod.POST, url, body, authenticated);
+  }
 
+  /**
+   * Performs a request with `put` http method.
+   * It is an authenticated request by default.
+   */
+  public put(url: string, body?: any, authenticated?: boolean): Promise<Response>{
+    return this.putOrPost(HttpMethod.PUT, url, body, authenticated);
+  }
+
+  private putOrPost(method: HttpMethod, url: string, body?: any, authenticated?: boolean): Promise<Response>{
+    return new Promise<Response>((resolve, reject) => {
+      this.buildRequestOptions(undefined, authenticated).then(o => {
+        if (method === HttpMethod.PUT) {
+          this.http.put(url, body, o).subscribe(r => resolve(r), e => reject(e));
+        } else if (method === HttpMethod.POST) {
+          this.http.post(url, body, o).subscribe(r => resolve(r), e => reject(e));
+        } else {
+          reject(new Error('Unknown http request method ' + method));
+        }
+      });
+    });
+  }
+  
 }

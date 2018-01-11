@@ -16,21 +16,16 @@ export class UserService {
   constructor(private authenticationService: AuthenticationService, private http: Http, private httpService: HttpService) { }
 
   getAuthenticatedUser(): Promise<User> {
-    let result = new Promise<User>( (resolve, reject) => {
-      this.httpService.buildRequestOptions(true).then((requestOptions) => {
-
-        this.http.get('/api/rest/v1/authentications/', requestOptions).map((v) => {
-            let result = new User();
-            result.userId = v.json().userId;
-            return result;
-          }).subscribe(
-            (v) => resolve(v),
-            (e) => reject(e)
-          );
-
-      }).catch((e) => reject(e)); // end of buildRequestOptions()
-    }); // end of new Promise<Trade>
-    return result;
-  }  
+    return new Promise<User>( (resolve, reject) => {
+      this.httpService
+        .get('/api/rest/v1/authentications/')
+        .then(v => {
+          let result = new User();
+          result.userId = v.json().userId;
+          return result;
+        })
+        .catch(err => reject(err));
+    });
+  }
 
 }

@@ -15,25 +15,26 @@ export class AuthenticationService {
 
   public authorizationHeaders(): Promise<Headers> {
     return new Promise<Headers>((resolve, reject) => {
-      this.get().then((v) => {
-        let headers = new Headers();          
-        headers.append("Authorization", v.authorizationHeader);
-        resolve(headers);
-      }).catch((e) => reject(e));
+      this.get()
+        .then(v => {
+          let headers = new Headers();          
+          headers.append("Authorization", v.authorizationHeader);
+          resolve(headers);
+        })
+        .catch(e => reject(e));
     });
   }
 
   public get(): Promise<Authentication> {
     if (this.lastAuthentication) {
-      return new Promise<Authentication>((resolve, reject) => {
-        resolve(this.lastAuthentication);
-      });
+      return new Promise<Authentication>((resolve, reject) =>
+        resolve(this.lastAuthentication)
+      );
     } else {
-      return this.http.get('/api/authenticate/info')
-        .map((response: Response) => {
-          this.lastAuthentication = this.authenticationTransformer.toPojo(response.json());
-          return this.lastAuthentication;
-        }).toPromise();
+      return this.http
+        .get('/api/authenticate/info')
+        .map(v => this.authenticationTransformer.toPojo(v.json()))
+        .toPromise();
     }
   }
 
