@@ -17,6 +17,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { LoadingComponent } from './components/loading/loading.component';
 import { HttpService } from './services/http.service';
 import { MessageComponent } from './components/message/message.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { MessageComponent } from './components/message/message.component';
     ReactiveFormsModule, // Refrain of using FormsModule and favor ReactiveFormModule which is more explicit and powerful than FormsModule.
     HttpModule
   ],
-  providers: [AuthenticationService, HttpService],
+  providers: [AuthenticationService, HttpService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

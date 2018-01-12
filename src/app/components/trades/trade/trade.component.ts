@@ -18,7 +18,7 @@ import { TradeMembership } from '../../../classes/pojo/trade-membership';
   selector: 'app-trade',
   templateUrl: './trade.component.html',
   styleUrls: ['./trade.component.scss'],
-  providers: [ TradeService, UserService, TradeMembershipService ]
+  providers: [ TradeService, TradeMembershipService ]
 })
 export class TradeComponent implements OnInit {
   trade: Trade = new Trade();
@@ -42,7 +42,6 @@ export class TradeComponent implements OnInit {
     this.routeAction = this.route.snapshot.params['routeAction'];
   }
 
-  userId: number;
   ngOnInit() {
     if (this.routeAction == RouteAction.CREATE) {
       this.loading = false;

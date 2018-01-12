@@ -13,21 +13,31 @@ import { User } from '../classes/pojo/user';
 
 @Injectable()
 export class UserService {
-  constructor(private authenticationService: AuthenticationService, private http: Http, private httpService: HttpService) { }
+
+  currentAuthenticatedUser: User;
+
+  constructor(
+    private authenticationService: AuthenticationService, 
+    private httpService: HttpService) { }
 
   getAuthenticatedUser(): Promise<User> {
-
-    // TODO need to use users endpoint instead of authentication
-    return new Promise<User>( (resolve, reject) => {
-      this.httpService
-        .get('/api/rest/v1/authentications/')
-        .then(v => {
-          let result = new User();
-          result.userId = v.json().userId;
-          resolve(result);
-        })
-        .catch(e => reject(e));
-    });
+    if (this.currentAuthenticatedUser) {
+      return new Promise<User> ((resolve, reject) => {
+        resolve(this.currentAuthenticatedUser);
+      });
+    } else {
+      return new Promise<User>( (resolve, reject) => {
+        this.httpService
+          .get('/api/rest/v1/authentications/')
+          .then(v => {
+            let result = new User();
+            result.userId = v.json().userId;
+            this.currentAuthenticatedUser = result;
+            resolve(result);
+          })
+          .catch(e => reject(e));
+      });    
+    }
   }
 
 }
