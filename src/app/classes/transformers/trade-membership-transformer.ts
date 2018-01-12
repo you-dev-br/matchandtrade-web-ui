@@ -2,17 +2,16 @@ import { Response } from '@angular/http';
 
 import { Page } from '../search/page';
 import { SearchResult } from '../search/search-result';
-import { Trade } from '../pojo/trade';
+import { TradeMembership } from '../pojo/trade-membership';
 import { Transformer } from './transformer';    
 
-export class TradeTransformer extends Transformer<Trade> {
+export class TradeMembershipTransformer extends Transformer<TradeMembership> {
 
-    public toPojo(json: any): Trade {
-        const result = new Trade();
+    public toPojo(json: any): TradeMembership {
+        const result = new TradeMembership();
         result._href = this.extractHref(json._links);
-        result.name = json.name;
         result.tradeId = json.tradeId;
-        result.state = json.state;
+        result.userId = json.userId;
         return result;
     }
 

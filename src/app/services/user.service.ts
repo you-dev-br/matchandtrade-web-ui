@@ -16,15 +16,17 @@ export class UserService {
   constructor(private authenticationService: AuthenticationService, private http: Http, private httpService: HttpService) { }
 
   getAuthenticatedUser(): Promise<User> {
+
+    // TODO need to use users endpoint instead of authentication
     return new Promise<User>( (resolve, reject) => {
       this.httpService
         .get('/api/rest/v1/authentications/')
         .then(v => {
           let result = new User();
           result.userId = v.json().userId;
-          return result;
+          resolve(result);
         })
-        .catch(err => reject(err));
+        .catch(e => reject(e));
     });
   }
 

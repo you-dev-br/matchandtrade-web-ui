@@ -11,12 +11,14 @@ import { Trade, TradeState } from '../../../classes/pojo/trade';
 import { TradeService } from '../../../services/trade.service';
 import { TradesComponent } from '../trades.component';
 import { UserService } from '../../../services/user.service';
+import { TradeMembershipService } from '../../../services/trade-membership.service';
+import { TradeMembership } from '../../../classes/pojo/trade-membership';
 
 @Component({
   selector: 'app-trade',
   templateUrl: './trade.component.html',
   styleUrls: ['./trade.component.scss'],
-  providers: [ TradeService, UserService ]
+  providers: [ TradeService, UserService, TradeMembershipService ]
 })
 export class TradeComponent implements OnInit {
   trade: Trade = new Trade();
@@ -29,7 +31,13 @@ export class TradeComponent implements OnInit {
   message: Message = new Message();
   states: KeyValuePair[] = [];
 
-  constructor(private route: ActivatedRoute, formBuilder: FormBuilder, private tradeService: TradeService, private userService: UserService) {
+  constructor( 
+      private route: ActivatedRoute,
+      formBuilder: FormBuilder,
+      private tradeService: TradeService,
+      private tradeMembershipService: TradeMembershipService,
+      private userService: UserService) {
+    
     this.buildForm(formBuilder);
     this.routeAction = this.route.snapshot.params['routeAction'];
   }
@@ -77,19 +85,42 @@ export class TradeComponent implements OnInit {
     }
   }
 
+  onSubscribe() {
+    this.loading = true;
+    this.userService.getAuthenticatedUser()
+      .then(user => {
+        let tradeMembership = new TradeMembership();
+        tradeMembership.tradeId = this.trade.tradeId;
+        tradeMembership.userId = user.userId;
+        return tradeMembership;
+      })
+      .then(tradeMembership => { 
+        this.tradeMembershipService
+          .save(tradeMembership)
+          .then(v => {
+            this.loading = false;
+            this.message.setInfoItems("Subscribed.");
+          })
+          .catch(e => {
+            this.loading = false;      
+            this.message.setErrorItems(e);
+          });
+      })
+  }
+
   onSubmit() {
     this.loading = true;
     this.trade.name = this.nameFormControl.value;
     this.trade.state = this.stateFormControl.value;
     this.tradeService.save(this.trade).then(v => {
-      this.loading = false;
       this.trade = v;
       this.populateForm(this.trade);
       this.tradeFormGroup.markAsPristine();
-      this.message.setInfoItems("Trade saved.");      
-    }).catch(e => {
-      this.message.setErrorItems(e);
+      this.message.setInfoItems("Trade saved.");
       this.loading = false;
+    }).catch(e => {
+      this.loading = false;
+      this.message.setErrorItems(e);
       this.tradeFormGroup.markAsPristine();
     });
   }

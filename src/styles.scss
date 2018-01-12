@@ -21,10 +21,14 @@ caption {
 }
 
 .mt-control-panel {
-  padding-top: 2em;
+  padding: 2em 0em 2em 0em;
   text-align: center;
 }
 
 .mt-control-panel i {
   margin-right: 0.5em;
+}
+
+.mt-control-panel button {
+  margin-left: .5em;
 }
