@@ -29,7 +29,7 @@
   </div>  
 
   <div class="mt-control-panel is-pulled-right">
-      <button class="button is-primary" type="button" (click)="onSubscribe()">
+      <button *ngIf="displaySubscribeButton()" class="button is-primary" type="button" (click)="onSubscribe()">
           <i class="fa fa-keyboard-o" aria-hidden="true"></i>Subscribe
       </button>
       <button

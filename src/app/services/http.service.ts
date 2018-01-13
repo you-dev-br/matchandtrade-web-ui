@@ -8,6 +8,7 @@ import { TradeTransformer } from '../classes/transformers/trade-transformer';
 import { SearchResult } from '../classes/search/search-result';
 import { Trade } from '../classes/pojo/trade';
 import { Observable } from 'rxjs/Observable';
+import { KeyValuePair } from '../classes/pojo/key-value-pair';
 
 export enum HttpMethod {POST='POST', PUT='PUT'};
 
@@ -23,7 +24,7 @@ export class HttpService {
    * @param authorized 
    * @param page 
    */
-  public buildRequestOptions(page?: Page, authorized?: boolean): Promise<RequestOptions> {
+  public buildRequestOptions(page?: Page, authorized?: boolean, params?: Array<KeyValuePair>): Promise<RequestOptions> {
     let shouldAuthenticate = authorized;
     if (!authorized) {
       shouldAuthenticate = true;
@@ -33,6 +34,7 @@ export class HttpService {
         this.authenticationService.authorizationHeaders()
           .then((v) => {
             let requestOptions = HttpService.buildPaginatedRequestOptions(page);
+            this.appendParameters(requestOptions, params);
             requestOptions.headers = v;
             resolve(requestOptions);
           })
@@ -41,6 +43,14 @@ export class HttpService {
     } else {
       return new Promise<RequestOptions>((resolve, reject) => {
         resolve(HttpService.buildPaginatedRequestOptions(page));
+      });
+    }
+  }
+
+  private appendParameters(requestOptions: RequestOptions, params: Array<KeyValuePair>) {
+    if (params) {
+      params.forEach(v => {
+        requestOptions.params.append(v.key, v.value);
       });
     }
   }
@@ -59,9 +69,9 @@ export class HttpService {
    * Performs a request with `get` http method.
    * It is an authenticated request by default.
    */
-  public get(url: string, authenticated?: boolean, page?: Page ): Promise<Response>{
+  public get(url: string, authenticated?: boolean, page?: Page, params?: Array<KeyValuePair>): Promise<Response>{
     return new Promise<Response>((resolve, reject) => {
-      this.buildRequestOptions(page, authenticated).then(o => {
+      this.buildRequestOptions(page, authenticated, params).then(o => {
         this.http.get(url, o).subscribe(r => resolve(r), e => reject(e));
       });
     });

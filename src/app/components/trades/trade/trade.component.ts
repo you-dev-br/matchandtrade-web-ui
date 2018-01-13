@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Response } from '@angular/http';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
@@ -13,6 +14,7 @@ import { TradesComponent } from '../trades.component';
 import { UserService } from '../../../services/user.service';
 import { TradeMembershipService } from '../../../services/trade-membership.service';
 import { TradeMembership } from '../../../classes/pojo/trade-membership';
+import { Page } from '../../../classes/search/page';
 
 @Component({
   selector: 'app-trade',
@@ -29,6 +31,7 @@ export class TradeComponent implements OnInit {
 
   loading: boolean = true;
   message: Message = new Message();
+  subscribed: boolean = false;
   states: KeyValuePair[] = [];
 
   constructor( 
@@ -47,11 +50,35 @@ export class TradeComponent implements OnInit {
       this.loading = false;
     } else if (this.routeAction == RouteAction.VIEW) {
       let tradeHref = this.route.snapshot.paramMap.get('href');
-      this.tradeService.get(tradeHref).then(v => {
-        this.loading = false;
-        this.trade = v;
-        this.populateForm(this.trade);
-      }).catch(e => this.message.setErrorItems(e));
+      this.tradeService.get(tradeHref)
+        .then(v => {
+          // Load Trade data
+          this.trade = v;
+          this.populateForm(this.trade);
+          return v;
+        })
+        .then(v => {
+          // Load current User
+          return this.userService.getAuthenticatedUser()
+            .then(user => {
+              return { tradeId: v.tradeId, userId: user.userId };
+            });
+        })
+        .then(v => {
+          // Load TradeMembership
+          return this.tradeMembershipService
+            .search(new Page(1, 1), v.tradeId, v.userId)
+            .then(v => {this.subscribed = true});
+        })
+        .catch(e => {
+          if (e instanceof Response && e.status == 404) {
+            this.subscribed = false;
+          }
+        })
+        .then(() => {
+          this.loading = false;
+        })
+        .catch(e => this.message.setErrorItems(e));
     } else {
       this.message.setErrorItems("Unknown route action: " + this.routeAction);
     }
@@ -93,16 +120,16 @@ export class TradeComponent implements OnInit {
         tradeMembership.userId = user.userId;
         return tradeMembership;
       })
-      .then(tradeMembership => { 
-        this.tradeMembershipService
-          .save(tradeMembership)
+      .then(v => { 
+        this.tradeMembershipService.save(v)
           .then(v => {
-            this.loading = false;
             this.message.setInfoItems("Subscribed.");
+            this.subscribed = true;
+            this.loading = false;
           })
           .catch(e => {
-            this.loading = false;      
             this.message.setErrorItems(e);
+            this.loading = false;      
           });
       })
   }
@@ -111,17 +138,29 @@ export class TradeComponent implements OnInit {
     this.loading = true;
     this.trade.name = this.nameFormControl.value;
     this.trade.state = this.stateFormControl.value;
-    this.tradeService.save(this.trade).then(v => {
-      this.trade = v;
-      this.populateForm(this.trade);
-      this.tradeFormGroup.markAsPristine();
-      this.message.setInfoItems("Trade saved.");
-      this.loading = false;
-    }).catch(e => {
-      this.loading = false;
-      this.message.setErrorItems(e);
-      this.tradeFormGroup.markAsPristine();
-    });
+    this.tradeService.save(this.trade)
+      .then(v => {
+        this.trade = v;
+        this.populateForm(this.trade);
+        this.tradeFormGroup.markAsPristine();
+        this.message.setInfoItems("Trade saved.");
+        this.subscribed = true;
+        this.loading = false;
+      }).catch(e => {
+        this.message.setErrorItems(e);
+        this.tradeFormGroup.markAsPristine();
+        this.loading = false;
+      });
+  }
+
+  displaySubscribeButton():boolean {
+    if(this.routeAction==RouteAction.CREATE) {
+      return false;
+    } else if (this.subscribed) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
 }

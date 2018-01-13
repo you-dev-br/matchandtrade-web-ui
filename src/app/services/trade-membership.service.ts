@@ -9,16 +9,22 @@ import { Page } from '../classes/search/page';
 import { SearchResult } from '../classes/search/search-result';
 import { TradeMembership } from '../classes/pojo/trade-membership';
 import { TradeMembershipTransformer } from '../classes/transformers/trade-membership-transformer';
+import { KeyValuePair } from '../classes/pojo/key-value-pair';
 
 @Injectable()
 export class TradeMembershipService {
   transformer = new TradeMembershipTransformer();
   constructor(private httpService: HttpService) { }
 
-  search(page: Page, tradeId?: string): Promise<SearchResult<TradeMembership>> {
+  search(page: Page, tradeId?: number, userId?: number): Promise<SearchResult<TradeMembership>> {
+
+    let params = new Array<KeyValuePair>();
+    params.push(new KeyValuePair('tradeId', tradeId));
+    params.push(new KeyValuePair('userId', userId));
+
     return new Promise<SearchResult<TradeMembership>>( (resolve, reject) => {
       this.httpService
-        .get('/api/rest/v1/trades', false)
+        .get('/api/rest/v1/trade-memberships', false, null, params)
         .then(v => resolve(this.transformer.toSearchResult(v, page)))
         .catch(e => reject(e));
     });
