@@ -26,7 +26,7 @@ export class HttpService {
    */
   public buildRequestOptions(page?: Page, authorized?: boolean, params?: Array<KeyValuePair>): Promise<RequestOptions> {
     let shouldAuthenticate = authorized;
-    if (!authorized) {
+    if (authorized == undefined || authorized == null) {
       shouldAuthenticate = true;
     }
     if(shouldAuthenticate == true) {
