@@ -48,7 +48,7 @@ export class TradeService {
   search(page: Page, name?: string): Promise<SearchResult<Trade>> {
     return new Promise<SearchResult<Trade>>( (resolve, reject) => {
       this.httpService
-        .get('/api/rest/v1/trades', false)
+        .get('/api/rest/v1/trades', false, page)
         .then(v => resolve(this.tradeTransformer.toSearchResult(v, page)))
         .catch(e => reject(e));
     });
