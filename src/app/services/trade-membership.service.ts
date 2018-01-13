@@ -23,8 +23,7 @@ export class TradeMembershipService {
     params.push(new KeyValuePair('userId', userId));
 
     return new Promise<SearchResult<TradeMembership>>( (resolve, reject) => {
-      this.httpService
-        .get('/api/rest/v1/trade-memberships', false, null, params)
+      this.httpService.get('/api/rest/v1/trade-memberships', true, page, params)
         .then(v => resolve(this.transformer.toSearchResult(v, page)))
         .catch(e => reject(e));
     });

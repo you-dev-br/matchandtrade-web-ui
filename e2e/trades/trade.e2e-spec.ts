@@ -104,4 +104,38 @@ describe('matchandtrade-web-ui App', () => {
     expect(page.elementMessageBody().getText()).toContain('must be unique');
   });
 
+  it('nom-members should subscribe to trade', () => {
+    // Sign-in with trade owner
+    signInUtil.signIn();
+    
+    // Create Trade
+    let tradeUtil = new TradeUtil(page);
+    tradeUtil.createTrade('TradeSubscription');
+
+    // Sign-in with a nom-member
+    signInUtil.signIn();
+
+    // Subscribe to Trade
+    page.elementNavigationBarTrades().click();
+    expect(page.elementTradeRow('TradeSubscription')).toBeDefined();
+    page.elementTradeRow('TradeSubscription').click();
+    page.elementSubscribeButton().click();
+    expect(page.elementMessageBody().getText()).toContain('Subscribed.');
+  });
+
+  it('already members should not be able to subscribe to trade', () => {
+    // Sign-in with trade owner
+    signInUtil.signIn();
+    
+    // Create Trade
+    let tradeUtil = new TradeUtil(page);
+    tradeUtil.createTrade('TradeSubscriptionAlreadyMember');
+
+    // Should not be able to subscribe to Trade
+    page.elementNavigationBarTrades().click();
+    expect(page.elementTradeRow('TradeSubscriptionAlreadyMember')).toBeDefined();
+    page.elementTradeRow('TradeSubscriptionAlreadyMember').click();
+    expect(page.elementSubscribeButton().isPresent()).toBeFalsy();
+  });
+
 });

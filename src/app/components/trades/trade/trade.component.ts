@@ -66,13 +66,14 @@ export class TradeComponent implements OnInit {
         })
         .then(v => {
           // Load TradeMembership
-          return this.tradeMembershipService
-            .search(new Page(1, 1), v.tradeId, v.userId)
+          return this.tradeMembershipService.search(new Page(1, 1), v.tradeId, v.userId)
             .then(v => {this.subscribed = true});
         })
         .catch(e => {
           if (e instanceof Response && e.status == 404) {
             this.subscribed = false;
+          } else {
+            this.message.setErrorItems(e);
           }
         })
         .then(() => {
@@ -154,13 +155,7 @@ export class TradeComponent implements OnInit {
   }
 
   displaySubscribeButton():boolean {
-    if(this.routeAction==RouteAction.CREATE) {
-      return false;
-    } else if (this.subscribed) {
-      return false;
-    } else {
-      return true;
-    }
+    return ((this.routeAction==RouteAction.CREATE) ? false : !this.subscribed);
   }
 
 }

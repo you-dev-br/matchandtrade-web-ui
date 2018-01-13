@@ -9,7 +9,7 @@ browser.driver.controlFlow().execute = function () {
         // this 'console.log()' will output a lot o information, use with caution.
         // console.log(args);
         // increase or reduce execution speed in millisecond
-        return protractor.promise.delayed(0);
+        return protractor.promise.delayed(5);
     });
 
     return originalControlFlowExecution.apply(browser.driver.controlFlow(), args);

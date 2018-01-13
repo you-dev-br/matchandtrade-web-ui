@@ -38,4 +38,8 @@ export class TradePage {
     return element(by.cssContainingText('option', state));
   }
 
+  elementSubscribeButton() {
+    return element(by.cssContainingText('button', 'Subscribe'));
+  }
+
 }
