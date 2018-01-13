@@ -14,6 +14,9 @@ import { TradeService } from '../../../services/trade.service';
 import { RouterStateSnapshot } from '@angular/router';
 import { SearchResult } from '../../../classes/search/search-result';
 import { UserService } from '../../../services/user.service';
+import { TradeMembershipService } from '../../../services/trade-membership.service';
+import { User } from '../../../classes/pojo/user';
+import { TradeMembership } from '../../../classes/pojo/trade-membership';
 
 class TradeServiceMock {
   get() {
@@ -23,6 +26,23 @@ class TradeServiceMock {
       trade.name = "name";
       trade.state = TradeState.SUBMITTING_ITEMS;
       resolve(trade);
+    });
+  }
+}
+
+class UserServiceMock {
+  getAuthenticatedUser() {
+    return new Promise<User>((resolve, reject) => {
+      resolve(new User());
+    });
+  }
+}
+
+
+class TradeMembershipServiceMock {
+  search() {
+    return new Promise<TradeMembership>((resolve, reject) => {
+      resolve(new TradeMembership());
     });
   }
 }
@@ -59,7 +79,8 @@ describe('TradeComponent-VIEW', () => {
             {provide: Router, useClass: RouterStub },
             {provide: ActivatedRoute, useValue: activatedRouteMock},
             {provide: TradeService, useClass: TradeServiceMock},
-            {provide: UserService, useValue: 'userServiceDummy'},
+            {provide: UserService, useClass: UserServiceMock},
+            {provide: TradeMembershipService, useClass: TradeMembershipServiceMock}
           ]
         }
       }).compileComponents();

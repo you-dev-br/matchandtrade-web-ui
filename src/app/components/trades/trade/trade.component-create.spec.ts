@@ -12,6 +12,7 @@ import { TradeComponent } from './trade.component';
 import { Trade } from '../../../classes/pojo/trade';
 import { TradeService } from '../../../services/trade.service';
 import { UserService } from '../../../services/user.service';
+import { TradeMembershipService } from '../../../services/trade-membership.service';
 
 const activatedRouteMock = {
     snapshot: {
@@ -42,7 +43,8 @@ describe('TradeComponent-CREATE', () => {
         providers:[
           {provide: ActivatedRoute, useValue: activatedRouteMock},
           {provide: TradeService, useValue: 'tradeServiceDummy'},
-          {provide: UserService, useValue: 'userServiceDummy'}
+          {provide: UserService, useValue: 'userServiceDummy'},
+          {provide: TradeMembershipService, useValue: 'tradeMembershipServiceDummy'}
         ]
       }
     })
