@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Response, ResponseOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute } from '../../../../test/router-stubs';
@@ -33,18 +34,20 @@ class UserServiceMock {
 }
 
 class TradeMembershipServiceMock {
-  search() {
-    let memberships = new Array<TradeMembership>();
+  makeInstance(): TradeMembership {
     let membership = new TradeMembership();
     membership.type = TradeMembershipType.OWNER;
-    memberships.push(membership);
+    return membership;
+  }
+  
+  search() {
+    let memberships = new Array<TradeMembership>();
+    memberships.push(this.makeInstance());
     return Promise.resolve(new SearchResult<TradeMembership>(memberships, null));
    }
   
   get() {
-    let result = new TradeMembership();
-    result.type = TradeMembershipType.OWNER;
-    return Promise.resolve(result);
+    return Promise.resolve(this.makeInstance());
   }
 }
 
@@ -98,14 +101,15 @@ describe('TradeComponent-VIEW', () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       expect(fixture.nativeElement.querySelector('#trade-name').value).toBe('tradeName');
+      expect(fixture.nativeElement.querySelector('#subscribe-to-trade-button')).toBeFalsy();
       expect(component.stateFormControl.value).toBe(TradeState.SUBMITTING_ITEMS);
       expect(fixture.nativeElement.querySelector('#trade-state').disabled).toBeFalsy();    
     });
   }));
 
   it('should disable form fields if user is not the trade owner', (()=> {
-    let injectedTradeService = fixture.debugElement.injector.get(TradeMembershipService);
-    spyOn(injectedTradeService, 'get').and.callFake((href) => {
+    let injectedTradeMembershipService = fixture.debugElement.injector.get(TradeMembershipService);
+    spyOn(injectedTradeMembershipService, 'get').and.callFake((href) => {
       return new Promise<TradeMembership>((resolve, reject) => {
         let result = new TradeMembership();
         result.type = TradeMembershipType.MEMBER;
@@ -118,8 +122,26 @@ describe('TradeComponent-VIEW', () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       expect(fixture.nativeElement.querySelector('#trade-name').value).toBe('tradeName');
+      expect(fixture.nativeElement.querySelector('#subscribe-to-trade-button')).toBeFalsy();
       expect(component.stateFormControl.value).toBe(TradeState.SUBMITTING_ITEMS);
       expect(fixture.nativeElement.querySelector('#trade-state').disabled).toBeTruthy();    
+    });
+  }));
+
+  it('should display subscribe button for non-members', (()=> {
+    let injectedTradeMembershipService = fixture.debugElement.injector.get(TradeMembershipService);
+    spyOn(injectedTradeMembershipService, 'search').and.callFake((a,b,c) => {
+        let ro = new ResponseOptions();
+        let result = new Response(ro);
+        result.status = 404;
+        return Promise.reject(result);
+    });
+
+    component.ngOnInit();
+
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('#subscribe-to-trade-button')).toBeTruthy();
     });
   }));
 

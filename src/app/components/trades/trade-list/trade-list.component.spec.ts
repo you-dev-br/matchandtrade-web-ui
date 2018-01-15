@@ -48,7 +48,7 @@ describe('TradeListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('when there are trades; then should display rows', (async(() => {
+  it('when there are trades; then it should display rows', (async(() => {
     let t1 = new Trade();
     t1.tradeId = 1;
     t1.name = "Trade number 1";
@@ -60,7 +60,7 @@ describe('TradeListComponent', () => {
     });
   })));
 
-  it('when there are no trades; then should not display any rows', (async(() => {
+  it('when there are no trades; then it should not display any rows', (async(() => {
     component.trades = [];
     fixture.detectChanges();
     fixture.whenStable().then(() => {

@@ -15,6 +15,9 @@ import { UserService } from '../../../services/user.service';
 import { TradeMembershipService } from '../../../services/trade-membership.service';
 import { TradeMembership, TradeMembershipType } from '../../../classes/pojo/trade-membership';
 import { Page } from '../../../classes/search/page';
+import { SearchResult } from '../../../classes/search/search-result';
+
+export class TradeMembershipNotFoundException {};
 
 @Component({
   selector: 'app-trade',
@@ -70,16 +73,23 @@ export class TradeComponent implements OnInit {
             .then(v => {              
               return v;
             });
-          })
+        })
+        .catch(e => {
+          if (!(e instanceof Response)) {
+            return e;
+          } else if (e instanceof Response && e.status == 404) {
+            throw new TradeMembershipNotFoundException();
+          }
+        })
+        .then(v => {
           // Get TradeMembership
-          .then(v => {
-            return this.tradeMembershipService.get(v.results[0]._href).then(tm => {
-              this.subscribed = true;
-              return this.tradeMembership = tm;
+          return this.tradeMembershipService.get(v.results[0]._href).then(tm => {
+            this.subscribed = true;
+            return this.tradeMembership = tm;
           });
         })
         .catch(e => {
-          if (!(e instanceof Response && e.status == 404)) {
+          if (!(e instanceof TradeMembershipNotFoundException)) {
             this.message.setErrorItems(e);
           }
         })
