@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -57,12 +58,23 @@ describe('TradeComponent-CREATE', () => {
     fixture.detectChanges();
   });
 
-  it('when creating a new trade; then it should display an empty form', (async(() => {
-    fixture.detectChanges();
+  it('when creating a new trade; then it should display an empty form', (() => {
     fixture.whenStable().then(() => {
-      expect(fixture.nativeElement.querySelector('#trade-name').value).toBe('');        
+      expect(fixture.nativeElement.querySelector('#trade-name').value).toBe('');
       expect(fixture.nativeElement.querySelector('#trade-state')).toBeFalsy();
+      expect(fixture.nativeElement.querySelector('#subscribe-to-trade-button')).toBeFalsy();
+      expect(fixture.nativeElement.querySelector('#save-trade-button').disabled).toBeTruthy();
     });
-  })));
+  }));
+
+  it('when creating a new trade; then it should enable the save button after editing the form', (() => {
+    fixture.nativeElement.querySelector('#trade-name').value = 'newName';
+    // dispatch a DOM event so that Angular learns of input value change.
+    fixture.nativeElement.querySelector('#trade-name').dispatchEvent(new Event('input'));
+    fixture.detectChanges()
+    fixture.whenStable().then(() => {
+      expect(fixture.nativeElement.querySelector('#save-trade-button').disabled).toBeFalsy();
+    });
+  }));
 
 });

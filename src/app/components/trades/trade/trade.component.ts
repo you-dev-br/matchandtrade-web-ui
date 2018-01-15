@@ -13,7 +13,7 @@ import { TradeService } from '../../../services/trade.service';
 import { TradesComponent } from '../trades.component';
 import { UserService } from '../../../services/user.service';
 import { TradeMembershipService } from '../../../services/trade-membership.service';
-import { TradeMembership } from '../../../classes/pojo/trade-membership';
+import { TradeMembership, TradeMembershipType } from '../../../classes/pojo/trade-membership';
 import { Page } from '../../../classes/search/page';
 
 @Component({
@@ -24,6 +24,7 @@ import { Page } from '../../../classes/search/page';
 })
 export class TradeComponent implements OnInit {
   trade: Trade = new Trade();
+  tradeMembership: TradeMembership;
   tradeFormGroup: FormGroup;
   nameFormControl: AbstractControl;
   routeAction: string;
@@ -54,7 +55,6 @@ export class TradeComponent implements OnInit {
         .then(v => {
           // Load Trade data
           this.trade = v;
-          this.populateForm(this.trade);
           return v;
         })
         .then(v => {
@@ -65,21 +65,28 @@ export class TradeComponent implements OnInit {
             });
         })
         .then(v => {
-          // Load TradeMembership
+          // Search TradeMembership
           return this.tradeMembershipService.search(new Page(1, 1), v.tradeId, v.userId)
-            .then(v => {this.subscribed = true});
+            .then(v => {              
+              return v;
+            });
+          })
+          // Get TradeMembership
+          .then(v => {
+            return this.tradeMembershipService.get(v.results[0]._href).then(tm => {
+              this.subscribed = true;
+              return this.tradeMembership = tm;
+          });
         })
         .catch(e => {
-          if (e instanceof Response && e.status == 404) {
-            this.subscribed = false;
-          } else {
+          if (!(e instanceof Response && e.status == 404)) {
             this.message.setErrorItems(e);
           }
         })
         .then(() => {
+          this.populateForm(this.trade, this.tradeMembership);
           this.loading = false;
-        })
-        .catch(e => this.message.setErrorItems(e));
+        });
     } else {
       this.message.setErrorItems("Unknown route action: " + this.routeAction);
     }
@@ -101,9 +108,12 @@ export class TradeComponent implements OnInit {
     return (this.routeAction == RouteAction.VIEW || this.stateFormControl.value != null);
   }
 
-  private populateForm(trade: Trade) {
+  private populateForm(trade: Trade, tradeMembership: TradeMembership) {
     this.nameFormControl.setValue(trade.name);
     this.stateFormControl.setValue(trade.state);
+    if (!(tradeMembership && tradeMembership.type == TradeMembershipType.OWNER)) {
+       this.tradeFormGroup.disable();
+    }
   }
   
   private nameValidator(control: FormControl): {[s: string]: boolean} {
@@ -125,6 +135,7 @@ export class TradeComponent implements OnInit {
         this.tradeMembershipService.save(v)
           .then(v => {
             this.message.setInfoItems("Subscribed.");
+            this.tradeMembership = v;
             this.subscribed = true;
             this.loading = false;
           })
@@ -142,7 +153,8 @@ export class TradeComponent implements OnInit {
     this.tradeService.save(this.trade)
       .then(v => {
         this.trade = v;
-        this.populateForm(this.trade);
+        this.populateForm(this.trade, null);
+        this.tradeFormGroup.enable();
         this.tradeFormGroup.markAsPristine();
         this.message.setInfoItems("Trade saved.");
         this.subscribed = true;

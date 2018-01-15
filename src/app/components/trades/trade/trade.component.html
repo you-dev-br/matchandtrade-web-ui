@@ -29,11 +29,17 @@
   </div>  
 
   <div class="mt-control-panel is-pulled-right">
-      <button *ngIf="displaySubscribeButton()" class="button is-primary" type="button" (click)="onSubscribe()">
+      <button 
+        class="button is-primary" 
+        id="subscribe-to-trade-button"
+        *ngIf="displaySubscribeButton()"
+        type="button" 
+        (click)="onSubscribe()">
         <i class="fa fa-id-card-o" aria-hidden="true"></i>Subscribe
       </button>
       <button
         class="button is-primary"
+        id="save-trade-button"
         type="submit"
         [disabled]="(tradeFormGroup.valid && tradeFormGroup.dirty) ? null : 'disabled'">
         <i class="fa fa-floppy-o" aria-hidden="true"></i>Save

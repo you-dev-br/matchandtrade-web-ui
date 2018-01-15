@@ -17,7 +17,6 @@ export class TradeMembershipService {
   constructor(private httpService: HttpService) { }
 
   search(page: Page, tradeId?: number, userId?: number): Promise<SearchResult<TradeMembership>> {
-
     let params = new Array<KeyValuePair>();
     params.push(new KeyValuePair('tradeId', tradeId));
     params.push(new KeyValuePair('userId', userId));
@@ -26,6 +25,14 @@ export class TradeMembershipService {
       this.httpService.get('/api/rest/v1/trade-memberships', true, page, params)
         .then(v => resolve(this.transformer.toSearchResult(v, page)))
         .catch(e => reject(e));
+    });
+  }
+
+  get(href: string) {
+    return new Promise<TradeMembership>((resolve, reject) => {
+      this.httpService.get(href).then(v => {
+        resolve(this.transformer.toPojo(v.json()));
+      });
     });
   }
 

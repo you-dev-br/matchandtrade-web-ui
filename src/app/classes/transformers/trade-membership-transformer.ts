@@ -2,7 +2,7 @@ import { Response } from '@angular/http';
 
 import { Page } from '../search/page';
 import { SearchResult } from '../search/search-result';
-import { TradeMembership } from '../pojo/trade-membership';
+import { TradeMembership, TradeMembershipType } from '../pojo/trade-membership';
 import { Transformer } from './transformer';    
 
 export class TradeMembershipTransformer extends Transformer<TradeMembership> {
@@ -12,6 +12,7 @@ export class TradeMembershipTransformer extends Transformer<TradeMembership> {
         result._href = this.extractHref(json._links);
         result.tradeId = json.tradeId;
         result.userId = json.userId;
+        result.type = TradeMembershipType[TradeMembershipType[json.type]];
         return result;
     }
 

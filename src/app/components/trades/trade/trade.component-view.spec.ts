@@ -1,49 +1,50 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute } from '../../../../test/router-stubs';
 
 import { AuthenticationService } from '../../../services/authentication.service';
-import { Pagination } from '../../../classes/search/pagination';
-import { PaginationComponent } from '../../pagination/pagination.component';
-import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute } from '../../../../test/router-stubs';
-import { TradeComponent } from './trade.component';
-import { Trade, TradeState } from '../../../classes/pojo/trade';
-import { MessageComponent } from '../../message/message.component';
 import { LoadingComponent } from '../../loading/loading.component';
-import { TradeService } from '../../../services/trade.service';
+import { MessageComponent } from '../../message/message.component';
+import { PaginationComponent } from '../../pagination/pagination.component';
 import { RouterStateSnapshot } from '@angular/router';
 import { SearchResult } from '../../../classes/search/search-result';
-import { UserService } from '../../../services/user.service';
+import { TradeComponent } from './trade.component';
+import { Trade, TradeState } from '../../../classes/pojo/trade';
 import { TradeMembershipService } from '../../../services/trade-membership.service';
+import { TradeMembership, TradeMembershipType } from '../../../classes/pojo/trade-membership';
+import { TradeService } from '../../../services/trade.service';
 import { User } from '../../../classes/pojo/user';
-import { TradeMembership } from '../../../classes/pojo/trade-membership';
+import { UserService } from '../../../services/user.service';
 
 class TradeServiceMock {
-  get() {
+  get(href) {
     return new Promise<Trade>((resolve, reject) => {
-      let trade = new Trade();
-      trade.tradeId = 123;
-      trade.name = "name";
-      trade.state = TradeState.SUBMITTING_ITEMS;
-      resolve(trade);
+      let result = new Trade();
+      result.name = 'tradeName';
+      result.state = TradeState.SUBMITTING_ITEMS;
+      resolve(result);
     });
-  }
+  };
 }
 
 class UserServiceMock {
-  getAuthenticatedUser() {
-    return new Promise<User>((resolve, reject) => {
-      resolve(new User());
-    });
-  }
+  getAuthenticatedUser() { return Promise.resolve(new User())}
 }
-
 
 class TradeMembershipServiceMock {
   search() {
-    return new Promise<TradeMembership>((resolve, reject) => {
-      resolve(new TradeMembership());
-    });
+    let memberships = new Array<TradeMembership>();
+    let membership = new TradeMembership();
+    membership.type = TradeMembershipType.OWNER;
+    memberships.push(membership);
+    return Promise.resolve(new SearchResult<TradeMembership>(memberships, null));
+   }
+  
+  get() {
+    let result = new TradeMembership();
+    result.type = TradeMembershipType.OWNER;
+    return Promise.resolve(result);
   }
 }
 
@@ -59,7 +60,6 @@ const activatedRouteMock = {
 describe('TradeComponent-VIEW', () => {
   let component: TradeComponent;
   let fixture: ComponentFixture<TradeComponent>;
-  let tradeService: TradeServiceMock;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -85,7 +85,6 @@ describe('TradeComponent-VIEW', () => {
         }
       }).compileComponents();
       
-    this.tradeService = TestBed.get(TradeServiceMock);
   }));
 
   beforeEach(() => {
@@ -94,16 +93,33 @@ describe('TradeComponent-VIEW', () => {
     fixture.detectChanges();
   });
 
-  it('should display trade data when viewing an existing trade', (() => {
-    fixture.detectChanges();
+  it('should display trade data when viewing an existing trade', (()=> {
     component.ngOnInit();
-    spyOn(this.tradeService, 'get').and.returnValue(Promise.resolve(false));
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('#trade-name').value).toBe('tradeName');
+      expect(component.stateFormControl.value).toBe(TradeState.SUBMITTING_ITEMS);
+      expect(fixture.nativeElement.querySelector('#trade-state').disabled).toBeFalsy();    
+    });
+  }));
+
+  it('should disable form fields if user is not the trade owner', (()=> {
+    let injectedTradeService = fixture.debugElement.injector.get(TradeMembershipService);
+    spyOn(injectedTradeService, 'get').and.callFake((href) => {
+      return new Promise<TradeMembership>((resolve, reject) => {
+        let result = new TradeMembership();
+        result.type = TradeMembershipType.MEMBER;
+        resolve(result);
+      });
+    });
+
+    component.ngOnInit();
 
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      expect(fixture.nativeElement.querySelector('#trade-name').value).toBe('name');
+      expect(fixture.nativeElement.querySelector('#trade-name').value).toBe('tradeName');
       expect(component.stateFormControl.value).toBe(TradeState.SUBMITTING_ITEMS);
-      expect(fixture.nativeElement.querySelector('#trade-state').disabled).toBeFalsy();    
+      expect(fixture.nativeElement.querySelector('#trade-state').disabled).toBeTruthy();    
     });
   }));
 
