@@ -69,25 +69,13 @@ export class TradeComponent implements OnInit {
         .then(v => {
           // Search TradeMembership
           return this.tradeMembershipService.search(new Page(1, 1), v.tradeId, v.userId)
-            .then(v => { return v; });
-        })
-        .catch(e => {
-          if (!(e instanceof Response)) {
-            return e;
-          } else if (e instanceof Response && e.status == 404) {
-            throw new TradeMembershipNotFoundException();
-          }
-        })
-        .then(v => {
-          // Get TradeMembership
-          return this.tradeMembershipService.get(v.results[0]._href)
-            .then(tm => {
-              this.tradeMembership = tm;
-              return this.tradeMembership;
+            .then(v => {
+              this.tradeMembership = v.results[0]; 
+              return v;
             });
         })
         .catch(e => {
-          if (!(e instanceof TradeMembershipNotFoundException)) {
+          if (!(e instanceof Response && e.status == 404)) {
             this.message.setErrorItems(e);
           }
         })
@@ -119,7 +107,7 @@ export class TradeComponent implements OnInit {
   private populateForm(trade: Trade, tradeMembership: TradeMembership) {
     this.nameFormControl.setValue(trade.name);
     this.stateFormControl.setValue(trade.state);
-    if (!(tradeMembership && tradeMembership.type == TradeMembershipType.OWNER)) {
+    if (!(tradeMembership && TradeMembershipType[tradeMembership.type] == TradeMembershipType.OWNER)) {
        this.tradeFormGroup.disable();
     }
   }

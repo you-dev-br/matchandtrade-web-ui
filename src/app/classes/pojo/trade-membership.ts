@@ -6,6 +6,3 @@ export class TradeMembership {
   userId: number = null;
   type: TradeMembershipType = null;
 }
-
-
-

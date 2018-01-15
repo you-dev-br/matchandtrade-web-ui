@@ -34,21 +34,13 @@ class UserServiceMock {
 }
 
 class TradeMembershipServiceMock {
-  makeInstance(): TradeMembership {
-    let membership = new TradeMembership();
-    membership.type = TradeMembershipType.OWNER;
-    return membership;
-  }
-  
   search() {
     let memberships = new Array<TradeMembership>();
-    memberships.push(this.makeInstance());
+    let membership = new TradeMembership();
+    membership.type = TradeMembershipType.OWNER;
+    memberships.push(membership);
     return Promise.resolve(new SearchResult<TradeMembership>(memberships, null));
    }
-  
-  get() {
-    return Promise.resolve(this.makeInstance());
-  }
 }
 
 const activatedRouteMock = {
@@ -101,30 +93,29 @@ describe('TradeComponent-VIEW', () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       expect(fixture.nativeElement.querySelector('#trade-name').value).toBe('tradeName');
-      expect(fixture.nativeElement.querySelector('#subscribe-to-trade-button')).toBeFalsy();
       expect(component.stateFormControl.value).toBe(TradeState.SUBMITTING_ITEMS);
       expect(fixture.nativeElement.querySelector('#trade-state').disabled).toBeFalsy();    
+      expect(fixture.nativeElement.querySelector('#subscribe-to-trade-button')).toBeFalsy();
     });
   }));
 
   it('should disable form fields if user is not the trade owner', (()=> {
     let injectedTradeMembershipService = fixture.debugElement.injector.get(TradeMembershipService);
-    spyOn(injectedTradeMembershipService, 'get').and.callFake((href) => {
-      return new Promise<TradeMembership>((resolve, reject) => {
-        let result = new TradeMembership();
-        result.type = TradeMembershipType.MEMBER;
-        resolve(result);
-      });
+    spyOn(injectedTradeMembershipService, 'search').and.callFake((a,b,c) => {
+      let memberships = new Array<TradeMembership>();
+      let membership = new TradeMembership();
+      membership.type = TradeMembershipType.MEMBER;
+      memberships.push(membership);
+      return Promise.resolve(new SearchResult<TradeMembership>(memberships, null));
     });
 
     component.ngOnInit();
-
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      expect(fixture.nativeElement.querySelector('#trade-name').value).toBe('tradeName');
-      expect(fixture.nativeElement.querySelector('#subscribe-to-trade-button')).toBeFalsy();
+      expect(fixture.nativeElement.querySelector('#trade-name').disabled).toBeTruthy();
       expect(component.stateFormControl.value).toBe(TradeState.SUBMITTING_ITEMS);
       expect(fixture.nativeElement.querySelector('#trade-state').disabled).toBeTruthy();    
+      expect(fixture.nativeElement.querySelector('#subscribe-to-trade-button')).toBeFalsy();
     });
   }));
 
