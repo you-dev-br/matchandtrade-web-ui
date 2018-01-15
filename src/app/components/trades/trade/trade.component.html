@@ -31,6 +31,14 @@
   <div class="mt-control-panel is-pulled-right">
       <button 
         class="button is-primary" 
+        id="submit-items-button"
+        *ngIf="displaySubmitItemsButton()"
+        type="button"
+        (click)="onSubmitItems()">
+        <i class="fa fa-id-card-o" aria-hidden="true">??</i>Submit Items
+      </button>
+      <button 
+        class="button is-primary" 
         id="subscribe-to-trade-button"
         *ngIf="displaySubscribeButton()"
         type="button" 

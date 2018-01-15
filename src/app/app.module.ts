@@ -18,6 +18,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { HttpService } from './services/http.service';
 import { MessageComponent } from './components/message/message.component';
 import { UserService } from './services/user.service';
+import { ItemListComponent } from './components/item-list/item-list.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { UserService } from './services/user.service';
     TradeComponent,
     AuthenticationCallbackComponent,
     LoadingComponent,
-    MessageComponent
+    MessageComponent,
+    ItemListComponent
   ],
   imports: [
     AppRoutingModule,

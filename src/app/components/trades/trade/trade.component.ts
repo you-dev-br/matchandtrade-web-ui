@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 
@@ -40,6 +40,7 @@ export class TradeComponent implements OnInit {
   constructor( 
       private route: ActivatedRoute,
       formBuilder: FormBuilder,
+      private router: Router,
       private tradeService: TradeService,
       private tradeMembershipService: TradeMembershipService,
       private userService: UserService) {
@@ -160,8 +161,15 @@ export class TradeComponent implements OnInit {
       });
   }
 
+  onSubmitItems(): void {
+    this.router.navigate(['items']);
+  }
+
   displaySubscribeButton():boolean {
     return ((this.routeAction==RouteAction.CREATE) ? false : !this.tradeMembership);
   }
 
+  displaySubmitItemsButton():boolean {
+    return true;
+  }
 }

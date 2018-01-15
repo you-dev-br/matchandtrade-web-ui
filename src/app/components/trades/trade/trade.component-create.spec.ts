@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -37,15 +37,17 @@ describe('TradeComponent-CREATE', () => {
         TradeComponent,
         RouterLinkStubDirective,
         RouterOutletStubComponent
-      ]
+      ],
+      providers: [RouterStub]
     })
     .overrideComponent(TradeComponent, {
       set: {
         providers:[
           {provide: ActivatedRoute, useValue: activatedRouteMock},
+          {provide: Router, useClass: RouterStub},
           {provide: TradeService, useValue: 'tradeServiceDummy'},
-          {provide: UserService, useValue: 'userServiceDummy'},
-          {provide: TradeMembershipService, useValue: 'tradeMembershipServiceDummy'}
+          {provide: TradeMembershipService, useValue: 'tradeMembershipServiceDummy'},
+          {provide: UserService, useValue: 'userServiceDummy'}
         ]
       }
     })
