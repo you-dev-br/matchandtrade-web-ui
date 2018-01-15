@@ -35,7 +35,6 @@ export class TradeComponent implements OnInit {
 
   loading: boolean = true;
   message: Message = new Message();
-  subscribed: boolean = false;
   states: KeyValuePair[] = [];
 
   constructor( 
@@ -70,9 +69,7 @@ export class TradeComponent implements OnInit {
         .then(v => {
           // Search TradeMembership
           return this.tradeMembershipService.search(new Page(1, 1), v.tradeId, v.userId)
-            .then(v => {              
-              return v;
-            });
+            .then(v => { return v; });
         })
         .catch(e => {
           if (!(e instanceof Response)) {
@@ -83,10 +80,11 @@ export class TradeComponent implements OnInit {
         })
         .then(v => {
           // Get TradeMembership
-          return this.tradeMembershipService.get(v.results[0]._href).then(tm => {
-            this.subscribed = true;
-            return this.tradeMembership = tm;
-          });
+          return this.tradeMembershipService.get(v.results[0]._href)
+            .then(tm => {
+              this.tradeMembership = tm;
+              return this.tradeMembership;
+            });
         })
         .catch(e => {
           if (!(e instanceof TradeMembershipNotFoundException)) {
@@ -146,7 +144,6 @@ export class TradeComponent implements OnInit {
           .then(v => {
             this.message.setInfoItems("Subscribed.");
             this.tradeMembership = v;
-            this.subscribed = true;
             this.loading = false;
           })
           .catch(e => {
@@ -167,7 +164,6 @@ export class TradeComponent implements OnInit {
         this.tradeFormGroup.enable();
         this.tradeFormGroup.markAsPristine();
         this.message.setInfoItems("Trade saved.");
-        this.subscribed = true;
         this.loading = false;
       }).catch(e => {
         this.message.setErrorItems(e);
@@ -177,7 +173,7 @@ export class TradeComponent implements OnInit {
   }
 
   displaySubscribeButton():boolean {
-    return ((this.routeAction==RouteAction.CREATE) ? false : !this.subscribed);
+    return ((this.routeAction==RouteAction.CREATE) ? false : !this.tradeMembership);
   }
 
 }
