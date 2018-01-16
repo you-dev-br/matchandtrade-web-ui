@@ -14,24 +14,17 @@ import { TradeMembership } from '../../classes/pojo/trade-membership';
 export class ItemHubComponent implements OnInit {
 
   routeAction: RouteAction;
-  tradeMembership: TradeMembership;
   tradeMembershipHref: string;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private tradeMembershipService: TradeMembershipService) {
-      this.tradeMembershipHref = this.route.snapshot.paramMap.get('tradeMembership');
+      this.tradeMembershipHref = this.route.snapshot.paramMap.get('tradeMembershipHref');
       this.routeAction = RouteAction[this.route.snapshot.paramMap.get('routeAction')];
     }
 
   ngOnInit() {
-    this.tradeMembershipService.get(this.tradeMembershipHref).then(v => {
-      this.tradeMembership = v;
-      console.log(v);
-      return v;
-    });
   }
-
 
 }

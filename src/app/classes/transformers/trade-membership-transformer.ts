@@ -10,6 +10,7 @@ export class TradeMembershipTransformer extends Transformer<TradeMembership> {
     public toPojo(json: any): TradeMembership {
         const result = new TradeMembership();
         result._href = this.extractHref(json._links);
+        result.tradeMembershipId = json.tradeMembershipId;
         result.tradeId = json.tradeId;
         result.userId = json.userId;
         result.type = TradeMembershipType[TradeMembershipType[json.type]];

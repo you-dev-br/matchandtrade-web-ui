@@ -5,6 +5,7 @@ import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, Activat
 import { ItemHubComponent } from './item-hub.component';
 import { TradeMembership, TradeMembershipType } from '../../classes/pojo/trade-membership';
 import { TradeMembershipService } from '../../services/trade-membership.service';
+import { ItemListComponent } from '../item-list/item-list.component';
 
 
 class TradeMembershipServiceMock {
@@ -22,7 +23,7 @@ const activatedRouteMock = {
   snapshot: {
       params: {routeAction: 'VIEW'},
       paramMap: {
-          get: function(v){
+          get: function(v) {
             return v;
           }
       }
@@ -35,7 +36,7 @@ describe('ItemHubComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ItemHubComponent ]
+      declarations: [ ItemHubComponent, ItemListComponent ]
     })
     .overrideComponent(ItemHubComponent, {
       set: {

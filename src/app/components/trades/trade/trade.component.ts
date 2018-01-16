@@ -162,7 +162,7 @@ export class TradeComponent implements OnInit {
   }
 
   onSubmitItems(): void {
-    this.router.navigate(['items', {routeAction: RouteAction.LIST, tradeMembership: this.tradeMembership._href}]);
+    this.router.navigate(['items', {routeAction: RouteAction.LIST, tradeMembershipHref: this.tradeMembership._href}]);
   }
 
   displaySubscribeButton():boolean {
