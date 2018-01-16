@@ -6,12 +6,12 @@ import { TradeComponent } from './components/trades/trade/trade.component';
 import { TradesComponent } from './components/trades/trades.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { LoggedInGuard } from './classes/permission/logged-in.guard';
-import { ItemListComponent } from './components/item-list/item-list.component';
+import { ItemHubComponent } from './components/item-hub/item-hub.component';
 
 const routes: Routes = [
   { path: 'authenticate/callback', component: AuthenticationCallbackComponent },
   { path: 'trades', component: TradesComponent },
-  { path: 'items', component: ItemListComponent },
+  { path: 'items', component: ItemHubComponent },
   { path: 'trades/:routeAction',
     component: TradeComponent,
     canActivate: [ LoggedInGuard ],

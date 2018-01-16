@@ -18,7 +18,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { HttpService } from './services/http.service';
 import { MessageComponent } from './components/message/message.component';
 import { UserService } from './services/user.service';
-import { ItemListComponent } from './components/item-list/item-list.component';
+import { ItemHubComponent } from './components/item-hub/item-hub.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,7 @@ import { ItemListComponent } from './components/item-list/item-list.component';
     AuthenticationCallbackComponent,
     LoadingComponent,
     MessageComponent,
-    ItemListComponent
+    ItemHubComponent
   ],
   imports: [
     AppRoutingModule,
