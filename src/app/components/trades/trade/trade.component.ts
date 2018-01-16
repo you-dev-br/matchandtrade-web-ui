@@ -10,7 +10,6 @@ import { Message, MessageType } from '../../../components/message/message';
 import { RouteAction } from '../../../classes/route/route-action';
 import { Trade, TradeState } from '../../../classes/pojo/trade';
 import { TradeService } from '../../../services/trade.service';
-import { TradesComponent } from '../trades.component';
 import { UserService } from '../../../services/user.service';
 import { TradeMembershipService } from '../../../services/trade-membership.service';
 import { TradeMembership, TradeMembershipType } from '../../../classes/pojo/trade-membership';
