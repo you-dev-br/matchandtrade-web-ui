@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 
-import { Pagination } from '../../../classes/search/pagination';
-import { TradeService } from '../../../services/trade.service';
-import { Trade } from '../../../classes/pojo/trade';
-import { RouteAction } from '../../../classes/route/route-action';
-import { Message } from '../../message/message';
+import { Message } from '../message/message';
+import { Pagination } from '../../classes/search/pagination';
+import { RouteAction } from '../../classes/route/route-action';
+import { TradeService } from '../../services/trade.service';
+import { Trade } from '../../classes/pojo/trade';
 
 @Component({
   selector: 'app-trade-list',

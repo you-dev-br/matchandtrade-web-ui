@@ -1,17 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { Router, RouterStateSnapshot } from '@angular/router';
+import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub } from '../../../test/router-stubs';
 
-import { AuthenticationService } from '../../../services/authentication.service';
-import { Pagination } from '../../../classes/search/pagination';
-import { PaginationComponent } from '../../pagination/pagination.component';
-import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub } from '../../../../test/router-stubs';
+import { AuthenticationService } from '../../services/authentication.service';
+import { LoadingComponent } from '../loading/loading.component';
+import { MessageComponent } from '../message/message.component';
+import { Pagination } from '../../classes/search/pagination';
+import { PaginationComponent } from '../pagination/pagination.component';
+import { SearchResult } from '../../classes/search/search-result';
+import { Trade } from '../../classes/pojo/trade';
 import { TradeListComponent } from './trade-list.component';
-import { Trade } from '../../../classes/pojo/trade';
-import { MessageComponent } from '../../message/message.component';
-import { LoadingComponent } from '../../loading/loading.component';
-import { TradeService } from '../../../services/trade.service';
-import { RouterStateSnapshot } from '@angular/router/src/router_state';
-import { SearchResult } from '../../../classes/search/search-result';
+import { TradeService } from '../../services/trade.service';
 
 class TradeServiceMock {
   search(){
