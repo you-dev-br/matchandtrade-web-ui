@@ -8,7 +8,6 @@ import { FormControl } from '@angular/forms/src/model';
 import { KeyValuePair } from '../../classes/pojo/key-value-pair';
 import { Message, MessageType } from '../../components/message/message';
 import { Page } from '../../classes/search/page';
-import { RouteAction } from '../../classes/route/route-action';
 import { SearchResult } from '../../classes/search/search-result';
 import { Trade, TradeState } from '../../classes/pojo/trade';
 import { TradeMembership, TradeMembershipType } from '../../classes/pojo/trade-membership';
@@ -171,7 +170,7 @@ export class TradeComponent implements OnInit {
   }
 
   onSubmitItems(): void {
-    this.router.navigate(['items', {routeAction: RouteAction.LIST, tradeMembershipHref: this.tradeMembership._href}]);
+    this.router.navigate(['item-list', {tradeMembershipHref: this.tradeMembership._href}]);
   }
 
   displaySubscribeButton():boolean {

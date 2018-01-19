@@ -10,7 +10,7 @@ import { TradeListComponent } from './components/trade-list/trade-list.component
 
 const routes: Routes = [
   { path: 'authenticate/callback', component: AuthenticationCallbackComponent },
-  { path: 'items', component: ItemListComponent },
+  { path: 'item-list', component: ItemListComponent },
   { path: 'trade-list', component: TradeListComponent },
   { path: 'trades',
     component: TradeComponent,
