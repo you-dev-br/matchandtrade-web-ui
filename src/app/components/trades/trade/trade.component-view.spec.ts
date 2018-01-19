@@ -44,12 +44,11 @@ class TradeMembershipServiceMock {
 }
 
 const activatedRouteMock = {
-    snapshot: {
-        params: {routeAction: 'VIEW'},
-        paramMap: {
-            get: function(){ return 'hrefMock'}
-        }
-    }
+  snapshot: {
+      paramMap: {
+          get: function(a: any){ return 'tradeMembershipHrefForVIEW'}
+      }
+  }
 }
 
 describe('TradeComponent-VIEW', () => {

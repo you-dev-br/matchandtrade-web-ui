@@ -23,16 +23,20 @@ export class TradeMembershipService {
 
     return new Promise<SearchResult<TradeMembership>>( (resolve, reject) => {
       this.httpService.get('/api/rest/v1/trade-memberships', true, page, params)
-        .then(v => resolve(this.transformer.toSearchResult(v, page)))
+        .then(v => 
+          resolve(this.transformer.toSearchResult(v, page))
+        )
         .catch(e => reject(e));
     });
   }
 
   get(href: string) {
     return new Promise<TradeMembership>((resolve, reject) => {
-      this.httpService.get(href).then(v => {
-        resolve(this.transformer.toPojo(v.json()));
-      });
+      this.httpService.get(href)
+      .then(v =>
+        resolve(this.transformer.toPojo(v.json()))
+      )
+      .catch(e => reject(e));
     });
   }
 
@@ -40,9 +44,9 @@ export class TradeMembershipService {
     return new Promise( (resolve, reject) => {
       this.httpService
         .post('/api/rest/v1/trade-memberships/', tradeMembership)
-        .then(v => {
-          resolve(this.transformer.toPojo(v.json()));
-        })
+        .then(v =>
+          resolve(this.transformer.toPojo(v.json()))
+        )
         .catch(e => reject(e));
     });
   }

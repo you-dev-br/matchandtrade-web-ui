@@ -17,9 +17,8 @@ import { TradeMembershipService } from '../../../services/trade-membership.servi
 
 const activatedRouteMock = {
     snapshot: {
-        params: {routeAction: 'CREATE'},
         paramMap: {
-            get: function(){ return 'hrefMock'}
+            get: function(a: any){ return undefined}
         }
     }
 }
@@ -38,7 +37,7 @@ describe('TradeComponent-CREATE', () => {
         RouterLinkStubDirective,
         RouterOutletStubComponent
       ],
-      providers: [RouterStub]
+      // providers: [RouterStub]
     })
     .overrideComponent(TradeComponent, {
       set: {

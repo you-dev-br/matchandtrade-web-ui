@@ -27,9 +27,9 @@ export class TradeMembershipNotFoundException {};
 export class TradeComponent implements OnInit {
   trade: Trade = new Trade();
   tradeMembership: TradeMembership;
+  tradeMembershipHref: string; // When defined, it also means it that it should render a VIEW page
   tradeFormGroup: FormGroup;
   nameFormControl: AbstractControl;
-  routeAction: string;
   stateFormControl: AbstractControl;
 
   loading: boolean = true;
@@ -45,34 +45,23 @@ export class TradeComponent implements OnInit {
       private userService: UserService) {
     
     this.buildForm(formBuilder);
-    this.routeAction = this.route.snapshot.params['routeAction'];
   }
 
   ngOnInit() {
-    if (this.routeAction == RouteAction.CREATE) {
+    this.tradeMembershipHref = this.route.snapshot.paramMap.get('href');
+    if (!this.tradeMembershipHref) {
       this.loading = false;
-    } else if (this.routeAction == RouteAction.VIEW) {
-      let tradeHref = this.route.snapshot.paramMap.get('href');
-      this.tradeService.get(tradeHref)
+    } else {
+      this.tradeService.get(this.tradeMembershipHref)
         .then(v => {
           // Load Trade data
           this.trade = v;
           return v;
         })
         .then(v => {
-          // Load current User
-          return this.userService.getAuthenticatedUser()
-            .then(user => {
-              return { tradeId: v.tradeId, userId: user.userId };
-            });
-        })
-        .then(v => {
-          // Search TradeMembership
-          return this.tradeMembershipService.search(new Page(1, 1), v.tradeId, v.userId)
-            .then(v => {
-              this.tradeMembership = v.results[0]; 
-              return v;
-            });
+          return this.fetchTradeMembership(v).then(membership => {
+            this.tradeMembership = membership;
+          });
         })
         .catch(e => {
           if (!(e instanceof Response && e.status == 404)) {
@@ -83,8 +72,6 @@ export class TradeComponent implements OnInit {
           this.populateForm(this.trade, this.tradeMembership);
           this.loading = false;
         });
-    } else {
-      this.message.setErrorItems("Unknown route action: " + this.routeAction);
     }
   }
 
@@ -101,7 +88,7 @@ export class TradeComponent implements OnInit {
   }
 
   isStateDisplayable() {
-    return (this.routeAction == RouteAction.VIEW || this.stateFormControl.value != null);
+    return (this.stateFormControl.value != null);
   }
 
   private populateForm(trade: Trade, tradeMembership: TradeMembership) {
@@ -153,11 +140,34 @@ export class TradeComponent implements OnInit {
         this.tradeFormGroup.markAsPristine();
         this.message.setInfoItems("Trade saved.");
         this.loading = false;
-      }).catch(e => {
+        return v;
+      })
+      .then(v => {
+        this.fetchTradeMembership(v).then(membership => {
+          this.tradeMembership = membership;
+        })
+      })
+      .catch(e => {
         this.message.setErrorItems(e);
         this.tradeFormGroup.markAsPristine();
         this.loading = false;
       });
+  }
+
+  fetchTradeMembership(trade: Trade): Promise<TradeMembership> {
+    return new Promise<TradeMembership>((resolve, reject) => {
+      this.userService.getAuthenticatedUser()
+        // Get current user
+        .then(user => {
+          return { tradeId: trade.tradeId, userId: user.userId };
+        })
+        .then(v => {
+          // Search TradeMembership
+          return this.tradeMembershipService.search(new Page(1, 1), v.tradeId, v.userId)
+            .then(v => { resolve(v.results[0]) });
+        })
+        .catch(e => reject(e));
+    });
   }
 
   onSubmitItems(): void {
@@ -165,7 +175,7 @@ export class TradeComponent implements OnInit {
   }
 
   displaySubscribeButton():boolean {
-    return ((this.routeAction==RouteAction.CREATE) ? false : !this.tradeMembership);
+    return this.tradeMembershipHref && !this.tradeMembership;
   }
 
   displaySubmitItemsButton():boolean {

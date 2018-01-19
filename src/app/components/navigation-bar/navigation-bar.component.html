@@ -9,7 +9,7 @@
     <a class="navbar-item">
       Matching and Trade
     </a>
-    <a class="navbar-item" routerLink="/trades" routerLinkActive="active" tabindex="1">
+    <a class="navbar-item" routerLink="/trade-list" routerLinkActive="active" tabindex="1">
       <span class="router-link">Trades</span>
     </a>
     <a class="navbar-item" routerLink="/sign-in" routerLinkActive="active" tabindex="1">
@@ -36,7 +36,7 @@
   </div>
 
   <div [ngClass]="burgerClass">
-    <div class="burger-item router-link" routerLink="/trades" routerLinkActive="active" (click)="toggleBurgerMenu()" tabindex="1">Trades</div>
+    <div class="burger-item router-link" routerLink="/trade-list" routerLinkActive="active" (click)="toggleBurgerMenu()" tabindex="1">Trades</div>
     <div class="burger-item router-link" routerLink="/sign-in" routerLinkActive="active" (click)="toggleBurgerMenu()" tabindex="1">Sign-in</div>
   </div>
 
