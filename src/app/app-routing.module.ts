@@ -5,7 +5,7 @@ import { AuthenticationCallbackComponent } from './components/authentication-cal
 import { LoggedInGuard } from './classes/permission/logged-in.guard';
 import { ItemListComponent } from './components/item-list/item-list.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
-import { TradeComponent } from './components/trades/trade/trade.component';
+import { TradeComponent } from './components/trade/trade.component';
 import { TradeListComponent } from './components/trade-list/trade-list.component';
 
 const routes: Routes = [

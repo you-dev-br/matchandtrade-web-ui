@@ -15,7 +15,7 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
 import { MessageComponent } from './components/message/message.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
-import { TradeComponent } from './components/trades/trade/trade.component';
+import { TradeComponent } from './components/trade/trade.component';
 import { TradeListComponent } from './components/trade-list/trade-list.component';
 import { UserService } from './services/user.service';
 

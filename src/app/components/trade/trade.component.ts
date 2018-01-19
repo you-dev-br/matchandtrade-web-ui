@@ -3,18 +3,18 @@ import { Response } from '@angular/http';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-
 import { FormControl } from '@angular/forms/src/model';
-import { KeyValuePair } from '../../../classes/pojo/key-value-pair';
-import { Message, MessageType } from '../../../components/message/message';
-import { RouteAction } from '../../../classes/route/route-action';
-import { Trade, TradeState } from '../../../classes/pojo/trade';
-import { TradeService } from '../../../services/trade.service';
-import { UserService } from '../../../services/user.service';
-import { TradeMembershipService } from '../../../services/trade-membership.service';
-import { TradeMembership, TradeMembershipType } from '../../../classes/pojo/trade-membership';
-import { Page } from '../../../classes/search/page';
-import { SearchResult } from '../../../classes/search/search-result';
+
+import { KeyValuePair } from '../../classes/pojo/key-value-pair';
+import { Message, MessageType } from '../../components/message/message';
+import { Page } from '../../classes/search/page';
+import { RouteAction } from '../../classes/route/route-action';
+import { SearchResult } from '../../classes/search/search-result';
+import { Trade, TradeState } from '../../classes/pojo/trade';
+import { TradeMembership, TradeMembershipType } from '../../classes/pojo/trade-membership';
+import { TradeMembershipService } from '../../services/trade-membership.service';
+import { TradeService } from '../../services/trade.service';
+import { UserService } from '../../services/user.service';
 
 export class TradeMembershipNotFoundException {};
 

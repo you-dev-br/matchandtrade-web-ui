@@ -2,21 +2,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Response, ResponseOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute } from '../../../../test/router-stubs';
+import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute } from '../../../test/router-stubs';
 
-import { AuthenticationService } from '../../../services/authentication.service';
-import { LoadingComponent } from '../../loading/loading.component';
-import { MessageComponent } from '../../message/message.component';
-import { PaginationComponent } from '../../pagination/pagination.component';
+import { AuthenticationService } from '../../services/authentication.service';
+import { LoadingComponent } from '../loading/loading.component';
+import { MessageComponent } from '../message/message.component';
+import { PaginationComponent } from '../pagination/pagination.component';
 import { RouterStateSnapshot } from '@angular/router';
-import { SearchResult } from '../../../classes/search/search-result';
+import { SearchResult } from '../../classes/search/search-result';
 import { TradeComponent } from './trade.component';
-import { Trade, TradeState } from '../../../classes/pojo/trade';
-import { TradeMembershipService } from '../../../services/trade-membership.service';
-import { TradeMembership, TradeMembershipType } from '../../../classes/pojo/trade-membership';
-import { TradeService } from '../../../services/trade.service';
-import { User } from '../../../classes/pojo/user';
-import { UserService } from '../../../services/user.service';
+import { Trade, TradeState } from '../../classes/pojo/trade';
+import { TradeMembershipService } from '../../services/trade-membership.service';
+import { TradeMembership, TradeMembershipType } from '../../classes/pojo/trade-membership';
+import { TradeService } from '../../services/trade.service';
+import { User } from '../../classes/pojo/user';
+import { UserService } from '../../services/user.service';
 
 class TradeServiceMock {
   get(href) {
