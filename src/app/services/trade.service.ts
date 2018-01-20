@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { AuthenticationService } from '../services/authentication.service';
 import { HttpService } from '../services/http.service';
 import { Pagination } from '../classes/search/pagination';
 import { Page } from '../classes/search/page';
@@ -15,7 +14,6 @@ export class TradeService {
   tradeTransformer = new TradeTransformer();
 
   constructor(
-    private authenticationService: AuthenticationService,
     private httpService: HttpService
   ) { }
 
