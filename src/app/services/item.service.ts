@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { AuthenticationService } from '../services/authentication.service';
 import { HttpService } from '../services/http.service';
 import { Item } from '../classes/pojo/item';
 import { ItemTransformer } from '../classes/transformers/item-transformer';
@@ -11,7 +10,6 @@ export class ItemService {
   itemTransformer: ItemTransformer = new ItemTransformer();
 
   constructor(
-    private authenticationService: AuthenticationService,
     private httpService: HttpService
   ) { }
 

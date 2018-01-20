@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { AuthenticationService } from '../services/authentication.service';
 import { HttpService } from '../services/http.service';
 import { Pagination } from '../classes/search/pagination';
 import { Page } from '../classes/search/page';
@@ -17,7 +16,6 @@ export class UserService {
   currentAuthenticatedUser: User;
 
   constructor(
-    private authenticationService: AuthenticationService, 
     private httpService: HttpService) { }
 
   getAuthenticatedUser(): Promise<User> {
