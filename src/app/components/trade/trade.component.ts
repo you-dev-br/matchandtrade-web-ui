@@ -23,15 +23,14 @@ export class TradeMembershipNotFoundException {};
   providers: [ TradeService, TradeMembershipService ]
 })
 export class TradeComponent implements OnInit {
-  trade: Trade = new Trade();
-  tradeMembership: TradeMembership;
-  tradeMembershipHref: string; // When defined, it also means it that it should render a VIEW page
-  tradeFormGroup: FormGroup;
-  nameFormControl: AbstractControl;
-  stateFormControl: AbstractControl;
-
   loading: boolean = true;
+  trade: Trade = new Trade();
+  tradeFormGroup: FormGroup;
+  tradeHref: string; // When truthy, it also means it that it should render a VIEW page
+  tradeMembership: TradeMembership;
+  nameFormControl: AbstractControl;
   message: Message = new Message();
+  stateFormControl: AbstractControl;
   states: KeyValuePair[] = [];
 
   constructor( 
@@ -46,11 +45,11 @@ export class TradeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tradeMembershipHref = this.route.snapshot.paramMap.get('href');
-    if (!this.tradeMembershipHref) {
+    this.tradeHref = this.route.snapshot.paramMap.get('tradeHref');
+    if (!this.tradeHref) {
       this.loading = false;
     } else {
-      this.tradeService.get(this.tradeMembershipHref)
+      this.tradeService.get(this.tradeHref)
         .then(v => {
           // Load Trade data
           this.trade = v;
@@ -173,7 +172,7 @@ export class TradeComponent implements OnInit {
   }
 
   displaySubscribeButton():boolean {
-    return this.tradeMembershipHref && !this.tradeMembership;
+    return this.tradeHref && !this.tradeMembership;
   }
 
   displaySubmitItemsButton():boolean {

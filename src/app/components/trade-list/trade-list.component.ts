@@ -29,7 +29,7 @@ export class TradeListComponent {
   }
 
   navigateToTrade(trade: Trade) {
-    this.router.navigate(['trades', {href: trade._href}]);
+    this.router.navigate(['trades', {tradeHref: trade._href}]);
   }
 
   nextPage() {
