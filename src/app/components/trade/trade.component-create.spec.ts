@@ -2,13 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute } from '../../../test/router-stubs';
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { RouterStateSnapshot } from '@angular/router';
-import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute } from '../../../test/router-stubs';
 import { TradeComponent } from './trade.component';
 import { Trade } from '../../classes/pojo/trade';
 import { TradeService } from '../../services/trade.service';
