@@ -2,13 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { Item } from '../../classes/pojo/item';
+import { ItemService } from '../../services/item.service';
 
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.scss']
+  styleUrls: ['./item.component.scss'],
+  providers: [ ItemService ]
 })
 export class ItemComponent implements OnInit {
+
+  item: Item = new Item();
 
   itemFormGroup: FormGroup;
   loading: boolean = false;
@@ -17,7 +22,8 @@ export class ItemComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    formBuilder: FormBuilder
+    formBuilder: FormBuilder,
+    private itemService: ItemService
   ) { 
     this.buildForm(formBuilder);
   }
@@ -40,7 +46,16 @@ export class ItemComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.loading = true;
+    this.loading = true;
+    this.item.name = this.nameFormControl.value;
+    this.itemService.save(this.item, this.tradeMembershipHref)
+      .then(v => {
+        console.log('onsubmit', v);
+      })
+      .catch(e => {
+        console.log('onsubmit.error', e);
+      });
+
     // this.trade.name = this.nameFormControl.value;
     // this.trade.state = this.stateFormControl.value;
     // this.tradeService.save(this.trade)

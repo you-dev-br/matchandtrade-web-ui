@@ -4,7 +4,6 @@ import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute } from '../../../test/router-stubs';
 
-import { AuthenticationService } from '../../services/authentication.service';
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
 import { PaginationComponent } from '../pagination/pagination.component';
@@ -36,8 +35,7 @@ describe('TradeComponent-CREATE', () => {
         TradeComponent,
         RouterLinkStubDirective,
         RouterOutletStubComponent
-      ],
-      // providers: [RouterStub]
+      ]
     })
     .overrideComponent(TradeComponent, {
       set: {
