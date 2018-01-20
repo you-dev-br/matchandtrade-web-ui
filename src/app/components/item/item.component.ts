@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 
 import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
+import { Message } from '../message/message';
 
 @Component({
   selector: 'app-item',
@@ -12,19 +13,18 @@ import { ItemService } from '../../services/item.service';
   providers: [ ItemService ]
 })
 export class ItemComponent implements OnInit {
-
   item: Item = new Item();
-
   itemFormGroup: FormGroup;
   loading: boolean = false;
   nameFormControl: AbstractControl;
+  message: Message = new Message();
   tradeMembershipHref: string;
 
   constructor(
     private route: ActivatedRoute,
     formBuilder: FormBuilder,
     private itemService: ItemService
-  ) { 
+  ) {
     this.buildForm(formBuilder);
   }
 
@@ -45,40 +45,26 @@ export class ItemComponent implements OnInit {
     }
   }
 
+  private populateForm(item: Item) {
+    this.nameFormControl.setValue(item.name);
+  }
+
   onSubmit() {
     this.loading = true;
     this.item.name = this.nameFormControl.value;
     this.itemService.save(this.item, this.tradeMembershipHref)
       .then(v => {
-        console.log('onsubmit', v);
+        this.item = v;
+        this.populateForm(this.item);
+        this.itemFormGroup.markAsPristine();
+        this.message.setInfoItems('Item saved.');
+        this.loading = false;
       })
       .catch(e => {
-        console.log('onsubmit.error', e);
+        this.message.setErrorItems(e);
+        this.itemFormGroup.markAsPristine();
+        this.loading = false;
       });
-
-    // this.trade.name = this.nameFormControl.value;
-    // this.trade.state = this.stateFormControl.value;
-    // this.tradeService.save(this.trade)
-    //   .then(v => {
-    //     this.trade = v;
-    //     this.populateForm(this.trade, null);
-    //     this.tradeFormGroup.enable();
-    //     this.tradeFormGroup.markAsPristine();
-    //     this.message.setInfoItems("Trade saved.");
-    //     this.loading = false;
-    //     return v;
-    //   })
-    //   .then(v => {
-    //     this.fetchTradeMembership(v).then(membership => {
-    //       this.tradeMembership = membership;
-    //     })
-    //   })
-    //   .catch(e => {
-    //     this.message.setErrorItems(e);
-    //     this.tradeFormGroup.markAsPristine();
-    //     this.loading = false;
-    //   });
   }
-
 
 }
