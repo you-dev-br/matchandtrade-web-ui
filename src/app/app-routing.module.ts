@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthenticationCallbackComponent } from './components/authentication-callback/authentication-callback.component'
 import { LoggedInGuard } from './classes/permission/logged-in.guard';
 import { ItemListComponent } from './components/item-list/item-list.component';
+import { ItemComponent } from './components/item/item.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { TradeComponent } from './components/trade/trade.component';
 import { TradeListComponent } from './components/trade-list/trade-list.component';
@@ -11,6 +12,7 @@ import { TradeListComponent } from './components/trade-list/trade-list.component
 const routes: Routes = [
   { path: 'authenticate/callback', component: AuthenticationCallbackComponent },
   { path: 'item-list', component: ItemListComponent },
+  { path: 'items', component: ItemComponent },  
   { path: 'trade-list', component: TradeListComponent },
   { path: 'trades',
     component: TradeComponent,

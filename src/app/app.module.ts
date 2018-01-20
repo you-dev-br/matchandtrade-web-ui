@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { AuthenticationCallbackComponent } from './components/authentication-callback/authentication-callback.component';
 import { AuthenticationService } from './services/authentication.service';
 import { ItemListComponent } from './components/item-list/item-list.component';
+import { ItemComponent } from './components/item/item.component';
 import { HttpService } from './services/http.service';
 import { LoadingComponent } from './components/loading/loading.component';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
@@ -22,15 +23,16 @@ import { UserService } from './services/user.service';
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationBarComponent,
-    SignInComponent,
-    TradeListComponent,
-    PaginationComponent,
-    TradeComponent,
     AuthenticationCallbackComponent,
+    ItemComponent,
+    ItemListComponent,
     LoadingComponent,
+    NavigationBarComponent,
     MessageComponent,
-    ItemListComponent
+    PaginationComponent,
+    SignInComponent,
+    TradeComponent,
+    TradeListComponent,
   ],
   imports: [
     AppRoutingModule,

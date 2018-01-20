@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { FormControl } from '@angular/forms/src/model';
 
 import { KeyValuePair } from '../../classes/pojo/key-value-pair';
 import { Message, MessageType } from '../../components/message/message';
