@@ -4,7 +4,7 @@ import { browser } from 'protractor';
 import { TradeUtil } from '../util/trade-util';
 import { SignInUtil } from '../util/sign-in-util';
 
-describe('matchandtrade-web-ui App', () => {
+describe('Trades', () => {
   let page: TradePage;
   let signInUtil: SignInUtil = new SignInUtil();
   
@@ -15,7 +15,7 @@ describe('matchandtrade-web-ui App', () => {
   it('should create new trade', () => {
     // Sign-in
     signInUtil.signIn();
-    let tradeName = 'Alpha';
+    const tradeName = 'Argentina';
 
     // Create Trade
     page.elementNavigationBarTrades().click();
@@ -31,7 +31,7 @@ describe('matchandtrade-web-ui App', () => {
     expect(page.elementTradeRow(tradeName)).toBeDefined();
     page.elementTradeRow(tradeName).click();
 
-    page.elementTradeName().sendKeys("Updated");
+    page.elementTradeName().sendKeys('Updated');
     expect(page.elementSaveTradeButton()).toBeDefined();
     page.elementSaveTradeButton().click();
     expect(page.elementSavedMessage().getText()).toBe('Trade saved.');
@@ -41,13 +41,13 @@ describe('matchandtrade-web-ui App', () => {
     expect(page.elementTradeRow(tradeName + 'Updated').getText()).toBe(tradeName + 'Updated');
   });
 
-  it('should update trade name', () => {
+  it('should update trade', () => {
     // Sign-in
     signInUtil.signIn();
-    let tradeName = 'Beta';
+    const tradeName = 'Brazil';
     
     // Create Trade
-    let tradeUtil = new TradeUtil(page);
+    const tradeUtil = new TradeUtil(page);
     tradeUtil.createTrade(tradeName);
 
     // Update Trade
@@ -56,6 +56,8 @@ describe('matchandtrade-web-ui App', () => {
     page.elementTradeRow(tradeName).click();
     page.elementTradeName().clear();
     page.elementTradeName().sendKeys(tradeName + 'Updated');
+    expect(page.elementTradeState('Matching Items')).toBeDefined();
+    page.elementTradeState('Matching Items').click();;
     expect(page.elementSaveTradeButton()).toBeDefined();
     page.elementSaveTradeButton().click();
     expect(page.elementSavedMessage().getText()).toBe('Trade saved.');
@@ -63,42 +65,26 @@ describe('matchandtrade-web-ui App', () => {
     expect(page.elementTradeRow(tradeName + 'Updated').getText()).toBe(tradeName + 'Updated');
   });
 
-  it('should update trade state', () => {
-    // Sign-in
-    signInUtil.signIn();
-    
-    // Create Trade
-    let tradeUtil = new TradeUtil(page);
-    tradeUtil.createTrade('TestingState');
-
-    // Update Trade
-    page.elementNavigationBarTrades().click();
-    expect(page.elementTradeRow('TestingState')).toBeDefined();
-    page.elementTradeRow('TestingState').click();
-    expect(page.elementTradeState('Matching Items')).toBeDefined();
-    page.elementTradeState('Matching Items').click();;
-    page.elementSaveTradeButton().click();
-    expect(page.elementSavedMessage().getText()).toBe('Trade saved.');
-  });
-
   it('should not update trade if has invalid data', () => {
     // Sign-in
     signInUtil.signIn();
     
     // Create Trade
-    let tradeUtil = new TradeUtil(page);
-    tradeUtil.createTrade('PreviousValidation');
-    tradeUtil.createTrade('CurrentValidation');
+    const tradeUtil = new TradeUtil(page);
+    const previousTradeName = 'Canada';
+    const currentTradeName = 'Denmark';
+    tradeUtil.createTrade(previousTradeName);
+    tradeUtil.createTrade(currentTradeName);
 
     // Update Trade
     page.elementNavigationBarTrades().click();
-    expect(page.elementTradeRow('CurrentValidation')).toBeDefined();
-    page.elementTradeRow('CurrentValidation').click();
+    expect(page.elementTradeRow(currentTradeName)).toBeDefined();
+    page.elementTradeRow(currentTradeName).click();
     page.elementTradeName().clear();
     page.elementTradeName().sendKeys('01');
     expect(page.elementSaveTradeButton().isEnabled()).toBeFalsy();
     page.elementTradeName().clear();
-    page.elementTradeName().sendKeys('PreviousValidation');
+    page.elementTradeName().sendKeys(previousTradeName);
     expect(page.elementSaveTradeButton().isEnabled()).toBeTruthy();
     page.elementSaveTradeButton().click();
     expect(page.elementMessageBody().getText()).toContain('must be unique');
@@ -109,16 +95,17 @@ describe('matchandtrade-web-ui App', () => {
     signInUtil.signIn();
     
     // Create Trade
-    let tradeUtil = new TradeUtil(page);
-    tradeUtil.createTrade('TradeSubscription');
+    const tradeUtil = new TradeUtil(page);
+    const tradeName = 'Egypt';
+    tradeUtil.createTrade(tradeName);
 
     // Sign-in with a nom-member
     signInUtil.signIn();
 
     // Subscribe to Trade
     page.elementNavigationBarTrades().click();
-    expect(page.elementTradeRow('TradeSubscription')).toBeDefined();
-    page.elementTradeRow('TradeSubscription').click();
+    expect(page.elementTradeRow(tradeName)).toBeDefined();
+    page.elementTradeRow(tradeName).click();
     page.elementSubscribeButton().click();
     expect(page.elementMessageBody().getText()).toContain('Subscribed.');
   });
@@ -128,13 +115,14 @@ describe('matchandtrade-web-ui App', () => {
     signInUtil.signIn();
     
     // Create Trade
-    let tradeUtil = new TradeUtil(page);
-    tradeUtil.createTrade('TradeSubscriptionAlreadyMember');
+    const tradeUtil = new TradeUtil(page);
+    const tradeName = 'Finland';
+    tradeUtil.createTrade(tradeName);
 
     // Should not be able to subscribe to Trade
     page.elementNavigationBarTrades().click();
-    expect(page.elementTradeRow('TradeSubscriptionAlreadyMember')).toBeDefined();
-    page.elementTradeRow('TradeSubscriptionAlreadyMember').click();
+    expect(page.elementTradeRow(tradeName)).toBeDefined();
+    page.elementTradeRow(tradeName).click();
     expect(page.elementSubscribeButton().isPresent()).toBeFalsy();
   });
 

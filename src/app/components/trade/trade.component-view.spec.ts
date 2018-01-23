@@ -87,7 +87,7 @@ describe('TradeComponent-VIEW', () => {
     fixture.detectChanges();
   });
 
-  it('should display trade data when viewing an existing trade', (()=> {
+  it('should display data when viewing an existing trade', (()=> {
     component.ngOnInit();
     fixture.whenStable().then(() => {
       fixture.detectChanges();

@@ -5,6 +5,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
 import { Message } from '../message/message';
+import { NotFoundException } from '../../classes/exceptions/service-exceptions';
 
 @Component({
   selector: 'app-item',
@@ -15,10 +16,11 @@ import { Message } from '../message/message';
 export class ItemComponent implements OnInit {
   item: Item = new Item();
   itemFormGroup: FormGroup;
-  loading: boolean = false;
+	itemHref: string;
+  loading: boolean = true;
   nameFormControl: AbstractControl;
   message: Message = new Message();
-  tradeMembershipHref: string;
+	tradeMembershipHref: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,9 +31,29 @@ export class ItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tradeMembershipHref = this.route.snapshot.paramMap.get('tradeMembershipHref');
-  }
+		this.tradeMembershipHref = this.route.snapshot.paramMap.get('tradeMembershipHref');
+		this.itemHref = this.route.snapshot.paramMap.get('itemHref');
+		
+		if (!this.itemHref) {
+			this.loading = false;
+		} else {
+			this.itemService.get(this.itemHref)
+				.then(v => {
+					this.item = v;
+				})
+				.catch(e => {
+					if (!(e instanceof NotFoundException)) {
+						this.message.setErrorItems(e);
+					}
+				})
+				.then(() => {
+					this.populateForm(this.item);
+					this.loading = false;
+				});
+		}
 
+	}
+	
   private buildForm(formBuilder: FormBuilder): void {
     this.itemFormGroup = formBuilder.group({
       'name': ['',Validators.compose([Validators.required, this.nameValidator])]

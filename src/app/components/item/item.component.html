@@ -3,7 +3,7 @@
 
 <form *ngIf="!loading" [formGroup]="itemFormGroup" (ngSubmit)="onSubmit()">
   <div class="field">
-    <label class="label" for="trade-name">Name</label>
+    <label class="label" for="item-name">Name</label>
     <div class="control">
       <input
         id="item-name"
@@ -20,7 +20,7 @@
   <div class="mt-control-panel is-pulled-right">
       <button
         class="button is-primary"
-        id="save-trade-button"
+        id="save-item-button"
         type="submit"
         [disabled]="(itemFormGroup.valid && itemFormGroup.dirty) ? null : 'disabled'">
         <i class="fa fa-floppy-o" aria-hidden="true"></i>Save
