@@ -1,6 +1,6 @@
 import { browser, by, element } from 'protractor';
 
-export class SignInUtil {
+export class SignInHelper {
 
   public signIn() {
     // browser.get('/sign-in');

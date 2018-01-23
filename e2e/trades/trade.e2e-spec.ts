@@ -2,11 +2,11 @@ import { TradePage } from './trade.po';
 import { browser } from 'protractor';
 
 import { TradeUtil } from '../util/trade-util';
-import { SignInUtil } from '../util/sign-in-util';
+import { SignInHelper } from '../sign-in-helper';
 
 describe('Trades', () => {
   let page: TradePage;
-  let signInUtil: SignInUtil = new SignInUtil();
+  let signInHelper: SignInHelper = new SignInHelper();
   
   beforeEach(() => {
     page = new TradePage();
@@ -14,7 +14,7 @@ describe('Trades', () => {
   
   it('should create new trade', () => {
     // Sign-in
-    signInUtil.signIn();
+    signInHelper.signIn();
     const tradeName = 'Argentina';
 
     // Create Trade
@@ -43,7 +43,7 @@ describe('Trades', () => {
 
   it('should update trade', () => {
     // Sign-in
-    signInUtil.signIn();
+    signInHelper.signIn();
     const tradeName = 'Brazil';
     
     // Create Trade
@@ -67,7 +67,7 @@ describe('Trades', () => {
 
   it('should not update trade if has invalid data', () => {
     // Sign-in
-    signInUtil.signIn();
+    signInHelper.signIn();
     
     // Create Trade
     const tradeUtil = new TradeUtil(page);
@@ -92,7 +92,7 @@ describe('Trades', () => {
 
   it('nom-members should subscribe to trade', () => {
     // Sign-in with trade owner
-    signInUtil.signIn();
+    signInHelper.signIn();
     
     // Create Trade
     const tradeUtil = new TradeUtil(page);
@@ -100,7 +100,7 @@ describe('Trades', () => {
     tradeUtil.createTrade(tradeName);
 
     // Sign-in with a nom-member
-    signInUtil.signIn();
+    signInHelper.signIn();
 
     // Subscribe to Trade
     page.elementNavigationBarTrades().click();
@@ -112,7 +112,7 @@ describe('Trades', () => {
 
   it('already members should not be able to subscribe to trade', () => {
     // Sign-in with trade owner
-    signInUtil.signIn();
+    signInHelper.signIn();
     
     // Create Trade
     const tradeUtil = new TradeUtil(page);
