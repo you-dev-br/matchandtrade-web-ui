@@ -1,15 +1,15 @@
 import { TradePage } from './trade.po';
 import { browser } from 'protractor';
 
-import { TradeUtil } from '../util/trade-util';
+import { TradeHelper } from './trade-helper';
 import { SignInHelper } from '../sign-in-helper';
 
 describe('Trades', () => {
-  let page: TradePage;
-  let signInHelper: SignInHelper = new SignInHelper();
+	const page: TradePage = new TradePage();
+	const signInHelper: SignInHelper = new SignInHelper();
+	const tradeHelper: TradeHelper = new TradeHelper(); 
   
   beforeEach(() => {
-    page = new TradePage();
   });
   
   it('should create new trade', () => {
@@ -47,8 +47,7 @@ describe('Trades', () => {
     const tradeName = 'Brazil';
     
     // Create Trade
-    const tradeUtil = new TradeUtil(page);
-    tradeUtil.createTrade(tradeName);
+    tradeHelper.createTrade(tradeName);
 
     // Update Trade
     page.elementNavigationBarTrades().click();
@@ -70,11 +69,10 @@ describe('Trades', () => {
     signInHelper.signIn();
     
     // Create Trade
-    const tradeUtil = new TradeUtil(page);
     const previousTradeName = 'Canada';
     const currentTradeName = 'Denmark';
-    tradeUtil.createTrade(previousTradeName);
-    tradeUtil.createTrade(currentTradeName);
+    tradeHelper.createTrade(previousTradeName);
+    tradeHelper.createTrade(currentTradeName);
 
     // Update Trade
     page.elementNavigationBarTrades().click();
@@ -95,9 +93,8 @@ describe('Trades', () => {
     signInHelper.signIn();
     
     // Create Trade
-    const tradeUtil = new TradeUtil(page);
     const tradeName = 'Egypt';
-    tradeUtil.createTrade(tradeName);
+    tradeHelper.createTrade(tradeName);
 
     // Sign-in with a nom-member
     signInHelper.signIn();
@@ -115,9 +112,8 @@ describe('Trades', () => {
     signInHelper.signIn();
     
     // Create Trade
-    const tradeUtil = new TradeUtil(page);
     const tradeName = 'Finland';
-    tradeUtil.createTrade(tradeName);
+    tradeHelper.createTrade(tradeName);
 
     // Should not be able to subscribe to Trade
     page.elementNavigationBarTrades().click();
