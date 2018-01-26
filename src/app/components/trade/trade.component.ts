@@ -80,7 +80,7 @@ export class TradeComponent implements OnInit {
     this.nameFormControl = this.tradeFormGroup.controls['name'];
     this.stateFormControl = this.tradeFormGroup.controls['state'];
     for(let v in TradeState) {
-      this.states.push(new KeyValuePair(v, TradeState[v].toString()));
+      this.states.push(new KeyValuePair(v, v));
     }
   }
 

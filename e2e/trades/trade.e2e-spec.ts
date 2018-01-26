@@ -55,8 +55,8 @@ describe('Trades', () => {
     page.elementTradeRow(tradeName).click();
     page.elementTradeName().clear();
     page.elementTradeName().sendKeys(tradeName + 'Updated');
-    expect(page.elementTradeState('Matching Items')).toBeDefined();
-    page.elementTradeState('Matching Items').click();;
+    expect(page.elementTradeState('MATCHING_ITEMS')).toBeDefined();
+    page.elementTradeState('MATCHING_ITEMS').click();;
     expect(page.elementSaveTradeButton()).toBeDefined();
     page.elementSaveTradeButton().click();
     expect(page.elementSavedMessage().getText()).toBe('Trade saved.');
