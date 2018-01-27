@@ -19,6 +19,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { TradeComponent } from './components/trade/trade.component';
 import { TradeListComponent } from './components/trade-list/trade-list.component';
 import { UserService } from './services/user.service';
+import { ItemMatcherComponent } from './components/item-matcher/item-matcher.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { UserService } from './services/user.service';
     SignInComponent,
     TradeComponent,
     TradeListComponent,
+    ItemMatcherComponent,
   ],
   imports: [
     AppRoutingModule,

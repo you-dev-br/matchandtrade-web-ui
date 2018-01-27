@@ -29,28 +29,36 @@
   </div>  
 
   <div class="mt-control-panel is-pulled-right">
-      <button 
-        class="button is-primary" 
-        id="items-button"
-        *ngIf="displayItemsButton()"
-        type="button"
-        (click)="onItems()">
-        <i class="fa fa-cube" aria-hidden="true"></i>Items
-      </button>
-      <button 
-        class="button is-primary" 
-        id="subscribe-to-trade-button"
-        *ngIf="displaySubscribeButton()"
-        type="button" 
-        (click)="onSubscribe()">
-        <i class="fa fa-id-card-o" aria-hidden="true"></i>Subscribe
-      </button>
-      <button
-        class="button is-primary"
-        id="save-trade-button"
-        type="submit"
-        [disabled]="(tradeFormGroup.valid && tradeFormGroup.dirty) ? null : 'disabled'">
-        <i class="fa fa-floppy-o" aria-hidden="true"></i>Save
-      </button>
+    <button 
+      class="button is-primary" 
+      id="match-items-button"
+      *ngIf="displayMatchItemsButton()"
+      type="button"
+      (click)="onMatchItems()">
+      <i class="fa fa-map-signs" aria-hidden="true"></i>Match Items
+    </button>
+    <button
+      class="button is-primary" 
+      id="items-button"
+      *ngIf="displayItemsButton()"
+      type="button"
+      (click)="onItems()">
+      <i class="fa fa-cube" aria-hidden="true"></i>Items
+    </button>
+    <button 
+      class="button is-primary" 
+      id="subscribe-to-trade-button"
+      *ngIf="displaySubscribeButton()"
+      type="button" 
+      (click)="onSubscribe()">
+      <i class="fa fa-id-card-o" aria-hidden="true"></i>Subscribe
+    </button>
+    <button
+      class="button is-primary"
+      id="save-trade-button"
+      type="submit"
+      [disabled]="(tradeFormGroup.valid && tradeFormGroup.dirty) ? null : 'disabled'">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>Save
+    </button>
   </div>
 </form>

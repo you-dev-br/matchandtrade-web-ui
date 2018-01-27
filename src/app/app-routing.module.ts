@@ -8,11 +8,13 @@ import { ItemComponent } from './components/item/item.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { TradeComponent } from './components/trade/trade.component';
 import { TradeListComponent } from './components/trade-list/trade-list.component';
+import { ItemMatcherComponent } from './components/item-matcher/item-matcher.component';
 
 const routes: Routes = [
   { path: 'authenticate/callback', component: AuthenticationCallbackComponent },
+  { path: 'item-matcher', component: ItemMatcherComponent },
   { path: 'item-list', component: ItemListComponent },
-  { path: 'items', component: ItemComponent },  
+  { path: 'items', component: ItemComponent },
   { path: 'trade-list', component: TradeListComponent },
   { path: 'trades',
     component: TradeComponent,

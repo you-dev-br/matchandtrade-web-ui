@@ -135,4 +135,21 @@ describe('TradeComponent-VIEW', () => {
     });
   }));
 
+  it('should display MatchItems button when viewing a trade with MATCHING_ITEMS state', (()=> {
+    let injectedTradeService = fixture.debugElement.injector.get(TradeService);
+  
+    spyOn(injectedTradeService, 'get').and.callFake((a) =>{
+      let trade = new Trade();
+      trade.state = TradeState.MATCHING_ITEMS;
+      return Promise.resolve(trade);
+    });
+  
+    component.ngOnInit();
+  
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('#match-items-button').disabled).toBeFalsy();
+    });
+  }));  
+
 });
