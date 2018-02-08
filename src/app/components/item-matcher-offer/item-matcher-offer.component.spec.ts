@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ItemMatcherComponent } from './item-matcher.component';
+import { ItemMatcherOfferComponent } from './item-matcher-offer.component';
 
-describe('ItemMatcherComponent', () => {
-  let component: ItemMatcherComponent;
-  let fixture: ComponentFixture<ItemMatcherComponent>;
+describe('ItemMatcherOfferComponent', () => {
+  let component: ItemMatcherOfferComponent;
+  let fixture: ComponentFixture<ItemMatcherOfferComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ItemMatcherComponent ]
+      declarations: [ ItemMatcherOfferComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ItemMatcherComponent);
+    fixture = TestBed.createComponent(ItemMatcherOfferComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

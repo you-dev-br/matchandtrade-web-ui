@@ -19,7 +19,8 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { TradeComponent } from './components/trade/trade.component';
 import { TradeListComponent } from './components/trade-list/trade-list.component';
 import { UserService } from './services/user.service';
-import { ItemMatcherComponent } from './components/item-matcher/item-matcher.component';
+import { ItemMatcherListComponent } from './components/item-matcher-list/item-matcher-list.component';
+import { ItemMatcherOfferComponent } from './components/item-matcher-offer/item-matcher-offer.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ItemMatcherComponent } from './components/item-matcher/item-matcher.com
     AuthenticationCallbackComponent,
     ItemComponent,
     ItemListComponent,
+    ItemMatcherListComponent,
     LoadingComponent,
     NavigationBarComponent,
     MessageComponent,
@@ -34,7 +36,7 @@ import { ItemMatcherComponent } from './components/item-matcher/item-matcher.com
     SignInComponent,
     TradeComponent,
     TradeListComponent,
-    ItemMatcherComponent,
+    ItemMatcherOfferComponent,
   ],
   imports: [
     AppRoutingModule,

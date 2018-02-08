@@ -81,21 +81,21 @@ export class HttpService {
    * Performs a request with `post` http method.
    * It is an authenticated request by default.
    */
-  public post(url: string, body?: any, authenticated?: boolean): Promise<Response>{
-    return this.putOrPost(HttpMethod.POST, url, body, authenticated);
+  public post(url: string, body?: any, authenticated?: boolean, page?: Page): Promise<Response>{
+    return this.putOrPost(HttpMethod.POST, url, body, authenticated, page);
   }
 
   /**
    * Performs a request with `put` http method.
    * It is an authenticated request by default.
    */
-  public put(url: string, body?: any, authenticated?: boolean): Promise<Response>{
-    return this.putOrPost(HttpMethod.PUT, url, body, authenticated);
+  public put(url: string, body?: any, authenticated?: boolean, page?: Page): Promise<Response>{
+    return this.putOrPost(HttpMethod.PUT, url, body, authenticated, page);
   }
 
-  private putOrPost(method: HttpMethod, url: string, body?: any, authenticated?: boolean): Promise<Response>{
+  private putOrPost(method: HttpMethod, url: string, body?: any, authenticated?: boolean, page?: Page): Promise<Response>{
     return new Promise<Response>((resolve, reject) => {
-      this.buildRequestOptions(undefined, authenticated).then(o => {
+      this.buildRequestOptions(page, authenticated).then(o => {
         if (method === HttpMethod.PUT) {
           this.http.put(url, body, o).subscribe(r => resolve(r), e => reject(e));
         } else if (method === HttpMethod.POST) {

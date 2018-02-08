@@ -172,7 +172,7 @@ export class TradeComponent implements OnInit {
   }
   
   onMatchItems(): void {
-    this.router.navigate(['item-matcher', {tradeMembershipHref: this.tradeMembership._href}]);
+    this.router.navigate(['item-matcher-list', {tradeMembershipHref: this.tradeMembership._href}]);
   }
 
   displaySubscribeButton(): boolean {

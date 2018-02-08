@@ -1,0 +1,34 @@
+<app-message [message]="message"></app-message>
+<app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
+
+<div class="box" *ngFor="let item of items">
+
+	<div class="item-thumbnail">
+		<figure class="image is-64x64 figure-thumbnail">
+			<img alt="No thumbnail available">
+		</figure>
+	</div>
+
+	<div class="item-details">
+		<div>
+				{{item.name}}
+		</div>
+		<div class="item-controls">
+			<button class="button is-primary is-small" type="button" (click)="navigateToOffer(item)">
+					<i class="fa fa-briefcase" aria-hidden="true"></i><span class="small-button-text">Offer</span>
+			</button>	
+			<button class="button is-primary is-small" type="button">
+				<i class="fa fa-info-circle" aria-hidden="true"></i><span class="small-button-text">Info</span>
+			</button>
+		</div>
+	</div>
+
+	<div class="clear-floating"></div>
+
+</div>
+
+<app-pagination
+	[loading]="loading"
+	[pagination]="pagination"
+	(onNextPage)="nextPage()"
+	(onPreviousPage)="previousPage()"></app-pagination>
