@@ -1,3 +1,41 @@
-<p>
-  item-matcher-offer works!
-</p>
+<div *ngIf="!loading">
+  <p class="wanted-item-paragraph">
+    Select the items you want to trade for:<br>
+    <i>{{wantedItem.name}}</i>
+  </p>
+
+  <div>
+    <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+      <caption>Offering Items</caption>
+      <tbody>
+        <tr *ngFor="let item of offers">
+          <td class="mt-table-row-clickable item-offer-checkbox-column">
+            <input class="item-offer-checkbox" type="checkbox" [checked]="item.checkedAttribute()" (change)="item.checked=!item.checked">
+          </td>
+          <td class="mt-table-row-clickable" (click)="item.checked=!item.checked">{{item.name}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <app-pagination
+      [loading]="loading"
+      [pagination]="pagination"
+      (onNextPage)="nextPage()"
+      (onPreviousPage)="previousPage()"></app-pagination>
+  </div>
+
+  <div class="mt-control-panel is-pulled-right">
+      <button
+        class="button is-primary"
+        (click)="navigateBack()">
+        <i class="fa fa-backward" aria-hidden="true"></i>Back
+      </button>
+      <button
+        class="button is-primary"
+        type="submit"
+        [disabled]="isSaveEnabled()"
+        (click)="save()">
+        <i class="fa fa-floppy-o" aria-hidden="true"></i>Save
+      </button>
+  </div>
+
+</div>

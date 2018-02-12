@@ -69,7 +69,7 @@ export class ItemMatcherListComponent implements OnInit {
   }
 
   navigateToOffer(item: Item) {
-    this.router.navigate(['item-matcher-offer', {itemHref: item._href}]);
+    this.router.navigate(['item-matcher-offer', {itemHref: item._href, tradeMembershipHref: this.tradeMembershipHref}]);
   }
 
 }
