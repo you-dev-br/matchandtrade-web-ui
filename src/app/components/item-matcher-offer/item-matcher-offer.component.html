@@ -1,7 +1,9 @@
+<app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
+<app-message [message]="message"></app-message>
+
 <div *ngIf="!loading">
   <p class="wanted-item-paragraph">
-    Select the items you want to trade for:<br>
-    <i>{{wantedItem.name}}</i>
+    Items you want to offer for: <i>{{wantedItem.name}}</i>
   </p>
 
   <div>

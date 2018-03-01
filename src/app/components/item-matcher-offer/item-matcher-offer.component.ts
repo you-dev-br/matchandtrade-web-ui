@@ -5,20 +5,23 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CheckableItem } from './checkable-item';
 import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
+import { Message } from '../message/message';
+import { Offer } from '../../classes/pojo/offer';
 import { Pagination } from '../../classes/search/pagination';
 import { TradeMembershipService } from '../../services/trade-membership.service';
-import { WantItemService } from '../../services/want-item.service';
+import { OfferService } from '../../services/offer.service';
 
 @Component({
   selector: 'app-item-matcher-offer',
   templateUrl: './item-matcher-offer.component.html',
   styleUrls: ['./item-matcher-offer.component.scss'],
-  providers: [ ItemService, TradeMembershipService, WantItemService ]
+  providers: [ ItemService, TradeMembershipService, OfferService ]
 })
 export class ItemMatcherOfferComponent implements OnInit {
 
   loading: boolean = true;
   offers: CheckableItem[] = new Array<CheckableItem>();
+  message: Message = new Message();
   pagination = new Pagination(1, 5, 0);
   tradeMembershipHref: string;
   wantedItem: Item;
@@ -28,9 +31,8 @@ export class ItemMatcherOfferComponent implements OnInit {
     private router: Router,
     private itemService: ItemService,
     private tradeMembershipService: TradeMembershipService,
-    private wantItemService: WantItemService
-  ) {
-  }
+    private offerService: OfferService
+  ) { }
 
   ngOnInit() {
     const wantedItemHref = this.route.snapshot.paramMap.get("itemHref");
@@ -40,7 +42,7 @@ export class ItemMatcherOfferComponent implements OnInit {
       this.wantedItem = v;
     })
     .then(() => {
-      this.itemService.search(this.pagination.page, this.tradeMembershipHref).then(v => {
+      return this.itemService.search(this.pagination.page, this.tradeMembershipHref).then(v => {
         this.offers = this.transformFromItemsToCheckableItems(v.results);
         this.pagination = v.pagination;
       });
@@ -48,7 +50,6 @@ export class ItemMatcherOfferComponent implements OnInit {
     .then(() => {
       this.loading = false;
     });
-
   }
 
   nextPage() {
@@ -68,11 +69,19 @@ export class ItemMatcherOfferComponent implements OnInit {
   }
 
   save() {
-    for(let i=0; this.offers.length; i++) {
+    this.loading = true;
+    const promiseOffers = new Array<Promise<Offer>>();
+    for(let i=0; i<this.offers.length; i++) {
       if (this.offers[i].checked) {
-        this.wantItemService.want(this.wantedItem, this.offers[i], i+1).then(v => console.log(v));
+        const promise = this.offerService.offer(this.tradeMembershipHref, this.offers[i], this.wantedItem);
+        promiseOffers.push(promise);
       }
     }
+    Promise.all(promiseOffers).then(v => {
+      this.message.setInfoItems('Offers saved.');
+    })
+    .catch(e => this.message.setErrorItems(e))
+    .then(() => this.loading = false);
   }
 
   isSaveEnabled(): boolean {
