@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 
 import { Item } from '../classes/pojo/item';
-import { Offer } from '../classes/pojo/offer';
+import { OfferTransformer } from '../classes/transformers/offer-transformer';
 import { HttpService } from '../services/http.service';
+import { Offer } from '../classes/pojo/offer';
+import { Page } from '../classes/search/page';
+import { SearchResult } from '../classes/search/search-result';
+import { ServiceExceptionFactory, NotFoundException } from '../classes/exceptions/service-exceptions';
 
 @Injectable()
 export class OfferService {
+
+  offerTransformer = new OfferTransformer();
 
   constructor(
     private httpService: HttpService
@@ -22,6 +28,15 @@ export class OfferService {
           })
 					.catch(e => reject(e));
       });
+  }
+
+  search(page: Page, tradeMembershipHref: string, wantedItemId: number): Promise<SearchResult<Offer>> {
+    return new Promise<SearchResult<Offer>>((resolve, reject) => {
+      this.httpService
+        .get(tradeMembershipHref + '/offers?wantedItemId=' + wantedItemId, true, page)
+        .then(v => resolve(this.offerTransformer.toSearchResult(v, page)))
+        .catch(e => reject( ServiceExceptionFactory.makeException(e) ));
+    });
   }
 
 }

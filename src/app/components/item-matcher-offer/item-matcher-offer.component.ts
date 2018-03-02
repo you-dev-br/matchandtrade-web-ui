@@ -10,6 +10,8 @@ import { Offer } from '../../classes/pojo/offer';
 import { Pagination } from '../../classes/search/pagination';
 import { TradeMembershipService } from '../../services/trade-membership.service';
 import { OfferService } from '../../services/offer.service';
+import { Page } from '../../classes/search/page';
+import { NotFoundException } from '../../classes/exceptions/service-exceptions';
 
 @Component({
   selector: 'app-item-matcher-offer',
@@ -35,17 +37,36 @@ export class ItemMatcherOfferComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const wantedItemHref = this.route.snapshot.paramMap.get("itemHref");
     this.tradeMembershipHref = this.route.snapshot.paramMap.get("tradeMembershipHref");
-
+    
+    const wantedItemHref = this.route.snapshot.paramMap.get("itemHref");
     this.itemService.get(wantedItemHref).then(v => {
       this.wantedItem = v;
     })
     .then(() => {
-      return this.itemService.search(this.pagination.page, this.tradeMembershipHref).then(v => {
-        this.offers = this.transformFromItemsToCheckableItems(v.results);
-        this.pagination = v.pagination;
+      return this.itemService.search(this.pagination.page, this.tradeMembershipHref);
+    })
+    .then(v => {
+      this.offers = this.transformFromItemsToCheckableItems(v.results);
+      this.pagination = v.pagination;
+      return this.offers;
+    })
+    .then(v => {
+      return this.offerService.search(new Page(1, 10), this.tradeMembershipHref, this.wantedItem.itemId);
+    })
+    .then(v => {
+      v.results.forEach(offer => {
+        this.offers.forEach(checkableItem => {
+          if (checkableItem.itemId == offer.offeredItemId) {
+            checkableItem.checked = true;
+          }
+        });
       });
+    })
+    .catch((e) => {
+      if (!(e instanceof NotFoundException)) {
+        this.message.setErrorItems(e);
+      }
     })
     .then(() => {
       this.loading = false;
