@@ -21,9 +21,11 @@ import { NotFoundException } from '../../classes/exceptions/service-exceptions';
 })
 export class ItemMatcherOfferComponent implements OnInit {
 
+  dirty: boolean = false;
   loading: boolean = true;
-  offers: CheckableItem[] = new Array<CheckableItem>();
   message: Message = new Message();
+  offerableItems: CheckableItem[] = new Array<CheckableItem>();
+  offers: Offer[] = new Array<Offer>();
   pagination = new Pagination(1, 5, 0);
   tradeMembershipHref: string;
   wantedItem: Item;
@@ -38,8 +40,8 @@ export class ItemMatcherOfferComponent implements OnInit {
 
   ngOnInit() {
     this.tradeMembershipHref = this.route.snapshot.paramMap.get("tradeMembershipHref");
-    
     const wantedItemHref = this.route.snapshot.paramMap.get("itemHref");
+    
     this.itemService.get(wantedItemHref).then(v => {
       this.wantedItem = v;
     })
@@ -47,16 +49,19 @@ export class ItemMatcherOfferComponent implements OnInit {
       return this.itemService.search(this.pagination.page, this.tradeMembershipHref);
     })
     .then(v => {
-      this.offers = this.transformFromItemsToCheckableItems(v.results);
+      this.offerableItems = this.transformFromItemsToCheckableItems(v.results);
       this.pagination = v.pagination;
-      return this.offers;
+      this.offerableItems;
     })
-    .then(v => {
-      return this.offerService.search(new Page(1, 10), this.tradeMembershipHref, this.wantedItem.itemId);
-    })
-    .then(v => {
+    .then(() => this.initCheckableItems())
+  }
+
+  private initCheckableItems(): void {
+    this.offers = new Array<Offer>();
+    this.offerService.search(new Page(1, 10), this.tradeMembershipHref, this.wantedItem.itemId).then(v => {
+      this.offers = v.results;
       v.results.forEach(offer => {
-        this.offers.forEach(checkableItem => {
+        this.offerableItems.forEach(checkableItem => {
           if (checkableItem.itemId == offer.offeredItemId) {
             checkableItem.checked = true;
           }
@@ -69,6 +74,7 @@ export class ItemMatcherOfferComponent implements OnInit {
       }
     })
     .then(() => {
+      this.dirty = false;
       this.loading = false;
     });
   }
@@ -91,26 +97,36 @@ export class ItemMatcherOfferComponent implements OnInit {
 
   save() {
     this.loading = true;
-    const promiseOffers = new Array<Promise<Offer>>();
-    for(let i=0; i<this.offers.length; i++) {
-      if (this.offers[i].checked) {
-        const promise = this.offerService.offer(this.tradeMembershipHref, this.offers[i], this.wantedItem);
-        promiseOffers.push(promise);
-      }
-    }
-    Promise.all(promiseOffers).then(v => {
+    const promises = new Array<Promise<any>>();
+
+    this.offers.forEach(v => {
+      const promise = this.offerService.delete(this.tradeMembershipHref, v.offerId);
+      promises.push(promise);
+    });
+
+    this.offerableItems.filter(v => v.checked).forEach(v => {
+      const promise = this.offerService.offer(this.tradeMembershipHref, v, this.wantedItem);
+      promises.push(promise);
+    });
+
+    Promise.all(promises).then(v => {
       this.message.setInfoItems('Offers saved.');
     })
     .catch(e => this.message.setErrorItems(e))
-    .then(() => this.loading = false);
+    .then(() => this.initCheckableItems());
   }
 
-  isSaveEnabled(): boolean {
-    return null;
+  isSaveEnabled(): any {
+    return (this.dirty ? null : 'disabled');
   }
 
   navigateBack() {
     this.router.navigate(['/item-matcher-list', {tradeMembershipHref: this.tradeMembershipHref}]);
+  }
+
+  toogleCheckableItem(checkableItem: CheckableItem) {
+    checkableItem.checked=!checkableItem.checked;
+    this.dirty = true;
   }
 
 }

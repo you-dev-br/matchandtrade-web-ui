@@ -39,4 +39,13 @@ export class OfferService {
     });
   }
 
+  delete(tradeMembershipHref: string, offerId: number): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.httpService
+        .delete(tradeMembershipHref + '/offers/' + offerId)
+        .then(v => resolve(true))
+        .catch(e => reject(ServiceExceptionFactory.makeException(e)));
+    });
+  }
+
 }

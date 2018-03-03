@@ -10,11 +10,11 @@
     <table class="table is-bordered is-striped is-hoverable is-fullwidth">
       <caption>Offering Items</caption>
       <tbody>
-        <tr *ngFor="let item of offers">
+        <tr *ngFor="let offerableItem of offerableItems">
           <td class="mt-table-row-clickable item-offer-checkbox-column">
-            <input class="item-offer-checkbox" type="checkbox" [checked]="item.checkedAttribute()" (change)="item.checked=!item.checked">
+            <input class="item-offer-checkbox" type="checkbox" [checked]="offerableItem.checkedAttribute()" (change)="toogleCheckableItem(offerableItems)">
           </td>
-          <td class="mt-table-row-clickable" (click)="item.checked=!item.checked">{{item.name}}</td>
+          <td class="mt-table-row-clickable" (click)="toogleCheckableItem(offerableItem)">{{offerableItem.name}}</td>
         </tr>
       </tbody>
     </table>

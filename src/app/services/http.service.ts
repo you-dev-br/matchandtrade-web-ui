@@ -66,6 +66,18 @@ export class HttpService {
   }
 
   /**
+   * Performs a request with `delete` http method.
+   * It is an authenticated request by default.
+   */
+  public delete(url: string, authenticated?: boolean, params?: Array<KeyValuePair>): Promise<Response>{
+    return new Promise<Response>((resolve, reject) => {
+      this.buildRequestOptions(null, authenticated, params).then(o => {
+        this.http.delete(url, o).subscribe(r => resolve(r), e => reject(e));
+      });
+    });
+  }
+  
+  /**
    * Performs a request with `get` http method.
    * It is an authenticated request by default.
    */
