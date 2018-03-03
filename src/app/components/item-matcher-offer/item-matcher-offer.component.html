@@ -12,9 +12,9 @@
       <tbody>
         <tr *ngFor="let offerableItem of offerableItems">
           <td class="mt-table-row-clickable item-offer-checkbox-column">
-            <input class="item-offer-checkbox" type="checkbox" [checked]="offerableItem.checkedAttribute()" (change)="toogleCheckableItem(offerableItems)">
+            <input class="item-offer-checkbox" type="checkbox" [checked]="offerableItem.checked()" (change)="toogleOfferableItem(offerableItem)">
           </td>
-          <td class="mt-table-row-clickable" (click)="toogleCheckableItem(offerableItem)">{{offerableItem.name}}</td>
+          <td class="mt-table-row-clickable" (click)="toogleOfferableItem(offerableItem)">{{offerableItem.name}}</td>
         </tr>
       </tbody>
     </table>
