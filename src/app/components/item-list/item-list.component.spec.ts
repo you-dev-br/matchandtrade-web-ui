@@ -33,7 +33,7 @@ describe('ItemListComponent', () => {
 				MessageComponent,
 				LoadingComponent,
 				ItemListComponent,
-        PaginationComponent,				
+        PaginationComponent
 			]
 		})
 			.overrideComponent(ItemListComponent, {

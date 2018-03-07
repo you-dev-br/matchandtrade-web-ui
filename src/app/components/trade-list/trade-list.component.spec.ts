@@ -31,14 +31,16 @@ describe('TradeListComponent', () => {
         PaginationComponent,
         RouterLinkStubDirective,
         RouterOutletStubComponent ],
-        }).overrideComponent(TradeListComponent, {
-          set: {
-            providers:[
-              {provide: Router, useClass: RouterStub },
-              {provide: TradeService, useClass: TradeServiceMock}]
-          }
-        })
-        .compileComponents();
+      })
+      .overrideComponent(TradeListComponent, {
+        set: {
+          providers:[
+            { provide: Router, useClass: RouterStub },
+            { provide: TradeService, useClass: TradeServiceMock }
+          ]
+         }
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

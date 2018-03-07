@@ -17,7 +17,7 @@ import { NotFoundException } from '../../classes/exceptions/service-exceptions';
   selector: 'app-item-matcher-offer',
   templateUrl: './item-matcher-offer.component.html',
   styleUrls: ['./item-matcher-offer.component.scss'],
-  providers: [ ItemService, TradeMembershipService, OfferService ]
+  providers: [ ItemService, OfferService ]
 })
 export class ItemMatcherOfferComponent implements OnInit {
 
@@ -34,8 +34,7 @@ export class ItemMatcherOfferComponent implements OnInit {
     private itemService: ItemService,
     private offerService: OfferService,
     private route: ActivatedRoute,
-    private router: Router,
-    private tradeMembershipService: TradeMembershipService
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -54,6 +53,10 @@ export class ItemMatcherOfferComponent implements OnInit {
       this.pagination = v.pagination;
     })
     .then(() => this.initCheckableItems())
+    .catch((e) => {
+      this.message.setErrorItems(e);
+      this.loading = false;
+    })
   }
 
   private initCheckableItems(): void {

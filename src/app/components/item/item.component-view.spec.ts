@@ -35,7 +35,7 @@ class ItemServiceMock {
   };
 }
 
-describe('ItemComponent-CREATE', () => {
+describe('ItemComponent-VIEW', () => {
   let component: ItemComponent;
   let fixture: ComponentFixture<ItemComponent>;
 
