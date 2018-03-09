@@ -19,16 +19,15 @@ export class ItemListComponent implements OnInit {
   items: Item[];
   loading: boolean = true;
   message: Message = new Message();
-  pagination: Pagination;
+  pagination: Pagination = new Pagination(1, 10, 0);
 
   @Input() tradeMembershipHref: string;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private itemService: ItemService) {
-      this.pagination = new Pagination(1, 10, 0);
-    }
+    private itemService: ItemService
+  ) { }
 
   ngOnInit() {
     this.tradeMembershipHref = this.route.snapshot.paramMap.get('tradeMembershipHref');

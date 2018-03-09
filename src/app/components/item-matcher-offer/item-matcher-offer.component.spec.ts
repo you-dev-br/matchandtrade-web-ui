@@ -1,18 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute, Router } from '../../../test/router-stubs';
 
+import { Item } from '../../classes/pojo/item';
+import { ItemService } from '../../services/item.service';
+import { ItemServiceMock } from '../../../test/item-service-mock';
 import { ItemMatcherOfferComponent } from './item-matcher-offer.component';
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
-import { OfferService } from '../../services/offer.service';
-import { TradeMembershipService } from '../../services/trade-membership.service';
-import { PaginationComponent } from '../pagination/pagination.component';
-import { ItemService } from '../../services/item.service';
-import { Item } from '../../classes/pojo/item';
-import { Page } from '../../classes/search/page';
-import { SearchResult } from '../../classes/search/search-result';
-import { Pagination } from '../../classes/search/pagination';
 import { Offer } from '../../classes/pojo/offer';
+import { OfferService } from '../../services/offer.service';
+import { Page } from '../../classes/search/page';
+import { Pagination } from '../../classes/search/pagination';
+import { PaginationComponent } from '../pagination/pagination.component';
+import { SearchResult } from '../../classes/search/search-result';
+import { TradeMembershipService } from '../../services/trade-membership.service';
 
 describe('ItemMatcherOfferComponent', () => {
   let component: ItemMatcherOfferComponent;
@@ -42,46 +43,6 @@ describe('ItemMatcherOfferComponent', () => {
         resolve(result);
       });
     }
-  }
-
-  // TODO move to a common place as it is also used in item.component-view.spec.ts
-  class ItemServiceMock {
-    get(href) {
-      return new Promise<Item>((resolve, reject) => {
-        const item = new Item();
-        item.name = 'ItemServiceMock.GET.name';
-        item._href = 'ItemServiceMock.GET.href';
-        resolve(item);
-      });
-    };
-
-    search(page: Page, tradeMembershipHref: string): Promise<SearchResult<Item>> {
-      return new Promise<SearchResult<Item>>((resolve, reject) => {
-        const item1 = new Item();
-        item1.name = 'ItemServiceMock.SEARCH.name1';
-        item1.itemId = 1;
-        item1._href = 'ItemServiceMock.SEARCH.href1';
-        const item2 = new Item();
-        item2.name = 'ItemServiceMock.SEARCH.name2';
-        item2.itemId = 2;
-        item2._href = 'ItemServiceMock.SEARCH.href2';
-        
-        const results = new Array<Item>();
-        results.push(item1);
-        results.push(item2);
-        const searchResult = new SearchResult<Item>(results, new Pagination(1, 10, 2));
-        resolve(searchResult);
-      });
-    }
-    
-    save(item: Item, tradeMembershipHref?: string): Promise<Item> {
-      return new Promise<Item>((resolve, reject) => {
-        let result: Item = Object.assign({}, item);
-        result.itemId = 1;
-        result._href = 'itemHrefMocked';
-        resolve(result);
-      });
-    };
   }
 
   beforeEach(async(() => {
