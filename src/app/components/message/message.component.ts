@@ -11,7 +11,7 @@ export class MessageComponent {
 
   @Input() message: Message;
 
-  hasMessages():boolean {
+  hasMessages(): boolean {
     if (this.message && this.message.items && this.message.items.length > 0) {
       return true;
     }

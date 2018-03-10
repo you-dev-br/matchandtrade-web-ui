@@ -55,7 +55,7 @@ describe('ItemListComponent', () => {
 		fixture.whenStable().then(() => {
 			fixture.detectChanges();
 			expect(fixture.nativeElement.querySelectorAll("td").length).toBe(2);
-			expect(fixture.nativeElement.querySelector(".mt-control-panel button")).toBeDefined();			
+			expect(fixture.nativeElement.querySelector(".mt-control-panel button")).toBeTruthy();			
 		});
 		expect(component).toBeTruthy();
 	});
@@ -69,7 +69,7 @@ describe('ItemListComponent', () => {
 		component.ngOnInit();
 		fixture.whenStable().then(() => {
 			fixture.detectChanges();
-			expect(fixture.nativeElement.querySelector('.items-not-found')).toBeDefined();
+			expect(fixture.nativeElement.querySelector('.items-not-found')).toBeTruthy();
 		});
 	});	
 });
