@@ -1,3 +1,49 @@
-<p>
-  item-matcher-offer works!
+<app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
+<app-message [message]="message"></app-message>
+
+<div *ngIf="!loading">
+<p class="wanted-item-paragraph">
+  Items you want to offer for: <i>{{wantedItem.name}}</i>
 </p>
+
+  <div>
+    <table id="offering_items_table" class="table is-bordered is-striped is-hoverable is-fullwidth">
+      <caption>Offering Items</caption>
+      <tbody>
+        <tr *ngFor="let offerableItem of offerableItems">
+          <td class="mt-table-row-clickable item-offer-checkbox-column">
+            <input
+              [id]="'offerableItemId_'+offerableItem.itemId"
+              class="item-offer-checkbox"
+              type="checkbox"
+              [checked]="offerableItem.checked()"
+              (change)="toogleOfferableItem(offerableItem)">
+          </td>
+          <td class="mt-table-row-clickable item-offer-name" (click)="toogleOfferableItem(offerableItem)">{{offerableItem.name}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <app-pagination
+      [loading]="loading"
+      [pagination]="pagination"
+      (onNextPage)="nextPage()"
+      (onPreviousPage)="previousPage()"></app-pagination>
+  </div>
+
+  <div class="mt-control-panel is-pulled-right">
+      <button
+        class="button is-primary"
+        (click)="navigateBack()">
+        <i class="fa fa-backward" aria-hidden="true"></i>Back
+      </button>
+      <button
+        id="save-offer"
+        class="button is-primary"
+        type="submit"
+        [disabled]="isSaveEnabled()"
+        (click)="save()">
+        <i class="fa fa-floppy-o" aria-hidden="true"></i>Save
+      </button>
+  </div>
+
+</div>

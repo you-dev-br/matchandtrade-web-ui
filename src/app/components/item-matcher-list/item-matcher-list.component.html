@@ -1,6 +1,8 @@
 <app-message [message]="message"></app-message>
 <app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
 
+<div *ngIf="!loading">
+
 <div class="box" *ngFor="let item of items">
 
 	<div class="item-thumbnail">
@@ -32,3 +34,5 @@
 	[pagination]="pagination"
 	(onNextPage)="nextPage()"
 	(onPreviousPage)="previousPage()"></app-pagination>
+
+</div>

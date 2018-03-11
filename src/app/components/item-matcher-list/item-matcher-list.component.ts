@@ -39,29 +39,29 @@ export class ItemMatcherListComponent implements OnInit {
         return tradeMembership;
       })
       .then(tradeMembership => {
-        this.search(tradeMembership);
+        return this.search(tradeMembership);
 			})
-      .catch(e => {
-        this.message.setErrorItems(e);
-      })
-      .then(() => {
-        this.loading = false;
-      });
+      .catch(e => this.message.setErrorItems(e))
+      .then(() => this.loading = false);
   }
   
   nextPage() {
       this.pagination.page.number++;
       this.loading = true;
-      this.search(this.tradeMembership).then(() => this.loading = false);
+      this.search(this.tradeMembership)
+        .then(() => this.loading = false)
+        .catch((e) => this.message.setErrorItems(e));
   }
 
   previousPage() {
       this.pagination.page.number--;
       this.loading = true;
-      this.search(this.tradeMembership).then(() => this.loading = false);
+      this.search(this.tradeMembership)
+        .then(() => this.loading = false)
+        .catch((e) => this.message.setErrorItems(e));
   }
 
-  search(tradeMembership: TradeMembership) {
+  search(tradeMembership: TradeMembership): Promise<any> {
     return this.searchService.searchItemsToMatch(tradeMembership, this.pagination.page).then(searchResults => {
       this.items = searchResults.results;
       this.pagination = searchResults.pagination;
@@ -69,7 +69,7 @@ export class ItemMatcherListComponent implements OnInit {
   }
 
   navigateToOffer(item: Item) {
-    this.router.navigate(['item-matcher-offer', {itemHref: item._href}]);
+    this.router.navigate(['item-matcher-offer', {itemHref: item._href, tradeMembershipHref: this.tradeMembershipHref}]);
   }
 
 }

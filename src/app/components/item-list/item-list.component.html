@@ -28,7 +28,7 @@
 	</div>
 </div>
 
-<div class="mt-control-panel is-pulled-right">
+<div *ngIf="!loading" class="mt-control-panel is-pulled-right">
 		<button
 			class="button is-primary"
 			(click)="createItem()"
