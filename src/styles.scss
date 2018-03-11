@@ -9,6 +9,16 @@ caption {
   font-size: small;
 }
 
+.is-primary:focus {
+	outline: 2px solid $primary-4;
+	outline-offset: 2px;
+}
+
+.navbar-item:focus {
+	outline: 1px solid $primary-7;
+	outline-offset: 0px;
+}
+
 .mt-table-row-clickable:hover {
   background-color: $primary-1;
   cursor: pointer;
@@ -18,6 +28,10 @@ caption {
   background-color: $primary-4;
   border-color: $primary-6;
   cursor: progress;
+}
+
+.mt-table-row-clickable:focus {
+	outline: none;
 }
 
 .mt-control-panel {
