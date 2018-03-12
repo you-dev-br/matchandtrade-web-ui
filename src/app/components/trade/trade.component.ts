@@ -198,10 +198,10 @@ export class TradeComponent implements OnInit {
   }
 
   displayItemsButton(): boolean {
-    return (this.tradeMembership ? true : false);
+    return (this.trade.state == TradeState.SUBMITTING_ITEMS ? true : false);
 	}
 	
 	displayDownloadResultsButton(): boolean {
-		return true;
+    return (this.trade.state == TradeState.RESULTS_GENERATED ? true : false);
 	}
 }
