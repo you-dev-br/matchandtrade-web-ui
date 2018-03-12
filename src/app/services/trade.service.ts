@@ -24,8 +24,19 @@ export class TradeService {
         .then(v => resolve(this.tradeTransformer.toPojo(v.json())))
         .catch(e => reject(e));
     });
-  }  
+  }
 
+	getResults(href: string): Promise<Blob> {
+		return new Promise<Blob>((resolve, reject) => {
+			this.httpService
+				.get(href + '/results')
+				.then(v => {
+					resolve(new Blob([v.arrayBuffer()], { type: 'text/csv' }));
+				})
+				.catch(e => reject(e));
+		});
+	}
+	
   save(trade: Trade): Promise<Trade> {
     let result = new Promise<Trade>( (resolve, reject) => {
       if (trade._href) {

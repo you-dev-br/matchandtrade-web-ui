@@ -175,6 +175,20 @@ export class TradeComponent implements OnInit {
     this.router.navigate(['item-matcher-list', {tradeMembershipHref: this.tradeMembership._href}]);
   }
 
+	onDownloadResults(): void {
+		this.tradeService.getResults(this.trade._href)
+			.then(v => {
+				// TODO make this a utility method
+				const downloadUrl = window.URL.createObjectURL(v);
+				const link = document.createElement('a');
+				link.href = window.URL.createObjectURL(v);
+				const tradeNameAsAlphanumericCharactersOnly = this.trade.name.replace(/[\W_]+/g," ");
+				link.download = tradeNameAsAlphanumericCharactersOnly + '[' + this.trade.tradeId + '].csv'  ;
+				link.click();
+			})
+			.catch(e => this.message.setErrorItems(e));
+	}
+	
   displaySubscribeButton(): boolean {
     return this.tradeHref && !this.tradeMembership;
   }
@@ -185,5 +199,9 @@ export class TradeComponent implements OnInit {
 
   displayItemsButton(): boolean {
     return (this.tradeMembership ? true : false);
-  }
+	}
+	
+	displayDownloadResultsButton(): boolean {
+		return true;
+	}
 }

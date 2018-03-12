@@ -1,7 +1,8 @@
 export enum TradeState {
   SUBMITTING_ITEMS='SUBMITTING_ITEMS',
   MATCHING_ITEMS='MATCHING_ITEMS',
-  GENERATING_TRADES='GENERATING_TRADES',
+	GENERATE_RESULTS='GENERATE_RESULTS',
+	RESULTS_GENERATED='RESULTS_GENERATED',
   CLOSED='CLOSED'
 };
 
@@ -11,6 +12,3 @@ export class Trade {
   name: string = null;
   state: TradeState = null;
 }
-
-
-

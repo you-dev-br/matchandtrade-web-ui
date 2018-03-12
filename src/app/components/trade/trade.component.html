@@ -29,6 +29,14 @@
   </div>  
 
   <div class="mt-control-panel is-pulled-right">
+		<button 
+      class="button is-primary" 
+      id="download-results-button"
+      *ngIf="displayDownloadResultsButton()"
+      type="button"
+      (click)="onDownloadResults()">
+      <i class="fa fa-download" aria-hidden="true"></i>Download Results
+    </button>		
     <button 
       class="button is-primary" 
       id="match-items-button"
