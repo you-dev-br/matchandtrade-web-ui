@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { AuthenticationService } from '../../services/authentication.service';
+import { Message } from '../message/message';
 
 @Component({
   selector: 'app-authentication-callback',
@@ -8,11 +11,19 @@ import { AuthenticationService } from '../../services/authentication.service';
 })
 export class AuthenticationCallbackComponent {
   authorizationHeader: string;
+  message: Message = new Message();
+  loading: boolean = true;
 
-  constructor(private authenticationService: AuthenticationService ) {
+  constructor(
+    private authenticationService: AuthenticationService,
+    private router: Router) {
     authenticationService.get().then((v) => {
       this.authorizationHeader = v.authorizationHeader;
+      this.router.navigate(['trade-list']);
+    })
+    .catch(e => {
+      this.message.setErrorItems(e);
+      this.loading = false;
     });
   }
-
 }
