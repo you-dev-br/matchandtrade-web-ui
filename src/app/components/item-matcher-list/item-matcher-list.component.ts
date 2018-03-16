@@ -7,6 +7,7 @@ import { SearchService } from '../../services/search.service';
 import { TradeMembership } from '../../classes/pojo/trade-membership';
 import { TradeMembershipService } from '../../services/trade-membership.service';
 import { Pagination } from '../../classes/search/pagination';
+import { NotFoundException } from '../../classes/exceptions/service-exceptions';
 
 @Component({
   selector: 'app-item-matcher-list',
@@ -41,7 +42,13 @@ export class ItemMatcherListComponent implements OnInit {
       .then(tradeMembership => {
         return this.search(tradeMembership);
 			})
-      .catch(e => this.message.setErrorItems(e))
+      .catch(e => {
+        if (e instanceof NotFoundException) {
+          this.message.setErrorItems("There are no items to match. Possibly, nobody else has submitted items yet.")
+        } else {
+          this.message.setErrorItems(e);
+        }
+      })
       .then(() => this.loading = false);
   }
   
