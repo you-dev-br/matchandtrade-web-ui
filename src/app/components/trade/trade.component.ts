@@ -199,14 +199,14 @@ export class TradeComponent implements OnInit {
   }
 
   displayMatchItemsButton(): boolean {
-    return this.tradeMembership && this.trade.state == TradeState.MATCHING_ITEMS;
+    return this.tradeMembership && TradeState[this.trade.state] == TradeState.MATCHING_ITEMS;
   }
 
   displayItemsButton(): boolean {
-    return (this.trade.state == TradeState.SUBMITTING_ITEMS ? true : false);
+    return TradeState[this.trade.state] == TradeState.SUBMITTING_ITEMS;
 	}
 	
 	displayDownloadResultsButton(): boolean {
-    return (this.trade.state == TradeState.RESULTS_GENERATED ? true : false);
+    return TradeState[this.trade.state] == TradeState.RESULTS_GENERATED;
 	}
 }
