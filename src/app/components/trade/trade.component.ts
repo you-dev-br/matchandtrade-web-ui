@@ -203,7 +203,7 @@ export class TradeComponent implements OnInit {
   }
 
   displayItemsButton(): boolean {
-    return TradeState[this.trade.state] == TradeState.SUBMITTING_ITEMS;
+    return this.tradeMembership && TradeState[this.trade.state] == TradeState.SUBMITTING_ITEMS;
 	}
 	
 	displayDownloadResultsButton(): boolean {
