@@ -43,9 +43,7 @@ export class ItemMatcherListComponent implements OnInit {
         return this.search(tradeMembership);
 			})
       .catch(e => {
-        if (e instanceof NotFoundException) {
-          this.message.setErrorItems("There are no items to match. Possibly, nobody else has submitted items yet.")
-        } else {
+        if (!(e instanceof NotFoundException)) {
           this.message.setErrorItems(e);
         }
       })

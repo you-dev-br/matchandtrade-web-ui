@@ -1,9 +1,10 @@
 <app-message [message]="message"></app-message>
 <app-loading [loading]="loading && !pagination.totalEntries" [containerHeight]="15" [imageHeight]="5"></app-loading>
 
-<div *ngIf="!loading && !pagination.totalEntries" class="trades-not-found">
-  <span class="align-helper"></span>
-  <span>No trades available at this time <i class="fa fa-frown-o" aria-hidden="true"></i></span>
+<div *ngIf="!loading && !pagination.totalEntries" class="not-found-container">
+  <div class="not-found-content">
+      No trades available at this time <i class="fa fa-frown-o" aria-hidden="true"></i>
+  </div>
 </div>
 
 <div *ngIf="pagination.totalEntries">
