@@ -54,7 +54,9 @@ export class ItemMatcherOfferComponent implements OnInit {
     })
     .then(() => this.initCheckableItems())
     .catch((e) => {
-      this.message.setErrorItems(e);
+      if (!(e instanceof NotFoundException)) {
+        this.message.setErrorItems(e);
+      }
       this.loading = false;
     })
   }
@@ -109,7 +111,7 @@ export class ItemMatcherOfferComponent implements OnInit {
     });
 
     Promise.all(promises).then(() => {
-      this.message.setInfoItems('Offers saved.');
+      this.message.setInfoItems('Offer saved.');
     })
     .catch(e => this.message.setErrorItems(e))
     .then(() => this.initCheckableItems());
