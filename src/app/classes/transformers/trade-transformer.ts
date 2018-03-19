@@ -12,6 +12,7 @@ export class TradeTransformer extends Transformer<Trade> {
         result._href = this.extractHref(json._links);
         result.name = json.name;
         result.tradeId = json.tradeId;
+        //TODO fix the state to be a valid TradeState reference. Also fix trade.component-view.spec.ts
         result.state = json.state;
         return result;
     }
