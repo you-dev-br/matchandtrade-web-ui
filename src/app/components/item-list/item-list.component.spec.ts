@@ -69,7 +69,6 @@ describe('ItemListComponent', () => {
 		component.ngOnInit();
 		fixture.whenStable().then(() => {
 			fixture.detectChanges();
-			console.log(fixture.nativeElement);
 			expect(fixture.nativeElement.querySelector('.not-found-content')).toBeTruthy();
 		});
 	});	
