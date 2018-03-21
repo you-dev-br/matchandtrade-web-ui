@@ -2,7 +2,7 @@ import { Response } from '@angular/http';
 
 import { Page } from '../search/page';
 import { SearchResult } from '../search/search-result';
-import { Trade } from '../pojo/trade';
+import { Trade, TradeState } from '../pojo/trade';
 import { Transformer } from './transformer';
 
 export class TradeTransformer extends Transformer<Trade> {
@@ -12,9 +12,32 @@ export class TradeTransformer extends Transformer<Trade> {
         result._href = this.extractHref(json._links);
         result.name = json.name;
         result.tradeId = json.tradeId;
-        //TODO fix the state to be a valid TradeState reference. Also fix trade.component-view.spec.ts
         result.state = json.state;
         return result;
+    }
+
+    public toStateText(state: string): string {
+        switch(state) {
+            case TradeState.CANCELED: {
+                return 'Canceled'
+            }
+            case TradeState.GENERATE_RESULTS: {
+                return 'Generate Results'
+            }
+            case TradeState.MATCHING_ITEMS: {
+                return 'Matching Items'
+            }
+            case TradeState.RESULTS_GENERATED: {
+                return 'Results Generated'
+            }
+            case TradeState.SUBMITTING_ITEMS: {
+                return 'Submitting Items'
+            }
+            case TradeState.GENERATING_RESULTS: {
+                return 'Generating Results'
+            }
+        }
+        return null;
     }
 
 }

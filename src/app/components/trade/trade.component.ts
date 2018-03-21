@@ -13,6 +13,7 @@ import { TradeMembership, TradeMembershipType } from '../../classes/pojo/trade-m
 import { TradeMembershipService } from '../../services/trade-membership.service';
 import { TradeService } from '../../services/trade.service';
 import { UserService } from '../../services/user.service';
+import { TradeTransformer } from '../../classes/transformers/trade-transformer';
 
 export class TradeMembershipNotFoundException {};
 
@@ -28,6 +29,7 @@ export class TradeComponent implements OnInit {
   tradeFormGroup: FormGroup;
   tradeHref: string; // When truthy, it also means it that it should render a VIEW page
   tradeMembership: TradeMembership;
+  tradeTransformer = new TradeTransformer()
   nameFormControl: AbstractControl;
   message: Message = new Message();
   stateFormControl: AbstractControl;
@@ -80,7 +82,7 @@ export class TradeComponent implements OnInit {
     this.nameFormControl = this.tradeFormGroup.controls['name'];
     this.stateFormControl = this.tradeFormGroup.controls['state'];
     for(let v in TradeState) {
-      this.states.push(new KeyValuePair(v, TradeState[v]));
+      this.states.push(new KeyValuePair(v, this.tradeTransformer.toStateText(v)));
     }
   }
 
@@ -90,10 +92,9 @@ export class TradeComponent implements OnInit {
 
   private populateForm(trade: Trade, tradeMembership: TradeMembership) {
     // We do not want the user to be able to set the state as "Results Generated", this status should only be valid when it is coming from the server.
-    if (TradeState.RESULTS_GENERATED != TradeState[trade.state]) {
-      this.states = this.states.filter(v => TradeState.RESULTS_GENERATED != TradeState[v.key]);
+    if (TradeState.RESULTS_GENERATED != trade.state) {
+      this.states = this.states.filter(v => TradeState.RESULTS_GENERATED != v.key);
     }
-
     this.stateFormControl.setValue(trade.state);
     this.nameFormControl.setValue(trade.name);
     if (!(tradeMembership && TradeMembershipType[tradeMembership.type] == TradeMembershipType.OWNER)) {
@@ -199,14 +200,14 @@ export class TradeComponent implements OnInit {
   }
 
   displayMatchItemsButton(): boolean {
-    return this.tradeMembership && TradeState[this.trade.state] == TradeState.MATCHING_ITEMS;
+    return this.tradeMembership && this.trade.state == TradeState.MATCHING_ITEMS;
   }
 
   displayItemsButton(): boolean {
-    return this.tradeMembership && TradeState[this.trade.state] == TradeState.SUBMITTING_ITEMS;
+    return this.tradeMembership && this.trade.state == TradeState.SUBMITTING_ITEMS;
 	}
 	
 	displayDownloadResultsButton(): boolean {
-    return TradeState[this.trade.state] == TradeState.RESULTS_GENERATED;
+    return this.trade.state == TradeState.RESULTS_GENERATED;
 	}
 }
