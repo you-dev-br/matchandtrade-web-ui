@@ -12,7 +12,7 @@ import { ItemMatcherListComponent } from './components/item-matcher-list/item-ma
 import { ItemMatcherOfferComponent } from './components/item-matcher-offer/item-matcher-offer.component';
 
 const routes: Routes = [
-  { path: 'authenticate/callback', component: AuthenticationCallbackComponent },
+  { path: 'authenticate-callback', component: AuthenticationCallbackComponent },
   { path: 'item-matcher-list', component: ItemMatcherListComponent },
   { path: 'item-matcher-offer', component: ItemMatcherOfferComponent },
   { path: 'item-list', component: ItemListComponent },

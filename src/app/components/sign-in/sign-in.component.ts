@@ -11,7 +11,7 @@ export class SignInComponent {
   googleUrl: string;
 
   constructor() {
-    this.googleUrl = environment.authenticateGoogleUrl;
+    this.googleUrl = environment.authenticateUrl;
   }
 
 }

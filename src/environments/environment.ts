@@ -7,5 +7,5 @@ export const environment = {
   production: false,
 	// Change ${EXTERNAL-ADDRESS} with host address used by external HTTP requests.
 	// authenticateGoogleUrl: "/api/authenticate?callbackUrl=http://${EXTERNAL-ADDRESS}:4200/authenticate/callback"
-	authenticateGoogleUrl: "/api/authenticate?callbackUrl=http://localhost:4200/authenticate/callback"
+	authenticateUrl: "/api/authenticate?callbackUrl=http://localhost:4200/authenticate-callback"
 };
