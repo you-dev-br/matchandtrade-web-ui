@@ -1,0 +1,27 @@
+version: '2'
+services:
+  matchandtrade-web-ui:
+    image: matchandtrade-web-ui:0.0-SNAPSHOT
+    container_name: matchandtrade-web-ui
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+     - "80:80"
+    volumes:
+     - ./config/httpd.conf:/usr/local/apache2/conf/httpd.conf
+     - ./log-ui:/usr/local/apache2/logs
+  matchandtrade-web-api:
+    image: matchandtrade-web-api:0.0-SNAPSHOT
+    container_name: matchandtrade-web-api
+    ports:
+     - "8080:8080"
+    volumes:
+     - ./config:/matchandtrade/config
+     - ./database:/matchandtrade/database
+     - ./log-api:/matchandtrade/log
+  mocked-oauth-server:
+    image: mocked-oauth-server:0.0-SNAPSHOT
+    container_name: mocked-oauth-server
+    ports:
+      - 8081:8081
