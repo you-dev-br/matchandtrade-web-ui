@@ -1,17 +1,8 @@
 {
-	"/api": {
-		"__comment": "/api should be used in all *.service.ts files and any http request made by the application",
-		"target":"http://localhost:8080",
-		"secure":"false",
-		"logLevel":"debug",
-		"pathRewrite": {
-			"^/api": ""
-		}
-	},
-	"/rest": {
-		"__comment": "/rest allows processing HETEOAS which has 'href' starting with '/rest'",
+	"/matchandtrade-web-api": {
+		"__comment": "Request that need to be redirected to matchandtrade-web-api",
 		"target":"http://localhost:8080",
 		"secure":"false",
 		"logLevel":"debug"
-	}	
+	}
 }

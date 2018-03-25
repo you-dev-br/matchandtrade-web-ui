@@ -46,7 +46,7 @@ export class TradeService {
           .catch(e => reject(e));
       } else {
         this.httpService
-          .post('/api/rest/v1/trades/', trade)
+          .post('/matchandtrade-web-api/v1/trades/', trade)
           .then(v => resolve(this.tradeTransformer.toPojo(v.json())))
           .catch(e => reject(e));
       }
@@ -57,7 +57,7 @@ export class TradeService {
   search(page: Page, name?: string): Promise<SearchResult<Trade>> {
     return new Promise<SearchResult<Trade>>( (resolve, reject) => {
       this.httpService
-        .get('/api/rest/v1/trades', false, page)
+        .get('/matchandtrade-web-api/v1/trades', false, page)
         .then(v => resolve(this.tradeTransformer.toSearchResult(v, page)))
         .catch(e => reject(e));
     });

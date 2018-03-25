@@ -26,7 +26,7 @@ export class UserService {
     } else {
       return new Promise<User>( (resolve, reject) => {
         this.httpService
-          .get('/api/rest/v1/authentications/')
+          .get('/matchandtrade-web-api/v1/authentications/')
           .then(v => {
             let result = new User();
             result.userId = v.json().userId;

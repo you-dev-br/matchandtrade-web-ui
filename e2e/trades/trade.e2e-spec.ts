@@ -7,15 +7,15 @@ import { SignInHelper } from '../sign-in-helper';
 describe('Trades', () => {
 	const page: TradePage = new TradePage();
 	const signInHelper: SignInHelper = new SignInHelper();
-	const tradeHelper: TradeHelper = new TradeHelper(); 
+  const tradeHelper: TradeHelper = new TradeHelper();
+  const salt: string = (new Date().getTime()/1000000).toFixed(6).substring(8);
   
-  beforeEach(() => {
-  });
-  
-  it('should create new trade', () => {
-    // Sign-in
+  beforeAll(() => {
     signInHelper.signIn();
-    const tradeName = 'Argentina';
+  });
+ 
+  it('should create new trade', () => {
+    const tradeName = 'Argentina' + salt;
 
     // Create Trade
     page.elementNavigationBarTrades().click();
@@ -42,9 +42,7 @@ describe('Trades', () => {
   });
 
   it('should update trade', () => {
-    // Sign-in
-    signInHelper.signIn();
-    const tradeName = 'Brazil';
+    const tradeName = 'Brazil' + salt;
     
     // Create Trade
     tradeHelper.createTrade(tradeName);
@@ -55,8 +53,8 @@ describe('Trades', () => {
     page.elementTradeRow(tradeName).click();
     page.elementTradeName().clear();
     page.elementTradeName().sendKeys(tradeName + 'Updated');
-    expect(page.elementTradeState('MATCHING_ITEMS')).toBeDefined();
-    page.elementTradeState('MATCHING_ITEMS').click();;
+    expect(page.elementTradeState('Matching Items')).toBeDefined();
+    page.elementTradeState('Matching Items').click();;
     expect(page.elementSaveTradeButton()).toBeDefined();
     page.elementSaveTradeButton().click();
     expect(page.elementSavedMessage().getText()).toBe('Trade saved.');
@@ -65,12 +63,9 @@ describe('Trades', () => {
   });
 
   it('should not update trade if has invalid data', () => {
-    // Sign-in
-    signInHelper.signIn();
-    
     // Create Trade
-    const previousTradeName = 'Canada';
-    const currentTradeName = 'Denmark';
+    const previousTradeName = 'Canada' + salt;
+    const currentTradeName = 'Denmark' + salt;
     tradeHelper.createTrade(previousTradeName);
     tradeHelper.createTrade(currentTradeName);
 
@@ -89,16 +84,13 @@ describe('Trades', () => {
   });
 
   it('nom-members should subscribe to trade', () => {
-    // Sign-in with trade owner
-    signInHelper.signIn();
-    
     // Create Trade
-    const tradeName = 'Egypt';
+    const tradeName = 'Egypt' + salt;
     tradeHelper.createTrade(tradeName);
 
-    // Sign-in with a nom-member
-    signInHelper.signIn();
-
+    // Sign-in with trade owner
+    signInHelper.signIn('bob');
+    
     // Subscribe to Trade
     page.elementNavigationBarTrades().click();
     expect(page.elementTradeRow(tradeName)).toBeDefined();
@@ -108,11 +100,8 @@ describe('Trades', () => {
   });
 
   it('already members should not be able to subscribe to trade', () => {
-    // Sign-in with trade owner
-    signInHelper.signIn();
-    
     // Create Trade
-    const tradeName = 'Finland';
+    const tradeName = 'Finland' + salt;
     tradeHelper.createTrade(tradeName);
 
     // Should not be able to subscribe to Trade

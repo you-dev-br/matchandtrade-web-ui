@@ -32,7 +32,7 @@ export class AuthenticationService {
       );
     } else {
       return this.http
-        .get('/api/authenticate/info')
+        .get('/matchandtrade-web-api/v1/authenticate/info')
         .map(v => {
           let result = this.authenticationTransformer.toPojo(v.json());
           this.lastAuthentication = result;

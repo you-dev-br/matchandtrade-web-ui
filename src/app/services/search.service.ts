@@ -13,7 +13,7 @@ import { ServiceExceptionFactory } from '../classes/exceptions/service-exception
 @Injectable()
 export class SearchService {
 
-  private searchUrl = "/api/rest/v1/search";
+  private searchUrl = "/matchandtrade-web-api/v1/search";
 
   constructor(
     private httpService: HttpService

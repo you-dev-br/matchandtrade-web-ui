@@ -13,21 +13,23 @@ describe('Items', () => {
 	const signInHelper: SignInHelper = new SignInHelper();
 	const tradePage: TradePage = new TradePage();
 	const tradeHelper: TradeHelper = new TradeHelper();
-  
+  const salt: string = (new Date().getTime()/1000000).toFixed(6).substring(8);
+
+	beforeAll(() => {
+    signInHelper.signIn('alice');
+  });
+
+
 	it('should create new item', () => {
-    // Sign-in
-		signInHelper.signIn();
-		const tradeName: string = 'Greece';
+		const tradeName: string = 'Greece' + salt;
 		tradeHelper.createTrade(tradeName);
 		itemHelper.createItem('Apple');
 	});
 
 	it('should update an existing item', () => {
-    // Sign-in
-		signInHelper.signIn();
-		const tradeName: string = 'Hungary';
+		const tradeName: string = 'Hungary' + salt;
 		tradeHelper.createTrade(tradeName);
-		const itemName: string = 'Banana';
+		const itemName: string = 'Banana' + salt;
 		itemHelper.createItem(itemName);
 
 		browser.navigate().back();

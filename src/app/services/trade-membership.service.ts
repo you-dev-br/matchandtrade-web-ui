@@ -21,7 +21,7 @@ export class TradeMembershipService {
     params.push(new KeyValuePair('userId', userId));
 
     return new Promise<SearchResult<TradeMembership>>( (resolve, reject) => {
-      this.httpService.get('/api/rest/v1/trade-memberships', true, page, params)
+      this.httpService.get('/matchandtrade-web-api/v1/trade-memberships', true, page, params)
         .then(v => 
           resolve(this.transformer.toSearchResult(v, page))
         )
@@ -42,7 +42,7 @@ export class TradeMembershipService {
   save(tradeMembership: TradeMembership): Promise<TradeMembership> {
     return new Promise( (resolve, reject) => {
       this.httpService
-        .post('/api/rest/v1/trade-memberships/', tradeMembership)
+        .post('/matchandtrade-web-api/v1/trade-memberships/', tradeMembership)
         .then(v =>
           resolve(this.transformer.toPojo(v.json()))
         )
