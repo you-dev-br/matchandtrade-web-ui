@@ -9,11 +9,11 @@
     <a class="navbar-item">
       Matching and Trade
     </a>
-    <a class="navbar-item" routerLink="/trade-list" routerLinkActive="active" tabindex="1">
+    <a class="navbar-item" (click)="onTrades()" (keyup.enter)="onTrades()" routerLinkActive="active" tabindex="1">
       <span class="router-link">Trades</span>
     </a>
-    <a class="navbar-item" routerLink="/sign-in" routerLinkActive="active" tabindex="1">
-      <span class="router-link">Sign-in</span>
+    <a class="navbar-item" (click)="onSign()" (keyup.enter)="onSign()" routerLinkActive="active" tabindex="1">
+      <span class="router-link">{{signText()}}</span>
     </a>
   </div>
   <div class="navbar-menu">

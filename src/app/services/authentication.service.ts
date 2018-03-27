@@ -25,6 +25,10 @@ export class AuthenticationService {
     });
   }
 
+  public isSignedIn(): boolean {
+    return this.lastAuthentication ? true : false;
+  }
+
   public get(): Promise<Authentication> {
     if (this.lastAuthentication) {
       return new Promise<Authentication>((resolve, reject) =>
@@ -40,6 +44,18 @@ export class AuthenticationService {
         })
         .toPromise();
     }
+  }
+
+  public signOut(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.http
+        .get('/matchandtrade-web-api/v1/authenticate/sign-out')
+        .subscribe(r => {
+          this.lastAuthentication = undefined;
+          resolve(true);
+        }, e => resolve(e));
+
+    });
   }
 
 }

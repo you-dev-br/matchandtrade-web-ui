@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { environment } from '../../../environments/environment';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,8 +11,20 @@ import { environment } from '../../../environments/environment';
 export class SignInComponent {
   googleUrl: string;
 
-  constructor() {
+  constructor(
+    private authenticationService: AuthenticationService
+  ) {
     this.googleUrl = environment.authenticateUrl;
+  }
+
+  signOut(): void {
+    this.authenticationService.signOut().then(v => {
+      window.location.href = '/';
+    });
+  }
+
+  isSignedIn(): boolean {
+    return this.authenticationService.isSignedIn();
   }
 
 }
