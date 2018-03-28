@@ -41,7 +41,7 @@ export class ItemListComponent implements OnInit {
 	}
 
   navigateToItem(item: Item) {
-    this.router.navigate(['items', {itemHref: item._href}]);
+    this.navigationService.navigate('items', {itemHref: item._href});
   }
 	
 	nextPage() {

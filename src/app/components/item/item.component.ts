@@ -34,7 +34,7 @@ export class ItemComponent implements OnInit {
 
   ngOnInit() {
     this.tradeMembershipHref = NavigationService.obtainData(this.route).tradeMembershipHref;
-		this.itemHref = this.route.snapshot.paramMap.get('itemHref');
+    this.itemHref = NavigationService.obtainData(this.route).itemHref;
 		
 		if (!this.itemHref) {
 			this.loading = false;
