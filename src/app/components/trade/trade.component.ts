@@ -176,7 +176,6 @@ export class TradeComponent implements OnInit {
 
   onItems(): void {
     this.navigationService.navigate('item-list', {tradeMembershipHref: this.tradeMembership._href});
-    // this.router.navigate(['item-list', {tradeMembershipHref: this.tradeMembership._href}]);
   }
   
   onMatchItems(): void {

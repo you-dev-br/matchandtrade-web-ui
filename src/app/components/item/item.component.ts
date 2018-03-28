@@ -5,6 +5,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
 import { Message } from '../message/message';
+import { NavigationService } from '../../services/navigation.service';
 import { NotFoundException } from '../../classes/exceptions/service-exceptions';
 
 @Component({
@@ -25,13 +26,14 @@ export class ItemComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     formBuilder: FormBuilder,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private navigateService: NavigationService
   ) {
     this.buildForm(formBuilder);
   }
 
   ngOnInit() {
-		this.tradeMembershipHref = this.route.snapshot.paramMap.get('tradeMembershipHref');
+    this.tradeMembershipHref = NavigationService.obtainData(this.route).tradeMembershipHref;
 		this.itemHref = this.route.snapshot.paramMap.get('itemHref');
 		
 		if (!this.itemHref) {

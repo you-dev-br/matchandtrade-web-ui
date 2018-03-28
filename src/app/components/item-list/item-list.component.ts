@@ -32,13 +32,12 @@ export class ItemListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.tradeMembershipHref = this.route.snapshot.paramMap.get('tradeMembershipHref');
     this.tradeMembershipHref = NavigationService.obtainData(this.route).tradeMembershipHref;
     this.search();
   }
 
   createItem() {
-    this.router.navigate(['items', {tradeMembershipHref: this.tradeMembershipHref}]);
+    this.navigationService.navigate('items', {tradeMembershipHref: this.tradeMembershipHref});
 	}
 
   navigateToItem(item: Item) {
