@@ -40,8 +40,8 @@ export class ItemMatcherOfferComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.tradeMembershipHref = this.route.snapshot.paramMap.get("tradeMembershipHref");
-    const wantedItemHref = this.route.snapshot.paramMap.get("itemHref");
+    this.tradeMembershipHref = NavigationService.obtainData(this.route).tradeMembershipHref;
+    const wantedItemHref = NavigationService.obtainData(this.route).itemHref;
     
     this.itemService.get(wantedItemHref).then(v => {
       this.wantedItem = v;

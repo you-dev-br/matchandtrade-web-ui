@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { Message } from '../message/message';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'app-authentication-callback',
@@ -16,10 +17,11 @@ export class AuthenticationCallbackComponent {
 
   constructor(
     private authenticationService: AuthenticationService,
+    private navigationService: NavigationService,
     private router: Router) {
     authenticationService.get().then((v) => {
       this.authorizationHeader = v.authorizationHeader;
-      this.router.navigate(['trade-list']);
+      this.navigationService.navigate('trade-list');
     })
     .catch(e => {
       this.message.setErrorItems(e);

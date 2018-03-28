@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { AuthenticationService } from '../../services/authentication.service';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -14,6 +15,7 @@ export class NavigationBarComponent implements OnInit {
   authenticated: boolean = false;
 
   constructor(
+    private navigationService: NavigationService,
     private router: Router,
     private authenticationService: AuthenticationService
   ) {
@@ -52,11 +54,11 @@ export class NavigationBarComponent implements OnInit {
   }
 
   onSign() {
-    this.router.navigate(['/sign-in']);
+    this.navigationService.navigate('/sign-in');
   }
 
   onTrades() {
-    this.router.navigate(['/trade-list']);
+    this.navigationService.navigate('/trade-list');
   }
 
 }
