@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { Message } from '../message/message';
 import { Item } from '../../classes/pojo/item';
+import { Message } from '../message/message';
+import { NavigationService } from '../../services/navigation.service';
+import { NotFoundException } from '../../classes/exceptions/service-exceptions';
+import { Pagination } from '../../classes/search/pagination';
 import { SearchService } from '../../services/search.service';
 import { TradeMembership } from '../../classes/pojo/trade-membership';
 import { TradeMembershipService } from '../../services/trade-membership.service';
-import { Pagination } from '../../classes/search/pagination';
-import { NotFoundException } from '../../classes/exceptions/service-exceptions';
 
 @Component({
   selector: 'app-item-matcher-list',
@@ -25,6 +26,7 @@ export class ItemMatcherListComponent implements OnInit {
   tradeMembershipHref: string;
 
   constructor(
+    private navigationService: NavigationService,
     private route: ActivatedRoute,
     private router: Router,
     private searchService: SearchService,
@@ -32,7 +34,7 @@ export class ItemMatcherListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.tradeMembershipHref = this.route.snapshot.paramMap.get('tradeMembershipHref');
+    this.tradeMembershipHref = NavigationService.obtainData(this.route).tradeMembershipHref;
 
     this.tradeMembershipService.get(this.tradeMembershipHref)
       .then(tradeMembership => {
