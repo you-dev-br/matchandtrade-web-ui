@@ -21,6 +21,7 @@ import { TradeListComponent } from './components/trade-list/trade-list.component
 import { UserService } from './services/user.service';
 import { ItemMatcherListComponent } from './components/item-matcher-list/item-matcher-list.component';
 import { ItemMatcherOfferComponent } from './components/item-matcher-offer/item-matcher-offer.component';
+import { NavigationService } from './services/navigation.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { ItemMatcherOfferComponent } from './components/item-matcher-offer/item-
     ReactiveFormsModule, // Refrain of using FormsModule and favor ReactiveFormModule which is more explicit and powerful than FormsModule.
     HttpModule
   ],
-  providers: [AuthenticationService, HttpService, UserService],
+  providers: [AuthenticationService, HttpService, NavigationService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

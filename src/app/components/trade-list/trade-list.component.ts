@@ -3,6 +3,7 @@ import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 
 import { Message } from '../message/message';
+import { NavigationService } from '../../services/navigation.service';
 import { Pagination } from '../../classes/search/pagination';
 import { TradeService } from '../../services/trade.service';
 import { Trade } from '../../classes/pojo/trade';
@@ -19,17 +20,17 @@ export class TradeListComponent {
   pagination: Pagination;
   loading: boolean = true;
 
-  constructor(private router: Router, private tradeService: TradeService) {
+  constructor(private router: Router, private navigationService: NavigationService, private tradeService: TradeService) {
     this.pagination = new Pagination(1, 10, 0);
     this.search();
   }
 
   createTrade() {
-    this.router.navigate(['trades']);
+    this.navigationService.navigate('trades');
   }
 
   navigateToTrade(trade: Trade) {
-    this.router.navigate(['trades', {tradeHref: trade._href}]);
+    this.navigationService.navigate('trades', {tradeHref: trade._href});
   }
 
   nextPage() {

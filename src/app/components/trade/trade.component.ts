@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { KeyValuePair } from '../../classes/pojo/key-value-pair';
 import { Message, MessageType } from '../../components/message/message';
+import { NavigationService } from '../../services/navigation.service';
 import { Page } from '../../classes/search/page';
 import { SearchResult } from '../../classes/search/search-result';
 import { Trade, TradeState } from '../../classes/pojo/trade';
@@ -39,6 +40,7 @@ export class TradeComponent implements OnInit {
       private route: ActivatedRoute,
       formBuilder: FormBuilder,
       private router: Router,
+      private navigationService: NavigationService,
       private tradeService: TradeService,
       private tradeMembershipService: TradeMembershipService,
       private userService: UserService) {
@@ -47,7 +49,7 @@ export class TradeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tradeHref = this.route.snapshot.paramMap.get('tradeHref');
+    this.tradeHref = NavigationService.obtainData(this.route).tradeHref;
     if (!this.tradeHref) {
       this.loading = false;
     } else {
