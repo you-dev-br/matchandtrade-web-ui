@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Message } from '../message/message';
 import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
+import { NavigationService } from '../../services/navigation.service';
 import { Page } from '../../classes/search/page';
 import { Pagination } from '../../classes/search/pagination';
 import { NotFoundException } from '../../classes/exceptions/service-exceptions';
@@ -26,11 +27,13 @@ export class ItemListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private navigationService: NavigationService
   ) { }
 
   ngOnInit() {
-    this.tradeMembershipHref = this.route.snapshot.paramMap.get('tradeMembershipHref');
+    // this.tradeMembershipHref = this.route.snapshot.paramMap.get('tradeMembershipHref');
+    this.tradeMembershipHref = NavigationService.obtainData(this.route).tradeMembershipHref;
     this.search();
   }
 

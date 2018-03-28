@@ -55,7 +55,6 @@ export class TradeComponent implements OnInit {
     } else {
       this.tradeService.get(this.tradeHref)
         .then(v => {
-          // Load Trade data
           this.trade = v;
           return v;
         })
@@ -176,7 +175,8 @@ export class TradeComponent implements OnInit {
   }
 
   onItems(): void {
-    this.router.navigate(['item-list', {tradeMembershipHref: this.tradeMembership._href}]);
+    this.navigationService.navigate('item-list', {tradeMembershipHref: this.tradeMembership._href});
+    // this.router.navigate(['item-list', {tradeMembershipHref: this.tradeMembership._href}]);
   }
   
   onMatchItems(): void {
