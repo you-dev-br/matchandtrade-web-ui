@@ -6,12 +6,13 @@ import { CheckableItem } from './checkable-item';
 import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
 import { Message } from '../message/message';
+import { NavigationService } from '../../services/navigation.service';
+import { NotFoundException } from '../../classes/exceptions/service-exceptions';
 import { Offer } from '../../classes/pojo/offer';
 import { OfferService } from '../../services/offer.service';
 import { Page } from '../../classes/search/page';
 import { Pagination } from '../../classes/search/pagination';
 import { TradeMembershipService } from '../../services/trade-membership.service';
-import { NotFoundException } from '../../classes/exceptions/service-exceptions';
 
 @Component({
   selector: 'app-item-matcher-offer',
@@ -32,6 +33,7 @@ export class ItemMatcherOfferComponent implements OnInit {
 
   constructor(
     private itemService: ItemService,
+    private navigationService: NavigationService,
     private offerService: OfferService,
     private route: ActivatedRoute,
     private router: Router
@@ -118,7 +120,7 @@ export class ItemMatcherOfferComponent implements OnInit {
   }
 
   navigateBack() {
-    this.router.navigate(['/item-matcher-list', {tradeMembershipHref: this.tradeMembershipHref}]);
+    this.navigationService.navigate('/item-matcher-list', {tradeMembershipHref: this.tradeMembershipHref});
   }
 
   toogleOfferableItem(checkableItem: CheckableItem) {
