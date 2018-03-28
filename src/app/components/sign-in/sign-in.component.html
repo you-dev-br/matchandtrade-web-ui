@@ -1,7 +1,7 @@
-<p>
+<p *ngIf="!isSignedIn()">
     <a href="{{googleUrl}}">Sign-in with Google</a>
 </p>
 
 <p *ngIf="isSignedIn()">
-    <a href="#" (click)="signOut()">Sign-out</a>
+    <a href="" (click)="signOut()">Sign-out</a>
 </p>

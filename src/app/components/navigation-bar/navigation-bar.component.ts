@@ -23,7 +23,7 @@ export class NavigationBarComponent implements OnInit {
   ngOnInit() {
     this.authenticationService.get().then(v => {
       this.authenticated = (v.authorizationHeader ? true : false);
-    });
+    }).catch(e => console.log("User not authenticated"));
   }
 
   onResize(navigationBarHtmlElement: HTMLElement) {
@@ -48,24 +48,11 @@ export class NavigationBarComponent implements OnInit {
   }
 
   signText() {
-    if (this.authenticated) {
-      return 'Sign-out';
-    }
-    return 'Sign-in';
-  }
-
-  private signOut() {
-    this.authenticationService.signOut().then(v => {
-      window.location.href = '/';
-    });
+    return (this.authenticated ? 'Sign-out' : 'Sign-in');
   }
 
   onSign() {
-    if (this.authenticated) {
-      this.signOut();
-    } else {
-      this.router.navigate(['/sign-in']);
-    }
+    this.router.navigate(['/sign-in']);
   }
 
   onTrades() {
@@ -73,6 +60,3 @@ export class NavigationBarComponent implements OnInit {
   }
 
 }
-
-
-
