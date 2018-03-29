@@ -1,17 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute, Router } from '../../../test/router-stubs';
+import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute, Router, NavigationServiceMock } from '../../../test/router-stubs';
 
 import { ItemComponent } from './item.component';
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
+import { NavigationService } from '../../services/navigation.service';
 import { ItemService } from '../../services/item.service';
 import { Item } from '../../classes/pojo/item';
 
 const activatedRouteMock = {
   snapshot: {
       paramMap: {
-          get: function(a: any){ return 'itemHrefForView'}
+          get: function(a: any){ return {itemHref:'itemHrefMock'} }
       }
   }
 }
@@ -52,8 +53,9 @@ describe('ItemComponent-VIEW', () => {
       set: {
         providers:[
           { provide: ActivatedRoute, useValue: activatedRouteMock },
-          { provide: Router, useClass: RouterStub },
           { provide: ItemService, useClass: ItemServiceMock },
+          { provide: NavigationService, useClass: NavigationServiceMock },
+          { provide: Router, useClass: RouterStub },
         ]
       }
     })

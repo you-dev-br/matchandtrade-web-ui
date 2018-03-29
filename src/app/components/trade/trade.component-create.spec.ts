@@ -2,10 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute } from '../../../test/router-stubs';
+import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute, NavigationServiceMock } from '../../../test/router-stubs';
 
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
+import { NavigationService } from '../../services/navigation.service';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { RouterStateSnapshot } from '@angular/router';
 import { TradeComponent } from './trade.component';
@@ -17,7 +18,7 @@ import { TradeMembershipService } from '../../services/trade-membership.service'
 const activatedRouteMock = {
     snapshot: {
         paramMap: {
-            get: function(a: any){ return undefined}
+            get: function(a: any){ return {} }
         }
     }
 }
@@ -42,6 +43,7 @@ describe('TradeComponent-CREATE', () => {
         providers:[
           {provide: ActivatedRoute, useValue: activatedRouteMock},
           {provide: Router, useClass: RouterStub},
+          {provide: NavigationService, useClass: NavigationServiceMock},
           {provide: TradeService, useValue: 'tradeServiceDummy'},
           {provide: TradeMembershipService, useValue: 'tradeMembershipServiceDummy'},
           {provide: UserService, useValue: 'userServiceDummy'}

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Response, ResponseOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute } from '../../../test/router-stubs';
+import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute, NavigationServiceMock } from '../../../test/router-stubs';
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { LoadingComponent } from '../loading/loading.component';
@@ -17,6 +17,7 @@ import { TradeMembership, TradeMembershipType } from '../../classes/pojo/trade-m
 import { TradeService } from '../../services/trade.service';
 import { User } from '../../classes/pojo/user';
 import { UserService } from '../../services/user.service';
+import { NavigationService } from '../../services/navigation.service';
 
 class TradeServiceMock {
   get(href) {
@@ -28,6 +29,12 @@ class TradeServiceMock {
     });
   };
 }
+
+// class NavigationServiceMock {
+//   public obtainData(route: ActivatedRoute): any {
+//     return route.snapshot.paramMap.get('routerData');
+//   }
+// }
 
 class UserServiceMock {
   getAuthenticatedUser() { return Promise.resolve(new User())}
@@ -46,7 +53,7 @@ class TradeMembershipServiceMock {
 const activatedRouteMock = {
   snapshot: {
       paramMap: {
-          get: function(a: any){ return 'tradeMembershipHrefForVIEW'}
+          get: function(a: any){ return {tradeHref: 'tradeHrefMock'} }
       }
   }
 }
@@ -72,6 +79,7 @@ describe('TradeComponent-VIEW', () => {
           providers:[
             {provide: Router, useClass: RouterStub },
             {provide: ActivatedRoute, useValue: activatedRouteMock},
+            {provide: NavigationService, useClass: NavigationServiceMock},
             {provide: TradeService, useClass: TradeServiceMock},
             {provide: UserService, useClass: UserServiceMock},
             {provide: TradeMembershipService, useClass: TradeMembershipServiceMock}

@@ -49,7 +49,7 @@ export class TradeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tradeHref = NavigationService.obtainData(this.route).tradeHref;
+    this.tradeHref = this.navigationService.obtainData(this.route).tradeHref;
     if (!this.tradeHref) {
       this.loading = false;
     } else {

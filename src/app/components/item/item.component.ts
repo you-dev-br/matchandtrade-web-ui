@@ -27,14 +27,14 @@ export class ItemComponent implements OnInit {
     private route: ActivatedRoute,
     formBuilder: FormBuilder,
     private itemService: ItemService,
-    private navigateService: NavigationService
+    private navigationService: NavigationService
   ) {
     this.buildForm(formBuilder);
   }
 
   ngOnInit() {
-    this.tradeMembershipHref = NavigationService.obtainData(this.route).tradeMembershipHref;
-    this.itemHref = NavigationService.obtainData(this.route).itemHref;
+    this.tradeMembershipHref = this.navigationService.obtainData(this.route).tradeMembershipHref;
+    this.itemHref = this.navigationService.obtainData(this.route).itemHref;
 		
 		if (!this.itemHref) {
 			this.loading = false;

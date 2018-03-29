@@ -2,7 +2,7 @@
 export { ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router';
 
 import { Component, Directive, Injectable, Input } from '@angular/core';
-import { NavigationExtras } from '@angular/router';
+import { NavigationExtras, ActivatedRoute } from '@angular/router';
 
 @Directive({
   selector: '[routerLink]',
@@ -50,5 +50,12 @@ export class ActivatedRouteStub {
   // ActivatedRoute.snapshot.paramMap
   get snapshot() {
     return { paramMap: this.testParamMap };
+  }
+}
+
+@Injectable()
+export class NavigationServiceMock {
+  public obtainData(route: ActivatedRoute): any {
+    return route.snapshot.paramMap.get('routerData');
   }
 }

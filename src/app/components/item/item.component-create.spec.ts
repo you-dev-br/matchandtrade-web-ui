@@ -1,16 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute, Router } from '../../../test/router-stubs';
+import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute, Router, NavigationServiceMock } from '../../../test/router-stubs';
 
 import { ItemComponent } from './item.component';
+import { ItemService } from '../../services/item.service';
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
-import { ItemService } from '../../services/item.service';
+import { NavigationService } from '../../services/navigation.service';
 
 const activatedRouteMock = {
   snapshot: {
       paramMap: {
-          get: function(a: any){ return undefined}
+          get: function(a: any){ return {} }
       }
   }
 }
@@ -33,6 +34,7 @@ describe('ItemComponent-CREATE', () => {
         providers:[
           {provide: ActivatedRoute, useValue: activatedRouteMock},
           {provide: Router, useClass: RouterStub},
+          {provide: NavigationService, useClass: NavigationServiceMock},
           {provide: ItemService, useValue: 'itemServiceDummy'},
         ]
       }

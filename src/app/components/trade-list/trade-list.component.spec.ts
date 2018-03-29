@@ -1,10 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, RouterStateSnapshot } from '@angular/router';
-import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub } from '../../../test/router-stubs';
+import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, NavigationServiceMock } from '../../../test/router-stubs';
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
+import { NavigationService } from '../../services/navigation.service';
 import { Pagination } from '../../classes/search/pagination';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { SearchResult } from '../../classes/search/search-result';
@@ -35,6 +36,7 @@ describe('TradeListComponent', () => {
       .overrideComponent(TradeListComponent, {
         set: {
           providers:[
+            { provide: NavigationService, useClass: NavigationServiceMock }
             { provide: Router, useClass: RouterStub },
             { provide: TradeService, useClass: TradeServiceMock }
           ]

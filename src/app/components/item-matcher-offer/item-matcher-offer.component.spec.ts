@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute, Router } from '../../../test/router-stubs';
+import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute, Router, NavigationServiceMock } from '../../../test/router-stubs';
 
 import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
@@ -7,6 +7,7 @@ import { ItemServiceMock } from '../../../test/item-service-mock';
 import { ItemMatcherOfferComponent } from './item-matcher-offer.component';
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
+import { NavigationService } from '../../services/navigation.service';
 import { Offer } from '../../classes/pojo/offer';
 import { OfferService } from '../../services/offer.service';
 import { Page } from '../../classes/search/page';
@@ -59,9 +60,10 @@ describe('ItemMatcherOfferComponent', () => {
         set: {
           providers:[
             { provide: ActivatedRoute, useValue: activatedRouteMock },
-            { provide: Router, useClass: RouterStub },
             { provide: ItemService, useClass: ItemServiceMock },
-            { provide: OfferService, useClass: OfferServiceMock }
+            { provide: NavigationService, useClass: NavigationServiceMock },
+            { provide: OfferService, useClass: OfferServiceMock },
+            { provide: Router, useClass: RouterStub },
           ]
         }
       })    

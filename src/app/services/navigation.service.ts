@@ -21,7 +21,7 @@ export class NavigationService {
     return replacedEqualsByPeriod;
   }
 
-  private static convertSafeBase64ToRegularBase64(safeBase64String: string): string {
+  private convertSafeBase64ToRegularBase64(safeBase64String: string): string {
     let replacedMinusByPlus = safeBase64String.replace("-", "+");
     let replacedUnderscoreBySlash = replacedMinusByPlus.replace("_", "/");
     let replacedPeriodByEquals = replacedMinusByPlus.replace(".", "=");
@@ -38,7 +38,7 @@ export class NavigationService {
     }
   }
 
-  public static obtainData(route: ActivatedRoute): any {
+  public obtainData(route: ActivatedRoute): any {
     const routerDataSafeBase64 = route.snapshot.paramMap.get('routerData');
     if (!routerDataSafeBase64) {
       return {};
@@ -48,5 +48,5 @@ export class NavigationService {
     const routerDataObject = JSON.parse(routerDataAsString);
     return routerDataObject;
   }
-  
+
 }
