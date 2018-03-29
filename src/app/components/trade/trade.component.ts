@@ -210,5 +210,9 @@ export class TradeComponent implements OnInit {
 	
 	displayDownloadResultsButton(): boolean {
     return this.trade.state == TradeState.RESULTS_GENERATED;
-	}
+  }
+  
+  navigateBack() {
+    this.navigationService.back();
+  }
 }

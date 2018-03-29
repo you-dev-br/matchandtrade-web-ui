@@ -36,7 +36,7 @@ describe('TradeListComponent', () => {
       .overrideComponent(TradeListComponent, {
         set: {
           providers:[
-            { provide: NavigationService, useClass: NavigationServiceMock }
+            { provide: NavigationService, useClass: NavigationServiceMock },
             { provide: Router, useClass: RouterStub },
             { provide: TradeService, useClass: TradeServiceMock }
           ]

@@ -71,4 +71,8 @@ export class ItemListComponent implements OnInit {
 			});
   }
 
+  navigateBack() {
+    this.navigationService.back();
+  }
+
 }

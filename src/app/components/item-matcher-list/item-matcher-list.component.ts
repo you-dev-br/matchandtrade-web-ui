@@ -79,4 +79,8 @@ export class ItemMatcherListComponent implements OnInit {
     this.navigationService.navigate('item-matcher-offer', {itemHref: item._href, tradeMembershipHref: this.tradeMembershipHref});
   }
 
+  navigateBack(): void {
+    this.navigationService.back();
+  }
+
 }

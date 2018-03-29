@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Injectable()
 export class NavigationService {
 
-  constructor(private router: Router) { }
+  // Naming as loc instead of location to avoid misunderstanding by the native javascript window location.
+  constructor(private router: Router, private loc: Location) { }
 
   /**
    * See: https://www.garykessler.net/library/base64.html
@@ -47,6 +49,10 @@ export class NavigationService {
     const routerDataAsString = atob(routerDataUnsafeBase64);
     const routerDataObject = JSON.parse(routerDataAsString);
     return routerDataObject;
+  }
+
+  public back() {
+    this.loc.back();
   }
 
 }

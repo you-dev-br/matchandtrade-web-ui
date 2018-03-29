@@ -119,8 +119,8 @@ export class ItemMatcherOfferComponent implements OnInit {
     .then(() => this.initCheckableItems());
   }
 
-  navigateBack() {
-    this.navigationService.navigate('/item-matcher-list', {tradeMembershipHref: this.tradeMembershipHref});
+  navigateBack(): void {
+    this.navigationService.back();
   }
 
   toogleOfferableItem(checkableItem: CheckableItem) {
