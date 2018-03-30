@@ -7,7 +7,6 @@ import { ItemService } from '../../services/item.service';
 import { NavigationService } from '../../services/navigation.service';
 import { Page } from '../../classes/search/page';
 import { Pagination } from '../../classes/search/pagination';
-import { NotFoundException } from '../../classes/exceptions/service-exceptions';
 
 @Component({
   selector: 'app-item-list',
@@ -64,9 +63,7 @@ export class ItemListComponent implements OnInit {
         this.loading = false;
       })
       .catch(e => {
-				if (!(e instanceof NotFoundException)) {
-					this.message.setErrorItems(e);
-				}
+				this.message.setErrorItems(e);
 				this.loading = false;
 			});
   }

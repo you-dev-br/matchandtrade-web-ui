@@ -4,7 +4,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Item } from '../../classes/pojo/item';
 import { Message } from '../message/message';
 import { NavigationService } from '../../services/navigation.service';
-import { NotFoundException } from '../../classes/exceptions/service-exceptions';
 import { Pagination } from '../../classes/search/pagination';
 import { SearchService } from '../../services/search.service';
 import { TradeMembership } from '../../classes/pojo/trade-membership';
@@ -45,9 +44,7 @@ export class ItemMatcherListComponent implements OnInit {
         return this.search(tradeMembership);
 			})
       .catch(e => {
-        if (!(e instanceof NotFoundException)) {
-          this.message.setErrorItems(e);
-        }
+        this.message.setErrorItems(e);
       })
       .then(() => this.loading = false);
   }

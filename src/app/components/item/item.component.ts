@@ -6,7 +6,6 @@ import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
 import { Message } from '../message/message';
 import { NavigationService } from '../../services/navigation.service';
-import { NotFoundException } from '../../classes/exceptions/service-exceptions';
 
 @Component({
   selector: 'app-item',
@@ -44,9 +43,7 @@ export class ItemComponent implements OnInit {
 					this.item = v;
 				})
 				.catch(e => {
-					if (!(e instanceof NotFoundException)) {
-						this.message.setErrorItems(e);
-					}
+					this.message.setErrorItems(e);
 				})
 				.then(() => {
 					this.populateForm(this.item);

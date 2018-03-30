@@ -6,16 +6,14 @@ import { HttpService } from '../services/http.service';
 import { Offer } from '../classes/pojo/offer';
 import { Page } from '../classes/search/page';
 import { SearchResult } from '../classes/search/search-result';
-import { ServiceExceptionFactory, NotFoundException } from '../classes/exceptions/service-exceptions';
+import { ExceptionFactory } from '../classes/exceptions/exceptions';
 
 @Injectable()
 export class OfferService {
 
   offerTransformer = new OfferTransformer();
 
-  constructor(
-    private httpService: HttpService
-  ) { }
+  constructor(private httpService: HttpService) { }
   
   offer(tradeMembershipHref:string, offeringItem: Item, wantedItem: Item): Promise<Offer> {
     const request = new Offer(offeringItem.itemId, wantedItem.itemId);
@@ -35,7 +33,7 @@ export class OfferService {
       this.httpService
         .get(tradeMembershipHref + '/offers?wantedItemId=' + wantedItemId, true, page)
         .then(v => resolve(this.offerTransformer.toSearchResult(v, page)))
-        .catch(e => reject( ServiceExceptionFactory.makeException(e) ));
+        .catch(e => reject( ExceptionFactory.makeException(e) ));
     });
   }
 
@@ -44,7 +42,7 @@ export class OfferService {
       this.httpService
         .delete(tradeMembershipHref + '/offers/' + offerId)
         .then(v => resolve(true))
-        .catch(e => reject(ServiceExceptionFactory.makeException(e)));
+        .catch(e => reject(ExceptionFactory.makeException(e)));
     });
   }
 

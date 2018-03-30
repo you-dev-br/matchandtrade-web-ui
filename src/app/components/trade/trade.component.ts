@@ -16,8 +16,6 @@ import { TradeService } from '../../services/trade.service';
 import { UserService } from '../../services/user.service';
 import { TradeTransformer } from '../../classes/transformers/trade-transformer';
 
-export class TradeMembershipNotFoundException {};
-
 @Component({
   selector: 'app-trade',
   templateUrl: './trade.component.html',

@@ -5,7 +5,7 @@ import { Item } from '../classes/pojo/item';
 import { ItemTransformer } from '../classes/transformers/item-transformer';
 import { Page } from '../classes/search/page';
 import { SearchResult } from '../classes/search/search-result';
-import { ServiceExceptionFactory, NotFoundException } from '../classes/exceptions/service-exceptions';
+import { ExceptionFactory } from '../classes/exceptions/exceptions';
 
 @Injectable()
 export class ItemService {
@@ -48,7 +48,7 @@ export class ItemService {
       this.httpService
         .get(tradeMembershipHref + '/items', true, page)
         .then(v => resolve(this.itemTransformer.toSearchResult(v, page)))
-        .catch(e => reject( ServiceExceptionFactory.makeException(e) ));
+        .catch(e => reject( ExceptionFactory.makeException(e) ));
     });
   }
 

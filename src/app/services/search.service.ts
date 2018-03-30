@@ -8,7 +8,7 @@ import { Item } from '../classes/pojo/item';
 import { ItemTransformer } from '../classes/transformers/item-transformer';
 import { Pagination } from '../classes/search/pagination';
 import { Page } from '../classes/search/page';
-import { ServiceExceptionFactory } from '../classes/exceptions/service-exceptions';
+import { ExceptionFactory } from '../classes/exceptions/exceptions';
 
 @Injectable()
 export class SearchService {
@@ -32,7 +32,7 @@ export class SearchService {
           const itemTransformer = new ItemTransformer();
           resolve(itemTransformer.toSearchResult(v, page));
         })
-        .catch(e => reject(ServiceExceptionFactory.makeException(e)));
+        .catch(e => reject(ExceptionFactory.makeException(e)));
     });
   }
 
@@ -50,7 +50,7 @@ export class SearchService {
           let searchResult = new SearchResult<Item>(items, new Pagination(1, 3));
           resolve(searchResult);
         })
-        .catch(e => reject(ServiceExceptionFactory.makeException(e)));
+        .catch(e => reject(ExceptionFactory.makeException(e)));
     });
   }  
 

@@ -53,9 +53,7 @@ export class TradeListComponent {
         this.loading = false;
       }).catch((e) => {
         this.loading = false;
-        if (e.status != 404) {
-          this.message.setErrorItems(e);
-        }
+        this.message.setErrorItems(e);
       });
   }
 

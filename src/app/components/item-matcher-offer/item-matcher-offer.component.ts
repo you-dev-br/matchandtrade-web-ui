@@ -7,7 +7,6 @@ import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
 import { Message } from '../message/message';
 import { NavigationService } from '../../services/navigation.service';
-import { NotFoundException } from '../../classes/exceptions/service-exceptions';
 import { Offer } from '../../classes/pojo/offer';
 import { OfferService } from '../../services/offer.service';
 import { Page } from '../../classes/search/page';
@@ -56,9 +55,7 @@ export class ItemMatcherOfferComponent implements OnInit {
     })
     .then(() => this.initCheckableItems())
     .catch((e) => {
-      if (!(e instanceof NotFoundException)) {
-        this.message.setErrorItems(e);
-      }
+      this.message.setErrorItems(e);
       this.loading = false;
     })
   }
@@ -77,9 +74,7 @@ export class ItemMatcherOfferComponent implements OnInit {
       });
     })
     .catch((e) => {
-      if (!(e instanceof NotFoundException)) {
-        this.message.setErrorItems(e);
-      }
+      this.message.setErrorItems(e);
     })
     .then(() => {
       this.dirty = false;
