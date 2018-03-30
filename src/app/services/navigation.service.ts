@@ -55,4 +55,8 @@ export class NavigationService {
     this.loc.back();
   }
 
+  public goToLocation(url: string) {
+    location.href = url;
+  }
+
 }
