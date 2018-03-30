@@ -2,17 +2,19 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthenticationCallbackComponent } from './components/authentication-callback/authentication-callback.component'
-import { LoggedInGuard } from './classes/permission/logged-in.guard';
 import { ItemListComponent } from './components/item-list/item-list.component';
 import { ItemComponent } from './components/item/item.component';
+import { ItemMatcherListComponent } from './components/item-matcher-list/item-matcher-list.component';
+import { ItemMatcherOfferComponent } from './components/item-matcher-offer/item-matcher-offer.component';
+import { LoggedInGuard } from './classes/permission/logged-in.guard';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { TradeComponent } from './components/trade/trade.component';
 import { TradeListComponent } from './components/trade-list/trade-list.component';
-import { ItemMatcherListComponent } from './components/item-matcher-list/item-matcher-list.component';
-import { ItemMatcherOfferComponent } from './components/item-matcher-offer/item-matcher-offer.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 const routes: Routes = [
-  { path: 'authenticate-callback', component: AuthenticationCallbackComponent },
+  { path: '', component: WelcomeComponent },
+  { path: 'authenticate-callback', component: AuthenticationCallbackComponent }, 
   { path: 'item-matcher-list', component: ItemMatcherListComponent },
   { path: 'item-matcher-offer', component: ItemMatcherOfferComponent },
   { path: 'item-list', component: ItemListComponent },
@@ -24,7 +26,8 @@ const routes: Routes = [
     data: {
       guardRedirect: 'sign-in'
     }},
-  { path: 'sign-in', component: SignInComponent }
+  { path: 'sign-in', component: SignInComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

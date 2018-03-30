@@ -61,4 +61,8 @@ export class NavigationBarComponent implements OnInit {
     this.navigationService.navigate('/trade-list');
   }
 
+  onMatchAndTrade() {
+    this.navigationService.navigate('/welcome');
+  }
+
 }

@@ -1,0 +1,11 @@
+.welcome-container {
+  min-height: 10em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.welcome-content {
+  min-height: 3em;
+}

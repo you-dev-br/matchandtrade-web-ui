@@ -22,6 +22,7 @@ import { UserService } from './services/user.service';
 import { ItemMatcherListComponent } from './components/item-matcher-list/item-matcher-list.component';
 import { ItemMatcherOfferComponent } from './components/item-matcher-offer/item-matcher-offer.component';
 import { NavigationService } from './services/navigation.service';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { NavigationService } from './services/navigation.service';
     TradeComponent,
     TradeListComponent,
     ItemMatcherOfferComponent,
+    WelcomeComponent,
   ],
   imports: [
     AppRoutingModule,

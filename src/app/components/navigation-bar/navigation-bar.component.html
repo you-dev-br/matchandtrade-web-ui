@@ -6,8 +6,8 @@
   #navigationBar>
 
   <div class="navbar-brand" *ngIf="!isSmallScreenSize()">
-    <a class="navbar-item">
-      Matching and Trade
+    <a class="navbar-item" (click)="onMatchAndTrade()" (keyup.enter)="onMatchAndTrade()" routerLinkActive="active" tabindex="1">
+      <span class="router-link">Match And Trade</span>
     </a>
     <a class="navbar-item" (click)="onTrades()" (keyup.enter)="onTrades()" routerLinkActive="active" tabindex="1">
       <span class="router-link">Trades</span>
