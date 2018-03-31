@@ -8,11 +8,10 @@
   </div>
 </div>
 
-
 <div *ngIf="!loading && offerableItems.length>0">
-<p class="wanted-item-paragraph">
-  Items you want to offer for: <i>{{wantedItem.name}}</i>
-</p>
+  <p class="wanted-item-paragraph">
+    Items you want to offer for: <i>{{wantedItem.name}}</i>
+  </p>
 
   <div>
     <table id="offering_items_table" class="table is-bordered is-striped is-hoverable is-fullwidth">
@@ -38,20 +37,21 @@
       (onPreviousPage)="previousPage()"></app-pagination>
   </div>
 
-  <div class="mt-control-panel is-pulled-right">
-      <button
-        class="button is-primary"
-        (click)="navigateBack()">
-        <i class="fa fa-backward" aria-hidden="true"></i>Back
-      </button>
-      <button
-        id="save-offer"
-        class="button is-primary"
-        type="submit"
-        [disabled]="isSaveEnabled()"
-        (click)="save()">
-        <i class="fa fa-floppy-o" aria-hidden="true"></i>Save
-      </button>
+  <div class="mt-cmd-panel-container">
+    <button 
+      class="mt-cmd-panel-first button is-primary"
+      (click)="navigateBack()">
+      <i class="fa fa-backward" aria-hidden="true"></i>Back
+    </button>
+    <button
+      class="mt-cmd-panel-last button is-primary"
+      id="save-offer"
+      type="submit"
+      [disabled]="isSaveEnabled()"
+      (click)="save()">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>Save
+    </button>
   </div>
 
 </div>
+ 

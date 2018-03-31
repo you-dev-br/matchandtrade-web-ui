@@ -1,6 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~variables.scss';
 
+html, body {
+  height: 100%;
+}
+
 caption {
   background-color: $primary-7;
   border: 1px solid $primary-8;
@@ -34,20 +38,36 @@ caption {
 	outline: 1px solid $primary-7;
 }
 
-.mt-control-panel {
-  padding: 2em 0em 2em 0em;
-  text-align: center;
+// ============
+// mt-cmd-panel
+// ============
+.mt-cmd-panel-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2em;
 }
 
-.mt-control-panel i {
-  margin-right: 0.5em;
+.mt-cmd-panel-first {
+  margin: 0.25em 0.25em 0em 0em;
 }
 
-.mt-control-panel button {
-  margin-left: 0.25em;
+.mt-cmd-panel-first i {
   margin-right: 0.25em;
 }
 
-html, body {
-  height: 100%;
+.mt-cmd-panel-middle {
+  margin: 0.25em 0.25em 0em 0em;
+}
+
+.mt-cmd-panel-middle i {
+  margin-right: 0.25em;
+}
+
+.mt-cmd-panel-last {
+  margin: 0.25em 0em 0em 0em;
+}
+
+.mt-cmd-panel-last i {
+  margin-right: 0.25em;
 }
