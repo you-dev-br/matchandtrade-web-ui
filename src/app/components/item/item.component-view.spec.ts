@@ -1,21 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute, Router, NavigationServiceMock } from '../../../test/router-stubs';
+import { RouterTestingModule } from '@angular/router/testing';
 
+import { ActivatedRouteMock, NavigationServiceMock } from '../../../test/router-mock';
 import { ItemComponent } from './item.component';
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
 import { NavigationService } from '../../services/navigation.service';
 import { ItemService } from '../../services/item.service';
 import { Item } from '../../classes/pojo/item';
-
-const activatedRouteMock = {
-  snapshot: {
-      paramMap: {
-          get: function(a: any){ return {itemHref:'itemHrefMock'} }
-      }
-  }
-}
 
 class ItemServiceMock {
   get(href) {
@@ -52,10 +46,10 @@ describe('ItemComponent-VIEW', () => {
     .overrideComponent(ItemComponent, {
       set: {
         providers:[
-          { provide: ActivatedRoute, useValue: activatedRouteMock },
+          { provide: ActivatedRoute, useValue: new ActivatedRouteMock({itemHref:'itemHrefMock'}) },
           { provide: ItemService, useClass: ItemServiceMock },
           { provide: NavigationService, useClass: NavigationServiceMock },
-          { provide: Router, useClass: RouterStub },
+          { provide: Router, useValue: RouterTestingModule.withRoutes([]) },
         ]
       }
     })

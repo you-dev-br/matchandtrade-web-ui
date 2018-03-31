@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { By } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute, NavigationServiceMock } from '../../../test/router-stubs';
+import { RouterTestingModule } from '@angular/router/testing';
 
+import { ActivatedRouteMock, NavigationServiceMock } from '../../../test/router-mock';
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
 import { NavigationService } from '../../services/navigation.service';
@@ -15,13 +15,6 @@ import { TradeService } from '../../services/trade.service';
 import { UserService } from '../../services/user.service';
 import { TradeMembershipService } from '../../services/trade-membership.service';
 
-const activatedRouteMock = {
-    snapshot: {
-        paramMap: {
-            get: function(a: any){ return {} }
-        }
-    }
-}
 
 describe('TradeComponent-CREATE', () => {
   let component: TradeComponent;
@@ -33,16 +26,14 @@ describe('TradeComponent-CREATE', () => {
       declarations: [
         MessageComponent,
         LoadingComponent,
-        TradeComponent,
-        RouterLinkStubDirective,
-        RouterOutletStubComponent
+        TradeComponent
       ]
     })
     .overrideComponent(TradeComponent, {
       set: {
         providers:[
-          {provide: ActivatedRoute, useValue: activatedRouteMock},
-          {provide: Router, useClass: RouterStub},
+          {provide: ActivatedRoute, useValue: new ActivatedRouteMock() },
+          {provide: Router, useValue: RouterTestingModule.withRoutes([])},
           {provide: NavigationService, useClass: NavigationServiceMock},
           {provide: TradeService, useValue: 'tradeServiceDummy'},
           {provide: TradeMembershipService, useValue: 'tradeMembershipServiceDummy'},

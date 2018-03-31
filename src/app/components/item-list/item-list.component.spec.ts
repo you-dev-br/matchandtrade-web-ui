@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute, Router, NavigationServiceMock } from '../../../test/router-stubs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Item } from '../../classes/pojo/item';
 import { ItemListComponent } from './item-list.component';
@@ -8,17 +8,11 @@ import { ItemServiceMock } from '../../../test/item-service-mock';
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
 import { NavigationService } from '../../../app/services/navigation.service';
+import { NavigationServiceMock, ActivatedRouteMock } from '../../../test/router-mock';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { SearchResult } from '../../classes/search/search-result';
 import { Pagination } from '../../classes/search/pagination';
-
-const activatedRouteMock = {
-	snapshot: {
-		paramMap: {
-			get: function (a: any) { return {} }
-		}
-	}
-}
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ItemListComponent', () => {
 	let component: ItemListComponent;
@@ -33,17 +27,17 @@ describe('ItemListComponent', () => {
         PaginationComponent
 			]
 		})
-			.overrideComponent(ItemListComponent, {
-				set: {
-					providers: [
-						{ provide: ActivatedRoute, useValue: activatedRouteMock },
-						{ provide: NavigationService, useClass: NavigationServiceMock },
-						{ provide: ItemService, useClass: ItemServiceMock },
-						{ provide: Router, useClass: RouterStub }
-					]
-				}
-			})
-			.compileComponents();
+		.overrideComponent(ItemListComponent, {
+			set: {
+				providers: [
+					{ provide: ActivatedRoute, useValue: new ActivatedRouteMock() },
+					{ provide: NavigationService, useClass: NavigationServiceMock },
+					{ provide: ItemService, useClass: ItemServiceMock },
+					{ provide: Router, useValue:  RouterTestingModule.withRoutes([]) }
+				]
+			}
+		})
+		.compileComponents();
 	}));
 
 	beforeEach(() => {

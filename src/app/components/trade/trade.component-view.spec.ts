@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Response, ResponseOptions } from '@angular/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute, NavigationServiceMock } from '../../../test/router-stubs';
+import { RouterTestingModule } from '@angular/router/testing';
 
+import { ActivatedRouteMock, NavigationServiceMock } from '../../../test/router-mock';
 import { AuthenticationService } from '../../services/authentication.service';
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
@@ -18,6 +18,7 @@ import { TradeService } from '../../services/trade.service';
 import { User } from '../../classes/pojo/user';
 import { UserService } from '../../services/user.service';
 import { NavigationService } from '../../services/navigation.service';
+import { ResponseOptions } from '@angular/http';
 
 class TradeServiceMock {
   get(href) {
@@ -29,12 +30,6 @@ class TradeServiceMock {
     });
   };
 }
-
-// class NavigationServiceMock {
-//   public obtainData(route: ActivatedRoute): any {
-//     return route.snapshot.paramMap.get('routerData');
-//   }
-// }
 
 class UserServiceMock {
   getAuthenticatedUser() { return Promise.resolve(new User())}
@@ -50,14 +45,6 @@ class TradeMembershipServiceMock {
    }
 }
 
-const activatedRouteMock = {
-  snapshot: {
-      paramMap: {
-          get: function(a: any){ return {tradeHref: 'tradeHrefMock'} }
-      }
-  }
-}
-
 describe('TradeComponent-VIEW', () => {
   let component: TradeComponent;
   let fixture: ComponentFixture<TradeComponent>;
@@ -69,24 +56,21 @@ describe('TradeComponent-VIEW', () => {
         MessageComponent,
         LoadingComponent,
         TradeComponent,
-        PaginationComponent,
-        RouterLinkStubDirective,
-        RouterOutletStubComponent
-      ],
-      providers: [ TradeServiceMock ]
-      }).overrideComponent(TradeComponent, {
-        set: {
-          providers:[
-            {provide: Router, useClass: RouterStub },
-            {provide: ActivatedRoute, useValue: activatedRouteMock},
-            {provide: NavigationService, useClass: NavigationServiceMock},
-            {provide: TradeService, useClass: TradeServiceMock},
-            {provide: UserService, useClass: UserServiceMock},
-            {provide: TradeMembershipService, useClass: TradeMembershipServiceMock}
-          ]
-        }
-      }).compileComponents();
-      
+        PaginationComponent
+      ]
+    })
+    .overrideComponent(TradeComponent, {
+      set: {
+        providers:[
+          {provide: Router, useValue: RouterTestingModule.withRoutes([]) },
+          {provide: ActivatedRoute, useValue: new ActivatedRouteMock({tradeHref: 'tradeHrefMock'}) },
+          {provide: NavigationService, useClass: NavigationServiceMock},
+          {provide: TradeService, useClass: TradeServiceMock},
+          {provide: UserService, useClass: UserServiceMock},
+          {provide: TradeMembershipService, useClass: TradeMembershipServiceMock}
+        ]
+      }
+    }).compileComponents();      
   }));
 
   beforeEach(() => {
@@ -107,10 +91,10 @@ describe('TradeComponent-VIEW', () => {
   }));
 
   it('should disable form fields if user is not the trade owner', (()=> {
-    let injectedTradeMembershipService = fixture.debugElement.injector.get(TradeMembershipService);
+    const injectedTradeMembershipService = fixture.debugElement.injector.get(TradeMembershipService);
     spyOn(injectedTradeMembershipService, 'search').and.callFake((a,b,c) => {
-      let memberships = new Array<TradeMembership>();
-      let membership = new TradeMembership();
+      const memberships = new Array<TradeMembership>();
+      const membership = new TradeMembership();
       membership.type = TradeMembershipType.MEMBER;
       memberships.push(membership);
       return Promise.resolve(new SearchResult<TradeMembership>(memberships, null));
@@ -127,11 +111,10 @@ describe('TradeComponent-VIEW', () => {
   }));
 
   it('should display subscribe button for non-members', (()=> {
-    let injectedTradeMembershipService = fixture.debugElement.injector.get(TradeMembershipService);
+    const injectedTradeMembershipService = fixture.debugElement.injector.get(TradeMembershipService);
     spyOn(injectedTradeMembershipService, 'search').and.callFake((a,b,c) => {
-        let ro = new ResponseOptions();
-        let result = new Response(ro);
-        result.status = 404;
+        const ro = new ResponseOptions();
+        const result = new Response(ro);
         return Promise.reject(result);
     });
 
@@ -144,10 +127,10 @@ describe('TradeComponent-VIEW', () => {
   }));
 
   it('should display MatchItems button when viewing a trade with MATCHING_ITEMS state', (()=> {
-    let injectedTradeService = fixture.debugElement.injector.get(TradeService);
+    const injectedTradeService = fixture.debugElement.injector.get(TradeService);
   
     spyOn(injectedTradeService, 'get').and.callFake((a) =>{
-      let trade = new Trade();
+      const trade = new Trade();
       trade.state = TradeState.MATCHING_ITEMS;
       return Promise.resolve(trade);
     });

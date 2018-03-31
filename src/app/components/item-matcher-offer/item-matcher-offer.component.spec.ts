@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterOutletStubComponent, RouterLinkStubDirective, RouterStub, ActivatedRouteStub, ActivatedRoute, Router, NavigationServiceMock } from '../../../test/router-stubs';
+import { ActivatedRoute, Router } from '@angular/router';
 
+import { ActivatedRouteMock, NavigationServiceMock } from '../../../test/router-mock';
 import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
 import { ItemServiceMock } from '../../../test/item-service-mock';
@@ -15,24 +16,11 @@ import { Pagination } from '../../classes/search/pagination';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { SearchResult } from '../../classes/search/search-result';
 import { TradeMembershipService } from '../../services/trade-membership.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ItemMatcherOfferComponent', () => {
   let component: ItemMatcherOfferComponent;
   let fixture: ComponentFixture<ItemMatcherOfferComponent>;
-
-  const activatedRouteMock = {
-    snapshot: {
-      paramMap: {
-        get: function(a: any) {
-          if (a) {
-            return a.toString();
-          } else {
-            return 'routeMock';
-          }
-        }
-      }
-    }
-  }
 
   class OfferServiceMock {
     search(page: Page, tradeMembershipHref: string, wantedItemId: number): Promise<SearchResult<Offer>> {
@@ -52,18 +40,16 @@ describe('ItemMatcherOfferComponent', () => {
         MessageComponent,
         LoadingComponent,
         ItemMatcherOfferComponent,
-        PaginationComponent,
-        RouterLinkStubDirective,
-        RouterOutletStubComponent ],
-      })
+        PaginationComponent
+      ]})
       .overrideComponent(ItemMatcherOfferComponent, {
         set: {
           providers:[
-            { provide: ActivatedRoute, useValue: activatedRouteMock },
+            { provide: ActivatedRoute, useValue: new ActivatedRouteMock() },
             { provide: ItemService, useClass: ItemServiceMock },
             { provide: NavigationService, useClass: NavigationServiceMock },
             { provide: OfferService, useClass: OfferServiceMock },
-            { provide: Router, useClass: RouterStub },
+            { provide: Router, useValue: RouterTestingModule.withRoutes([]) },
           ]
         }
       })    
