@@ -1,16 +1,16 @@
+<app-page-title [template]="'item-list'"></app-page-title>
 <app-message [message]="message"></app-message>
 <app-loading [loading]="loading && !pagination.totalEntries" [containerHeight]="15" [imageHeight]="5"></app-loading>
 
 <div *ngIf="!loading && !pagination.totalEntries" class="not-found-container">
 	<div class="not-found-content">
-		No items available at this time <i class="fa fa-frown-o" aria-hidden="true"></i>
+		You did not submited any item to this trade yet.
 	</div>
 </div>
 
 <div *ngIf="!loading && pagination.totalEntries">
 	<div>
 		<table class="table is-bordered is-striped is-hoverable is-fullwidth">
-			<caption>Items</caption>
 			<tbody>
 				<tr *ngFor="let i of items">
 					<td class="mt-table-row-clickable" 

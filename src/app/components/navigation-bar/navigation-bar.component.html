@@ -25,7 +25,7 @@
   </div>
 
   <div class="navbar-brand" *ngIf="isSmallScreenSize()">
-    <a class="navbar-item">
+    <a class="navbar-item" (click)="onMatchAndTrade()" (keyup.enter)="onMatchAndTrade()">
       Matching and Trade
     </a>
     <button class="button navbar-burger is-primary" (click)="toggleBurgerMenu()" tabindex="1">

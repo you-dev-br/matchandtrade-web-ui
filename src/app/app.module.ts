@@ -23,6 +23,7 @@ import { ItemMatcherListComponent } from './components/item-matcher-list/item-ma
 import { ItemMatcherOfferComponent } from './components/item-matcher-offer/item-matcher-offer.component';
 import { NavigationService } from './services/navigation.service';
 import { WelcomeComponent } from './components/welcome/welcome.component';
+import { PageTitleComponent } from './components/page-title/page-title.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
     TradeListComponent,
     ItemMatcherOfferComponent,
     WelcomeComponent,
+    PageTitleComponent,
   ],
   imports: [
     AppRoutingModule,

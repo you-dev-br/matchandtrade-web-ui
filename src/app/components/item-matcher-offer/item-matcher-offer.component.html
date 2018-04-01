@@ -1,3 +1,4 @@
+<app-page-title [template]="'item-matcher-offer'"></app-page-title>
 <app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
 <app-message [message]="message"></app-message>
 
@@ -10,12 +11,11 @@
 
 <div *ngIf="!loading && offerableItems.length>0">
   <p class="wanted-item-paragraph">
-    Items you want to offer for: <i>{{wantedItem.name}}</i>
+    You want: <i>{{wantedItem.name}}</i>
   </p>
 
   <div>
     <table id="offering_items_table" class="table is-bordered is-striped is-hoverable is-fullwidth">
-      <caption>Offering Items</caption>
       <tbody>
         <tr *ngFor="let offerableItem of offerableItems">
           <td class="mt-table-row-clickable item-offer-checkbox-column">
