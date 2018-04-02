@@ -13,29 +13,28 @@ import { User } from '../classes/pojo/user';
 @Injectable()
 export class UserService {
 
-  currentAuthenticatedUser: User;
+	private currentAuthenticatedUser: User;
 
-  constructor(
-    private httpService: HttpService) { }
+	constructor(private httpService: HttpService) { }
 
-  getAuthenticatedUser(): Promise<User> {
-    if (this.currentAuthenticatedUser) {
-      return new Promise<User> ((resolve, reject) => {
-        resolve(this.currentAuthenticatedUser);
-      });
-    } else {
-      return new Promise<User>( (resolve, reject) => {
-        this.httpService
-          .get('/matchandtrade-web-api/v1/authentications/')
-          .then(v => {
-            let result = new User();
-            result.userId = v.json().userId;
-            this.currentAuthenticatedUser = result;
-            resolve(result);
-          })
-          .catch(e => reject(e));
-      });    
-    }
-  }
+	getAuthenticatedUser(): Promise<User> {
+		if (this.currentAuthenticatedUser) {
+			return new Promise<User>((resolve, reject) => {
+				resolve(this.currentAuthenticatedUser);
+			});
+		} else {
+			return new Promise<User>((resolve, reject) => {
+				this.httpService
+					.get('/matchandtrade-web-api/v1/authentications/')
+					.then(v => {
+						let result = new User();
+						result.userId = v.json().userId;
+						this.currentAuthenticatedUser = result;
+						resolve(result);
+					})
+					.catch(e => reject(e));
+			});
+		}
+	}
 
 }

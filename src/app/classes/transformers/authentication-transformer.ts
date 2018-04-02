@@ -10,9 +10,7 @@ import { Transformer } from './transformer';
 export class AuthenticationTransformer extends Transformer<Authentication> {
 
     public toPojo(json: any): Authentication {
-        let result = new Authentication();
-        result.authorizationHeader = json.authenticationHeader;
-        return result;
+        return new Authentication(json.authenticationHeader);
     }
 
     public toPojos(list: any): Array<Authentication> {

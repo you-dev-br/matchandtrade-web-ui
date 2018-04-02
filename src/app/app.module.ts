@@ -10,20 +10,21 @@ import { AuthenticationCallbackComponent } from './components/authentication-cal
 import { AuthenticationService } from './services/authentication.service';
 import { ItemListComponent } from './components/item-list/item-list.component';
 import { ItemComponent } from './components/item/item.component';
+import { ItemMatcherListComponent } from './components/item-matcher-list/item-matcher-list.component';
+import { ItemMatcherOfferComponent } from './components/item-matcher-offer/item-matcher-offer.component';
 import { HttpService } from './services/http.service';
 import { LoadingComponent } from './components/loading/loading.component';
-import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { MessageComponent } from './components/message/message.component';
+import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
+import { NavigationService } from './services/navigation.service';
 import { SignInComponent } from './components/sign-in/sign-in.component';
+import { StorageService } from './services/storage.service';
+import { PageTitleComponent } from './components/page-title/page-title.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { TradeComponent } from './components/trade/trade.component';
 import { TradeListComponent } from './components/trade-list/trade-list.component';
 import { UserService } from './services/user.service';
-import { ItemMatcherListComponent } from './components/item-matcher-list/item-matcher-list.component';
-import { ItemMatcherOfferComponent } from './components/item-matcher-offer/item-matcher-offer.component';
-import { NavigationService } from './services/navigation.service';
 import { WelcomeComponent } from './components/welcome/welcome.component';
-import { PageTitleComponent } from './components/page-title/page-title.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { PageTitleComponent } from './components/page-title/page-title.component
     ReactiveFormsModule, // Refrain of using FormsModule and favor ReactiveFormModule which is more explicit and powerful than FormsModule.
     HttpModule
   ],
-  providers: [AuthenticationService, HttpService, NavigationService, UserService],
+  providers: [AuthenticationService, HttpService, NavigationService,  StorageService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

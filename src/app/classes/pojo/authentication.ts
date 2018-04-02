@@ -1,4 +1,8 @@
 export class Authentication {
-    authorizationHeader: string;
-    userId: number;
+	authorizationHeader: string;
+
+	constructor(authHeader: string) {
+		this.authorizationHeader = authHeader;
+	}
+
 }

@@ -5,13 +5,13 @@ import 'rxjs/add/operator/map';
 
 import { Authentication } from '../classes/pojo/authentication';
 import { AuthenticationTransformer } from '../classes/transformers/authentication-transformer';
+import { StorageService } from './storage.service';
 
 @Injectable()
 export class AuthenticationService {
-  private lastAuthentication: Authentication;
   private authenticationTransformer = new AuthenticationTransformer();
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private storageService: StorageService) { }
 
   public authorizationHeaders(): Promise<Headers> {
     return new Promise<Headers>((resolve, reject) => {
@@ -26,20 +26,20 @@ export class AuthenticationService {
   }
 
   public isSignedIn(): boolean {
-    return this.lastAuthentication ? true : false;
+		return this.storageService.getAuthentication() ? true : false;
   }
 
   public get(): Promise<Authentication> {
-    if (this.lastAuthentication) {
+    if (this.storageService.getAuthentication()) {
       return new Promise<Authentication>((resolve, reject) =>
-        resolve(this.lastAuthentication)
+        resolve(this.storageService.getAuthentication())
       );
     } else {
       return this.http
         .get('/matchandtrade-web-api/v1/authenticate/info')
         .map(v => {
           let result = this.authenticationTransformer.toPojo(v.json());
-          this.lastAuthentication = result;
+          this.storageService.setAuthentication(result);
           return result;
         })
         .toPromise();
@@ -47,15 +47,14 @@ export class AuthenticationService {
   }
 
   public signOut(): Promise<boolean> {
+		this.storageService.removeAuthentication();
     return new Promise<boolean>((resolve, reject) => {
       this.http
         .get('/matchandtrade-web-api/v1/authenticate/sign-out')
         .subscribe(r => {
-          this.lastAuthentication = undefined;
           resolve(true);
         }, e => resolve(e));
-
     });
-  }
-
+	}
+	
 }
