@@ -14,6 +14,7 @@ import { OfferService } from '../../services/offer.service';
 import { Page } from '../../classes/search/page';
 import { Pagination } from '../../classes/search/pagination';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { PageTitleComponent } from '../page-title/page-title.component';
 import { SearchResult } from '../../classes/search/search-result';
 import { TradeMembershipService } from '../../services/trade-membership.service';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -40,7 +41,8 @@ describe('ItemMatcherOfferComponent', () => {
         MessageComponent,
         LoadingComponent,
         ItemMatcherOfferComponent,
-        PaginationComponent
+				PaginationComponent,
+				PageTitleComponent
       ]})
       .overrideComponent(ItemMatcherOfferComponent, {
         set: {

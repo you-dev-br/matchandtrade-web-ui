@@ -7,7 +7,7 @@ import { ActivatedRouteMock, NavigationServiceMock } from '../../../test/router-
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
 import { NavigationService } from '../../services/navigation.service';
-import { PaginationComponent } from '../pagination/pagination.component';
+import { PageTitleComponent } from '../page-title/page-title.component';
 import { RouterStateSnapshot } from '@angular/router';
 import { TradeComponent } from './trade.component';
 import { Trade } from '../../classes/pojo/trade';
@@ -25,7 +25,8 @@ describe('TradeComponent-CREATE', () => {
       imports: [ReactiveFormsModule],
       declarations: [
         MessageComponent,
-        LoadingComponent,
+				LoadingComponent,
+				PageTitleComponent,
         TradeComponent
       ]
     })

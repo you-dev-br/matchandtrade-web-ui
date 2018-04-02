@@ -9,6 +9,7 @@ import { ItemService } from '../../services/item.service';
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
 import { NavigationService } from '../../services/navigation.service';
+import { PageTitleComponent } from '../page-title/page-title.component';
 
 describe('ItemComponent-CREATE', () => {
   let component: ItemComponent;
@@ -20,7 +21,8 @@ describe('ItemComponent-CREATE', () => {
       declarations: [ 
         ItemComponent,
         LoadingComponent,
-        MessageComponent,
+				MessageComponent,
+				PageTitleComponent
        ]
     })
     .overrideComponent(ItemComponent, {

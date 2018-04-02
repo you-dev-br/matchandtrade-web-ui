@@ -10,6 +10,7 @@ import { NavigationService } from '../../services/navigation.service';
 import { NavigationServiceMock } from '../../../test/router-mock';
 import { Pagination } from '../../classes/search/pagination';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { PageTitleComponent } from '../page-title/page-title.component';
 import { SearchResult } from '../../classes/search/search-result';
 import { Trade } from '../../classes/pojo/trade';
 import { TradeListComponent } from './trade-list.component';
@@ -31,7 +32,8 @@ describe('TradeListComponent', () => {
         MessageComponent,
         LoadingComponent,
         TradeListComponent,
-        PaginationComponent
+				PaginationComponent,
+				PageTitleComponent
       ]})
       .overrideComponent(TradeListComponent, {
         set: {

@@ -7,8 +7,10 @@ import { ActivatedRouteMock, NavigationServiceMock } from '../../../test/router-
 import { AuthenticationService } from '../../services/authentication.service';
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
+import { NavigationService } from '../../services/navigation.service';
+import { PageTitleComponent } from '../page-title/page-title.component';
 import { PaginationComponent } from '../pagination/pagination.component';
-import { RouterStateSnapshot } from '@angular/router';
+import { ResponseOptions } from '@angular/http';
 import { SearchResult } from '../../classes/search/search-result';
 import { TradeComponent } from './trade.component';
 import { Trade, TradeState } from '../../classes/pojo/trade';
@@ -17,8 +19,6 @@ import { TradeMembership, TradeMembershipType } from '../../classes/pojo/trade-m
 import { TradeService } from '../../services/trade.service';
 import { User } from '../../classes/pojo/user';
 import { UserService } from '../../services/user.service';
-import { NavigationService } from '../../services/navigation.service';
-import { ResponseOptions } from '@angular/http';
 
 class TradeServiceMock {
   get(href) {
@@ -56,7 +56,8 @@ describe('TradeComponent-VIEW', () => {
         MessageComponent,
         LoadingComponent,
         TradeComponent,
-        PaginationComponent
+				PageTitleComponent,
+				PaginationComponent
       ]
     })
     .overrideComponent(TradeComponent, {

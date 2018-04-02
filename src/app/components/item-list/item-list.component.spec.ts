@@ -12,6 +12,7 @@ import { NavigationServiceMock, ActivatedRouteMock } from '../../../test/router-
 import { PaginationComponent } from '../pagination/pagination.component';
 import { SearchResult } from '../../classes/search/search-result';
 import { Pagination } from '../../classes/search/pagination';
+import { PageTitleComponent } from '../page-title/page-title.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ItemListComponent', () => {
@@ -24,7 +25,8 @@ describe('ItemListComponent', () => {
 				MessageComponent,
 				LoadingComponent,
 				ItemListComponent,
-        PaginationComponent
+				PaginationComponent,
+				PageTitleComponent
 			]
 		})
 		.overrideComponent(ItemListComponent, {
@@ -51,7 +53,7 @@ describe('ItemListComponent', () => {
 		fixture.whenStable().then(() => {
 			fixture.detectChanges();
 			expect(fixture.nativeElement.querySelectorAll("td").length).toBe(2);
-			expect(fixture.nativeElement.querySelector(".mt-control-panel button")).toBeTruthy();			
+			expect(fixture.nativeElement.querySelector(".mt-cmd-panel-container")).toBeTruthy();
 		});
 		expect(component).toBeTruthy();
 	});

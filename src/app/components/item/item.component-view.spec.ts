@@ -4,12 +4,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ActivatedRouteMock, NavigationServiceMock } from '../../../test/router-mock';
+import { Item } from '../../classes/pojo/item';
 import { ItemComponent } from './item.component';
+import { ItemService } from '../../services/item.service';
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
 import { NavigationService } from '../../services/navigation.service';
-import { ItemService } from '../../services/item.service';
-import { Item } from '../../classes/pojo/item';
+import { PageTitleComponent } from '../page-title/page-title.component';
 
 class ItemServiceMock {
   get(href) {
@@ -40,7 +41,8 @@ describe('ItemComponent-VIEW', () => {
       declarations: [ 
         ItemComponent,
         LoadingComponent,
-        MessageComponent,
+				MessageComponent,
+				PageTitleComponent
        ]
     })
     .overrideComponent(ItemComponent, {
