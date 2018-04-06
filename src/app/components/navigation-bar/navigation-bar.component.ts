@@ -54,15 +54,15 @@ export class NavigationBarComponent implements OnInit {
   }
 
   onSign() {
-    this.navigationService.navigate('/sign-in');
+    this.navigationService.navigateWithData('/sign-in');
   }
 
   onTrades() {
-    this.navigationService.navigate('/trade-list');
+    this.navigationService.navigateWithData('/trade-list');
   }
 
   onMatchAndTrade() {
-    this.navigationService.navigate('/welcome');
+    this.navigationService.navigateWithData('/welcome');
   }
 
 }

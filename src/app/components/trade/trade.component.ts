@@ -173,11 +173,11 @@ export class TradeComponent implements OnInit {
   }
 
   onItems(): void {
-    this.navigationService.navigate('item-list', {tradeMembershipHref: this.tradeMembership._href});
+    this.navigationService.navigateWithData('item-list', {tradeMembershipHref: this.tradeMembership._href});
   }
   
   onMatchItems(): void {
-    this.navigationService.navigate('item-matcher-list', {tradeMembershipHref: this.tradeMembership._href});
+    this.navigationService.navigateWithData('item-matcher-list', {tradeMembershipHref: this.tradeMembership._href});
   }
 
 	onDownloadResults(): void {

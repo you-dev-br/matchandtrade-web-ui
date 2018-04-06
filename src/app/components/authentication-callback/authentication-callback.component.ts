@@ -21,7 +21,7 @@ export class AuthenticationCallbackComponent {
     private router: Router) {
     authenticationService.get().then((v) => {
       this.authorizationHeader = v.authorizationHeader;
-      this.navigationService.navigate('trade-list');
+      this.navigationService.navigateWithData('trade-list');
     })
     .catch(e => {
       this.message.setErrorItems(e);

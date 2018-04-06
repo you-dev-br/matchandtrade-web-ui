@@ -26,11 +26,11 @@ export class TradeListComponent {
   }
 
   createTrade() {
-    this.navigationService.navigate('trades');
+    this.navigationService.navigateWithData('trades');
   }
 
   navigateToTrade(trade: Trade) {
-    this.navigationService.navigate('trades', {tradeHref: trade._href});
+    this.navigationService.navigateWithData('trades', {tradeHref: trade._href});
   }
 
   nextPage() {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { Item } from '../../classes/pojo/item';
 import { Message } from '../message/message';
@@ -27,7 +27,6 @@ export class ItemMatcherListComponent implements OnInit {
   constructor(
     private navigationService: NavigationService,
     private route: ActivatedRoute,
-    private router: Router,
     private searchService: SearchService,
     private tradeMembershipService: TradeMembershipService,
   ) { }
@@ -73,7 +72,7 @@ export class ItemMatcherListComponent implements OnInit {
   }
 
   navigateToOffer(item: Item) {
-    this.navigationService.navigate('item-matcher-offer', {itemHref: item._href, tradeMembershipHref: this.tradeMembershipHref});
+    this.navigationService.navigate(['item-matcher-offer', this.tradeMembershipHref, item._href]);
   }
 
   navigateBack(): void {

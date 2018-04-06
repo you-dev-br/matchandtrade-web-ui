@@ -13,7 +13,7 @@ export class WelcomeComponent {
   constructor(private navigationService: NavigationService) { }
 
   navigateToTradeList() {
-    this.navigationService.navigate('/trade-list');
+    this.navigationService.navigateWithData('/trade-list');
   }
 
   signInWithGoogle() {

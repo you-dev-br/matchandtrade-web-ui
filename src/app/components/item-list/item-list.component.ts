@@ -36,11 +36,11 @@ export class ItemListComponent implements OnInit {
   }
 
   createItem() {
-    this.navigationService.navigate('items', {tradeMembershipHref: this.tradeMembershipHref});
+    this.navigationService.navigateWithData('items', {tradeMembershipHref: this.tradeMembershipHref});
 	}
 
   navigateToItem(item: Item) {
-    this.navigationService.navigate('items', {itemHref: item._href});
+    this.navigationService.navigateWithData('items', {itemHref: item._href});
   }
 	
 	nextPage() {
