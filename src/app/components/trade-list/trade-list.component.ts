@@ -26,7 +26,7 @@ export class TradeListComponent {
   }
 
   createTrade() {
-    this.navigationService.navigateWithData('trades');
+    this.navigationService.navigate(['trades']);
   }
 
   navigateToTrade(trade: Trade) {
