@@ -3,7 +3,11 @@ import { ActivatedRoute} from '@angular/router';
 export class NavigationServiceMock {
   public obtainData(route: ActivatedRoute): any {
     return route.snapshot.paramMap.get('routerData');
-  }
+	}
+	
+	public obtainUrlPathParam(route: ActivatedRoute, paramName: string): string {
+		return route.snapshot.paramMap.get(paramName);
+	}
 }
 
 /**

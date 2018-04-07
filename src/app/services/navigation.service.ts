@@ -18,15 +18,15 @@ export class NavigationService {
    */
   private encodeToSafeBase64(input: string): string {
     const base64String = btoa(input);
-    const replacedPlusByMinus = base64String.replace("+", "-");
-    const replacedSlashByUnderscore = replacedPlusByMinus.replace("/", "_");
-    return replacedSlashByUnderscore.replace("=", ".");
+    const replacedPlusByMinus = base64String.replace(/\+/g, "-");
+    const replacedSlashByUnderscore = replacedPlusByMinus.replace(/\//g, "_");
+    return replacedSlashByUnderscore.replace(/=/g, ".");
   }
 
   private decodeFromSafeBase64(input: string): string {
-    const replacedEqualsByPeriod = input.replace(".", "=");
-    const replacedUnderscoreBySlash = replacedEqualsByPeriod.replace("_", "/");
-    const replacedPlusByMinus = replacedUnderscoreBySlash.replace("-", "+");
+    const replacedEqualsByPeriod = input.replace(/\./g, "=");
+    const replacedUnderscoreBySlash = replacedEqualsByPeriod.replace(/_/g, "/");
+    const replacedPlusByMinus = replacedUnderscoreBySlash.replace(/-/g, "+");
     return atob(replacedPlusByMinus);
   }
 
