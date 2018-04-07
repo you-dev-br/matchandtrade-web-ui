@@ -22,7 +22,7 @@ export class SignInComponent {
 
   signOut(): void {
     this.authenticationService.signOut().then(v => {
-      this.navigationService.goToLocation('/');
+      this.navigationService.navigate(['/'])
     });
   }
 

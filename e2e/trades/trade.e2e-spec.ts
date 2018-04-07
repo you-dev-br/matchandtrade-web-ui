@@ -85,11 +85,14 @@ describe('Trades', () => {
 
   it('nom-members should subscribe to trade', () => {
     // Create Trade
+    signInHelper.signOut();
+    signInHelper.signIn('bob');
     const tradeName = 'Egypt' + salt;
     tradeHelper.createTrade(tradeName);
 
     // Sign-in with trade owner
-    signInHelper.signIn('bob');
+    signInHelper.signOut();
+    signInHelper.signIn('carol');
     
     // Subscribe to Trade
     page.elementNavigationBarTrades().click();

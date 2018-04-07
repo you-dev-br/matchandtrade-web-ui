@@ -3,7 +3,7 @@ import { browser, by, element } from 'protractor';
 export class TradePage {
 
   elementNavigationBarTrades() {
-    return element(by.cssContainingText('.router-link', 'Trades'));
+    return element(by.id('navbar-trades'));
   }
 
   elementCreateTradeButton() {
