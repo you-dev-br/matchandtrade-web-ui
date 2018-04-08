@@ -8,25 +8,21 @@
 </div>
 
 <div *ngIf="!loading && pagination.totalEntries">
-
-	<div class="box" *ngFor="let item of items">
-		<div class="item-thumbnail">
-			<figure class="image is-64x64 figure-thumbnail">
-					No thumbnail available
-			</figure>
-		</div>
-
-		<div class="item-details">
-			<div>{{item.name}}</div>
-			<div class="item-controls">
-				<button class="button is-primary is-small" type="button" (click)="navigateToOffer(item)">
-					<i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="small-button-text">I Want</span>
-				</button>
-			</div>
-		</div>
-
-		<div class="clear-floating"></div>
-	</div>
+	<table class="table is-bordered is-fullwidth">
+		<tbody>
+			<tr *ngFor="let item of items"><td>
+				<figure class="pull-left image is-64x64 figure-thumbnail item-thumbnail">
+						No thumbnail available
+				</figure>
+				<div>{{item.name}}</div>
+				<div class="item-controls">
+					<button class="button is-primary is-small" type="button" (click)="navigateToOffer(item)">
+						<i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="small-button-text">I Want</span>
+					</button>
+				</div>
+			</td></tr>
+		</tbody>
+	</table>
 
 	<app-pagination
 		[loading]="loading"
@@ -44,4 +40,3 @@
 	</div>
 
 </div>
-

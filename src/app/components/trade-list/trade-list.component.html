@@ -7,20 +7,18 @@
 </div>
 
 <div *ngIf="!loading && pagination.totalEntries">
-  <div>
-    <table class="table is-bordered is-striped is-hoverable is-fullwidth">
-      <tbody>
-        <tr *ngFor="let t of trades">
-          <td class="mt-table-row-clickable" (keyup.enter)="navigateToTrade(t)" (click)="navigateToTrade(t)" tabindex="2">{{t.name}}</td>
-        </tr>
-      </tbody>
-    </table>
-    <app-pagination
-      [loading]="loading"
-      [pagination]="pagination"
-      (onNextPage)="nextPage()"
-      (onPreviousPage)="previousPage()"></app-pagination>
-  </div>
+  <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+    <tbody>
+      <tr *ngFor="let t of trades">
+        <td class="mt-table-row-clickable" (keyup.enter)="navigateToTrade(t)" (click)="navigateToTrade(t)" tabindex="2">{{t.name}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <app-pagination
+    [loading]="loading"
+    [pagination]="pagination"
+    (onNextPage)="nextPage()"
+    (onPreviousPage)="previousPage()"></app-pagination>
 </div>
 
 <div *ngIf="!loading" class="mt-cmd-panel-container">
