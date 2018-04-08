@@ -2,11 +2,9 @@
 <app-message [message]="message"></app-message>
 <app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
 
-<div *ngIf="!loading && !pagination.totalEntries" class="not-found-container">
-	<div class="not-found-content">
-		<p>No items found for matching.</p>
-		<p>Possibly, other members did not submit their items yet <i class="fa fa-frown-o" aria-hidden="true"></i></p>
-	</div>
+<div *ngIf="!loading && !pagination.totalEntries" class="not-found-content">
+		<p>No items for matching.</p>
+		<p>Other members didn't submit items <i class="fa fa-frown-o" aria-hidden="true"></i></p>
 </div>
 
 <div *ngIf="!loading && pagination.totalEntries">
@@ -22,8 +20,8 @@
 			<div>{{item.name}}</div>
 			<div class="item-controls">
 				<button class="button is-primary is-small" type="button" (click)="navigateToOffer(item)">
-					<i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="small-button-text">I Want!</span>
-				</button>	
+					<i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="small-button-text">I Want</span>
+				</button>
 			</div>
 		</div>
 

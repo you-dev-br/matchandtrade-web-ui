@@ -2,10 +2,8 @@
 <app-message [message]="message"></app-message>
 <app-loading [loading]="loading && !pagination.totalEntries" [containerHeight]="15" [imageHeight]="5"></app-loading>
 
-<div *ngIf="!loading && !pagination.totalEntries" class="not-found-container">
-	<div class="not-found-content">
-		You did not submited any item to this trade yet.
-	</div>
+<div *ngIf="!loading && !pagination.totalEntries" class="not-found-content">
+	You didn't submit any item to this trade yet.
 </div>
 
 <div *ngIf="!loading && pagination.totalEntries">
