@@ -3,12 +3,15 @@ import { browser } from 'protractor';
 
 import { TradeHelper } from './trade-helper';
 import { SignInHelper } from '../sign-in-helper';
+import { ItemPage } from '../items/item.po';
+import { ItemHelper } from '../items/item-helper';
 
 describe('Trades', () => {
-	const page: TradePage = new TradePage();
+  const itemHelper: ItemHelper = new ItemHelper();
+  const page: TradePage = new TradePage();
 	const signInHelper: SignInHelper = new SignInHelper();
   const tradeHelper: TradeHelper = new TradeHelper();
-  const salt: string = (new Date().getTime()/1000000).toFixed(6).substring(8);
+  const salt: string = (new Date().getTime()/1000000).toFixed(8).substring(8);
   
   beforeAll(() => {
     signInHelper.signIn();
@@ -112,6 +115,18 @@ describe('Trades', () => {
     expect(page.elementTradeRow(tradeName)).toBeDefined();
     page.elementTradeRow(tradeName).click();
     expect(page.elementSubscribeButton().isPresent()).toBeFalsy();
+  });
+
+  it('should submit items', () => {
+    // Create Trade
+    signInHelper.signOut();
+    signInHelper.signIn('bob');
+    const tradeName = 'Ghana' + salt;
+    tradeHelper.createTrade(tradeName);
+    signInHelper.signOut();
+    signInHelper.signIn('carol');
+    tradeHelper.subscribeToTrade(tradeName);
+    itemHelper.createItem('Crambery');
   });
 
 });

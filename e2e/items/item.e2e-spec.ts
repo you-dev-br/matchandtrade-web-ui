@@ -19,7 +19,6 @@ describe('Items', () => {
     signInHelper.signIn('alice');
   });
 
-
 	it('should create new item', () => {
 		const tradeName: string = 'Greece' + salt;
 		tradeHelper.createTrade(tradeName);

@@ -1,7 +1,7 @@
 <app-page-title [template]="(isSignedIn() ? 'sign-out' : 'sign-in')"></app-page-title>
 
 <p *ngIf="!isSignedIn()">
-    <a href="{{googleUrl}}">Sign-in with Google</a>
+    <a id="sign-in-link" href="{{googleUrl}}">Sign-in with Google</a>
 </p>
 
 <p *ngIf="isSignedIn()">
