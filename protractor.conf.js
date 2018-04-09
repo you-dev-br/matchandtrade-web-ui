@@ -10,8 +10,16 @@ exports.config = {
     './protractor-extra.conf.js',
     './e2e/**/*.e2e-spec.ts'
   ],
+
+	// Running chrome in headless mode
+	// See: https://gist.github.com/cvuorinen/543c6f72f8ec917ebfd596802d387aa3
+	// See: https://github.com/angular/protractor/blob/master/docs/browser-setup.md
+	// See: https://cvuorinen.net/2017/05/running-angular-tests-in-headless-chrome/
   capabilities: {
-    'browserName': 'chrome'
+		'browserName': 'chrome',
+		chromeOptions: {
+			args: [ "--headless", "--disable-gpu", "--window-size=450x700" ]
+		}
   },
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
