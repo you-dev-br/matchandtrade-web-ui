@@ -21,9 +21,7 @@ export class SignInComponent {
   }
 
   signOut(): void {
-    this.authenticationService.signOut().then(v => {
-      this.navigationService.navigate(['/'])
-    });
+    this.authenticationService.signOut().then(v => this.navigationService.navigate('/'));
   }
 
   isSignedIn(): boolean {

@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: '', component: WelcomeComponent },
   { path: 'authenticate-callback', component: AuthenticationCallbackComponent }, 
   { path: 'item-matcher-list', component: ItemMatcherListComponent },
-  { path: 'item-matcher-offer/:tradeMembershipHref/:itemHref', component: ItemMatcherOfferComponent },
+  { path: 'item-matcher-offer', component: ItemMatcherOfferComponent },
   { path: 'item-list', component: ItemListComponent },
   { path: 'items', component: ItemComponent },
   { path: 'trade-list', component: TradeListComponent },

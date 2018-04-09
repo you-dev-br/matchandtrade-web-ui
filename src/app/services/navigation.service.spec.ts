@@ -25,7 +25,7 @@ describe('NavigationService', () => {
 		spyOn(service, 'getSnapshotParam').and.callFake(v => {
 			return testingParamAsSafeBase64;
 		});
-		service.navigateWithData('test-path', testingParam);
+		service.navigate('test-path', testingParam);
 		const testingParamObtained = service.obtainData(null);
 		expect(testingParam).toEqual(testingParamObtained);
   }));

@@ -8,8 +8,8 @@ import { ActivatedRouteSnapshot } from '@angular/router/src/router_state';
 export class NavigationService {
 
   // Naming as loc instead of location to avoid misunderstanding by the native javascript window location.
-  constructor(private router: Router, private loc: Location) { }
-
+	constructor(private router: Router, private loc: Location) { }
+	
   /**
    * See: https://www.garykessler.net/library/base64.html
    * NOTE: In the URL and Filename safe variant, character 62 (0x3E) is replaced with a "-" (minus sign) 
@@ -24,51 +24,39 @@ export class NavigationService {
     return replacedSlashByUnderscore.replace(/=/g, ".");
   }
 
-  public static decodeFromSafeBase64(input: string): string {
-		const replacedEqualsByPeriod = input.replace(/\./g, "=");
+	/**
+	 * Decodes a string generated with encodeToSafeBase64()
+	 * @param safeBase64
+	 */
+  public static decodeFromSafeBase64(safeBase64: string): string {
+		const replacedEqualsByPeriod = safeBase64.replace(/\./g, "=");
     const replacedUnderscoreBySlash = replacedEqualsByPeriod.replace(/_/g, "/");
     const replacedPlusByMinus = replacedUnderscoreBySlash.replace(/-/g, "+");
     return atob(replacedPlusByMinus);
   }
 	
   /**
-	 * Navigates to a router path using a query parameter named [routerData] with URL safe data.
+	 * Navigates to a router path using a encoded (using encodeToSafeBase64()) query parameter named [routerData]
 	 * This method does not support URL path parameters.
 	 * @param routerPath
 	 * @param routerData 
-   */
-	public navigateWithData(routerPath: string, routerData?: any) {
+	 */
+	public navigate(routerPath: string, routerData?: any) {
 		if (!routerData) {
 			this.router.navigate([routerPath]);
     } else {
 			const routerDataAsString = JSON.stringify(routerData);
 			const routerDataAsSafeBase64 = NavigationService.encodeToSafeBase64(routerDataAsString);
-      this.router.navigate([routerPath, {routerData: routerDataAsSafeBase64}]);
+      this.router.navigate([routerPath], {queryParams: {routerParam: routerDataAsSafeBase64}});
     }
   }
 
-  /**
-   * Navigates to a router path using.
-   * It supports path parameters which are required when present in the URL.
-   * It is also recomended to use this method when the URL does not require any data.
-   * @param navigationParameters
-   */
-  public navigate(navigationParameters: Array<any>): void {
-		const routerParameters = new Array();
-    routerParameters.push(navigationParameters[0]);
-    for(let i=1; i<navigationParameters.length; i++) {
-			const base64ParamSafe = NavigationService.encodeToSafeBase64(navigationParameters[i]);
-      routerParameters.push(base64ParamSafe);
-    }
-    this.router.navigate(routerParameters);
-  }
-	
   /**
 	 * Obtains data when the route was created using 'navigateWithData()'
 	 * @param route
    */
 	public obtainData(route: ActivatedRoute): any {
-		const routerDataSafeBase64 = this.getSnapshotParam(route, 'routerData');
+		const routerDataSafeBase64 = this.getSnapshotParam(route, 'routerParam');
     if (!routerDataSafeBase64) {
 			return {};
     }
@@ -77,17 +65,7 @@ export class NavigationService {
     return routerDataObject;
   }
 
-  /**
-   * Obtain data when teh route was created using 'navigate()'
-   * @param route
-   * @param paramName 
-   */
-  public obtainUrlPathParam(route: ActivatedRoute, paramName: string): string {
-    const param = route.snapshot.paramMap.get(paramName);
-    return NavigationService.decodeFromSafeBase64(param);
-  }
-
-  /**
+	/**
    * Navigates back (looks at browser history)
    */
   public back() {
@@ -102,8 +80,8 @@ export class NavigationService {
     location.href = url;
 	}
 	
-	getSnapshotParam(route: ActivatedRoute, paramName: string): string {
-		return route.snapshot.paramMap.get(paramName);
+	public getSnapshotParam(route: ActivatedRoute, paramName: string): string {
+		return route.snapshot.queryParamMap.get(paramName);
 	}
 
 }
