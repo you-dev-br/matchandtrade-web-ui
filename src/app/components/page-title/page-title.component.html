@@ -1,27 +1,20 @@
 <div class="mt-page-title">
-  <span *ngIf="template=='trade-list'">
+  <!-- Please sort it by template -->
+  <span *ngIf="template=='existing-trade'">
     <i class="mt-page-title-icon fa fa-exchange" aria-hidden="true"></i>
-    Available Trades
+    My Trade
   </span>
   <span *ngIf="template=='new-trade'">
     <i class="mt-page-title-icon fa fa-exchange" aria-hidden="true"></i>
     Create a New Trade
   </span>
-  <span *ngIf="template=='existing-trade'">
-    <i class="mt-page-title-icon fa fa-exchange" aria-hidden="true"></i>
-    My Trade
+  <span *ngIf="template=='existing-item'">
+    <i class="mt-page-title-icon fa fa-cube" aria-hidden="true"></i>
+    My Item
   </span>
   <span *ngIf="template=='item-list'">
     <i class="mt-page-title-icon fa fa-cube" aria-hidden="true"></i>
     My Items up for Trade
-  </span>
-  <span *ngIf="template=='new-item'">
-    <i class="mt-page-title-icon fa fa-cube" aria-hidden="true"></i>
-    Create a New Item
-  </span>
-  <span *ngIf="template=='existing-item'">
-    <i class="mt-page-title-icon fa fa-cube" aria-hidden="true"></i>
-    My Item
   </span>
   <span *ngIf="template=='item-matcher-list'">
     <i class="mt-page-title-icon fa fa-map-signs" aria-hidden="true"></i>
@@ -31,6 +24,10 @@
     <i class="mt-page-title-icon fa fa-map-signs" aria-hidden="true"></i>
     Which Items Would You Offer?
   </span>
+  <span *ngIf="template=='new-item'">
+    <i class="mt-page-title-icon fa fa-cube" aria-hidden="true"></i>
+    Create a New Item
+  </span>  
   <span *ngIf="template=='sign-in'">
     <i class="mt-page-title-icon fa fa-sign-in" aria-hidden="true"></i>
     Sign-in with...
@@ -38,6 +35,14 @@
   <span *ngIf="template=='sign-out'">
     <i class="mt-page-title-icon fa fa-sign-out" aria-hidden="true"></i>
     Sign-out...
+  </span>
+  <span *ngIf="template=='trade-list'">
+    <i class="mt-page-title-icon fa fa-exchange" aria-hidden="true"></i>
+    Available Trades
+  </span>
+  <span *ngIf="template=='trade-result'">
+    <i class="mt-page-title-icon fa fa-file-text" aria-hidden="true"></i>
+    Trade Results
   </span>
   <span *ngIf="template=='welcome'">
     <i class="mt-page-title-icon fa fa-home" aria-hidden="true"></i>

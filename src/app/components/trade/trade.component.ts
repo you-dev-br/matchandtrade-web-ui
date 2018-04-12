@@ -180,18 +180,8 @@ export class TradeComponent implements OnInit {
     this.navigationService.navigate('item-matcher-list', {tradeMembershipHref: this.tradeMembership._href});
   }
 
-	onDownloadResults(): void {
-		this.tradeService.getResults(this.trade._href)
-			.then(v => {
-				// TODO make this a utility method
-				const downloadUrl = window.URL.createObjectURL(v);
-				const link = document.createElement('a');
-				link.href = window.URL.createObjectURL(v);
-				const tradeNameAsAlphanumericCharactersOnly = this.trade.name.replace(/[\W_]+/g," ");
-				link.download = tradeNameAsAlphanumericCharactersOnly + '[' + this.trade.tradeId + '].csv'  ;
-				link.click();
-			})
-			.catch(e => this.message.setErrorItems(e));
+	onResults(): void {
+    this.navigationService.navigate('trade-result', {tradeHref: this.trade._href});
 	}
 	
   displaySubscribeButton(): boolean {
@@ -206,7 +196,7 @@ export class TradeComponent implements OnInit {
     return this.tradeMembership && this.trade.state == TradeState.SUBMITTING_ITEMS;
 	}
 	
-	displayDownloadResultsButton(): boolean {
+	displayResultsButton(): boolean {
     return this.trade.state == TradeState.RESULTS_GENERATED;
   }
   

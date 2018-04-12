@@ -9,9 +9,11 @@ import { SearchResult } from '../classes/search/search-result';
 import { Trade } from '../classes/pojo/trade';
 import { Observable } from 'rxjs/Observable';
 import { KeyValuePair } from '../classes/pojo/key-value-pair';
+import { forEach } from '@angular/router/src/utils/collection';
 
 export enum HttpMethod {POST='POST', PUT='PUT'};
 
+// TODO Clean up this class
 @Injectable()
 export class HttpService {
 
@@ -24,7 +26,7 @@ export class HttpService {
    * @param authorized 
    * @param page 
    */
-  public buildRequestOptions(page?: Page, authorized?: boolean, params?: Array<KeyValuePair>): Promise<RequestOptions> {
+  public buildRequestOptions(page?: Page, authorized?: boolean, params?: Array<KeyValuePair>, headers?: Array<KeyValuePair>): Promise<RequestOptions> {
     let shouldAuthenticate = authorized;
     if (authorized == undefined || authorized == null) {
       shouldAuthenticate = true;
@@ -36,6 +38,11 @@ export class HttpService {
             let requestOptions = HttpService.buildPaginatedRequestOptions(page);
             this.appendParameters(requestOptions, params);
             requestOptions.headers = v;
+            if (headers) {
+              headers.forEach(h => {
+                requestOptions.headers.append(h.key, h.value);
+              });
+            }
             resolve(requestOptions);
           })
           .catch((e) => reject(e));
@@ -81,9 +88,9 @@ export class HttpService {
    * Performs a request with `get` http method.
    * It is an authenticated request by default.
    */
-  public get(url: string, authenticated?: boolean, page?: Page, params?: Array<KeyValuePair>): Promise<Response>{
+  public get(url: string, authenticated?: boolean, page?: Page, params?: Array<KeyValuePair>, headers?: Array<KeyValuePair>): Promise<Response>{
     return new Promise<Response>((resolve, reject) => {
-      this.buildRequestOptions(page, authenticated, params).then(o => {
+      this.buildRequestOptions(page, authenticated, params, headers).then(o => {
         this.http.get(url, o).subscribe(r => resolve(r), e => reject(e));
       });
     });

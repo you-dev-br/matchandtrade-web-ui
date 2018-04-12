@@ -6,12 +6,16 @@ import { Pagination } from '../classes/search/pagination';
 import { Page } from '../classes/search/page';
 import { SearchResult } from '../classes/search/search-result';
 import { Trade } from '../classes/pojo/trade';
+import { TradeResult } from '../classes/pojo/trade-result';
 import { TradeTransformer } from '../classes/transformers/trade-transformer';
+import { TradeResultTransformer } from '../classes/transformers/trade-result-transformer';
+import { KeyValuePair } from '../classes/pojo/key-value-pair';
 
 @Injectable()
 export class TradeService {
   trades: Trade[] = new Array<Trade>();
   tradeTransformer = new TradeTransformer();
+  tradeResultTransformer = new TradeResultTransformer();
 
   constructor(
     private httpService: HttpService
@@ -26,12 +30,25 @@ export class TradeService {
     });
   }
 
-	getResults(href: string): Promise<Blob> {
+	getResultsCsv(href: string): Promise<Blob> {
+    const headers = new Array<KeyValuePair>();
+    headers.push(new KeyValuePair("Content-type", "text/csv")); 
 		return new Promise<Blob>((resolve, reject) => {
+			this.httpService
+				.get(href + '/results', true, undefined, undefined, headers)
+				.then(v => {
+					resolve(new Blob([v.arrayBuffer()], { type: 'text/csv' }));
+				})
+				.catch(e => reject(e));
+		});
+	}
+
+  getResultsJson(href: string): Promise<TradeResult> {
+		return new Promise<TradeResult>((resolve, reject) => {
 			this.httpService
 				.get(href + '/results')
 				.then(v => {
-					resolve(new Blob([v.arrayBuffer()], { type: 'text/csv' }));
+					resolve(this.tradeResultTransformer.toPojo(v.json()));
 				})
 				.catch(e => reject(e));
 		});

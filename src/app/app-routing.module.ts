@@ -10,6 +10,7 @@ import { LoggedInGuard } from './classes/permission/logged-in.guard';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { TradeComponent } from './components/trade/trade.component';
 import { TradeListComponent } from './components/trade-list/trade-list.component';
+import { TradeResultComponent } from './components/trade-result/trade-result.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'item-list', component: ItemListComponent },
   { path: 'items', component: ItemComponent },
   { path: 'trade-list', component: TradeListComponent },
+  { path: 'trade-result', component: TradeResultComponent },
   { path: 'trades',
     component: TradeComponent,
     canActivate: [ LoggedInGuard ],
