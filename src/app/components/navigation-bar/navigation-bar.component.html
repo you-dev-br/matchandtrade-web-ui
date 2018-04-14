@@ -9,20 +9,20 @@
     <a class="navbar-item" (click)="onMatchAndTrade()" (keyup.enter)="onMatchAndTrade()" tabindex="1">
       <span class="router-link">Match and Trade</span>
     </a>
-    <a id="navbar-trades" class="navbar-item" (click)="onTrades()" (keyup.enter)="onTrades()" tabindex="1">
+    <a id="navbar-trades" [class]="'navbar-item' + navbarTradesClass()" (click)="onTrades()" (keyup.enter)="onTrades()" tabindex="1">
       <span class="router-link">Trades</span>
     </a>
-    <a id="navbar-my-account" class="navbar-item" *ngIf="authenticated" (click)="onMyAccount()" (keyup.enter)="onMyAccount()" tabindex="1">
+    <a id="navbar-my-account" [class]="'navbar-item' + navbarMyAccountClass()" *ngIf="authenticated" (click)="onMyAccount()" (keyup.enter)="onMyAccount()" tabindex="1">
       <span class="router-link">My Account</span>
     </a>
-    <a id="navbar-sign" class="navbar-item" (click)="onSign()" (keyup.enter)="onSign()" tabindex="1">
+    <a id="navbar-sign" [class]="'navbar-item' + navbarSignClass()" (click)="onSign()" (keyup.enter)="onSign()" tabindex="1">
       <span class="router-link">{{signText()}}</span>
     </a>
   </div>
 
   <div class="navbar-brand" *ngIf="isSmallScreenSize()">
     <a class="navbar-item" (click)="onMatchAndTrade()" (keyup.enter)="onMatchAndTrade()">
-      Match and Trade
+			<span class="router-link">Match and Trade</span>
     </a>
     <button class="button navbar-burger is-primary" (click)="onBurgerMenu()" tabindex="1">
       <span></span>
@@ -32,9 +32,9 @@
   </div>
 
   <div [ngClass]="burgerClass">
-    <div class="burger-item router-link" (click)="onBurgerMenu('/trade-list')" tabindex="1">Trades</div>
-    <div class="burger-item router-link" *ngIf="authenticated" (click)="onBurgerMenu('/my-account')" tabindex="1">My Account</div>
-    <div class="burger-item router-link" (click)="onBurgerMenu('/sign-in')" tabindex="1">{{signText()}}</div>
+    <div [class]="'burger-item router-link' + navbarTradesClass()" (click)="onBurgerMenu('/trade-list')" tabindex="1"><i class="fa fa-caret-right"> </i> Trades</div>
+    <div [class]="'burger-item router-link' + navbarMyAccountClass()" *ngIf="authenticated" (click)="onBurgerMenu('/my-account')" tabindex="1"><i class="fa fa-caret-right"> </i> My Account</div>
+    <div [class]="'burger-item router-link' + navbarSignClass()" (click)="onBurgerMenu('/sign-in')" tabindex="1"><i class="fa fa-caret-right"> </i> {{signText()}}</div>
   </div>
 
 </nav>
