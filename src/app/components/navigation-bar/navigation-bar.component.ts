@@ -32,11 +32,14 @@ export class NavigationBarComponent implements OnInit {
     this.navigationBarWidth = navigationBarHtmlElement.clientWidth;
   }
 
-  toggleBurgerMenu() {
+  onBurgerMenu(routePath?: string): void {
     if (this.burgerClass == "burger-menu-inactive") {
       this.burgerClass = "burger-menu-active";
     } else {
       this.burgerClass = "burger-menu-inactive";
+    }
+    if (routePath) {
+      this.navigationService.navigate(routePath);
     }
   }
 
@@ -51,6 +54,10 @@ export class NavigationBarComponent implements OnInit {
 
   signText() {
     return (this.authenticated ? 'Sign-out' : 'Sign-in');
+  }
+
+  onMyAccount(): void {
+    this.navigationService.navigate('/my-account');
   }
 
   onSign() {

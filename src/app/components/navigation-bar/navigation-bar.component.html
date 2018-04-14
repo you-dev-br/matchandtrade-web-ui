@@ -6,29 +6,25 @@
   #navigationBar>
 
   <div class="navbar-brand" *ngIf="!isSmallScreenSize()">
-    <a class="navbar-item" (click)="onMatchAndTrade()" (keyup.enter)="onMatchAndTrade()" routerLinkActive="active" tabindex="1">
-      <span class="router-link">Match And Trade</span>
+    <a class="navbar-item" (click)="onMatchAndTrade()" (keyup.enter)="onMatchAndTrade()" tabindex="1">
+      <span class="router-link">Match and Trade</span>
     </a>
-    <a id="navbar-trades" class="navbar-item" (click)="onTrades()" (keyup.enter)="onTrades()" routerLinkActive="active" tabindex="1">
+    <a id="navbar-trades" class="navbar-item" (click)="onTrades()" (keyup.enter)="onTrades()" tabindex="1">
       <span class="router-link">Trades</span>
     </a>
-    <a id="navbar-sign" class="navbar-item" (click)="onSign()" (keyup.enter)="onSign()" routerLinkActive="active" tabindex="1">
+    <a id="navbar-my-account" class="navbar-item" *ngIf="authenticated" (click)="onMyAccount()" (keyup.enter)="onMyAccount()" tabindex="1">
+      <span class="router-link">My Account</span>
+    </a>
+    <a id="navbar-sign" class="navbar-item" (click)="onSign()" (keyup.enter)="onSign()" tabindex="1">
       <span class="router-link">{{signText()}}</span>
     </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start">
-    </div>
-    <div class="navbar-end">
-        <a class="navbar-item" id="user-profile" routerLink="/sign-in" routerLinkActive="active" tabindex="1"></a>
-    </div>
   </div>
 
   <div class="navbar-brand" *ngIf="isSmallScreenSize()">
     <a class="navbar-item" (click)="onMatchAndTrade()" (keyup.enter)="onMatchAndTrade()">
-      Matching and Trade
+      Match and Trade
     </a>
-    <button class="button navbar-burger is-primary" (click)="toggleBurgerMenu()" tabindex="1">
+    <button class="button navbar-burger is-primary" (click)="onBurgerMenu()" tabindex="1">
       <span></span>
       <span></span>
       <span></span>
@@ -36,8 +32,9 @@
   </div>
 
   <div [ngClass]="burgerClass">
-    <div class="burger-item router-link" routerLink="/trade-list" routerLinkActive="active" (click)="toggleBurgerMenu()" tabindex="1">Trades</div>
-    <div class="burger-item router-link" routerLink="/sign-in" routerLinkActive="active" (click)="toggleBurgerMenu()" tabindex="1">Sign-in</div>
+    <div class="burger-item router-link" (click)="onBurgerMenu('/trade-list')" tabindex="1">Trades</div>
+    <div class="burger-item router-link" *ngIf="authenticated" (click)="onBurgerMenu('/my-account')" tabindex="1">My Account</div>
+    <div class="burger-item router-link" (click)="onBurgerMenu('/sign-in')" tabindex="1">{{signText()}}</div>
   </div>
 
 </nav>

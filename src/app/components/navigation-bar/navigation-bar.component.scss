@@ -1,3 +1,5 @@
+@import '~variables.scss';
+
 .burger-menu-inactive {
     width: 100%;
     display: none;
@@ -17,7 +19,7 @@
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-#user-profile::after {
+#navbar-my-account-avatar::after {
   content: "\F2BE"; 
   font-family: FontAwesome;
   font-size: 1.5em;

@@ -78,9 +78,11 @@ export class HttpService {
    */
   public delete(url: string, authenticated?: boolean, params?: Array<KeyValuePair>): Promise<Response>{
     return new Promise<Response>((resolve, reject) => {
-      this.buildRequestOptions(null, authenticated, params).then(o => {
-        this.http.delete(url, o).subscribe(r => resolve(r), e => reject(e));
-      });
+      this.buildRequestOptions(null, authenticated, params)
+        .then(o => {
+          this.http.delete(url, o).subscribe(r => resolve(r), e => reject(e));
+        })
+        .catch(e => reject(e));
     });
   }
   
@@ -90,9 +92,11 @@ export class HttpService {
    */
   public get(url: string, authenticated?: boolean, page?: Page, params?: Array<KeyValuePair>, headers?: Array<KeyValuePair>): Promise<Response>{
     return new Promise<Response>((resolve, reject) => {
-      this.buildRequestOptions(page, authenticated, params, headers).then(o => {
-        this.http.get(url, o).subscribe(r => resolve(r), e => reject(e));
-      });
+      this.buildRequestOptions(page, authenticated, params, headers)
+        .then(o => {
+          this.http.get(url, o).subscribe(r => resolve(r), e => reject(e));
+        })
+        .catch(e => reject(e));
     });
   }
   
@@ -122,7 +126,8 @@ export class HttpService {
         } else {
           reject(new Error('Unknown http request method ' + method));
         }
-      });
+      })
+      .catch(e => reject(e));
     });
   }
   

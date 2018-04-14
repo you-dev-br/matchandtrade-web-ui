@@ -12,6 +12,7 @@ import { TradeComponent } from './components/trade/trade.component';
 import { TradeListComponent } from './components/trade-list/trade-list.component';
 import { TradeResultComponent } from './components/trade-result/trade-result.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
+import { MyAccountComponent } from './components/my-account/my-account.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -20,14 +21,10 @@ const routes: Routes = [
   { path: 'item-matcher-offer', component: ItemMatcherOfferComponent },
   { path: 'item-list', component: ItemListComponent },
   { path: 'items', component: ItemComponent },
+  { path: 'my-account', component: MyAccountComponent },
   { path: 'trade-list', component: TradeListComponent },
   { path: 'trade-result', component: TradeResultComponent },
-  { path: 'trades',
-    component: TradeComponent,
-    canActivate: [ LoggedInGuard ],
-    data: {
-      guardRedirect: 'sign-in'
-    }},
+  { path: 'trades', component: TradeComponent, canActivate: [ LoggedInGuard ] },
   { path: 'sign-in', component: SignInComponent },
   { path: '**', redirectTo: '' }
 ];

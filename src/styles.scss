@@ -23,6 +23,13 @@ caption {
 	outline-offset: 0px;
 }
 
+.mt-field-text {
+  margin: 0em 0.75em 0em 0.75em;
+}
+
+// ============
+// mt-table
+// ============
 .mt-table-row-clickable:hover {
   background-color: $primary-1;
   cursor: pointer;

@@ -26,6 +26,7 @@ import { TradeListComponent } from './components/trade-list/trade-list.component
 import { UserService } from './services/user.service';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { TradeResultComponent } from './components/trade-result/trade-result.component';
+import { MyAccountComponent } from './components/my-account/my-account.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { TradeResultComponent } from './components/trade-result/trade-result.com
     WelcomeComponent,
     PageTitleComponent,
     TradeResultComponent,
+    MyAccountComponent,
   ],
   imports: [
     AppRoutingModule,

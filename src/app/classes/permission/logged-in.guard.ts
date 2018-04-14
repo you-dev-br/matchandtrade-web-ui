@@ -13,16 +13,15 @@ export class LoggedInGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     
-    let guardRedirect = next.data['guardRedirect'];
     return this.authenticationService.get().then((v) => {
       if (v.authorizationHeader) {
         return true;
       } else {
-        this.router.navigate([guardRedirect])
+        this.router.navigate(['sign-in']);
         return false;
       }
     }).catch((e) => {
-      this.router.navigate([guardRedirect])
+      this.router.navigate(['sign-in'])
       return false;
     });
 

@@ -1,0 +1,43 @@
+<app-page-title [template]="'my-account'"></app-page-title>
+<app-message [message]="message"></app-message>
+<app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
+
+<form *ngIf="!loading && user" [formGroup]="userFormGroup" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label class="label" for="user-name">Name</label>
+    <div class="control">
+      <input
+        id="user-name"
+        class="input"
+        [formControl]="userFormGroup.controls['name']"
+        type="text"
+        placeholder="Your name">
+    </div>
+    <p class="help is-danger" *ngIf="!nameFormControl.valid && nameFormControl.touched">
+        <i class="fa fa-warning"></i>Name is mandatory and its length must be between 3 and 150.
+    </p>
+  </div>
+  <div class="field">
+    <label class="label">Email</label>
+    <div class="control">
+      <p class="mt-field-text">{{user.email}}</p>
+    </div>
+  </div>
+
+  <div class="mt-cmd-panel-container">
+    <button 
+      class="mt-cmd-panel-first button is-primary"
+      type="button"
+      (click)="navigateBack()">
+      <i class="fa fa-backward" aria-hidden="true"></i>Back
+    </button>
+    <button
+      class="mt-cmd-panel-last button is-primary"
+      id="save-item-button"
+      type="submit"
+      [disabled]="(userFormGroup.valid && userFormGroup.dirty) ? null : 'disabled'">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>Save
+    </button>	
+  </div>
+
+</form>

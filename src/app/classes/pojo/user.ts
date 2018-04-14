@@ -1,6 +1,8 @@
 export class User {
   _href: string;
-  userId: number = null;
+  userId: number;
+  name: string;
+  email: string;
 }
 
 

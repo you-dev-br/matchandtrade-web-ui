@@ -9,11 +9,14 @@ import { SearchResult } from '../classes/search/search-result';
 import { Trade } from '../classes/pojo/trade';
 import { TradeTransformer } from '../classes/transformers/trade-transformer';
 import { User } from '../classes/pojo/user';
+import { UserTransformer } from '../classes/transformers/user-transformer';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class UserService {
 
 	private currentAuthenticatedUser: User;
+	private userTransformer: UserTransformer = new UserTransformer();
 
 	constructor(private httpService: HttpService) { }
 
@@ -24,17 +27,30 @@ export class UserService {
 			});
 		} else {
 			return new Promise<User>((resolve, reject) => {
-				this.httpService
-					.get('/matchandtrade-web-api/v1/authentications/')
-					.then(v => {
-						let result = new User();
-						result.userId = v.json().userId;
-						this.currentAuthenticatedUser = result;
-						resolve(result);
-					})
+				this.httpService.get('/matchandtrade-web-api/v1/authentications/')
+					.then(v => this.get(v.json().userId))
+					.then(u => resolve(u))
 					.catch(e => reject(e));
 			});
 		}
+	}
+
+	get(userId: number): Promise<User> {
+		return new Promise<User>((resolve, reject) => {
+			this.httpService
+				.get('/matchandtrade-web-api/v1/users/' + userId)
+				.then(v => resolve(this.userTransformer.toPojo(v.json())))
+				.catch(e => reject(e));
+		});
+	}
+
+	save(user: User): Promise<User> {
+		return new Promise<User>((resolve, reject) => {
+			this.httpService
+				.put('/matchandtrade-web-api/v1/users/' + user.userId, user)
+				.then(v => resolve(this.userTransformer.toPojo(v.json())))
+				.catch(e => reject(e));
+		});
 	}
 
 }
