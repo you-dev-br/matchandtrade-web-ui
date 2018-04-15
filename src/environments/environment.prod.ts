@@ -7,5 +7,5 @@ export const environment = {
   production: true,
 	// Change ${EXTERNAL-ADDRESS} with host address used by external HTTP requests.
 	// authenticateGoogleUrl: "/api/authenticate?callbackUrl=http://${EXTERNAL-ADDRESS}:4200/authenticate/callback"
-  authenticateUrl: "/matchandtrade-web-api/v1/authenticate?callbackUrl=http://matchandtrade.com/authenticate-callback"
+  authenticateUrl: "/matchandtrade-web-api/v1/authenticate"
 };
