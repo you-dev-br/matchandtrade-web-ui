@@ -15,12 +15,12 @@ import { Trade } from '../../classes/pojo/trade';
   providers: [TradeService, UserService]
 })
 export class TradeResultComponent implements OnInit {
-  private loading: boolean = true;
-  private message: Message = new Message();
+  loading: boolean = true;
+  message: Message = new Message();
   private trade: Trade;
   private tradedItems: Array<TradedItem>;
   private tradeHref: string;
-  private tradeResult: TradeResult;
+  tradeResult: TradeResult;
 
   constructor(
     private navigationService: NavigationService,
