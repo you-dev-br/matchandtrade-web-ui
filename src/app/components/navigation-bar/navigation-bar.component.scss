@@ -1,28 +1,51 @@
 @import '~variables.scss';
 
-.burger-menu-inactive {
-    width: 100%;
-    display: none;
-}
+$navbar-heigh: 2.5rem;
 
-.burger-menu-active {
-    display: block;
+.burger-menu-inactive {
+    display: none;
 }
 
 .burger-item {
   cursor: pointer;
-  padding: 0.5em 0.5em 0.5em 0.5em;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
   background-color: rgba(0, 0, 0, 0.1);
 }
+
+.burger-item.active i {
+	display: inline;
+}
+
+.burger-item i {
+	display: none;
+}
+
 
 .burger-item:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-#navbar-my-account-avatar::after {
-  content: "\F2BE"; 
-  font-family: FontAwesome;
-  font-size: 1.5em;
-  padding: 0px 0px 0px 0px;
-  margin: 0px 0px 0px 0px;
+.navbar-brand, .navbar, .navbar-burger {
+	min-height: $navbar-heigh;
+}
+
+.navbar-burger {
+	height: $navbar-heigh;
+}
+
+.navbar-item {
+	padding: 0rem 0.5rem 0rem 0.5rem;
+}
+
+.router-link {
+	border: 0.15rem solid transparent;
+}
+
+.navbar-item.active .router-link{
+	border-width: 0.15rem;
+	border-style: solid;
+	border-bottom-color: white;
+	border-left-color: transparent;
+	border-right-color: transparent;
+	border-top-color: transparent;
 }
