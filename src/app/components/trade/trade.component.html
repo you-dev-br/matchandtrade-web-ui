@@ -22,7 +22,7 @@
     <label class="label" for="trade-state">State</label>
     <div class="control">
       <div class="select">
-        <select id="trade-state" class="select" [formControl]="tradeFormGroup.controls['state']">
+        <select id="trade-state" [formControl]="tradeFormGroup.controls['state']">
           <option *ngFor="let s of states" [value]='s.key'>{{s.value}}</option>
         </select>
       </div>

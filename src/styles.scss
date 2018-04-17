@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~variables.scss';
 
+
 html, body {
   height: 100%;
 }
@@ -77,4 +78,44 @@ caption {
 
 .mt-cmd-panel-last i {
   margin-right: 0.25em;
+}
+
+
+// ================================================
+// disabled form elements (input, textarea, select)
+// ================================================
+.input[disabled], .textarea[disabled], .select select[disabled] {
+  background-color: white;
+  border: 0em solid transparent;
+  color: $text;
+  cursor: default;
+  -webkit-appearance: none;
+}
+
+// Overwriting bulma css. So, we need to disable bulmas select arrow.
+// Then create our own select arrow (because the default arrow is very ugly)
+
+// Disable bulma arrow which is created via '.select {border}'
+.select:not(.is-multiple):not(.is-loading)::after {
+  border: none;
+}
+
+// Drawing our own custom arrow
+.select select:enabled {
+  padding-right: 2.5em;
+}
+.select select:enabled {
+  background-image:
+    linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position:
+    calc(100% - 14px) calc(1em),
+    calc(100% - 10px) calc(1em),
+    calc(100% - 1.8em) 0.5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    2px 1.3em;
+  background-repeat: no-repeat;
 }

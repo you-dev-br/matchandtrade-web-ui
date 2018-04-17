@@ -97,7 +97,7 @@ export class TradeComponent implements OnInit {
     this.stateFormControl.setValue(trade.state);
     this.nameFormControl.setValue(trade.name);
     if (!(tradeMembership && TradeMembershipType[tradeMembership.type] == TradeMembershipType.OWNER)) {
-       this.tradeFormGroup.disable();
+      this.tradeFormGroup.disable();
     }
   }
   
