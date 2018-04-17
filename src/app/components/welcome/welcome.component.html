@@ -4,6 +4,6 @@
   <a (click)='navigateToTradeList()' (keyup.enter)='navigateToTradeList()' tabindex="1">Trade</a> and exchange
   items with other people.
 </p>
-<p class='double-spacing-centered'>
+<p class='double-spacing-centered' *ngIf="!isSignedIn()">
   <a (click)='signInWithGoogle()' (keyup.enter)='signInWithGoogle()' tabindex="1"> Sign-in with Google</a> to get started.
 </p>

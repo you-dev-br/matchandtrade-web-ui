@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { AuthenticationService } from '../../services/authentication.service';
 import { NavigationService } from '../../services/navigation.service';
 import { environment } from '../../../environments/environment';
 
@@ -10,7 +11,9 @@ import { environment } from '../../../environments/environment';
 })
 export class WelcomeComponent {
 
-  constructor(private navigationService: NavigationService) { }
+  constructor(
+    private authenticationService: AuthenticationService,
+    private navigationService: NavigationService) { }
 
   navigateToTradeList() {
     this.navigationService.navigate('/trade-list');
@@ -18,6 +21,11 @@ export class WelcomeComponent {
 
   signInWithGoogle() {
     this.navigationService.goToLocation(environment.authenticateUrl);
+  }
+
+  isSignedIn(): boolean {
+    console.log('isSignedIn', this.authenticationService.isSignedIn());
+    return this.authenticationService.isSignedIn();
   }
 
 }
