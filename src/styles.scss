@@ -102,20 +102,22 @@ caption {
 
 // Drawing our own custom arrow
 .select select:enabled {
-  padding-right: 2.5em;
+  padding-right: 2em;
 }
+
 .select select:enabled {
   background-image:
     linear-gradient(45deg, transparent 50%, gray 50%),
     linear-gradient(135deg, gray 50%, transparent 50%),
     linear-gradient(to right, #ccc, #ccc);
   background-position:
-    calc(100% - 14px) calc(1em),
-    calc(100% - 10px) calc(1em),
-    calc(100% - 1.8em) 0.5em;
+    calc(100% - 13px) calc(15px),
+    calc(100% - 7px) calc(15px),
+    calc(100% - 25px) 7px;
   background-size:
-    5px 5px,
-    5px 5px,
-    2px 1.3em;
+    7px 7px,
+    7px 7px,
+    1px 20px;
   background-repeat: no-repeat;
 }
+
