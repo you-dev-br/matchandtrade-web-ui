@@ -76,8 +76,17 @@ export class NavigationBarComponent implements OnInit {
   }
 
   onMatchAndTrade() {
-    this.navigationService.navigate('/welcome');
-	}
+    this.navigationService.navigate('/home');
+  }
+  
+  navbarHomeClass() {
+    let result = '';
+    console.log('home',this.currentUrlPath.length, this.currentUrlPath );
+		if (this.currentUrlPath == 'home') {
+			result += ' active';
+		}
+		return result;    
+  }
 	
 	navbarTradesClass() {
 		let result = '';

@@ -20,7 +20,6 @@ $navbar-heigh: 2.5rem;
 	display: none;
 }
 
-
 .burger-item:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
@@ -38,11 +37,13 @@ $navbar-heigh: 2.5rem;
 }
 
 .router-link {
-	border: 0.15rem solid transparent;
+	border: 0.2rem solid transparent;
+	margin: 0rem 0rem 0rem 0rem;
+	padding-bottom: .25rem;
 }
 
-.navbar-item.active .router-link{
-	border-width: 0.15rem;
+.navbar-item.active .router-link {
+	border-width: 0.2rem;
 	border-style: solid;
 	border-bottom-color: white;
 	border-left-color: transparent;

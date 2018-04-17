@@ -15,7 +15,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { MyAccountComponent } from './components/my-account/my-account.component';
 
 const routes: Routes = [
-  { path: '', component: WelcomeComponent },
+  { path: 'home', component: WelcomeComponent },
   { path: 'authenticate-callback', component: AuthenticationCallbackComponent }, 
   { path: 'item-matcher-list', component: ItemMatcherListComponent },
   { path: 'item-matcher-offer', component: ItemMatcherOfferComponent },
