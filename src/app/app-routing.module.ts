@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'trade-result', component: TradeResultComponent },
   { path: 'trades', component: TradeComponent, canActivate: [ LoggedInGuard ] },
   { path: 'sign-in', component: SignInComponent },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({
