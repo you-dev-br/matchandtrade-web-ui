@@ -56,9 +56,6 @@ export class TradeResultComponent implements OnInit {
 
   displayAllEntries():void {
     this.tradeResult.tradedItems = this.tradedItems;
-    this.tradedItems.forEach(v => {
-      this.tradeResult.tradedItems.push(v);
-    });
   }
 
   download():void {
