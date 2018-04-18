@@ -81,7 +81,6 @@ export class NavigationBarComponent implements OnInit {
   
   navbarHomeClass() {
     let result = '';
-    console.log('home',this.currentUrlPath.length, this.currentUrlPath );
 		if (this.currentUrlPath == 'home') {
 			result += ' active';
 		}

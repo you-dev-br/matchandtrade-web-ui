@@ -27,6 +27,7 @@ import { UserService } from './services/user.service';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { TradeResultComponent } from './components/trade-result/trade-result.component';
 import { MyAccountComponent } from './components/my-account/my-account.component';
+import { AutosizeDirective } from './directives/autosize.directive';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { MyAccountComponent } from './components/my-account/my-account.component
     PageTitleComponent,
     TradeResultComponent,
     MyAccountComponent,
+    AutosizeDirective,
   ],
   imports: [
     AppRoutingModule,

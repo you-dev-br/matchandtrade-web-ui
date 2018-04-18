@@ -107,6 +107,10 @@ export class TradeComponent implements OnInit {
     }
   }
 
+  trimName() {
+    this.nameFormControl.setValue(this.nameFormControl.value.replace(/\n/g, ''));
+  }
+
   onSubscribe() {
     this.loading = true;
     this.userService.getAuthenticatedUser()

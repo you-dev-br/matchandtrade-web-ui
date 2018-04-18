@@ -6,12 +6,15 @@
   <div class="field">
     <label class="label" for="trade-name">Name</label>
     <div class="control">
-      <input
+      <textarea
+        autosize
+        rows=1
+        (keyup.enter)="trimName()"
         id="trade-name"
-        class="input"
+        class="textarea"
         [formControl]="tradeFormGroup.controls['name']"
         type="text"
-        placeholder="Trade name">
+        placeholder="Trade name"></textarea>
     </div>
     <p class="help is-danger" *ngIf="!nameFormControl.valid && nameFormControl.touched">
         <i class="fa fa-warning"></i>Trade name is mandatory and its length must be between 3 and 150.
