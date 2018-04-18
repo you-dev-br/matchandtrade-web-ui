@@ -185,7 +185,7 @@ export class TradeComponent implements OnInit {
 	}
 	
   displaySubscribeButton(): boolean {
-    return this.tradeHref && !this.tradeMembership;
+    return this.tradeHref && !this.tradeMembership && this.trade.state == TradeState.SUBMITTING_ITEMS;
   }
 
   displayMatchItemsButton(): boolean {
