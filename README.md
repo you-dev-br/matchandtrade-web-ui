@@ -40,3 +40,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Resources
 SVG Images
 (https://github.com/SamHerbert/SVG-Loaders/tree/master/svg-loaders)
+
+ngx-autosize
+https://github.com/chrum/ngx-autosize
