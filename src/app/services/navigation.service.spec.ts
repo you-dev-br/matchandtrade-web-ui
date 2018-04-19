@@ -32,6 +32,7 @@ describe('NavigationService', () => {
   }));
 
 	it('should get navigation message', inject([NavigationService], (service: NavigationService) => {
+		localStorage.clear();
 		expect(service.getNavigationMessage()).toBeNull();
 		service.setNavigationMessage('testing');
 		expect(service.getNavigationMessage().text).toBe('testing');
