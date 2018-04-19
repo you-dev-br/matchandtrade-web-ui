@@ -109,7 +109,7 @@ export class ItemMatcherOfferComponent implements OnInit {
 
     Promise.all(promises).then(() => {
       this.navigationService.setNavigationMessage('Offer saved.');
-      this.navigationService.back();
+      this.navigateBack();
     })
     .catch(e => this.message.setErrorItems(e));
   }
