@@ -85,14 +85,6 @@ describe('ItemComponent-VIEW', () => {
 		});
 	});
 
-	it('should show saved message when item is saved', () => {
-		component.onSubmit();
-		fixture.whenStable().then(() => {
-			fixture.detectChanges();
-			expect(fixture.nativeElement.querySelector('#message-body div').innerHTML).toContain('Item saved.')
-		})
-	});
-
 	it('should show error message when saving invalid item', () => {
 		let injectedItemService = fixture.debugElement.injector.get(ItemService);
 		spyOn(injectedItemService, 'save').and.callFake((a,b) => {

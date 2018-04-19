@@ -78,13 +78,15 @@ export class ItemComponent implements OnInit {
         this.item = v;
         this.populateForm(this.item);
         this.itemFormGroup.markAsPristine();
-        this.message.setInfoItems('Item saved.');
-        this.loading = false;
       })
       .catch(e => {
         this.message.setErrorItems(e);
         this.itemFormGroup.markAsPristine();
         this.loading = false;
+      })
+      .then(() => {
+        this.navigationService.setNavigationMessage('Item saved.');
+        this.navigateBack();
       });
   }
 

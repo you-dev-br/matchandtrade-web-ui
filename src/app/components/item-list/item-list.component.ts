@@ -32,6 +32,7 @@ export class ItemListComponent implements OnInit {
 
   ngOnInit() {
     this.tradeMembershipHref = this.navigationService.obtainData(this.route).tradeMembershipHref;
+    this.message.setNavigationMessage(this.navigationService.getNavigationMessage());
     this.search();
   }
 

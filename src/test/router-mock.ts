@@ -17,6 +17,10 @@ export class NavigationServiceMock {
     result.type = MessageType.INFO;
     return result;
   }
+
+  public setNavigationMessage(m: string) {}
+
+  public back() {}
 }
 
 /**
