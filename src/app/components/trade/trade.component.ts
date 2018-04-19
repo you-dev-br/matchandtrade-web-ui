@@ -107,7 +107,8 @@ export class TradeComponent implements OnInit {
     }
   }
 
-  trimName() {
+  sanitizeName() {
+    this.nameFormControl.setValue(this.nameFormControl.value.trim());
     this.nameFormControl.setValue(this.nameFormControl.value.replace(/\n/g, ''));
   }
 
@@ -136,6 +137,7 @@ export class TradeComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
+    this.sanitizeName();
     this.trade.name = this.nameFormControl.value;
     this.trade.state = this.stateFormControl.value;
     this.tradeService.save(this.trade)

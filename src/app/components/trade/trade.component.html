@@ -9,7 +9,7 @@
       <textarea
         autosize
         rows=1
-        (keyup.enter)="trimName()"
+        (keydown.enter)="onSubmit()"
         id="trade-name"
         class="textarea"
         [formControl]="tradeFormGroup.controls['name']"
