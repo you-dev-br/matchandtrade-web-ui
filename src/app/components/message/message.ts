@@ -1,4 +1,5 @@
 import { Response } from '@angular/http';
+import { StorableMessage } from './storable-message';
 
 export enum MessageType {INFO='INFO', ERROR='ERROR'}
 
@@ -10,7 +11,7 @@ export class Message {
         this.items.push(this.parseMessage(message));
     }
 
-    private parseMessage(message: any): string {
+    public parseMessage(message: any): string {
         let result;
         if (message instanceof Response) {
             const e = <Response> message;
@@ -40,6 +41,13 @@ export class Message {
         this.setItems(msgs);
     }
     
+    public setNavigationMessage(msg: StorableMessage) {
+        if (msg) {
+            this.type = (msg.type == MessageType.ERROR ? MessageType.ERROR : MessageType.INFO);
+            this.items.push(msg.text);
+        }
+    }
+
     private setItems(msgs: any) {
         this.items.forEach(v => {
             this.items.pop();

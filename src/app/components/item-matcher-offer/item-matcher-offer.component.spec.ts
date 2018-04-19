@@ -18,6 +18,7 @@ import { PageTitleComponent } from '../page-title/page-title.component';
 import { SearchResult } from '../../classes/search/search-result';
 import { TradeMembershipService } from '../../services/trade-membership.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Message } from '../message/message';
 
 describe('ItemMatcherOfferComponent', () => {
   let component: ItemMatcherOfferComponent;

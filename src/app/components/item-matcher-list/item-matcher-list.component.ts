@@ -33,6 +33,7 @@ export class ItemMatcherListComponent implements OnInit {
 
   ngOnInit() {
     this.tradeMembershipHref = this.navigationService.obtainData(this.route).tradeMembershipHref;
+    this.message.setNavigationMessage(this.navigationService.getNavigationMessage());
 
     this.tradeMembershipService.get(this.tradeMembershipHref)
       .then(tradeMembership => {

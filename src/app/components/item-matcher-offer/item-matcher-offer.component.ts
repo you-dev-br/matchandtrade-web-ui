@@ -40,7 +40,7 @@ export class ItemMatcherOfferComponent implements OnInit {
 
   ngOnInit() {
     this.tradeMembershipHref = this.navigationService.obtainData(this.route).tradeMembershipHref
-		const wantedItemHref = this.navigationService.obtainData(this.route).itemHref;
+    const wantedItemHref = this.navigationService.obtainData(this.route).itemHref;
     
     this.itemService.get(wantedItemHref).then(v => {
       this.wantedItem = v;
@@ -108,10 +108,10 @@ export class ItemMatcherOfferComponent implements OnInit {
     });
 
     Promise.all(promises).then(() => {
-      this.message.setInfoItems('Offer saved.');
+      this.navigationService.setNavigationMessage('Offer saved.');
+      this.navigationService.back();
     })
-    .catch(e => this.message.setErrorItems(e))
-    .then(() => this.initCheckableItems());
+    .catch(e => this.message.setErrorItems(e));
   }
 
   navigateBack(): void {

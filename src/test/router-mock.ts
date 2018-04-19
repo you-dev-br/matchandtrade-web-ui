@@ -1,4 +1,6 @@
 import { ActivatedRoute} from '@angular/router';
+import { StorableMessage } from '../app/components/message/storable-message';
+import { MessageType } from '../app/components/message/message';
 
 export class NavigationServiceMock {
   public obtainData(route: ActivatedRoute): any {
@@ -7,7 +9,14 @@ export class NavigationServiceMock {
 	
 	public obtainUrlPathParam(route: ActivatedRoute, paramName: string): string {
 		return route.snapshot.paramMap.get(paramName);
-	}
+  }
+  
+  public getNavigationMessage(): StorableMessage {
+    const result = new StorableMessage();
+    result.text = 'NavigationServiceMock.getNavigationMessage()';
+    result.type = MessageType.INFO;
+    return result;
+  }
 }
 
 /**

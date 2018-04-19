@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ActivatedRouteSnapshot } from '@angular/router/src/router_state';
+import { StorageService } from './storage.service';
+import { StorableMessage } from '../components/message/storable-message';
 
 @Injectable()
 export class NavigationService {
 
   // Naming as loc instead of location to avoid misunderstanding by the native javascript window location.
-	constructor(private router: Router, private loc: Location) { }
+	constructor(private router: Router, private loc: Location, private storageService: StorageService) { }
 	
   /**
    * See: https://www.garykessler.net/library/base64.html
@@ -82,6 +84,14 @@ export class NavigationService {
 	
 	public getSnapshotParam(route: ActivatedRoute, paramName: string): string {
 		return route.snapshot.queryParamMap.get(paramName);
-	}
+  }
+  
+  public setNavigationMessage(msg: any): void {
+    this.storageService.setNavigationMessage(msg);
+  }
+
+  public getNavigationMessage(): StorableMessage {
+    return this.storageService.removeNavigationMessage();
+  }
 
 }

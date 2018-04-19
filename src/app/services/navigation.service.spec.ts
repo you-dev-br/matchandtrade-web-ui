@@ -8,12 +8,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Location } from '@angular/common';
 import { ActivatedRouteMock } from '../../test/router-mock';
 import { ActivatedRoute } from '@angular/router';
+import { StorageService } from './storage.service';
 
 describe('NavigationService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
 			imports: [RouterTestingModule.withRoutes([{path: 'test-path', redirectTo: ''}])],
-			providers: [NavigationService]
+			providers: [NavigationService, StorageService]
 		})
 	});
 	
@@ -29,5 +30,12 @@ describe('NavigationService', () => {
 		const testingParamObtained = service.obtainData(null);
 		expect(testingParam).toEqual(testingParamObtained);
   }));
+
+	it('should get navigation message', inject([NavigationService], (service: NavigationService) => {
+		expect(service.getNavigationMessage()).toBeNull();
+		service.setNavigationMessage('testing');
+		expect(service.getNavigationMessage().text).toBe('testing');
+  }));
+
 
 });
