@@ -12,6 +12,8 @@ import { NavigationService } from '../../services/navigation.service';
 })
 export class SignInComponent {
   googleUrl: string;
+  // Controlling when signing out to avoid the UI to flash between sing-in/out
+  signingOut: boolean = false;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -21,11 +23,15 @@ export class SignInComponent {
   }
 
   signOut(): void {
-    this.authenticationService.signOut().then(v => this.navigationService.navigate('/'));
+    this.signingOut = true;
+    console.log('signingout', this.signingOut, this.authenticationService.isSignedIn());
+    this.authenticationService.signOut()
+      .then(v => this.navigationService.navigate('home'))
+      .catch(() => this.signingOut = false);
   }
 
   isSignedIn(): boolean {
-    return this.authenticationService.isSignedIn();
+    return this.signingOut || this.authenticationService.isSignedIn();
   }
 
 }
