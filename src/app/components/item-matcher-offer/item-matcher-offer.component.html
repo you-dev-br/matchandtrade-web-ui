@@ -17,14 +17,12 @@
   <div>
     <table id="offering_items_table" class="table is-bordered is-striped is-hoverable is-fullwidth">
       <tbody>
-        <tr *ngFor="let offerableItem of offerableItems">
-          <td class="mt-table-row-clickable item-offer-checkbox-column">
+        <tr *ngFor="let offerableItem of obtainOfferableItemsForCurrentPage()">
+          <td class="mt-table-row-clickable item-offer-checkbox-column" (click)="toogleOfferableItem(offerableItem)">
             <input
-              [id]="'offerableItemId_'+offerableItem.itemId"
               class="item-offer-checkbox"
               type="checkbox"
-              [checked]="offerableItem.checked()"
-              (change)="toogleOfferableItem(offerableItem)">
+              [checked]="offerableItem.checked()">
           </td>
           <td class="mt-table-row-clickable item-offer-name" (click)="toogleOfferableItem(offerableItem)">{{offerableItem.name}}</td>
         </tr>

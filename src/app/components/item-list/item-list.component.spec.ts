@@ -52,7 +52,7 @@ describe('ItemListComponent', () => {
 		component.ngOnInit();
 		fixture.whenStable().then(() => {
 			fixture.detectChanges();
-			expect(fixture.nativeElement.querySelectorAll("td").length).toBe(2);
+			expect(fixture.nativeElement.querySelectorAll("td").length).toBe(5);
 			expect(fixture.nativeElement.querySelector(".mt-cmd-panel-container")).toBeTruthy();
 		});
 		expect(component).toBeTruthy();

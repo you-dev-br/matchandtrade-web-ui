@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ActivatedRouteMock, NavigationServiceMock } from '../../../test/router-mock';
+import { CheckableItem } from './checkable-item';
 import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
 import { ItemServiceMock } from '../../../test/item-service-mock';
@@ -30,7 +31,7 @@ describe('ItemMatcherOfferComponent', () => {
         const offer = new Offer(1, 2, 3);
         const results = new Array<Offer>();
         results.push(offer);
-        const result = new SearchResult<Offer>(results, new Pagination(1,10,1));
+        const result = new SearchResult<Offer>(results, new Pagination(1,5,1));
         resolve(result);
       });
     }
@@ -90,22 +91,23 @@ describe('ItemMatcherOfferComponent', () => {
     });
   });
 
-  it('should enable [save button] when changing offers selection', () => {
+  it('should enable toogle offerable item', () => {
     component.ngOnInit();
     fixture.whenStable().then(() => {
+      const checkableItem: CheckableItem = component.offerableItems[3];
+      const originalCheckableItemCheckedValue = checkableItem.checked();
+      component.toogleOfferableItem(component.offerableItems[3]);
       fixture.detectChanges();
-      fixture.nativeElement.querySelector('#offerableItemId_1').click();
-      fixture.detectChanges();
-      expect(fixture.nativeElement.querySelector('#save-offer').disabled).toBeFalsy();
+      expect(checkableItem.checked()).toBe(!originalCheckableItemCheckedValue);
     });
   });
 
-  it('should display current offers as selected checkboxes', () => {
+  it('should load offers', () => {
     component.ngOnInit();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      expect(fixture.nativeElement.querySelector('#offerableItemId_1').checked).toBeTruthy();
-      expect(fixture.nativeElement.querySelector('#offerableItemId_2').checked).toBeFalsy();
+      expect(component.offerableItems[0].checked()).toBe(true);
+      expect(component.offerableItems[1].checked()).toBe(false);
     });
   });
 

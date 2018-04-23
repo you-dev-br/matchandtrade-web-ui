@@ -4,7 +4,7 @@ export class CheckableItem extends Item {
   private _checked: boolean = false;
   
   public checked() {
-    return (this._checked ? true : null);
+    return (this._checked ? true : false);
   }
 
   public setChecked(checked: boolean): void {
