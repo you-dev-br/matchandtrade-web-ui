@@ -6,6 +6,7 @@ import { Message } from '../message/message';
 import { NavigationService } from '../../services/navigation.service';
 import { Pagination } from '../../classes/search/pagination';
 import { SearchService } from '../../services/search.service';
+import { StorageService } from '../../services/storage.service';
 import { TradeMembership } from '../../classes/pojo/trade-membership';
 import { TradeMembershipService } from '../../services/trade-membership.service';
 
@@ -28,12 +29,17 @@ export class ItemMatcherListComponent implements OnInit {
     private navigationService: NavigationService,
     private route: ActivatedRoute,
     private searchService: SearchService,
+    private storageService: StorageService,
     private tradeMembershipService: TradeMembershipService,
   ) { }
 
   ngOnInit() {
     this.tradeMembershipHref = this.navigationService.obtainData(this.route).tradeMembershipHref;
     this.message.setNavigationMessage(this.navigationService.getNavigationMessage());
+
+    // Remember last visited page
+    const lastPage = this.storageService.removeLastItemMatcherListPage();
+    this.pagination.page.number = (lastPage ? lastPage : 1);
 
     this.tradeMembershipService.get(this.tradeMembershipHref)
       .then(tradeMembership => {
@@ -53,7 +59,10 @@ export class ItemMatcherListComponent implements OnInit {
       this.pagination.page.number++;
       this.loading = true;
       this.search(this.tradeMembership)
-        .then(() => this.loading = false)
+        .then(() => {
+          this.storageService.setLastItemMatcherListPage(this.pagination.page.number);
+          this.loading = false;
+        })
         .catch((e) => this.message.setErrorItems(e));
   }
 
@@ -61,7 +70,10 @@ export class ItemMatcherListComponent implements OnInit {
       this.pagination.page.number--;
       this.loading = true;
       this.search(this.tradeMembership)
-        .then(() => this.loading = false)
+        .then(() => {
+          this.storageService.setLastItemMatcherListPage(this.pagination.page.number);
+          this.loading = false;
+        })
         .catch((e) => this.message.setErrorItems(e));
   }
 
