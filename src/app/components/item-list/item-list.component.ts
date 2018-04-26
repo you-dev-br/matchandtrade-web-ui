@@ -38,22 +38,35 @@ export class ItemListComponent implements OnInit {
 
   createItem() {
     this.navigationService.navigate('items', {tradeMembershipHref: this.tradeMembershipHref});
-	}
+  }
+
+  deleteItem(item: Item) {
+    this.loading = true;
+    this.itemService.delete(item._href)
+      .then(() =>{
+        this.items = this.items.filter(v => {
+          return v.itemId != item.itemId;
+        });
+      })
+      .then(() => this.search())
+      .catch(e => this.message.setErrorItems(e))
+      .then(() => this.message.setInfoItems('Item deleted.'));
+  }
 
   navigateToItem(item: Item) {
     this.navigationService.navigate('items', {itemHref: item._href});
   }
 	
 	nextPage() {
-		this.pagination.page.number++;
 		this.loading = true;
+		this.pagination.page.number++;
 		this.search();
 	}
 
 	previousPage() {
-			this.pagination.page.number--;
-			this.loading = true;
-			this.search();
+    this.loading = true;
+    this.pagination.page.number--;
+    this.search();
 	}
 
   search(): void {
@@ -61,12 +74,9 @@ export class ItemListComponent implements OnInit {
       .then(v => {
         this.items = v.results;
         this.pagination = v.pagination;
-        this.loading = false;
       })
-      .catch(e => {
-				this.message.setErrorItems(e);
-				this.loading = false;
-			});
+      .catch(e => this.message.setErrorItems(e))
+      .then(() => this.loading = false);
   }
 
   navigateBack() {
