@@ -1,6 +1,6 @@
 <app-page-title [template]="'item-list'"></app-page-title>
 <app-message [message]="message"></app-message>
-<app-loading [loading]="loading && !pagination.totalEntries" [containerHeight]="15" [imageHeight]="5"></app-loading>
+<app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
 
 <div *ngIf="!loading && !pagination.totalEntries" class="not-found-content">
 	You didn't submit any item to this trade yet.
@@ -8,13 +8,21 @@
 
 <div *ngIf="!loading && pagination.totalEntries">
 	<div>
-		<table class="table is-bordered is-striped is-hoverable is-fullwidth">
+		<table class="table is-bordered is-striped is-fullwidth">
 			<tbody>
 				<tr *ngFor="let i of items">
-					<td class="mt-table-row-clickable" 
+					<td class="mt-table-row-clickable data-row" 
 						(keyup.enter)="navigateToItem(i)"
 						(click)="navigateToItem(i)"
-						tabindex="2">{{i.name}}</td>
+						tabindex="2">
+						{{i.name}}
+					</td>
+					<td class="mt-table-row-clickable data-actions is-hoverable"
+						(keyup.enter)="deleteItem(i)"
+						(click)="deleteItem(i)"
+						tabindex="2">
+						<i class="fa fa-trash" aria-hidden="true"></i>
+					</td>
 				</tr>
 			</tbody>
 		</table>

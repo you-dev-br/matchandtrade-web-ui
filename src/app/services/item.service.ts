@@ -15,7 +15,16 @@ export class ItemService {
   constructor(
     private httpService: HttpService
 	) { }
-	
+
+  delete(href: string): Promise<void> {
+    return new Promise<void>( (resolve, reject) => {
+      this.httpService
+        .delete(href)
+        .then(v => resolve())
+        .catch(e => reject(e));
+    });
+  }
+  
 	get(href: string): Promise<Item> {
     return new Promise<Item>( (resolve, reject) => {
       this.httpService
