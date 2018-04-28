@@ -19,6 +19,7 @@ export class ItemComponent implements OnInit {
 	itemHref: string;
   loading: boolean = true;
   nameFormControl: AbstractControl;
+  descriptionFormControl: AbstractControl;
   message: Message = new Message();
 	tradeMembershipHref: string;
 
@@ -55,9 +56,11 @@ export class ItemComponent implements OnInit {
 	
   private buildForm(formBuilder: FormBuilder): void {
     this.itemFormGroup = formBuilder.group({
-      'name': ['',Validators.compose([Validators.required, this.nameValidator])]
+      'name': ['',Validators.compose([Validators.required, this.nameValidator])],
+      'description': ['', Validators.compose([this.descriptionValidator])]
     });
     this.nameFormControl = this.itemFormGroup.controls['name'];
+    this.descriptionFormControl = this.itemFormGroup.controls['description'];
   }
 
   private nameValidator(control: FormControl): {[s: string]: boolean} {
@@ -66,13 +69,21 @@ export class ItemComponent implements OnInit {
     }
   }
 
+  private descriptionValidator(control: FormControl): {[s: string]: boolean} {
+    if (control.value && control.value.length > 500) {
+      return {invalid: true};
+    }
+  }
+
   private populateForm(item: Item) {
     this.nameFormControl.setValue(item.name);
+    this.descriptionFormControl.setValue(item.description);
   }
 
   onSubmit() {
     this.loading = true;
     this.item.name = this.nameFormControl.value;
+    this.item.description = this.descriptionFormControl.value;
     this.itemService.save(this.item, this.tradeMembershipHref)
       .then(v => {
         this.item = v;

@@ -8,23 +8,23 @@
 
 <div *ngIf="!loading && pagination.totalEntries">
 	<div>
-		<table class="table is-bordered is-striped is-fullwidth">
-			<tbody>
-				<tr *ngFor="let i of items">
-					<td class="mt-table-row-clickable data-row" 
-						(keyup.enter)="navigateToItem(i)"
-						(click)="navigateToItem(i)"
-						tabindex="2">
-						{{i.name}}
-					</td>
-					<td class="mt-table-row-clickable data-actions is-hoverable"
+		<table class="table mt-table-hoverable is-striped is-fullwidth">
+			<tr *ngFor="let i of items">
+				<td
+					class=""
+					(keyup.enter)="navigateToItem(i)"
+					(click)="navigateToItem(i)"
+					tabindex="2">
+					{{i.name}}
+					<span
+						class="is-pulled-right"
 						(keyup.enter)="deleteItem(i)"
 						(click)="deleteItem(i)"
 						tabindex="2">
-						<i class="fa fa-trash" aria-hidden="true"></i>
-					</td>
-				</tr>
-			</tbody>
+						<i class="fa fa-trash mt-table-icon"></i>
+					</span>
+				</td>
+			</tr>
 		</table>
 		<app-pagination
 			[loading]="loading"

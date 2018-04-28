@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~variables.scss';
 
-
 html, body {
   height: 100%;
 }
@@ -29,21 +28,47 @@ caption {
 }
 
 // ============
-// mt-table   TODO: Need to review this style
+// mt-table
 // ============
-.mt-table-row-clickable:hover {
-  background-color: $primary-2;
-  cursor: pointer;
+%mt-table {
+  border-left: .25em solid transparent;
+  border-top: 1px solid silver;
+  border-bottom: 1px solid silver;
+  border-right: 0em none transparent;
+  padding: .5em .5em .5em .25em;
+  td {
+    border-left: .25em solid transparent;
+    padding: .5em .5em .5em .25em;
+  }
 }
 
-.mt-table-row-clickable:active {
-  background-color: $primary-4;
-  border-color: $primary-6;
-  cursor: progress;
+.mt-table {
+  @extend %mt-table;
 }
 
-.mt-table-row-clickable:focus {
-	outline: 1px solid $primary-7;
+.mt-table-hoverable {
+  @extend %mt-table;
+  td:hover {
+    border-left: .25em solid $primary-7;
+    cursor: pointer;
+  }
+  td:active {
+    background-color: $primary-2;
+    cursor: progress;
+  }
+  td:focus {
+    outline: 0px;
+  }
+}
+
+// We want to increase the icon 'hit-box'
+.mt-table-icon {
+  margin: -.5em -.5em -.5em -.5em;
+  padding: .75em .5em .75em .5em;
+}
+
+.mt-table-icon:hover {
+  color: $primary-7;
 }
 
 // ============
@@ -120,4 +145,3 @@ caption {
     1px 20px;
   background-repeat: no-repeat;
 }
-

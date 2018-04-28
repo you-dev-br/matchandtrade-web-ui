@@ -10,8 +10,7 @@ export class ItemTransformer extends Transformer<Item> {
     public toPojo(json: any): Item {
         const result = new Item();
         result._href = this.extractHref(json._links);
-        result.name = json.name;
-        result.itemId = json.itemId;
+        Object.assign(result, json);
         return result;
     }
 
