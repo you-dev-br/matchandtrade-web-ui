@@ -10,6 +10,9 @@ the docker image to reflect the newly released version.
 # Build 'matchandtrade-web-ui'
 ng build --prod --build-optimizer
 
+# Delete old distribution folder
+rm -rf docker/dist/
+
 # Copy the distribution folder to `docker/dist
 cp -r dist/ docker/
 
