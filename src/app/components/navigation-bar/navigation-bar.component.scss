@@ -70,6 +70,12 @@ $container-height-trashold: 34px;
 	}
 }
 
+.burger-menu-item.active {
+	i {
+		color: white;
+	}
+}
+
 .burger-menu-item:hover {
 	background-color: $primary-6;
 	padding: .3em .3em .3em .3em;
