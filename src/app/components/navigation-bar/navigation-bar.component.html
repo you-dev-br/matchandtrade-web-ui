@@ -1,38 +1,42 @@
-<nav
-  class="navbar is-primary"
-  role="navigation"
-  aria-label="main navigation"
-  (window:resize)="onResize(navigationBar)"
-  #navigationBar>
+<div class="navigation-bar" (window:resize)="onResize(navigationBar)" #navigationBar>
 
-  <div class="navbar-brand" *ngIf="!isSmallScreenSize()">
-    <a [class]="'navbar-item' + navbarHomeClass()" (click)="onMatchAndTrade()" (keyup.enter)="onMatchAndTrade()" tabindex="1">
-      <span class="router-link">Match and Trade</span>
-    </a>
-    <a id="navbar-trades" [class]="'navbar-item' + navbarTradesClass()" (click)="onTrades()" (keyup.enter)="onTrades()" tabindex="1">
-      <span class="router-link">Trades</span>
-    </a>
-    <a id="navbar-my-account" [class]="'navbar-item' + navbarMyAccountClass()" *ngIf="authenticated" (click)="onMyAccount()" (keyup.enter)="onMyAccount()" tabindex="1">
-      <span class="router-link">My Account</span>
-    </a>
-    <a id="navbar-sign" [class]="'navbar-item' + navbarSignClass()" (click)="onSign()" (keyup.enter)="onSign()" tabindex="1">
-      <span class="router-link">{{signText()}}</span>
-    </a>
-  </div>
+	<div *ngIf="!isSmallScreenSize()">
+		<div class="menu-container">
+			<div [class]="'menu-item ' + cssClassHome()" (click)="onMatchAndTrade()" (keyup.enter)="onMatchAndTrade()" tabindex="1">
+				<div>Match and Trade</div>
+				<svg class="menu-pointer"><path d="m0 8 l13 -8 l13 8 z"/><path id="menu-pointer-border" d="m0 8 l13 -8 l13 8"/><path id="menu-pointer-border" d="m0 8 l13 -8 l13 8"/></svg>		
+			</div>
 
-  <div class="navbar-brand" *ngIf="isSmallScreenSize()">
-    <a class="navbar-item" (click)="onMatchAndTrade()" (keyup.enter)="onMatchAndTrade()">
-			<span class="router-link">Match and Trade</span>
-    </a>
-    <button class="button navbar-burger is-primary" (click)="onBurgerMenu()" tabindex="1">
-      <i class="fa fa-bars" aria-hidden="true"></i>
-    </button>
-  </div>
+			<div [class]="'menu-item ' + cssClassTrades()" (click)="onTrades()" (keyup.enter)="onTrades()" tabindex="1">
+				<div>Trade</div>
+				<svg class="menu-pointer"><path d="m0 8 l13 -8 l13 8 z"/><path id="menu-pointer-border" d="m0 8 l13 -8 l13 8"/><path id="menu-pointer-border" d="m0 8 l13 -8 l13 8"/></svg>		
+			</div>
 
-  <div [ngClass]="burgerClass">
-    <div [class]="'burger-item router-link' + navbarTradesClass()" (click)="onBurgerMenu('/trade-list')" tabindex="1"><i class="fa fa-caret-right"> </i> Trades</div>
-    <div [class]="'burger-item router-link' + navbarMyAccountClass()" *ngIf="authenticated" (click)="onBurgerMenu('/my-account')" tabindex="1"><i class="fa fa-caret-right"> </i> My Account</div>
-    <div [class]="'burger-item router-link' + navbarSignClass()" (click)="onBurgerMenu('/sign-in')" tabindex="1"><i class="fa fa-caret-right"> </i> {{signText()}}</div>
-  </div>
+			<div [class]="'menu-item ' + cssClassSign()" (click)="onSign()" (keyup.enter)="onSign()" tabindex="1">
+				<div>{{signText()}}</div>
+				<svg class="menu-pointer"><path d="m0 8 l13 -8 l13 8 z"/><path id="menu-pointer-border" d="m0 8 l13 -8 l13 8"/><path id="menu-pointer-border" d="m0 8 l13 -8 l13 8"/></svg>		
+			</div>
 
-</nav>
+		</div>
+	</div>
+
+	<div *ngIf="isSmallScreenSize()">
+			<div class="menu-container">
+				<div class="menu-item" (click)="onMatchAndTrade()" (keyup.enter)="onMatchAndTrade()" tabindex="1">
+					<div>Match and Trade</div>
+					<svg class="menu-pointer"><!-- Empty svg, it's here just to keep height consistancy between desktop and mobile menus --></svg>
+				</div>
+				<div class="menu-item-filler"><!-- Empty div filling in empty space and pushing the burger menu to the far right--></div>
+				<div class="menu-item-burger" (click)="onBurgerMenu()" tabindex="1">
+					<i class="fa fa-bars" aria-hidden="true"></i>
+				</div>
+			</div>
+	</div>
+
+</div> <!-- End of #navigationBar -->
+
+<div *ngIf="burgerMenuVisible">
+	<div [class]="'burger-menu-item ' + cssClassTrades()" (click)="onBurgerMenu('/trade-list')" tabindex="1"><i class="fa fa-caret-right"> </i> Trades</div>
+	<div [class]="'burger-menu-item ' + cssClassMyAccount()" *ngIf="authenticated" (click)="onBurgerMenu('/my-account')" tabindex="1"><i class="fa fa-caret-right"> </i> My Account</div>
+	<div [class]="'burger-menu-item ' + cssClassSign()" (click)="onBurgerMenu('/sign-in')" tabindex="1"><i class="fa fa-caret-right"> </i> {{signText()}}</div>
+</div>

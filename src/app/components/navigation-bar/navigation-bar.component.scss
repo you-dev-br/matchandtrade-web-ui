@@ -1,52 +1,85 @@
 @import '~variables.scss';
 
-$navbar-heigh: 2.5rem;
-
-.burger-menu-inactive {
-    display: none;
+$container-height: 36px;
+$container-height-trashold: 34px;
+// ==============
+// Navigation Bar
+// ==============
+.navigation-bar {
+	background: linear-gradient($primary-5, $primary-5 $container-height-trashold, $primary-7 $container-height-trashold, $primary-7 $container-height);
+	color: white;
 }
 
-.burger-item {
-  cursor: pointer;
-  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-  background-color: rgba(0, 0, 0, 0.1);
+// ============
+// Desktop Menu
+// ============
+.menu-container {
+	display: flex;
 }
 
-.burger-item.active i {
-	display: inline;
+.menu-item {
+	display: flex;
+	padding: 4px 10px 0px 10px;
+	flex-direction: column;
+	align-items: center;
+	svg {
+		fill: transparent;
+	}
 }
 
-.burger-item i {
-	display: none;
+.menu-item:hover {
+	background-color: $primary-7;
 }
 
-.burger-item:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+.menu-item:focus, .menu-item-burger:focus {
+	outline: rgba(255, 0, 0, .5);
+	background: linear-gradient($primary-6, $primary-6 $container-height-trashold, $primary-7 $container-height-trashold, $primary-7 $container-height);
 }
 
-.navbar-brand, .navbar, .navbar-burger {
-	min-height: $navbar-heigh;
+.menu-item-filler {
+	flex: 2;
 }
 
-.navbar-burger {
-	height: $navbar-heigh;
+.menu-pointer {
+	height: 8px;
+	width: 26px;
 }
 
-.navbar-item {
-	padding: 0rem 0.5rem 0rem 0.5rem;
+// ===========
+// Mobile Menu
+// ===========
+.active {
+	i {
+		color: white;
+	}
+	svg {
+		fill: white;
+	}
+	svg #menu-pointer-border {
+		stroke: $primary-7;
+		stroke-width: 2px;
+	}
 }
 
-.router-link {
-	border: 0.2rem solid transparent;
-	margin: 0rem 0rem 0rem 0rem;
-	padding-bottom: .25rem;
+.burger-menu-item {
+	background-color: $primary-6;
+	padding: .3em .3em .3em .3em;
+	color: white;
+	i {
+		color: $primary-6;
+	}
 }
 
-.navbar-item.active .router-link {
-	border-width: 0.2rem;
-	border-style: solid;
-	border-bottom-color: white;
-	border-left-color: transparent;
-	border-right-color: transparent;
-	border-top-color: transparent;
+.burger-menu-item:hover {
+	background-color: $primary-6;
+	padding: .3em .3em .3em .3em;
+	background-color: $primary-5;
+	cursor: pointer;
+	i {
+		color: $primary-7;
+	}
+}
+
+.menu-item-burger {
+	padding: 6px 15px 0px 15px;
 }

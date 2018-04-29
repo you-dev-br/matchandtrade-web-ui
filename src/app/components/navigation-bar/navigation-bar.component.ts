@@ -12,7 +12,7 @@ import { ActivationEnd } from '@angular/router';
 })
 export class NavigationBarComponent implements OnInit {
   navigationBarWidth: number;
-  burgerClass: string = 'burger-menu-inactive';
+  burgerMenuVisible: boolean = false;
 	authenticated: boolean = false;
 	currentUrlPath: string = '';
 
@@ -25,9 +25,11 @@ export class NavigationBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authenticationService.get().then(v => {
-      this.authenticated = (v.authorizationHeader ? true : false);
-		}).catch(e => console.log('User not authenticated'));
+		this.authenticationService.get()
+			.then(v => {
+				this.authenticated = (v.authorizationHeader ? true : false);
+			})
+			.catch(e => console.log('User not authenticated'));
 		
 		this.router.events.subscribe(e => {
 			if (e instanceof ActivationEnd) {
@@ -36,7 +38,6 @@ export class NavigationBarComponent implements OnInit {
 				}
 			}
 		});
-
   }
 
   onResize(navigationBarHtmlElement: HTMLElement) {
@@ -44,7 +45,7 @@ export class NavigationBarComponent implements OnInit {
   }
 
   onBurgerMenu(routePath?: string): void {
-    this.burgerClass = (this.burgerClass == 'burger-menu-inactive' ? '' : 'burger-menu-inactive');
+    this.burgerMenuVisible = !this.burgerMenuVisible;
     if (routePath) {
       this.navigationService.navigate(routePath);
     }
@@ -76,10 +77,11 @@ export class NavigationBarComponent implements OnInit {
   }
 
   onMatchAndTrade() {
+		this.burgerMenuVisible = false;
     this.navigationService.navigate('/home');
   }
   
-  navbarHomeClass() {
+  cssClassHome() {
     let result = '';
 		if (this.currentUrlPath == 'home') {
 			result += ' active';
@@ -87,7 +89,7 @@ export class NavigationBarComponent implements OnInit {
 		return result;    
   }
 	
-	navbarTradesClass() {
+	cssClassTrades() {
 		let result = '';
 		if (this.currentUrlPath.startsWith('trade')) {
 			result += ' active';
@@ -95,7 +97,7 @@ export class NavigationBarComponent implements OnInit {
 		return result;
 	}
 
-	navbarMyAccountClass() {
+	cssClassMyAccount() {
 		let result = '';
 		if (this.currentUrlPath.startsWith('my-account')) {
 			result += ' active';
@@ -103,7 +105,7 @@ export class NavigationBarComponent implements OnInit {
 		return result;
 	}
 
-	navbarSignClass() {
+	cssClassSign() {
 		let result = '';
 		if (this.currentUrlPath.startsWith('sign')) {
 			result += ' active';
