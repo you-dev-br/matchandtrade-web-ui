@@ -1,17 +1,25 @@
+@import '~variables.scss';
+
+.loading-organizer {
+	font-size: small;
+}
+
+.member-icon {
+	color: $primary-7;
+	margin-right: .5em;
+}
+
 .not-found-content {
     margin-top: 3em;
     text-align: center;
 }
 
-.trade-info {
-	display: flex;
-	padding: .25em .5em 0em 0em;
-}
-
-.trade-info-status {
-	width: 15em;
-}
-
-.loading-organizer {
+.owner-icon {
+	color: $primary-7;
 	font-size: small;
+	margin-right: .5em;
+}
+
+.trade-info {
+	padding: .25em .5em 0em 0em;
 }

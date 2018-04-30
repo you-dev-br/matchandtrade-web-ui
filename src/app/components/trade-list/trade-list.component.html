@@ -10,10 +10,12 @@
   <table class="table mt-table-hoverable is-striped is-fullwidth">
     <tr *ngFor="let t of trades">
       <td class="mt-table-row-clickable" (keyup.enter)="navigateToTrade(t)" (click)="navigateToTrade(t)" tabindex="2">
-				{{t.name}}
+        <i *ngIf="isOwner(t)" class="owner-icon fas fa-user"></i>
+        <i *ngIf="isMember(t)" class="member-icon fas fa-address-card"></i>
+        {{t.name}}
 				<div class="trade-info">
 					<div class="trade-info-status is-size-7 has-text-grey"><b>Status:</b> {{t.statusText}}</div>
-					<div class="is-size-7 has-text-grey"><b>Organizer:</b> {{t.organizer}} <i *ngIf="!t.organizer" class="loading-organizer fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>
+					<div class="is-size-7 has-text-grey"><b>Organizer:</b> {{t.organizerName}} <i *ngIf="!t.organizerName" class="loading-organizer fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>
 				</div>
 			</td>
     </tr>
