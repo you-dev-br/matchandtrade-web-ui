@@ -1,7 +1,7 @@
 @import '~variables.scss';
 
-$container-height: 36px;
-$container-height-trashold: 34px;
+$container-height: 38px;
+$container-height-trashold: 36px;
 // ==============
 // Navigation Bar
 // ==============
@@ -18,10 +18,10 @@ $container-height-trashold: 34px;
 }
 
 .menu-item {
-	display: flex;
-	padding: 4px 10px 0px 10px;
-	flex-direction: column;
 	align-items: center;
+	display: flex;
+	flex-direction: column;
+	padding: 6px 10px 0px 10px;
 	svg {
 		fill: transparent;
 	}
@@ -29,6 +29,7 @@ $container-height-trashold: 34px;
 
 .menu-item:hover {
 	background-color: $primary-7;
+	cursor: pointer;
 }
 
 .menu-item:focus, .menu-item-burger:focus {
