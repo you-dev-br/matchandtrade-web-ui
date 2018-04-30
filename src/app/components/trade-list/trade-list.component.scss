@@ -2,3 +2,16 @@
     margin-top: 3em;
     text-align: center;
 }
+
+.trade-info {
+	display: flex;
+	padding: .25em .5em 0em 0em;
+}
+
+.trade-info-status {
+	width: 15em;
+}
+
+.loading-organizer {
+	font-size: small;
+}

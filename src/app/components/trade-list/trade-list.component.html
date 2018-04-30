@@ -1,6 +1,6 @@
 <app-page-title [template]="'trade-list'"></app-page-title>
 <app-message [message]="message"></app-message>
-<app-loading [loading]="loading && !pagination.totalEntries" [containerHeight]="15" [imageHeight]="5"></app-loading>
+<app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
 
 <div *ngIf="!loading && !pagination.totalEntries" class="not-found-content">
   No trades available at this time <i class="fa fa-frown-o" aria-hidden="true"></i>
@@ -9,7 +9,13 @@
 <div *ngIf="!loading && pagination.totalEntries">
   <table class="table mt-table-hoverable is-striped is-fullwidth">
     <tr *ngFor="let t of trades">
-      <td class="mt-table-row-clickable" (keyup.enter)="navigateToTrade(t)" (click)="navigateToTrade(t)" tabindex="2">{{t.name}}</td>
+      <td class="mt-table-row-clickable" (keyup.enter)="navigateToTrade(t)" (click)="navigateToTrade(t)" tabindex="2">
+				{{t.name}}
+				<div class="trade-info">
+					<div class="trade-info-status is-size-7 has-text-grey"><b>Status:</b> {{t.statusText}}</div>
+					<div class="is-size-7 has-text-grey"><b>Organizer:</b> {{t.organizer}} <i *ngIf="!t.organizer" class="loading-organizer fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>
+				</div>
+			</td>
     </tr>
   </table>
   <app-pagination

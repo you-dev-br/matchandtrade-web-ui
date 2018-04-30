@@ -114,7 +114,8 @@ caption {
   border: 0em solid transparent;
   color: $text;
   cursor: default;
-  -webkit-appearance: none;
+	-webkit-appearance: none;
+	resize: none;
 }
 
 // Overwriting bulma css. So, we need to disable bulmas select arrow.
