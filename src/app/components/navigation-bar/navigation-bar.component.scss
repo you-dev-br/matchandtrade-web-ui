@@ -65,10 +65,12 @@ $container-height-trashold: 44px;
 
 .burger-menu-item {
 	background-color: $primary-6;
-	padding: .3em .3em .3em .3em;
+	border-bottom: 2px solid $primary-7;
+	padding: 8px 0px 8px 0px;
 	color: white;
 	i {
 		color: $primary-6;
+		margin: 0em .5em 0em 1em;
 	}
 }
 
@@ -79,8 +81,6 @@ $container-height-trashold: 44px;
 }
 
 .burger-menu-item:hover {
-	background-color: $primary-6;
-	padding: .3em .3em .3em .3em;
 	background-color: $primary-5;
 	cursor: pointer;
 	i {
