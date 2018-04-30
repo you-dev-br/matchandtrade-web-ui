@@ -1,7 +1,7 @@
 @import '~variables.scss';
 
-$container-height: 40px;
-$container-height-trashold: 38px;
+$container-height: 46px;
+$container-height-trashold: 44px;
 // ==============
 // Navigation Bar
 // ==============
@@ -21,7 +21,7 @@ $container-height-trashold: 38px;
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	padding: 8px 10px 0px 10px;
+	padding: 10px 10px 0px 10px;
 	svg {
 		fill: transparent;
 	}
@@ -44,6 +44,7 @@ $container-height-trashold: 38px;
 .menu-pointer {
 	height: 8px;
 	width: 26px;
+	margin: 4px 0px 0px 0px;
 }
 
 // ===========
@@ -88,5 +89,6 @@ $container-height-trashold: 38px;
 }
 
 .menu-item-burger {
-	padding: 6px 15px 0px 15px;
+	padding: 9px 15px 0px 15px;
+	font-size: larger;
 }
