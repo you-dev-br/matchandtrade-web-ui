@@ -1,20 +1,22 @@
 @import '~variables.scss';
 
 .mt-page-title {
+	background-color: #fafafa;
   color: $primary-7;
-  margin: 0em 0em .5em 0em;
   font-weight: bold;
+	margin: 0em -.5em 1em -.5em;
+	padding: .5em 0em 0em 0em;
 }
 
 .mt-page-title i {
-  margin: 0em 0em 0em 0em;
+  margin: 0em .5em 0em 1em;
   padding: 0em 0em 0em 0em;
 }
 
 .mt-page-title hr {
   background-color: $primary-7;
-  margin: 0.2em 0em 0.2em 0em;
-  height: 0.1em;
+  margin: 0.3em 0em 0.2em 0em;
+  height: 2px;
 }
 
 .mt-page-title-icon {

@@ -24,7 +24,6 @@ export class WelcomeComponent {
   }
 
   isSignedIn(): boolean {
-    console.log('isSignedIn', this.authenticationService.isSignedIn());
     return this.authenticationService.isSignedIn();
   }
 

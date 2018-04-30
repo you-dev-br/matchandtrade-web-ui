@@ -12,6 +12,11 @@
 				<svg class="menu-pointer"><path d="m0 8 l13 -8 l13 8 z"/><path id="menu-pointer-border" d="m0 8 l13 -8 l13 8"/><path id="menu-pointer-border" d="m0 8 l13 -8 l13 8"/></svg>		
 			</div>
 
+			<div *ngIf='authenticated' [class]="'menu-item ' + cssClassMyAccount()" (click)="onMyAccount()" (keyup.enter)="onMyAccount()" tabindex="1">
+				<div>My Account</div>
+				<svg class="menu-pointer"><path d="m0 8 l13 -8 l13 8 z"/><path id="menu-pointer-border" d="m0 8 l13 -8 l13 8"/><path id="menu-pointer-border" d="m0 8 l13 -8 l13 8"/></svg>		
+			</div>
+
 			<div [class]="'menu-item ' + cssClassSign()" (click)="onSign()" (keyup.enter)="onSign()" tabindex="1">
 				<div>{{signText()}}</div>
 				<svg class="menu-pointer"><path d="m0 8 l13 -8 l13 8 z"/><path id="menu-pointer-border" d="m0 8 l13 -8 l13 8"/><path id="menu-pointer-border" d="m0 8 l13 -8 l13 8"/></svg>		

@@ -1,7 +1,7 @@
 @import '~variables.scss';
 
-$container-height: 38px;
-$container-height-trashold: 36px;
+$container-height: 40px;
+$container-height-trashold: 38px;
 // ==============
 // Navigation Bar
 // ==============
@@ -21,7 +21,7 @@ $container-height-trashold: 36px;
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	padding: 6px 10px 0px 10px;
+	padding: 8px 10px 0px 10px;
 	svg {
 		fill: transparent;
 	}
@@ -54,7 +54,7 @@ $container-height-trashold: 36px;
 		color: white;
 	}
 	svg {
-		fill: white;
+		fill: #fafafa;
 	}
 	svg #menu-pointer-border {
 		stroke: $primary-7;
