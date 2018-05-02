@@ -43,13 +43,13 @@ export class NavigationService {
 	 * @param routerPath
 	 * @param routerData 
 	 */
-	public navigate(routerPath: string, routerData?: any) {
+	public navigate(routerPath: string, routerData?: any, replaceUrl?: boolean) {
 		if (!routerData) {
 			this.router.navigate([routerPath]);
     } else {
 			const routerDataAsString = JSON.stringify(routerData);
 			const routerDataAsSafeBase64 = NavigationService.encodeToSafeBase64(routerDataAsString);
-      this.router.navigate([routerPath], {queryParams: {routerParam: routerDataAsSafeBase64}});
+      this.router.navigate([routerPath], {queryParams: {routerParam: routerDataAsSafeBase64}, replaceUrl: replaceUrl});
     }
   }
 
@@ -72,7 +72,7 @@ export class NavigationService {
    */
   public back() {
     this.loc.back();
-  }
+	}
 
   /**
    * Navigates to a location without using router

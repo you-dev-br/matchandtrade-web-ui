@@ -147,7 +147,15 @@ export class TradeComponent implements OnInit {
         this.tradeFormGroup.enable();
         this.tradeFormGroup.markAsPristine();
         this.message.setInfoItems("Trade saved.");
-        this.loading = false;
+				this.loading = false;
+				/*
+				 * This is a very elusive problem when it comes to navigation. Imagine the navigation scenario:
+				 * create trades > items list > create items > save item (which navigates back to items list) > navigate back
+				 * In the above scenario, router will navigate back to "Create Trade Page" but we want it go navigate back to
+				 * "The current trade". Hence I am adding the extra navigation below so angular's router pushes the 
+				 * 'tradeHref' to the path and pushing it to the browsers history.
+				 */
+				this.navigationService.navigate('trades',  {tradeHref: v._href}, true);
         return v;
       })
       .then(v => {
