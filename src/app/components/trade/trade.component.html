@@ -17,12 +17,12 @@
         placeholder="Trade name"></textarea>
     </div>
     <p class="help is-danger" *ngIf="!nameFormControl.valid && nameFormControl.touched">
-        <i class="fa fa-warning"></i>Trade name is mandatory and its length must be between 3 and 150.
+      <i class="fa fa-warning"></i>Trade name is mandatory and its length must be between 3 and 150.
     </p>
   </div>
 
   <div class="field" *ngIf="isStateDisplayable()">
-    <label class="label" for="trade-state">State</label>
+    <label class="label" for="trade-state">Status</label>
     <div class="control">
       <div class="select">
         <select id="trade-state" [formControl]="tradeFormGroup.controls['state']">
@@ -69,14 +69,14 @@
       *ngIf="displayResultsButton()"
       type="button"
       (click)="onResults()">
-      <i class="fa fa-file-text" aria-hidden="true"></i>Results
+      <i class="fa fa-file-alt" aria-hidden="true"></i>Results
     </button>		
     <button
       class="mt-cmd-panel-last button is-primary"
       id="save-trade-button"
       type="submit"
       [disabled]="(tradeFormGroup.valid && tradeFormGroup.dirty) ? null : 'disabled'">
-      <i class="fa fa-floppy-o" aria-hidden="true"></i>Save
+      <i class="fas fa-save" aria-hidden="true"></i>Save
     </button>
   </div>
 </form>
