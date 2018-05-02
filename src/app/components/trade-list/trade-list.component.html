@@ -15,7 +15,7 @@
         {{t.name}}
 				<div class="trade-info">
 					<div class="trade-info-status is-size-7 has-text-grey"><b>Status:</b> {{t.statusText}}</div>
-					<div class="is-size-7 has-text-grey"><b>Organizer:</b> {{t.organizerName}} <i *ngIf="!t.organizerName" class="loading-organizer fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>
+					<div *ngIf="authenticatedUser" class="is-size-7 has-text-grey"><b>Organizer:</b> {{t.organizerName}} <i *ngIf="!t.organizerName" class="loading-organizer fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>
 				</div>
 			</td>
     </tr>

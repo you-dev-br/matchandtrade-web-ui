@@ -45,8 +45,10 @@ export class TradeListComponent {
 			private userService: UserService) {
     this.pagination = new Pagination(1, 10, 0);
     this.userService.getAuthenticatedUser()
-      .then(v => this.authenticatedUser = v)
-      .then(() => this.search());
+			.then(v => this.authenticatedUser = v)
+			.catch(e => console.log('User not authenticated. Continue normally.'))
+			.then(() => this.search())
+			.catch(e => this.message.setErrorItems(e));
   }
 
   createTrade() {
@@ -57,20 +59,24 @@ export class TradeListComponent {
 		const result = new TradeProxy();
 		Object.assign(result, trade);
 		result.statusText = this.tradeTransformer.toStateText(trade.state);
-		this.tradeMembershipService.search(new Page(1, 1), trade.tradeId, undefined, TradeMembershipType.OWNER)
-			.then(v => this.userService.get(v.results[0].userId))
-      .then(v => result.organizerName = v.name)
-      .then(() => {
-        this.tradeMembershipService.search(new Page(1,1), trade.tradeId, this.authenticatedUser.userId)
-          .then(membership => {
-            if (membership.results.length > 0) {
-              result.tradeMembershipType = membership.results[0].type;
-            }
-          });
-      })
-			.catch(e => {
-				console.log('Unable to get owner of Trade.tradeId: ' + trade.tradeId)
-			});
+
+		// Load organizer data only if the current user is an authenticated user
+		if (this.authenticatedUser) {
+			this.tradeMembershipService.search(new Page(1, 1), trade.tradeId, undefined, TradeMembershipType.OWNER)
+				.then(v => this.userService.get(v.results[0].userId))
+				.then(v => result.organizerName = v.name)
+				.then(() => {
+					this.tradeMembershipService.search(new Page(1,1), trade.tradeId, this.authenticatedUser.userId)
+						.then(membership => {
+							if (membership.results.length > 0) {
+								result.tradeMembershipType = membership.results[0].type;
+							}
+						});
+				})
+				.catch(e => {
+					console.log('Unable to get owner of Trade.tradeId: ' + trade.tradeId)
+				});
+		}
 		return result;
   }
   
