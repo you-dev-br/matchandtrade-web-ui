@@ -119,29 +119,17 @@ caption {
 
 // Overwriting bulma css. So, we need to disable bulmas select arrow.
 // Then create our own select arrow (because the default arrow is very ugly)
-
 // Disable bulma arrow which is created via '.select {border}'
 .select:not(.is-multiple):not(.is-loading)::after {
   border: none;
 }
-
 // Drawing our own custom arrow
 .select select:enabled {
-  padding-right: 2em;
-}
-
-.select select:enabled {
-  background-image:
-    linear-gradient(45deg, transparent 50%, gray 50%),
-    linear-gradient(135deg, gray 50%, transparent 50%),
-    linear-gradient(to right, #ccc, #ccc);
+	padding-right: 2em;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAGCAYAAAAVMmT4AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gUCBBsSqDdF3AAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAA2SURBVBjTY3R0dPzPQCRgZGBgYCBGw/79+xkZYRx8Gvbv388INxmfBphCDMXoGpAV4gS4nAQAOXITishw3jkAAAAASUVORK5CYII=');
   background-position:
-    calc(100% - 13px) calc(15px),
+    calc(100% - 11px) calc(15px),
     calc(100% - 7px) calc(15px),
     calc(100% - 25px) 7px;
-  background-size:
-    7px 7px,
-    7px 7px,
-    1px 20px;
   background-repeat: no-repeat;
 }
