@@ -11,7 +11,8 @@
     <tr *ngFor="let t of trades">
       <td class="mt-table-row-clickable" (keyup.enter)="navigateToTrade(t)" (click)="navigateToTrade(t)" tabindex="2">
         <i *ngIf="isOwner(t)" class="owner-icon fas fa-user"></i>
-        <i *ngIf="isMember(t)" class="member-icon fas fa-address-card"></i>
+				<i *ngIf="isMember(t)" class="member-icon fas fa-address-card"></i>
+				<i *ngIf="!isMember(t) && !isOwner(t)" class="not-member-icon fas fa-address-card"></i>
         {{t.name}}
 				<div class="trade-info">
 					<div class="trade-info-status is-size-7 has-text-grey"><b>Status:</b> {{t.statusText}}</div>
