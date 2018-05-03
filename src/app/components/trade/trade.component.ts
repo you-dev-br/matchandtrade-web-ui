@@ -80,8 +80,9 @@ export class TradeComponent implements OnInit {
     });
     this.nameFormControl = this.tradeFormGroup.controls['name'];
     this.stateFormControl = this.tradeFormGroup.controls['state'];
+		// We do not want the user to be able to set the state as "Results Generated" nor "Results Generated", this status should only be valid when it is coming from the server.
     for(let v in TradeState) {
-			if (v != TradeState.GENERATING_RESULTS) {
+			if (v != TradeState.GENERATING_RESULTS && v != TradeState.RESULTS_GENERATED) {
 				this.states.push(new KeyValuePair(v, this.tradeTransformer.toStateText(v)));
 			}
     }
@@ -92,10 +93,10 @@ export class TradeComponent implements OnInit {
   }
 
   private populateForm(trade: Trade, tradeMembership: TradeMembership) {
-    // We do not want the user to be able to set the state as "Results Generated", this status should only be valid when it is coming from the server.
-    if (TradeState.RESULTS_GENERATED != trade.state) {
-      this.states = this.states.filter(v => TradeState.RESULTS_GENERATED != v.key);
-    }
+		// If state is "Results Generated" or "Generating Results" then let's add it to the states so the user can see the current state propertly
+    if (trade.state == TradeState.RESULTS_GENERATED || trade.state == TradeState.GENERATING_RESULTS ) {
+			this.states.push(new KeyValuePair(trade.state, this.tradeTransformer.toStateText(trade.state)));
+		}
     this.stateFormControl.setValue(trade.state);
     this.nameFormControl.setValue(trade.name);
     if (!(tradeMembership && TradeMembershipType[tradeMembership.type] == TradeMembershipType.OWNER)) {
