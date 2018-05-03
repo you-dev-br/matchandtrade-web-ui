@@ -27,7 +27,7 @@ export class MessageComponent {
   }
 
   messageIconClass(): string {
-    const result = "fa";
+    const result = "fas";
     if (this.message.type == MessageType.ERROR) {
       return result + " fa-times";
     }
