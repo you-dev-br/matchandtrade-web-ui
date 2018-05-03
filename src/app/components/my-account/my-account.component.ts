@@ -65,12 +65,13 @@ export class MyAccountComponent implements OnInit {
     this.loading = true;
     this.user.name = this.nameFormControl.value;
     this.userService.save(this.user)
-      .then(v => this.setUser(v))
+			.then(v => this.setUser(v))
+			.then(() => this.message.setInfoItems('Account saved.'))
       .catch(e => this.message.setErrorItems(e))
       .then(() => {
         this.loading = false;
         this.userFormGroup.markAsPristine();
-      });
+			});
   }
 
   private setUser(user: User) {
