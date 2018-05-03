@@ -37,21 +37,22 @@ export class TradeResultComponent implements OnInit {
       })
       .then(() => {
         this.tradeService.get(this.tradeHref).then(v => this.trade = v);
-      })
+			})
+			.then(() => this.displayMyEntries())
       .catch(e => this.message.setErrorItems(e))
       .then(() => {
         this.loading = false;
       });
   }
 
-  displayMyEntries():void {
-    this.userService.getAuthenticatedUser().then(u => {
+  displayMyEntries(): Promise<void> {
+    return this.userService.getAuthenticatedUser().then(u => {
       const tradedItemsForCurrentUser: Array<TradedItem> = this.tradedItems
         .filter(v => {
           return (v.userId == u.userId ? true : false);
         });
         this.tradeResult.tradedItems = tradedItemsForCurrentUser;
-    }).catch(e => this.message.setErrorItems(e));
+    });
   }
 
   displayAllEntries():void {
@@ -70,7 +71,15 @@ export class TradeResultComponent implements OnInit {
 				link.click();
 			})
     	.catch(e => this.message.setErrorItems(e));
-  }
+	}
+	
+	filter(option: string): void {
+		if (option == 'all-entries') {
+			this.displayAllEntries();
+		} else {
+			this.displayMyEntries();
+		}
+	}
 
   navigateBack() {
     this.navigationService.back();

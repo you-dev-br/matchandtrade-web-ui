@@ -9,6 +9,30 @@
 <p><b>Total of Traded Items:</b> {{tradeResult.totalOfTradedItems}}</p>
 <p><b>Total of Items not Traded:</b> {{tradeResult.totalOfNotTradedItems}}</p>
 
+<div class="filter-tab is-pulled-right">
+	<div class="filter-tab-icon">
+		<i class="fas fa-filter" aria-hidden="true" (click)="filter()"></i>
+	</div>
+	<div class="select">
+		<select id="filter-select" #filterSelect (change)="filter(filterSelect.value)">
+			<option value="my-entries">My Entries</option>
+			<option value="all-entries">All Entries</option>
+		</select>
+	</div>
+</div>
+
+<table class="table mt-table is-hoverable is-striped is-fullwidth">
+	<tr *ngFor="let tradedItem of tradeResult.tradedItems">
+		<td>
+			<b>User:</b> {{tradedItem.userName}}<br>
+			<b>sends:</b> {{tradedItem.itemName}}<br>
+			<b>to:</b> {{tradedItem.sendingUserName}}<br>
+			<b>and receives: </b> {{tradedItem.receivingItemName}}<br>
+			<b>from:</b> {{tradedItem.receivingUserName}}<br>
+		</td>
+	</tr>
+</table>
+
 <div class="mt-cmd-panel-container">
     <button
     class="mt-cmd-panel-first button is-primary"
@@ -19,36 +43,9 @@
   <button
     class="mt-cmd-panel-first button is-primary"
     type="button"
-    (click)="displayMyEntries()">
-    <i class="fa fa-user" aria-hidden="true"></i>My Entries
-  </button>
-  <button
-    class="mt-cmd-panel-first button is-primary"
-    type="button"
-    (click)="displayAllEntries()">
-    <i class="fas fa-file-alt" aria-hidden="true"></i>All Entries
-  </button>
-  <button
-    class="mt-cmd-panel-first button is-primary"
-    type="button"
     (click)="download()">
     <i class="fa fa-download" aria-hidden="true"></i>Download as CSV
   </button>
 </div>
-
-<br>
-<table class="table is-bordered is-striped is-hoverable is-fullwidth">
-  <tbody>
-    <tr *ngFor="let tradedItem of tradeResult.tradedItems">
-      <td>
-        <b>User:</b> {{tradedItem.userName}}<br>
-        <b>sends:</b> {{tradedItem.itemName}}<br>
-        <b>to:</b> {{tradedItem.sendingUserName}}<br>
-        <b>and receives: </b> {{tradedItem.receivingItemName}}<br>
-        <b>from:</b> {{tradedItem.receivingUserName}}<br>
-      </td>
-    </tr>
-  </tbody>
-</table>
 
 </div>
