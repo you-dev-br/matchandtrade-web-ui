@@ -2,3 +2,13 @@
   margin-top: 3em;
 	text-align: center;
 }
+
+.item-description {
+	font-size: small;
+	color: grey;
+}
+
+.item-row {
+	display: flex;
+	justify-content: space-between;
+}

@@ -11,18 +11,25 @@
 		<table class="table mt-table-hoverable is-striped is-fullwidth">
 			<tr *ngFor="let i of items">
 				<td
-					class=""
+					class="item-row"
 					(keyup.enter)="navigateToItem(i)"
 					(click)="navigateToItem(i)"
 					tabindex="2">
-					{{i.name}}
-					<span
+					<div>
+						<div>
+							{{i.name}}
+						</div>
+						<div class="item-description">
+							{{cropText(i.description, 150)}}
+						</div>
+					</div>
+					<div
 						class="is-pulled-right"
 						(keyup.enter)="deleteItem(i)"
 						(click)="deleteItem(i)"
 						tabindex="2">
-						<i class="fa fa-trash mt-table-icon"></i>
-					</span>
+						<i class="fas fa-trash mt-table-icon"></i>
+					</div>
 				</td>
 			</tr>
 		</table>

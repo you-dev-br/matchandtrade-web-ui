@@ -38,7 +38,19 @@ export class ItemListComponent implements OnInit {
 
   createItem() {
     this.navigationService.navigate('items', {tradeMembershipHref: this.tradeMembershipHref});
-  }
+	}
+	
+	cropText(text: string, charCount: number): string {
+		if (text) {
+			let result = text.substring(0, charCount);
+			if (text.length > charCount) {
+				result += '  ...';
+			}
+			return result;
+		} else {
+			return undefined;
+		}
+	}
 
   deleteItem(item: Item) {
     this.loading = true;

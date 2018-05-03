@@ -48,7 +48,7 @@ caption {
 .mt-table-hoverable {
   @extend %mt-table;
   td:hover {
-    border-left: .25em solid $primary-7;
+		border-left: .25em solid $primary-7;
     cursor: pointer;
   }
   td:active {
@@ -62,8 +62,9 @@ caption {
 
 // We want to increase the icon 'hit-box'
 .mt-table-icon {
-  margin: -.5em -.5em -.5em -.5em;
-  padding: .75em .5em .75em .5em;
+  margin: -.5em -.5em -.5em 0em;
+	padding: .75em .5em .75em .5em;
+	color: grey;
 }
 
 .mt-table-icon:hover {
