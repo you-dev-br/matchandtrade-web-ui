@@ -18,5 +18,6 @@ export class TradedItem {
   receivingItemId: number;
   receivingItemName: string;
   sendingUserId: number;
-  sendingUserName: string;
+	sendingUserName: string;
+	expanded: boolean = false;
 } 

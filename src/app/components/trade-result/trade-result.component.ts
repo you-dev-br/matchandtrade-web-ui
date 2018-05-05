@@ -83,6 +83,10 @@ export class TradeResultComponent implements OnInit {
 
   navigateBack() {
     this.navigationService.back();
-  }
+	}
+	
+	toogleExpanded(tradedItem: TradedItem) {
+		tradedItem.expanded = !tradedItem.expanded;
+	}
 
 }

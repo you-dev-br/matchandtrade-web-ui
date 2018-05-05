@@ -11,7 +11,7 @@
 
 <div class="filter-tab is-pulled-right">
 	<div class="filter-tab-icon">
-		<i class="fas fa-filter" aria-hidden="true" (click)="filter()"></i>
+		<i class="fas fa-filter" aria-hidden="true"></i>
 	</div>
 	<div class="select">
 		<select id="filter-select" #filterSelect (change)="filter(filterSelect.value)">
@@ -21,14 +21,22 @@
 	</div>
 </div>
 
-<table class="table mt-table is-hoverable is-striped is-fullwidth">
+<table class="table mt-table-hoverable is-hoverable is-striped is-fullwidth">
 	<tr *ngFor="let tradedItem of tradeResult.tradedItems">
-		<td>
-			<b>User:</b> {{tradedItem.userName}}<br>
-			<b>sends:</b> {{tradedItem.itemName}}<br>
-			<b>to:</b> {{tradedItem.sendingUserName}}<br>
-			<b>and receives: </b> {{tradedItem.receivingItemName}}<br>
-			<b>from:</b> {{tradedItem.receivingUserName}}<br>
+		<td (click)="toogleExpanded(tradedItem)">
+			<div>
+				<span>{{tradedItem.userName}}</span>
+				<span class="is-pulled-right expanding-icon">
+					<i *ngIf="!tradedItem.expanded" class="fas fa-angle-double-down"></i>
+					<i *ngIf="tradedItem.expanded" class="fas fa-angle-double-up"></i>
+				</span>
+			</div>
+			<div *ngIf="tradedItem.expanded" class="expanded-traded-item">
+				<b>Sends:</b> {{tradedItem.itemName}}<br>
+				<b>To:</b> {{tradedItem.sendingUserName}}<br>
+				<b>And receives: </b> {{tradedItem.receivingItemName}}<br>
+				<b>From:</b> {{tradedItem.receivingUserName}}<br>
+			</div>
 		</td>
 	</tr>
 </table>

@@ -1,3 +1,9 @@
+@import '~variables.scss';
+
+.expanded-traded-item {
+	margin-left: 1.5em;
+}
+
 .filter-tab {
 	background: linear-gradient(white 0%, #f5f5f5 100%);
 	border: 1px solid lightgrey;
@@ -13,4 +19,8 @@
   justify-content: center;
 	width: 1.5em;
 	margin-right: .5em;
+}
+
+.table td:hover .expanding-icon {
+	color: $primary-7;
 }
