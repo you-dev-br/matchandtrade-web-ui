@@ -4,10 +4,12 @@
 
 <div *ngIf="!loading && tradeResult">
 
-<p><b>Trade:</b> {{tradeResult.tradeName}}</p>
-<p><b>Total of Items:</b> {{tradeResult.totalOfItems}}</p>
-<p><b>Total of Traded Items:</b> {{tradeResult.totalOfTradedItems}}</p>
-<p><b>Total of Items not Traded:</b> {{tradeResult.totalOfNotTradedItems}}</p>
+<div class="summary">
+	<p><b>Trade:</b> {{tradeResult.tradeName}}</p>
+	<p><b>Total of Items:</b> {{tradeResult.totalOfItems}}</p>
+	<p><b>Total of Traded Items:</b> {{tradeResult.totalOfTradedItems}}</p>
+	<p><b>Total of Items not Traded:</b> {{tradeResult.totalOfNotTradedItems}}</p>
+</div>
 
 <div class="filter-tab is-pulled-right">
 	<div class="filter-tab-icon">
