@@ -31,10 +31,9 @@ describe('Items', () => {
 		const itemName: string = 'Banana' + salt;
 		itemHelper.createItem(itemName);
 
-		browser.navigate().back();
 		expect(page.elementItemRow(itemName)).toBeDefined();
 		page.elementItemRow(itemName).click();
-		expect(page.elementSaveItemButton()).toBeDefined();
+		expect(page.elementSaveItemButton().isEnabled()).toBeFalsy();
 		page.elementItemName().clear();
 		page.elementItemName().sendKeys(itemName + 'Updated');
 		page.elementSaveItemButton().click();

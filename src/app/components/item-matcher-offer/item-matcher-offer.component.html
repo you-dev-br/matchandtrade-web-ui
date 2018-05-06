@@ -18,7 +18,7 @@
     <table id="offering_items_table" class="table is-bordered is-striped is-hoverable is-fullwidth">
       <tbody>
         <tr *ngFor="let offerableItem of obtainOfferableItemsForCurrentPage()">
-          <td class="mt-table-row-clickable item-offer-checkbox-column" (click)="toogleOfferableItem(offerableItem)">
+          <td class="item-offer-checkbox-column" (click)="toogleOfferableItem(offerableItem)">
             <input
               class="item-offer-checkbox"
               type="checkbox"

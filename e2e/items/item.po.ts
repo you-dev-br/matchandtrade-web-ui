@@ -15,7 +15,7 @@ export class ItemPage {
   }
 
   elementItemRow(name: string) {
-    return element(by.cssContainingText('.mt-table-row-clickable', name));
+		return element(by.cssContainingText('.item-row', name)).all(by.tagName('div')).first();
   }
 
   elementSaveItemButton() {

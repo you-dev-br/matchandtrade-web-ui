@@ -3,7 +3,7 @@ import { browser, by, element } from 'protractor';
 export class TradePage {
 
   elementNavigationBarTrades() {
-    return element(by.id('navbar-trades'));
+    return element(by.id('menu-item-trades'));
   }
 
   elementCreateTradeButton() {
@@ -31,7 +31,7 @@ export class TradePage {
   }
 
   elementTradeRow(tradeName: string) {
-    return element(by.cssContainingText('.mt-table-row-clickable', tradeName));
+    return element(by.cssContainingText('tr', tradeName));
   }
 
   elementTradeState(state: string) {

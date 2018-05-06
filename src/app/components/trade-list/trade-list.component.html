@@ -9,7 +9,7 @@
 <div *ngIf="!loading && pagination.totalEntries">
   <table class="table mt-table-hoverable is-striped is-fullwidth">
     <tr *ngFor="let t of trades" (keyup.enter)="navigateToTrade(t)" (click)="navigateToTrade(t)" tabindex="2">
-      <td class="mt-table-row-clickable">
+      <td>
         <i *ngIf="isOwner(t)" class="owner-icon fas fa-user"></i>
 				<i *ngIf="isMember(t)" class="member-icon fas fa-address-card"></i>
 				<i *ngIf="!isMember(t) && !isOwner(t)" class="not-member-icon fas fa-address-card"></i>
