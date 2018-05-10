@@ -10,9 +10,9 @@
 <div *ngIf="!loading && pagination.totalEntries">
 	<div>
 		<table class="table mt-table-hoverable is-striped is-fullwidth">
-			<tr *ngFor="let i of items">
+			<tr *ngFor="let i of items" (keyup.enter)="navigateToItem(i)" (click)="navigateToItem(i)" tabindex="2">
 				<td class="item-row">
-					<div (keyup.enter)="navigateToItem(i)" (click)="navigateToItem(i)" tabindex="2">
+					<div>
 						<div>
 							{{i.name}}
 						</div>
@@ -20,8 +20,8 @@
 							{{cropText(i.description, 150)}}
 						</div>
 					</div>
-					<div class="is-pulled-right" (keyup.enter)="deleteItem(i)" (click)="deleteItem(i)" tabindex="2">
-						<i class="fas fa-trash mt-table-icon"></i>
+					<div class="is-pulled-right">
+						<i class="fas fa-trash mt-table-icon" (keyup.enter)="deleteItem(i)" (click)="deleteItem(i)" tabindex="2"></i>
 					</div>
 				</td>
 			</tr>

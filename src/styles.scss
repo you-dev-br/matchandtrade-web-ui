@@ -35,40 +35,39 @@ caption {
 // mt-table
 // ============
 %mt-table {
-  border-left: .25em solid transparent;
   border-top: 1px solid silver;
   border-bottom: 1px solid silver;
-  border-right: 0em none transparent;
   td {
     border-left: .25em solid transparent;
-    padding: 1em .5em 1em .25em;
-  }
+		padding: 1em .5em 1em .25em;
+	}
+	tr {
+		outline-color: $primary-4;
+	}
 }
 
 .mt-table {
-  @extend %mt-table;
+	@extend %mt-table;
 }
 
 .mt-table-hoverable {
   @extend %mt-table;
   td:hover {
 		border-left: .25em solid $primary-7;
-    cursor: pointer;
+		cursor: pointer;
   }
   td:active {
     background-color: $primary-2;
-    cursor: progress;
-  }
-  td:focus {
-    outline: 0px;
+		cursor: progress;
   }
 }
 
 // We want to increase the icon 'hit-box'
 .mt-table-icon {
-  margin: -.5em -.5em -.5em 0em;
-	padding: .75em .5em .75em .5em;
 	color: grey;
+	margin: -.5em -.5em -.5em 0em;
+	outline-color: $primary-4;
+	padding: .75em .5em .75em .5em;
 }
 
 .mt-table-icon:hover {
