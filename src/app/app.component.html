@@ -1,5 +1,10 @@
-<app-navigation-bar></app-navigation-bar>
+<div class="app-container-layout">
 
-<div class="app-component-main">
-  <router-outlet></router-outlet>
+	<div class="app-side-layout"></div>
+	<div class="app-middle-layout">
+		<app-navigation-bar></app-navigation-bar>
+		<div><router-outlet></router-outlet></div>
+	</div>
+	<div class="app-side-layout"></div>
+
 </div>

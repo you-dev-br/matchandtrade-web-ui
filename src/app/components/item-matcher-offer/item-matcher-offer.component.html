@@ -2,14 +2,14 @@
 <app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
 <app-message [message]="message"></app-message>
 
-<div *ngIf="!loading && offerableItems.length<1" class="not-found-container">
+<div *ngIf="!loading && offerableItems.length<1" class="not-found-container mt-content">
   <div class="not-found-content">
     <p>You did not submit any items.</p>
     <p>As a result, you cannot make offers in this trade <i class="fa fa-frown-o" aria-hidden="true"></i></p>
   </div>
 </div>
 
-<div *ngIf="!loading && offerableItems.length>0">
+<div *ngIf="!loading && offerableItems.length>0" class="mt-content">
   <p class="wanted-item-paragraph">
     You want: <i>{{wantedItem.name}}</i>
   </p>

@@ -1,4 +1,31 @@
-.app-component-main {
-  min-height: 85%;
-  margin: 0em 0.5em 0em 0.5em;
+@import '~variables.scss';
+
+$container-height: 46px;
+$container-height-trashold: 44px;
+
+.app-container-layout {
+	display: flex;
+	justify-content: center;
+	height: 100%;
+}
+
+.app-side-layout {
+	background: linear-gradient(
+		$primary-5, 
+		$primary-5 $container-height-trashold,
+		$primary-7 $container-height-trashold,
+		$primary-7 $container-height,
+		whitesmoke $container-height,
+		whitesmoke 86px,
+		$primary-7 86px,
+		$primary-7 88px,
+		transparent 88px,
+		transparent 100%);
+	flex: 1 auto;
+}
+
+.app-middle-layout {
+	background-color: white;
+	flex-grow: 999; // We want it to grow as much as possible within its max-width
+	max-width: 60em;
 }

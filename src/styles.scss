@@ -1,10 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~variables.scss';
 
-html, body {
-  height: 100%;
-}
-
 caption {
   background-color: $primary-7;
   border: 1px solid $primary-8;
@@ -25,6 +21,14 @@ caption {
 
 .mt-field-text {
   margin: 0em 0.75em 0em 0.75em;
+}
+
+// ============
+// mt-content
+// ============
+.mt-content {
+	margin-left: .5em;
+	margin-right: .5em;
 }
 
 // ============

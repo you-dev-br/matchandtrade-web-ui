@@ -1,4 +1,4 @@
-<article [class]="messageClass()" *ngIf="hasMessages()">
+<article [class]="messageClass() + ' mt-content'" *ngIf="hasMessages()">
   <div [class]="messageBodyClass()" id="message-body">
     <div *ngFor="let i of message.items">
       <i [class]="messageIconClass()" aria-hidden="true"></i>

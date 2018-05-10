@@ -2,7 +2,7 @@
 <app-message [message]="message"></app-message>
 <app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
 
-<div *ngIf="!loading && tradeResult">
+<div *ngIf="!loading && tradeResult" class="mt-content">
 
 <div class="summary">
 	<p><b>Trade:</b> {{tradeResult.tradeName}}</p>

@@ -2,12 +2,12 @@
 <app-message [message]="message"></app-message>
 <app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
 
-<div *ngIf="!loading && !pagination.totalEntries" class="not-found-content">
+<div *ngIf="!loading && !pagination.totalEntries" class="not-found-content mt-content">
 		<p>No items for matching.</p>
 		<p>Other members didn't submit items <i class="fa fa-frown-o" aria-hidden="true"></i></p>
 </div>
 
-<div *ngIf="!loading && pagination.totalEntries">
+<div *ngIf="!loading && pagination.totalEntries" class="mt-content">
 	<table class="table is-bordered is-fullwidth">
 		<tbody>
 			<tr *ngFor="let item of items"><td>

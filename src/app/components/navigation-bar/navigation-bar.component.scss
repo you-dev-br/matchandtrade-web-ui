@@ -8,6 +8,7 @@ $container-height-trashold: 44px;
 .navigation-bar {
 	background: linear-gradient($primary-5, $primary-5 $container-height-trashold, $primary-7 $container-height-trashold, $primary-7 $container-height);
 	color: white;
+	height: $container-height;
 }
 
 // ============
@@ -21,7 +22,9 @@ $container-height-trashold: 44px;
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	padding: 10px 10px 0px 10px;
+	height: $container-height;
+	justify-content: flex-end;
+	padding: 0px 10px 0px 10px;
 	svg {
 		fill: transparent;
 	}
@@ -33,7 +36,7 @@ $container-height-trashold: 44px;
 }
 
 .menu-item:focus, .menu-item-burger:focus {
-	outline: rgba(255, 0, 0, .5);
+	outline: none;
 	background: linear-gradient($primary-6, $primary-6 $container-height-trashold, $primary-7 $container-height-trashold, $primary-7 $container-height);
 }
 
@@ -55,7 +58,7 @@ $container-height-trashold: 44px;
 		color: white;
 	}
 	svg {
-		fill: #fafafa;
+		fill: whitesmoke;
 	}
 	svg #menu-pointer-border {
 		stroke: $primary-7;

@@ -1,6 +1,7 @@
 <app-page-title [template]="'trade-list'"></app-page-title>
 <app-message [message]="message"></app-message>
 <app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
+<div class="mt-content">
 
 <div *ngIf="!loading && !pagination.totalEntries" class="not-found-content">
   No trades available at this time <i class="fa fa-frown-o" aria-hidden="true"></i>
@@ -36,4 +37,6 @@
     tabindex="3">
     <i class="fa fa-plus" aria-hidden="true"></i>Create
   </button>
+</div>
+
 </div>
