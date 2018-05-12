@@ -1,11 +1,48 @@
-.pagination-list {
-  padding: .5em;
+@import '~variables.scss';
+
+.arrow {
+	margin: 0em 0em 0em 0em;
 }
 
-.pagination-previous {
-  width: 8em;
+.pagination-container {
+	text-align: center;
 }
 
-.pagination-next {
-  width: 8em;
+.page {
+	border: 1px solid silver;
+	color: dimgrey;
+	margin: 0em .2em 0em .2em;
+	padding: 1em 1em 1em 1em;
+}
+
+.page:hover {
+	background-color: whitesmoke;
+}
+
+%current-page {
+	background-color: $primary-2;
+	border-color: $primary-7;
+	color: $primary-7;
+}
+
+.page:active,.page:focus {
+	@extend %current-page;
+}
+
+.ellipsis, .ellipsis:hover {
+	background-color: transparent;
+	border: none;
+	color: grey;
+	cursor: default;
+	margin: 0em .2em 0em .2em;
+	padding: 0em 0em 0em 0em;
+}
+
+.current-page {
+	@extend %current-page;
+}
+
+.current-page:hover {
+	background-color: $primary-2;
+	cursor: default;
 }

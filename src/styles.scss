@@ -23,6 +23,7 @@ caption {
   margin: 0em 0.75em 0em 0.75em;
 }
 
+
 // ============
 // mt-content
 // ============
@@ -31,12 +32,14 @@ caption {
 	margin-right: .5em;
 }
 
+
 // ============
 // mt-table
 // ============
 %mt-table {
   border-top: 1px solid silver;
-  border-bottom: 1px solid silver;
+	border-bottom: 1px solid silver;
+	margin: .5em 0em .5em 0em; 
   td {
     border-left: .25em solid transparent;
 		padding: 1em .5em 1em .25em;
@@ -73,6 +76,7 @@ caption {
 .mt-table-icon:hover {
   color: $primary-7;
 }
+
 
 // ============
 // mt-cmd-panel
