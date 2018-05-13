@@ -15,18 +15,18 @@
   </p>
 
   <div>
-    <table id="offering_items_table" class="table is-bordered is-striped is-hoverable is-fullwidth">
-      <tbody>
-        <tr *ngFor="let offerableItem of obtainOfferableItemsForCurrentPage()">
-          <td class="item-offer-checkbox-column" (click)="toogleOfferableItem(offerableItem)">
-            <input
-              class="item-offer-checkbox"
-              type="checkbox"
-              [checked]="offerableItem.checked()">
-          </td>
-          <td class="mt-table-row-clickable item-offer-name" (click)="toogleOfferableItem(offerableItem)">{{offerableItem.name}}</td>
-        </tr>
-      </tbody>
+    <table id="offering_items_table" class="table mt-table-hoverable is-striped is-fullwidth">
+			<tr *ngFor="let offerableItem of obtainOfferableItemsForCurrentPage()">
+				<td class="offering-item-cell" (click)="toogleOfferableItem(offerableItem)">
+					<div>
+						<input
+							class="item-offer-checkbox"
+							type="checkbox"
+							[checked]="offerableItem.checked()">
+					</div>
+					<div>{{offerableItem.name}}</div>
+				</td>
+			</tr>
     </table>
     <app-pagination
       [loading]="loading"
