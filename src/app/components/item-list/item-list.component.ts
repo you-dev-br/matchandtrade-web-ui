@@ -65,21 +65,19 @@ export class ItemListComponent implements OnInit {
       .then(() => this.message.setInfoItems('Item deleted.'));
   }
 
-  navigateToItem(item: Item) {
-    this.navigationService.navigate('items', {itemHref: item._href});
-  }
-	
-	nextPage() {
+	goToPage(pageNumber: number) {
 		this.loading = true;
-		this.pagination.page.number++;
+		this.pagination.page.number = pageNumber;
 		this.search();
 	}
 
-	previousPage() {
-    this.loading = true;
-    this.pagination.page.number--;
-    this.search();
-	}
+	navigateBack() {
+    this.navigationService.back();
+  }
+
+  navigateToItem(item: Item) {
+    this.navigationService.navigate('items', {itemHref: item._href});
+  }
 
   search(): void {
     this.itemService.search(this.pagination.page, this.tradeMembershipHref)
@@ -89,10 +87,6 @@ export class ItemListComponent implements OnInit {
       })
       .catch(e => this.message.setErrorItems(e))
       .then(() => this.loading = false);
-  }
-
-  navigateBack() {
-    this.navigationService.back();
   }
 
 }

@@ -29,8 +29,7 @@
 		<app-pagination
 			[loading]="loading"
 			[pagination]="pagination"
-			(onNextPage)="nextPage()"
-			(onPreviousPage)="previousPage()">
+			(onGoToPage)="goToPage($event)">
 		</app-pagination>
 	</div>
 </div>

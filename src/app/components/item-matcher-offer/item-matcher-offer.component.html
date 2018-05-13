@@ -31,8 +31,8 @@
     <app-pagination
       [loading]="loading"
       [pagination]="pagination"
-      (onNextPage)="nextPage()"
-      (onPreviousPage)="previousPage()"></app-pagination>
+			(onGoToPage)="goToPage($event)">
+		</app-pagination>
   </div>
 
   <div class="mt-cmd-panel-container">

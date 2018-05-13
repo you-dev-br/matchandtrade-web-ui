@@ -21,7 +21,7 @@ export class ItemMatcherListComponent implements OnInit {
 	items: Item[] = Array<Item>();
   loading: boolean = true;
   message: Message = new Message();
-  pagination: Pagination = new Pagination(1, 5, 0);
+  pagination: Pagination = new Pagination(1, 10, 0);
   tradeMembership: TradeMembership;
   tradeMembershipHref: string;
 
@@ -55,29 +55,18 @@ export class ItemMatcherListComponent implements OnInit {
       .then(() => this.loading = false);
   }
   
-  nextPage() {
-      this.pagination.page.number++;
-      this.loading = true;
-      this.search(this.tradeMembership)
-        .then(() => {
-          this.storageService.setLastItemMatcherListPage(this.pagination.page.number);
-          this.loading = false;
-        })
-        .catch((e) => this.message.setErrorItems(e));
+  goToPage(pageNumber: number) {
+		this.pagination.page.number = pageNumber;
+		this.loading = true;
+		this.search(this.tradeMembership)
+			.then(() => {
+				this.storageService.setLastItemMatcherListPage(this.pagination.page.number);
+				this.loading = false;
+			})
+			.catch((e) => this.message.setErrorItems(e));
   }
 
-  previousPage() {
-      this.pagination.page.number--;
-      this.loading = true;
-      this.search(this.tradeMembership)
-        .then(() => {
-          this.storageService.setLastItemMatcherListPage(this.pagination.page.number);
-          this.loading = false;
-        })
-        .catch((e) => this.message.setErrorItems(e));
-  }
-
-  search(tradeMembership: TradeMembership): Promise<any> {
+  private search(tradeMembership: TradeMembership): Promise<any> {
     return this.searchService.searchItemsToMatch(tradeMembership, this.pagination.page).then(searchResults => {
       this.items = searchResults.results;
       this.pagination = searchResults.pagination;

@@ -9,26 +9,24 @@
 
 <div *ngIf="!loading && pagination.totalEntries" class="mt-content">
 	<table class="table is-bordered is-fullwidth">
-		<tbody>
-			<tr *ngFor="let item of items"><td>
-				<figure class="pull-left image is-64x64 figure-thumbnail item-thumbnail">
-						No thumbnail available
-				</figure>
-				<div>{{item.name}}</div>
-				<div class="item-controls">
-					<button class="button is-primary is-small" type="button" (click)="navigateToOffer(item)">
-						<i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="small-button-text">I Want</span>
-					</button>
-				</div>
-			</td></tr>
-		</tbody>
+		<tr *ngFor="let item of items"><td>
+			<figure class="pull-left image is-64x64 figure-thumbnail item-thumbnail">
+				No thumbnail available
+			</figure>
+			<div>{{item.name}}</div>
+			<div class="item-controls">
+				<button class="button is-primary is-small" type="button" (click)="navigateToOffer(item)">
+					<i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="small-button-text">I Want</span>
+				</button>
+			</div>
+		</td></tr>
 	</table>
 
 	<app-pagination
 		[loading]="loading"
 		[pagination]="pagination"
-		(onNextPage)="nextPage()"
-		(onPreviousPage)="previousPage()"></app-pagination>
+		(onGoToPage)="goToPage($event)">
+	</app-pagination>
 
 	<div class="mt-cmd-panel-container">
 		<button 

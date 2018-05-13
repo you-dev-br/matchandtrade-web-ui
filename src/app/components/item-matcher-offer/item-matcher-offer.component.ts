@@ -28,7 +28,7 @@ export class ItemMatcherOfferComponent implements OnInit {
   message: Message = new Message();
   offerableItems: CheckableItem[] = new Array<CheckableItem>();
   originalOffers: Offer[] = new Array<Offer>();
-  pagination = new Pagination(1, 5, 0);
+  pagination = new Pagination(1, 20, 0);
   tradeMembershipHref: string;
   wantedItem: Item;
 
@@ -121,13 +121,14 @@ export class ItemMatcherOfferComponent implements OnInit {
     this.navigationService.back();
   }
 
-  nextPage() {
-    const nextPage = this.pagination.page.number++;
-  }
-
-  previousPage() {
-    this.pagination.page.number--;
-  }
+	goToPage(pageNumber: number) {
+		// We need to create a new instance of pagination so the pagination.component can detect the changes
+		// See https://stackoverflow.com/questions/34796901/angular2-change-detection-ngonchanges-not-firing-for-nested-object
+		let newPaginationInstance = new Pagination(0, 0, 0);
+		Object.assign(newPaginationInstance, this.pagination);
+		newPaginationInstance.page.number = pageNumber;
+		this.pagination = newPaginationInstance;
+	}
 
   save() {
     this.loading = true;

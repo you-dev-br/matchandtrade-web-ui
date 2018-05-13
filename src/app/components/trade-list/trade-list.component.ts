@@ -98,19 +98,13 @@ export class TradeListComponent {
 
   navigateToTrade(trade: TradeProxy) {
     this.navigationService.navigate('trades', {tradeHref: trade._href});
-  }
-
-  nextPage() {
-      this.pagination.page.number++;
-      this.loading = true;
-      this.search();
 	}
 	
-  previousPage() {
-      this.pagination.page.number--;
-      this.loading = true;
-      this.search();
-  }
+	goToPage(pageNumber: number) {
+		this.pagination.page.number = pageNumber;
+		this.loading = true;
+		this.search();
+	}
 
   search(): void {
     this.tradeService.search(this.pagination.page)

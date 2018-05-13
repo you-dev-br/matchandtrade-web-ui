@@ -1,7 +1,8 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
 
 import { Pagination } from '../../classes/search/pagination';
 import { KeyValuePair } from '../../classes/pojo/key-value-pair';
+import { isNumber } from 'util';
 
 export enum PaginationButton{NEXT, NONE, PREVIOUS}
 
@@ -10,12 +11,11 @@ export enum PaginationButton{NEXT, NONE, PREVIOUS}
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss']
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent implements OnInit, OnChanges {
   @Input() loading: boolean = false;
-  @Input() pagination: Pagination;
-  @Output() onNextPage = new EventEmitter<Pagination>();
-  @Output() onPreviousPage = new EventEmitter<Pagination>();
-	interval: any[] = [];
+	@Input() pagination: Pagination;
+	@Output() onGoToPage = new EventEmitter<number>();
+	interval: any[];
 	currentPage: number;
 
   constructor() {}
@@ -26,7 +26,7 @@ export class PaginationComponent implements OnInit {
 		if (totalPages < 2) {
 			return;
 		}
-		
+		this.interval = [];
 		this.currentPage = this.pagination.page.number;
 		const pageNumber = this.pagination.page.number;
 		const maxPagesToDisplay = 5;
@@ -69,28 +69,43 @@ export class PaginationComponent implements OnInit {
 
 	}
 
+	ngOnChanges(changes) {
+		if(this.pagination && changes["pagination"]) {
+			this.pagination = changes["pagination"].currentValue;
+			this.ngOnInit();
+		}
+	}
+
 	private addToPageInterval(pageNumber: number, maxIntervalSize: number, totalPages) {
 		if (this.interval.length < maxIntervalSize && pageNumber > 0 && pageNumber <= totalPages) {
 			this.interval.push(pageNumber);
 		}
 	}
 
+	goToPage(targetPage: number) {
+		if (isNumber(targetPage) && targetPage != this.currentPage) {
+			this.onGoToPage.emit(targetPage);
+		}
+ 	}
+
   nextPage() {
     if (this.isNextPageButtonEnabled()) {
-      this.onNextPage.emit(this.pagination);
+			const targetPage = this.currentPage + 1;
+      this.onGoToPage.emit(targetPage);
     }
 	}
 	
 	pageClass(page: any): string {
 		let result = 'button is-small page ';
-		result += (page==this.currentPage ? 'current-page' : ' ');
-		result += (page=='...' ? 'ellipsis' : '');
+		result += (page == this.currentPage ? 'current-page' : ' ');
+		result += (page == '...' ? 'ellipsis' : '');
 		return result;
 	}
 
 	previousPage() {
     if (this.isPreviousPageButtonEnabled()) {
-      this.onPreviousPage.emit(this.pagination);
+			const targetPage = this.currentPage - 1;
+      this.onGoToPage.emit(targetPage);
     }
   }
 
@@ -106,9 +121,7 @@ export class PaginationComponent implements OnInit {
 
   isPreviousPageButtonEnabled(): boolean {
     if (!this.loading
-      && this.pagination
-      && this.pagination.page
-			&& this.pagination.page.number > 1) {
+			&& this.currentPage > 1) {
       return true;
     }
     return false;

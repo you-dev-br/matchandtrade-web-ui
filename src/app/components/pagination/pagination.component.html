@@ -6,7 +6,8 @@
 
 		<a 
 			*ngFor="let page of interval"
-			[class]="pageClass(page)">
+			[class]="pageClass(page)"
+			(click)="goToPage(page)">
 			{{page}}
 		</a>
 
