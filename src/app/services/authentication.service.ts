@@ -53,7 +53,7 @@ export class AuthenticationService {
         .get('/matchandtrade-web-api/v1/authenticate/sign-out')
         .subscribe(r => {
           resolve(true);
-        }, e => resolve(e));
+        }, e => reject(e));
     });
 	}
 	

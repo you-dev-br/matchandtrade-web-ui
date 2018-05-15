@@ -13,11 +13,13 @@ export class TradeHelper {
     this.page.elementSaveTradeButton().click();   
   }
   
-  public subscribeToTrade(tradeName: string) {    
-    // Subscribe to Trade
+	public navigateToTrade(tradeName: string) {    
     this.page.elementNavigationBarTrades().click();
     this.page.elementTradeRow(tradeName).click();
-    this.page.elementSubscribeButton().click();
-  }
+	}
+
+	public save() {
+		this.page.elementSaveTradeButton().click();
+	}
 	
 }

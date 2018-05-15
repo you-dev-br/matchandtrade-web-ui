@@ -40,6 +40,14 @@ export class TradePage {
 
   elementSubscribeButton() {
     return element(by.cssContainingText('button', 'Subscribe'));
-  }
+	}
+	
+  elementMatchingItemsButton() {
+    return element(by.cssContainingText('button', 'Match Items'));
+	}
+
+	elementResultsButton() {
+    return element(by.cssContainingText('button', 'Results'));
+	}
 
 }

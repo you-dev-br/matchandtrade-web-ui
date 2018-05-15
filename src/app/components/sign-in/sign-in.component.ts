@@ -24,10 +24,9 @@ export class SignInComponent {
 
   signOut(): void {
     this.signingOut = true;
-    console.log('signingout', this.signingOut, this.authenticationService.isSignedIn());
     this.authenticationService.signOut()
       .then(v => this.navigationService.navigate('home'))
-      .catch(() => this.signingOut = false);
+			.catch((e) => this.signingOut = false);
   }
 
   isSignedIn(): boolean {

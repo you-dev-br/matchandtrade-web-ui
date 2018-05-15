@@ -5,7 +5,7 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
 
 exports.config = {
-  allScriptsTimeout: 11000,
+  allScriptsTimeout: 900000,
   specs: [
     './protractor-extra.conf.js',
     './e2e/**/*.e2e-spec.ts'
@@ -18,7 +18,8 @@ exports.config = {
   capabilities: {
 		'browserName': 'chrome',
 		chromeOptions: {
-			args: [ "--headless", "--disable-gpu", "--window-size=450x700" ]
+			// For headless testing use: args: [ "--headless", "--disable-gpu", "--window-size=450x700" ]
+			args: [ '--disable-gpu', '--window-size=450x700' ]
 		}
   },
   directConnect: true,
@@ -32,7 +33,7 @@ exports.config = {
   }],
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 30000,
+    defaultTimeoutInterval: 180000,
     print: function() {}
   },
   onPrepare() {

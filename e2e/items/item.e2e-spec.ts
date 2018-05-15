@@ -20,22 +20,22 @@ describe('Items', () => {
   });
 
 	it('should create new item', () => {
-		const tradeName: string = 'Greece' + salt;
+		const tradeName: string = 'Test - Should create new item ' + salt;
 		tradeHelper.createTrade(tradeName);
 		itemHelper.createItem('Apple');
 	});
 
 	it('should update an existing item', () => {
-		const tradeName: string = 'Hungary' + salt;
+		const tradeName: string = 'Test - Should update an existing item ' + salt;
 		tradeHelper.createTrade(tradeName);
-		const itemName: string = 'Banana' + salt;
+		const itemName: string = 'Apple ' + salt;
 		itemHelper.createItem(itemName);
 
 		expect(page.elementItemRow(itemName)).toBeDefined();
 		page.elementItemRow(itemName).click();
 		expect(page.elementSaveItemButton().isEnabled()).toBeFalsy();
 		page.elementItemName().clear();
-		page.elementItemName().sendKeys(itemName + 'Updated');
+		page.elementItemName().sendKeys(itemName + ' Updated');
 		page.elementSaveItemButton().click();
 		expect(page.elementSavedMessage()).toBeDefined();
 	});

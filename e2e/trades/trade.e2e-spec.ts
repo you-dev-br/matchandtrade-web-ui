@@ -18,7 +18,7 @@ describe('Trades', () => {
   });
  
   it('should create new trade', () => {
-    const tradeName = 'Argentina' + salt;
+    const tradeName = 'Test - Should create new trade ' + salt;
 
     // Create Trade
     page.elementNavigationBarTrades().click();
@@ -28,11 +28,10 @@ describe('Trades', () => {
     expect(page.elementSaveTradeButton()).toBeDefined();
     page.elementSaveTradeButton().click();
     expect(page.elementSavedMessage().getText()).toBe('Trade saved.');
-
   });
 
   it('should update trade', () => {
-    const tradeName = 'Brazil' + salt;
+    const tradeName = 'Test - Should update trade ' + salt;
     
     // Create Trade
     tradeHelper.createTrade(tradeName);
@@ -54,8 +53,8 @@ describe('Trades', () => {
 
   it('should not update trade if has invalid data', () => {
     // Create Trade
-    const previousTradeName = 'Canada' + salt;
-    const currentTradeName = 'Denmark' + salt;
+    const previousTradeName = 'Test - Previous trade ' + salt;
+    const currentTradeName = 'Test - Should not update trade if has invalid data' + salt;
     tradeHelper.createTrade(previousTradeName);
     tradeHelper.createTrade(currentTradeName);
 
@@ -111,8 +110,9 @@ describe('Trades', () => {
     const tradeName = 'Ghana' + salt;
     tradeHelper.createTrade(tradeName);
     signInHelper.signOut();
-    signInHelper.signIn('carol');
-    tradeHelper.subscribeToTrade(tradeName);
+		signInHelper.signIn('carol');
+		tradeHelper.navigateToTrade(tradeName);
+		page.elementSubscribeButton().click();
     itemHelper.createItem('Crambery');
   });
 
