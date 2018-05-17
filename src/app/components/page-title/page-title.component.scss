@@ -1,17 +1,11 @@
 @import '~variables.scss';
 
 .mt-page-title {
-	// background: linear-gradient(
-	// 	whitesmoke 0px,
-	// 	whitesmoke 40px,
-	// 	$primary-7 40px,
-	// 	$primary-7 42px,
-	// 	gainsboro 42px,
-	// 	transparent 100%);
   color: $primary-7;
 	font-weight: bold;
 	height: 45px;
 	padding-top: 8px;
+	margin-bottom: .5em;
 }
 
 .mt-page-title i {
