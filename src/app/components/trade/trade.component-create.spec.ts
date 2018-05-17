@@ -16,7 +16,7 @@ import { UserService } from '../../services/user.service';
 import { TradeMembershipService } from '../../services/trade-membership.service';
 
 
-describe('TradeComponent-CREATE', () => {
+describe('trade.component-create', () => {
   let component: TradeComponent;
   let fixture: ComponentFixture<TradeComponent>;
 

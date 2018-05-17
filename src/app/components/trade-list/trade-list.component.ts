@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 
@@ -29,7 +29,7 @@ class TradeProxy {
   styleUrls: ['./trade-list.component.scss'],
   providers: [TradeService, TradeMembershipService, UserService]
 })
-export class TradeListComponent {
+export class TradeListComponent implements OnInit {
   authenticatedUser: User = null;
   loading: boolean = true;
   message: Message = new Message();
@@ -43,13 +43,16 @@ export class TradeListComponent {
 			private tradeService: TradeService, 
 			private tradeMembershipService: TradeMembershipService,
 			private userService: UserService) {
+	}
+	
+	ngOnInit() {
     this.pagination = new Pagination(1, 10, 0);
     this.userService.getAuthenticatedUser()
 			.then(v => this.authenticatedUser = v)
 			.catch(e => console.log('User not authenticated. Continue normally.'))
 			.then(() => this.search())
 			.catch(e => this.message.setErrorItems(e));
-  }
+	}
 
   createTrade() {
     this.navigationService.navigate('trades');

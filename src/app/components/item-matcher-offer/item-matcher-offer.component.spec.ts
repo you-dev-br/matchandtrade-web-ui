@@ -21,7 +21,7 @@ import { TradeMembershipService } from '../../services/trade-membership.service'
 import { RouterTestingModule } from '@angular/router/testing';
 import { Message } from '../message/message';
 
-describe('ItemMatcherOfferComponent', () => {
+describe('item-matcher-offer.component', () => {
   let component: ItemMatcherOfferComponent;
   let fixture: ComponentFixture<ItemMatcherOfferComponent>;
 
@@ -78,8 +78,8 @@ describe('ItemMatcherOfferComponent', () => {
     component.ngOnInit();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      expect(fixture.nativeElement.querySelector('#offering_items_table')).toBeDefined();
-      expect(fixture.nativeElement.querySelector('.item-offer-name').innerHTML).toBe('ItemServiceMock.SEARCH.name1');
+      expect(fixture.nativeElement.querySelector('#offering-items-table')).toBeDefined();
+      expect(fixture.nativeElement.querySelector('#item-offer-name').innerHTML).toBe('ItemServiceMock.SEARCH.name1');
     });
   });
 

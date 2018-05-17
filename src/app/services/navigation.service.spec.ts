@@ -10,7 +10,7 @@ import { ActivatedRouteMock } from '../../test/router-mock';
 import { ActivatedRoute } from '@angular/router';
 import { StorageService } from './storage.service';
 
-describe('NavigationService', () => {
+describe('navigation.service', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
 			imports: [RouterTestingModule.withRoutes([{path: 'test-path', redirectTo: ''}])],

@@ -11,7 +11,7 @@ import { MessageComponent } from '../message/message.component';
 import { NavigationService } from '../../services/navigation.service';
 import { PageTitleComponent } from '../page-title/page-title.component';
 
-describe('ItemComponent-CREATE', () => {
+describe('item.component-create', () => {
   let component: ItemComponent;
   let fixture: ComponentFixture<ItemComponent>;
 

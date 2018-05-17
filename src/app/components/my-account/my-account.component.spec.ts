@@ -10,7 +10,7 @@ import { MessageComponent } from '../message/message.component';
 import { NavigationService } from '../../services/navigation.service';
 import { NavigationServiceMock } from '../../../test/router-mock';
 
-describe('MyAccountComponent', () => {
+describe('my-account.component', () => {
   let component: MyAccountComponent;
   let fixture: ComponentFixture<MyAccountComponent>;
 

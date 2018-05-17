@@ -15,7 +15,7 @@ import { Pagination } from '../../classes/search/pagination';
 import { PageTitleComponent } from '../page-title/page-title.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('ItemListComponent', () => {
+describe('item-list.component', () => {
 	let component: ItemListComponent;
 	let fixture: ComponentFixture<ItemListComponent>;
 

@@ -45,7 +45,7 @@ class TradeMembershipServiceMock {
    }
 }
 
-describe('TradeComponent-VIEW', () => {
+describe('trade.component-view', () => {
   let component: TradeComponent;
   let fixture: ComponentFixture<TradeComponent>;
 

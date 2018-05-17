@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MessageComponent } from './message.component';
 import { Message } from './message';
 
-describe('MessageComponent', () => {
+describe('message.component', () => {
   let component: MessageComponent;
   let fixture: ComponentFixture<MessageComponent>;
 

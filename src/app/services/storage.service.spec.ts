@@ -6,7 +6,7 @@ import { Authentication } from '../classes/pojo/authentication';
 import { StorableMessage } from '../components/message/storable-message';
 import { MessageType } from '../components/message/message';
 
-describe('StorageService', () => {
+describe('storage.service', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [StorageService]

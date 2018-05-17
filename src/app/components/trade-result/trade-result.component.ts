@@ -26,20 +26,23 @@ export class TradeResultComponent implements OnInit {
     private navigationService: NavigationService,
     private route: ActivatedRoute,
     private tradeService: TradeService,
-    private userService: UserService) { }
+		private userService: UserService) { }
 
   ngOnInit() {
-    this.tradeHref = this.navigationService.obtainData(this.route).tradeHref;
+		this.tradeHref = this.navigationService.obtainData(this.route).tradeHref;
     this.tradeService.getResultsJson(this.tradeHref)
-      .then(v => {
-        this.tradeResult = v;
-        this.tradedItems = v.tradedItems;
-      })
+			.then(v => {
+				this.tradeResult = v;
+				this.tradedItems = v.tradedItems;
+			})
       .then(() => {
         this.tradeService.get(this.tradeHref).then(v => this.trade = v);
 			})
 			.then(() => this.displayMyEntries())
-      .catch(e => this.message.setErrorItems(e))
+      .catch(e => {
+				console.log('in error:', e);
+				this.message.setErrorItems(e);
+			})
       .then(() => {
         this.loading = false;
       });

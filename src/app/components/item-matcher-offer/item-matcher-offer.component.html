@@ -15,7 +15,7 @@
   </p>
 
   <div>
-    <table id="offering_items_table" class="table mt-table-hoverable is-striped is-fullwidth">
+    <table id="offering-items-table" class="table mt-table-hoverable is-striped is-fullwidth">
 			<tr *ngFor="let offerableItem of obtainOfferableItemsForCurrentPage()">
 				<td class="offering-item-cell" (click)="toogleOfferableItem(offerableItem)">
 					<div>
@@ -24,7 +24,7 @@
 							type="checkbox"
 							[checked]="offerableItem.checked()">
 					</div>
-					<div>{{offerableItem.name}}</div>
+					<div id="item-offer-name">{{offerableItem.name}}</div>
 				</td>
 			</tr>
     </table>

@@ -27,24 +27,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-
-		// Running chrome in headless mode
-		// See: https://gist.github.com/cvuorinen/543c6f72f8ec917ebfd596802d387aa3
-		// See: https://github.com/angular/protractor/blob/master/docs/browser-setup.md
-		// See: https://cvuorinen.net/2017/05/running-angular-tests-in-headless-chrome/
-		browsers: ['ChromeHeadless'],
+		browsers: ['Chrome'],
     singleRun: false,
-    customLaunchers: {
-      ChromeHeadless: {
-        base: 'Chrome',
-        flags: [
-          // See https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md
-          '--headless',
-          '--disable-gpu',
-          // Without a remote debugging port, Google Chrome exits immediately.
-          '--remote-debugging-port=9222',
-        ],
-			}
-		}
   });
 };
