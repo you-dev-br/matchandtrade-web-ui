@@ -135,9 +135,7 @@ caption {
 .select select:enabled {
 	padding-right: 2em;
 	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAGCAYAAAAVMmT4AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gUCBBsSqDdF3AAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAA2SURBVBjTY3R0dPzPQCRgZGBgYCBGw/79+xkZYRx8Gvbv388INxmfBphCDMXoGpAV4gS4nAQAOXITishw3jkAAAAASUVORK5CYII=');
-  background-position:
-    calc(100% - 11px) calc(15px),
-    calc(100% - 7px) calc(15px),
-    calc(100% - 25px) 7px;
-  background-repeat: no-repeat;
+  background-position: calc(100% - .75em) center;
+	background-repeat: no-repeat;
+	background-size: .75em;
 }
