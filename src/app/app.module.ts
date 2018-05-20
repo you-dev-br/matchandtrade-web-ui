@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -28,6 +29,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { TradeResultComponent } from './components/trade-result/trade-result.component';
 import { MyAccountComponent } from './components/my-account/my-account.component';
 import { AutosizeDirective } from './directives/autosize.directive';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -49,12 +51,14 @@ import { AutosizeDirective } from './directives/autosize.directive';
     TradeResultComponent,
     MyAccountComponent,
     AutosizeDirective,
+    FileUploadComponent,
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
+		HttpModule, // This is depricated we need to phase it out
+		HttpClientModule,
     ReactiveFormsModule, // Refrain of using FormsModule and favor ReactiveFormModule which is more explicit and powerful than FormsModule.
-    HttpModule
   ],
   providers: [AuthenticationService, HttpService, NavigationService,  StorageService, UserService],
   bootstrap: [AppComponent]

@@ -6,6 +6,10 @@ import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
 import { Message } from '../message/message';
 import { NavigationService } from '../../services/navigation.service';
+import { FileInfo, FileInfoStatus } from '../../classes/file-info';
+import { noUndefined } from '@angular/compiler/src/util';
+import { Observable } from 'rxjs/Observable';
+import { fromPromise } from 'rxjs/observable/fromPromise';
 
 @Component({
   selector: 'app-item',
@@ -22,6 +26,7 @@ export class ItemComponent implements OnInit {
   descriptionFormControl: AbstractControl;
   message: Message = new Message();
 	tradeMembershipHref: string;
+	uploading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -78,7 +83,22 @@ export class ItemComponent implements OnInit {
   private populateForm(item: Item) {
     this.nameFormControl.setValue(item.name);
     this.descriptionFormControl.setValue(item.description);
-  }
+	}
+	
+	obtainUploadUrl(): string {
+		return this.itemHref + '/files';
+	}
+
+	onFileUploadChange(files: FileInfo[]) {
+		let hasUpload: boolean = false;
+		files.forEach(v => {
+			if (v.status == FileInfoStatus.UPLOADING) {
+				hasUpload = true;
+			}
+		});
+		this.uploading = hasUpload;
+		this.itemFormGroup.markAsDirty();
+	}
 
   onSubmit() {
     this.loading = true;
@@ -100,6 +120,13 @@ export class ItemComponent implements OnInit {
 
   navigateBack() {
     this.navigationService.back();
-  }
+	}
+	
+	saveButtonDisabledAttribute(): string {
+		if (this.itemFormGroup.valid && this.itemFormGroup.dirty && !this.uploading) {
+			return null;
+		}
+		return 'disabled';
+	}
 
 }

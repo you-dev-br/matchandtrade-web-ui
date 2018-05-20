@@ -10,6 +10,7 @@ import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
 import { NavigationService } from '../../services/navigation.service';
 import { PageTitleComponent } from '../page-title/page-title.component';
+import { FileUploadComponent } from '../file-upload/file-upload.component';
 
 describe('item.component-create', () => {
   let component: ItemComponent;
@@ -19,7 +20,8 @@ describe('item.component-create', () => {
     TestBed.configureTestingModule({
       imports: [ ReactiveFormsModule ],
       declarations: [ 
-        ItemComponent,
+				ItemComponent,
+				FileUploadComponent,
         LoadingComponent,
 				MessageComponent,
 				PageTitleComponent

@@ -11,6 +11,7 @@ import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
 import { NavigationService } from '../../services/navigation.service';
 import { PageTitleComponent } from '../page-title/page-title.component';
+import { FileUploadComponent } from '../file-upload/file-upload.component';
 
 class ItemServiceMock {
   get(href) {
@@ -39,7 +40,8 @@ describe('item.component-view', () => {
     TestBed.configureTestingModule({
       imports: [ ReactiveFormsModule ],
       declarations: [ 
-        ItemComponent,
+				ItemComponent,
+				FileUploadComponent,
         LoadingComponent,
 				MessageComponent,
 				PageTitleComponent
