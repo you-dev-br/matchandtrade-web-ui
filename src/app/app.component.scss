@@ -1,21 +1,8 @@
 @import '~variables.scss';
 
-$container-height: 46px;
-$container-height-trashold: 44px;
-
 .app-container-layout {
-	background: linear-gradient(
-		$primary-5, 
-		$primary-5 $container-height-trashold,
-		$primary-7 $container-height-trashold,
-		$primary-7 $container-height,
-		whitesmoke $container-height,
-		whitesmoke 86px,
-		$primary-7 86px,
-		$primary-7 88px,
-		gainsboro 88px,
-		white 91px,
-		white 100%);
+	background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="100"><rect width="10" height="44" style="fill:#ff8000"/><rect y="44" width="10" height="2" style="fill:#cc5600"/><rect y="46" width="10" height="40" style="fill:whitesmoke"/><rect y="86" width="10" height="2" style="fill:#cc5600"/><rect y="88" width="10" height="1" style="fill:silver"/><rect y="89" width="10" height="1" style="fill:whitesmoke"/></svg>');
+	background-repeat: repeat-x;
 	display: flex;
 	justify-content: center;
 	height: 100%;
