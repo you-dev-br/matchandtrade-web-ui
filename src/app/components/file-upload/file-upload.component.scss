@@ -1,6 +1,28 @@
 @import '~variables.scss';
 
+.add-images-button {
+	background-color: $secondary-5;
+	border-radius: 3px;
+	display: block;
+	color: white;
+	cursor: pointer;
+	font-size: small;
+	margin-bottom: .5em;
+	padding: .25em 0em .25em 0em;
+	text-align: center;
+	width: 9em;
+}
+
+.add-images-button:hover {
+	background-color: $secondary-6;
+}
+
+.add-images-button-icon {
+	margin-top: .02em;
+}
+
 .file-upload-content  {
+	align-items: center;
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
@@ -11,17 +33,15 @@
 	display: flex;
 	border: 1px solid silver;
 	font-size: x-small;
-	height: 96px;
+	height: 98px;
 	justify-content: center;
-	margin: .125em .125em .125em .125em;
-	padding: .125em .125em .125em .125em;
+	margin: .15em .15em .15em .15em;
 	text-align: center;
-	width: 96px;
+	width: 98px;
 }
 
 .image-info {
 	@extend %image-info;
-	border: 1px solid silver;
 }
 
 .image-info-error {
@@ -47,10 +67,4 @@
 
 .image-info-button:hover {
 	background-color: gainsboro;
-}
-
-.thumbnail {
-	max-height: 96px;
-	max-width: 96px;
-	padding: 1px 1px 1px 1px;
 }

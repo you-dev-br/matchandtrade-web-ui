@@ -46,7 +46,15 @@ export class FileUploadComponent implements OnInit {
 				fileInfo.percentageUploaded = percentage;
 			} else if (v.type == HttpEventType.Response) {
 				let responseBody = JSON.parse(v.body.toString());
-				fileInfo.thumbnailUrl = '/matchandtrade-web-api/files/' + responseBody.relativePath;
+				let thumbnailRelativeUrl;
+				responseBody._links.forEach(link => {
+					if (link.rel == 'thumbnail') {
+						thumbnailRelativeUrl = link.href;
+					}
+				});
+				if (thumbnailRelativeUrl) {
+					fileInfo.thumbnailUrl = thumbnailRelativeUrl;
+				}
 				console.log('response', responseBody);
 			}
 		}, err => {

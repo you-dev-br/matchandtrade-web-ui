@@ -1,9 +1,11 @@
-<div class="file-upload-content is-fullwidth">
-	<label class="file-label image-info-button">
+<div align="center">
+	<label class="add-images-button is-small">
+		Add images &nbsp;<span class="add-images-button-icon"><i class="fas fa-upload"></i></span>
 		<input class="file-input" type="file" (change)="onInputFileChange($event)" multiple>
-		<div>Add images<br><i class="fas fa-upload"></i></div>
 	</label>
+</div>
 
+<div class="file-upload-content is-fullwidth">
 	<div *ngFor='let fileInfo of filesInfo'>
 		<div class="image-info-uploading" *ngIf="fileInfo.status=='UPLOADING'">
 			<div>Uploading<br><i class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;{{fileInfo.percentageUploaded}}%</div>
@@ -12,7 +14,7 @@
 			<div>{{fileInfo.error}}</div>
 		</div>
 		<figure class="image-info" *ngIf="fileInfo.status=='STORED'">
-			<img class="thumbnail" src="{{fileInfo.thumbnailUrl}}">
+			<img src="{{fileInfo.thumbnailUrl}}">
 		</figure>
 	</div>
 </div>
