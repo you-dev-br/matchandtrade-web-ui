@@ -26,7 +26,8 @@ export class ItemComponent implements OnInit {
   descriptionFormControl: AbstractControl;
   message: Message = new Message();
 	tradeMembershipHref: string;
-	uploading: boolean = false;
+	files: FileInfo[] = [];
+
 
   constructor(
     private route: ActivatedRoute,
@@ -66,7 +67,17 @@ export class ItemComponent implements OnInit {
     });
     this.nameFormControl = this.itemFormGroup.controls['name'];
     this.descriptionFormControl = this.itemFormGroup.controls['description'];
-  }
+	}
+	
+	private isUploading(): boolean {
+		let result: boolean = false;
+		this.files.forEach(v => {
+			if (v.status == FileInfoStatus.UPLOADING) {
+				result = true;
+			}
+		});
+		return result;
+	}
 
   private nameValidator(control: FormControl): {[s: string]: boolean} {
     if (control.value && (control.value.length < 3 || control.value.length > 150)) {
@@ -85,18 +96,8 @@ export class ItemComponent implements OnInit {
     this.descriptionFormControl.setValue(item.description);
 	}
 	
-	obtainUploadUrl(): string {
-		return this.itemHref + '/files';
-	}
-
 	onFileUploadChange(files: FileInfo[]) {
-		let hasUpload: boolean = false;
-		files.forEach(v => {
-			if (v.status == FileInfoStatus.UPLOADING) {
-				hasUpload = true;
-			}
-		});
-		this.uploading = hasUpload;
+		this.files = files;
 		this.itemFormGroup.markAsDirty();
 	}
 
@@ -107,10 +108,21 @@ export class ItemComponent implements OnInit {
     this.itemService.save(this.item, this.tradeMembershipHref)
       .then(v => {
         this.item = v;
-        this.populateForm(this.item);
-        this.navigationService.setNavigationMessage('Item saved.');
-        this.navigateBack();
-      })
+				this.populateForm(this.item);
+				return v;
+			})
+			.then(v => {
+				const addFilePromisses = new Array<Promise<any>>();
+				for (let i=0; i<this.files.length; i++) {
+					const addFilePromise = this.itemService.addFile(v._href, this.files[i].fileId);
+					addFilePromisses.push(addFilePromise);
+				}
+				return Promise.all(addFilePromisses);
+			})
+			.then(v => {
+				this.navigationService.setNavigationMessage('Item saved.');
+				this.navigateBack();
+			})
       .catch(e => {
         this.message.setErrorItems(e);
         this.itemFormGroup.markAsPristine();
@@ -123,7 +135,7 @@ export class ItemComponent implements OnInit {
 	}
 	
 	saveButtonDisabledAttribute(): string {
-		if (this.itemFormGroup.valid && this.itemFormGroup.dirty && !this.uploading) {
+		if (this.itemFormGroup.valid && this.itemFormGroup.dirty && !this.isUploading()) {
 			return null;
 		}
 		return 'disabled';

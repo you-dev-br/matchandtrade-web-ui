@@ -13,7 +13,6 @@ import { FileInfo, FileInfoStatus } from '../../classes/file-info';
 })
 export class FileUploadComponent implements OnInit {
 
-	@Input() uploadUrl: string;
 	@Input() initialFiles: FileInfo[];
 	@Output() onChange = new EventEmitter<FileInfo[]>();
 	filesInfo: FileInfo[] = [];
@@ -38,7 +37,7 @@ export class FileUploadComponent implements OnInit {
 	}
 
 	private upload(file: File, fileInfo: FileInfo) {
-		const uploadObeserver = this.fileStorageService.save(this.uploadUrl, file);
+		const uploadObeserver = this.fileStorageService.save(file);
 		uploadObeserver.subscribe(v => {
 			if (v.type == HttpEventType.UploadProgress) {
 				const percentage = Math.round(100 * v.loaded / v.total);
@@ -54,8 +53,8 @@ export class FileUploadComponent implements OnInit {
 				});
 				if (thumbnailRelativeUrl) {
 					fileInfo.thumbnailUrl = thumbnailRelativeUrl;
+					fileInfo.fileId = responseBody.fileId;
 				}
-				console.log('response', responseBody);
 			}
 		}, err => {
 			fileInfo.status = FileInfoStatus.ERROR;
@@ -63,7 +62,6 @@ export class FileUploadComponent implements OnInit {
 			this.onChange.emit(this.filesInfo);
 		}, () =>{
 			fileInfo.status = FileInfoStatus.STORED;
-			console.log('done', )
 			this.onChange.emit(this.filesInfo);
 		});
 	}

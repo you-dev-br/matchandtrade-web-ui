@@ -139,12 +139,12 @@ export class ItemMatcherOfferComponent implements OnInit {
     });
     Promise.all(deleteOfferPromises)
       .then(() => {
-        const promises = new Array<Promise<any>>();
+        const createOfferPromises = new Array<Promise<any>>();
         this.offerableItems.filter(v => v.checked()).forEach(v => {
           const promise = this.offerService.offer(this.tradeMembershipHref, v, this.wantedItem);
-          promises.push(promise);
+          createOfferPromises.push(promise);
         });
-        return Promise.all(promises);
+        return Promise.all(createOfferPromises);
       })
       .then(v => {
         this.navigationService.setNavigationMessage('Offer saved.');

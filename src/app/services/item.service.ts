@@ -6,6 +6,7 @@ import { ItemTransformer } from '../classes/transformers/item-transformer';
 import { Page } from '../classes/search/page';
 import { SearchResult } from '../classes/search/search-result';
 import { ExceptionFactory } from '../classes/exceptions/exceptions';
+import { Response } from '@angular/http';
 
 @Injectable()
 export class ItemService {
@@ -50,7 +51,11 @@ export class ItemService {
 			});
 		}
 		return result;
-  }
+	}
+	
+	addFile(itemHref: string, fileId: number): Promise<Response> {
+		return Promise.resolve(this.httpService.post(itemHref + '/files/' + fileId));
+	}
 
   search(page: Page, tradeMembershipHref: string): Promise<SearchResult<Item>> {
     return new Promise<SearchResult<Item>>((resolve, reject) => {
@@ -59,6 +64,6 @@ export class ItemService {
         .then(v => resolve(this.itemTransformer.toSearchResult(v, page)))
         .catch(e => reject( ExceptionFactory.makeException(e) ));
     });
-  }
-
+	}
+	
 }

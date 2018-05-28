@@ -1,9 +1,10 @@
 export class FileInfo {
+	error: string;
+	fileId: number;
 	status: FileInfoStatus;
+	percentageUploaded: number;
 	thumbnailUrl: string;
 	url: string;
-	percentageUploaded: number;
-	error: string;
 }
 
 export enum FileInfoStatus {

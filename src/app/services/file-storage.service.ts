@@ -9,13 +9,13 @@ export class FileStorageService {
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService ) { }
 
-	save(url: string, file: File): Observable<HttpEvent<{}>> {
+	save(file: File): Observable<HttpEvent<{}>> {
 		return Observable.fromPromise(this.authenticationService.get())
 			.flatMap(v => {
 				const formData = new FormData();
 				formData.append('file', file);
 				const headers = new HttpHeaders({'authorization': v.authorizationHeader});
-				const request = new HttpRequest('POST', url, formData, {
+				const request = new HttpRequest('POST', "/matchandtrade-web-api/v1/files/", formData, {
 					headers: headers,
 					reportProgress: true,
 					responseType: 'text'
