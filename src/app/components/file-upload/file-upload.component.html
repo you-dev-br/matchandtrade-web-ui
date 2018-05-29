@@ -5,6 +5,10 @@
 	</label>
 </div>
 
+<div class="error-message is-danger help" *ngIf="error">
+	<i class="fa fa-warning"></i>{{error}}
+</div>
+
 <div class="file-upload-content is-fullwidth">
 	<div *ngFor='let fileInfo of filesInfo'>
 		<div class="image-info-uploading" *ngIf="fileInfo.status=='UPLOADING'">

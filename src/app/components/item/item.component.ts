@@ -10,12 +10,13 @@ import { FileInfo, FileInfoStatus } from '../../classes/file-info';
 import { noUndefined } from '@angular/compiler/src/util';
 import { Observable } from 'rxjs/Observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
+import { FileStorageService } from '../../services/file-storage.service';
 
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss'],
-  providers: [ ItemService ]
+  providers: [ ItemService, FileStorageService ]
 })
 export class ItemComponent implements OnInit {
   item: Item = new Item();
@@ -28,11 +29,11 @@ export class ItemComponent implements OnInit {
 	tradeMembershipHref: string;
 	files: FileInfo[] = [];
 
-
   constructor(
     private route: ActivatedRoute,
     formBuilder: FormBuilder,
-    private itemService: ItemService,
+		private itemService: ItemService,
+		private fileStorageService: FileStorageService;
     private navigationService: NavigationService
   ) {
     this.buildForm(formBuilder);
@@ -48,7 +49,13 @@ export class ItemComponent implements OnInit {
 			this.itemService.get(this.itemHref)
 				.then(v => {
 					this.item = v;
+					return v;
 				})
+				.then(v => {
+					const filesUrl = v._links.find(link => link.rel == 'files');
+					return this.fileStorageService.get(filesUrl.href);
+				})
+				.then(v => this.files = v)
 				.catch(e => {
 					this.message.setErrorItems(e);
 				})

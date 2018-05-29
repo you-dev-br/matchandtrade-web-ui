@@ -15,6 +15,7 @@ export class FileUploadComponent implements OnInit {
 
 	@Input() initialFiles: FileInfo[];
 	@Output() onChange = new EventEmitter<FileInfo[]>();
+	error: string;
 	filesInfo: FileInfo[] = [];
 
   constructor(private fileStorageService: FileStorageService) { }
@@ -28,6 +29,12 @@ export class FileUploadComponent implements OnInit {
 	onInputFileChange(event: Event) {
 		const fileInput = <HTMLInputElement> event.target;
 		const files = fileInput.files;
+
+		if ((files.length + this.filesInfo.length) > 3) {
+			this.error = 'Items cannot have more than 3 images.';
+			return;
+		}
+
 		this.onChange.emit(this.filesInfo);
 		for(let i=0; i<files.length; i++) {
 			const fileInfo = new FileInfo();
@@ -62,6 +69,7 @@ export class FileUploadComponent implements OnInit {
 			this.onChange.emit(this.filesInfo);
 		}, () =>{
 			fileInfo.status = FileInfoStatus.STORED;
+			this.error = undefined;
 			this.onChange.emit(this.filesInfo);
 		});
 	}
