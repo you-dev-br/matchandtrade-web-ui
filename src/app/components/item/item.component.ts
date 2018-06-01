@@ -6,7 +6,7 @@ import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
 import { Message } from '../message/message';
 import { NavigationService } from '../../services/navigation.service';
-import { FileInfo, FileInfoStatus } from '../../classes/file-info';
+import { FileUpload, FileUploadStatus } from '../../classes/pojo/file-upload';
 import { noUndefined } from '@angular/compiler/src/util';
 import { Observable } from 'rxjs/Observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
@@ -27,7 +27,7 @@ export class ItemComponent implements OnInit {
   descriptionFormControl: AbstractControl;
   message: Message = new Message();
 	tradeMembershipHref: string;
-	files: FileInfo[] = [];
+	files: FileUpload[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -79,7 +79,7 @@ export class ItemComponent implements OnInit {
 	private isUploading(): boolean {
 		let result: boolean = false;
 		this.files.forEach(v => {
-			if (v.status == FileInfoStatus.UPLOADING) {
+			if (v.status == FileUploadStatus.UPLOADING) {
 				result = true;
 			}
 		});
@@ -103,7 +103,7 @@ export class ItemComponent implements OnInit {
     this.descriptionFormControl.setValue(item.description);
 	}
 	
-	onFileUploadChange(files: FileInfo[]) {
+	onFileUploadChange(files: FileUpload[]) {
 		this.files = files;
 		this.itemFormGroup.markAsDirty();
 	}

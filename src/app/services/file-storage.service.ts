@@ -3,7 +3,7 @@ import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common
 import { AuthenticationService } from './authentication.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx'
-import { FileInfoStatus, FileInfo } from '../classes/file-info';
+import { FileUploadStatus, FileUpload } from '../classes/pojo/file-upload';
 import { HttpEventType } from '@angular/common/http';
 import { HttpResponse } from '@angular/common/http';
 import { RequestOptions } from '@angular/http';
@@ -28,24 +28,24 @@ export class FileStorageService {
 			});
 	}
 
-	get(fileHref: string): Promise<FileInfo[]> {
-		return new Promise<FileInfo[]>((resolve, reject) => {
+	get(fileHref: string): Promise<FileUpload[]> {
+		return new Promise<FileUpload[]>((resolve, reject) => {
 			this.authenticationService.get().then(v => {
 				const h = new HttpHeaders({'authorization': v.authorizationHeader});
 
 				return this.http.get(fileHref.toLowerCase(), {headers: h, responseType: 'text'}).toPromise();
 			})
 			.then(v => {
-				const result = new Array<FileInfo>();
+				const result = new Array<FileUpload>();
 				const response = JSON.parse(v);
 				response.forEach(e => {
-					const fileInfo = new FileInfo();
+					const fileInfo = new FileUpload();
 					fileInfo.fileId = e.fileId;
 					const thumbnailLink = e._links.find(v => v.rel == 'thumbnail');
 					fileInfo.thumbnailUrl = (thumbnailLink ? thumbnailLink.href : undefined )
 					const originalLink = e._links.find(v => v.rel == 'original');
 					fileInfo.url = (originalLink ? originalLink.href : undefined);
-					fileInfo.status = FileInfoStatus.STORED;
+					fileInfo.status = FileUploadStatus.STORED;
 					result.push(fileInfo);
 				});
 				resolve(result);

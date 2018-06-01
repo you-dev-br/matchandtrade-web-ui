@@ -3,7 +3,7 @@ import { FileStorageService } from '../../services/file-storage.service';
 import { HttpEventType } from '@angular/common/http';
 import { error } from 'selenium-webdriver';
 import { Message } from '../message/message';
-import { FileInfo, FileInfoStatus } from '../../classes/file-info';
+import { FileUpload, FileUploadStatus } from '../../classes/pojo/file-upload';
 
 @Component({
   selector: 'app-file-upload',
@@ -13,10 +13,10 @@ import { FileInfo, FileInfoStatus } from '../../classes/file-info';
 })
 export class FileUploadComponent implements OnInit {
 
-	@Input() initialFiles: FileInfo[];
-	@Output() onChange = new EventEmitter<FileInfo[]>();
+	@Input() initialFiles: FileUpload[];
+	@Output() onChange = new EventEmitter<FileUpload[]>();
 	error: string;
-	filesInfo: FileInfo[] = [];
+	filesInfo: FileUpload[] = [];
 
   constructor(private fileStorageService: FileStorageService) { }
 
@@ -37,18 +37,18 @@ export class FileUploadComponent implements OnInit {
 
 		this.onChange.emit(this.filesInfo);
 		for(let i=0; i<files.length; i++) {
-			const fileInfo = new FileInfo();
+			const fileInfo = new FileUpload();
 			this.filesInfo.push(fileInfo);
 			this.upload(files.item(i), fileInfo);
 		}
 	}
 
-	private upload(file: File, fileInfo: FileInfo) {
+	private upload(file: File, fileInfo: FileUpload) {
 		const uploadObeserver = this.fileStorageService.save(file);
 		uploadObeserver.subscribe(v => {
 			if (v.type == HttpEventType.UploadProgress) {
 				const percentage = Math.round(100 * v.loaded / v.total);
-				fileInfo.status = FileInfoStatus.UPLOADING;
+				fileInfo.status = FileUploadStatus.UPLOADING;
 				fileInfo.percentageUploaded = percentage;
 			} else if (v.type == HttpEventType.Response) {
 				let responseBody = JSON.parse(v.body.toString());
@@ -64,11 +64,11 @@ export class FileUploadComponent implements OnInit {
 				}
 			}
 		}, err => {
-			fileInfo.status = FileInfoStatus.ERROR;
+			fileInfo.status = FileUploadStatus.ERROR;
 			fileInfo.error = "Error uploading file";
 			this.onChange.emit(this.filesInfo);
 		}, () =>{
-			fileInfo.status = FileInfoStatus.STORED;
+			fileInfo.status = FileUploadStatus.STORED;
 			this.error = undefined;
 			this.onChange.emit(this.filesInfo);
 		});
