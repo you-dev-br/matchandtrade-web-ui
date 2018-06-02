@@ -1,38 +1,31 @@
 @import '~variables.scss';
 
-.add-images-button {
-	background-color: $secondary-5;
-	border-radius: 3px;
-	display: block;
-	color: white;
-	cursor: pointer;
-	font-size: small;
-	margin-bottom: .5em;
-	padding: .25em 0em .25em 0em;
-	text-align: center;
-	width: 9em;
-}
-
-.add-images-button:hover {
-	background-color: $secondary-6;
-}
-
-.add-images-button-icon {
-	font-size: medium;
-}
-
 .error-message {
 	text-align: center;
 }
 
-.file-upload-content  {
+.file {
+	margin-bottom: .5em;
+}
+
+.file-cta {
+	background-color: $secondary-5;
+	color: white;
+}
+
+.file-cta:hover {
+	background-color: $secondary-6;
+	color: white;
+}
+
+.gallery  {
 	align-items: center;
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
 }
 
-%image-info {
+%thumbnail {
 	align-items: center;
 	display: flex;
 	border: 1px solid silver;
@@ -44,31 +37,31 @@
 	width: 98px;
 }
 
-.image-info {
-	@extend %image-info;
+.thumbnail {
+	@extend %thumbnail;
 }
 
-.image-info-error {
-	@extend %image-info;
+.thumbnail-error {
+	@extend %thumbnail;
 	background-color: pink;
 	border: 1px solid maroon;
 	color: maroon;
 }
 
-.image-info-uploading {
-	@extend %image-info;
+.thumbnail-uploading {
+	@extend %thumbnail;
 	background-color: $primary-2;
 	border: 1px solid $primary-5;
 	color: $primary-7;
 }
 
-.image-info-button {
-	@extend %image-info;
+.thumbnail-button {
+	@extend %thumbnail;
 	font-size: small;
 	background-color: #eeeeee;
 	border-radius: 3px;
 }
 
-.image-info-button:hover {
+.thumbnail-button:hover {
 	background-color: gainsboro;
 }

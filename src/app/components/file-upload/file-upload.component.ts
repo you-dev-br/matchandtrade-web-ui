@@ -52,6 +52,10 @@ export class FileUploadComponent implements OnInit {
 			Object.assign(fileUpload, responseFileUpload);
 		}
 	}
+
+	isUploadButtonEnabled() {
+		return true;
+	}
 	
 	onInputFileChange(event: Event) {
 		const inputElement = <HTMLInputElement> event.target;
