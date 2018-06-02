@@ -44,18 +44,13 @@ export class ItemComponent implements OnInit {
   ngOnInit() {
     this.tradeMembershipHref = this.navigationService.obtainData(this.route).tradeMembershipHref;
     this.itemHref = this.navigationService.obtainData(this.route).itemHref;
-		
 		if (!this.itemHref) {
 			this.loading = false;
 		} else {
 			this.itemService.get(this.itemHref)
 				.then(v => {
 					this.item = v;
-					return v;
-				})
-				.then(v => {
-					const filesUrl = v._links.find(link => link.rel == 'files');
-					return this.fileStorageService.get(filesUrl.href);
+					return this.fileStorageService.get(v.getFilesHref());
 				})
 				.then(filePojos => {
 					filePojos.forEach(filePojo => {
@@ -71,7 +66,6 @@ export class ItemComponent implements OnInit {
 					this.loading = false;
 				});
 		}
-
 	}
 	
   private buildForm(formBuilder: FormBuilder): void {
@@ -82,6 +76,12 @@ export class ItemComponent implements OnInit {
     this.nameFormControl = this.itemFormGroup.controls['name'];
     this.descriptionFormControl = this.itemFormGroup.controls['description'];
 	}
+
+  private descriptionValidator(control: FormControl): {[s: string]: boolean} {
+    if (control.value && control.value.length > 500) {
+      return {invalid: true};
+    }
+  }
 	
 	private isUploading(): boolean {
 		let result: boolean = false;
@@ -93,22 +93,15 @@ export class ItemComponent implements OnInit {
 		return result;
 	}
 
+	navigateBack() {
+    this.navigationService.back();
+	}
+
   private nameValidator(control: FormControl): {[s: string]: boolean} {
     if (control.value && (control.value.length < 3 || control.value.length > 150)) {
       return {invalid: true};
     }
   }
-
-  private descriptionValidator(control: FormControl): {[s: string]: boolean} {
-    if (control.value && control.value.length > 500) {
-      return {invalid: true};
-    }
-  }
-
-  private populateForm(item: Item) {
-    this.nameFormControl.setValue(item.name);
-    this.descriptionFormControl.setValue(item.description);
-	}
 	
 	onFileUploadChange(files: FileUpload[]) {
 		this.files = files;
@@ -142,10 +135,11 @@ export class ItemComponent implements OnInit {
         this.itemFormGroup.markAsPristine();
         this.loading = false;
       });
-  }
-
-  navigateBack() {
-    this.navigationService.back();
+	}
+	
+	private populateForm(item: Item) {
+    this.nameFormControl.setValue(item.name);
+    this.descriptionFormControl.setValue(item.description);
 	}
 	
 	saveButtonDisabledAttribute(): string {
