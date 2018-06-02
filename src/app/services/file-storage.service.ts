@@ -4,12 +4,16 @@ import { AuthenticationService } from './authentication.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx'
 import { FileUploadStatus, FileUpload } from '../classes/pojo/file-upload';
+import { FileTransformer } from '../classes/transformers/file-transformer';
 import { HttpEventType } from '@angular/common/http';
 import { HttpResponse } from '@angular/common/http';
 import { RequestOptions } from '@angular/http';
+import { FilePojo } from '../classes/pojo/file-pojo';
 
 @Injectable()
 export class FileStorageService {
+
+	fileTransformer = new FileTransformer();
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService ) { }
 
@@ -28,25 +32,18 @@ export class FileStorageService {
 			});
 	}
 
-	get(fileHref: string): Promise<FileUpload[]> {
-		return new Promise<FileUpload[]>((resolve, reject) => {
+	get(fileHref: string): Promise<FilePojo[]> {
+		return new Promise<FilePojo[]>((resolve, reject) => {
 			this.authenticationService.get().then(v => {
 				const h = new HttpHeaders({'authorization': v.authorizationHeader});
-
-				return this.http.get(fileHref.toLowerCase(), {headers: h, responseType: 'text'}).toPromise();
+				return this.http.get(fileHref, {headers: h, responseType: 'text'}).toPromise();
 			})
 			.then(v => {
-				const result = new Array<FileUpload>();
+				const result = new Array<FilePojo>();
 				const response = JSON.parse(v);
 				response.forEach(e => {
-					const fileInfo = new FileUpload();
-					fileInfo.fileId = e.fileId;
-					const thumbnailLink = e._links.find(v => v.rel == 'thumbnail');
-					fileInfo.thumbnailUrl = (thumbnailLink ? thumbnailLink.href : undefined )
-					const originalLink = e._links.find(v => v.rel == 'original');
-					fileInfo.url = (originalLink ? originalLink.href : undefined);
-					fileInfo.status = FileUploadStatus.STORED;
-					result.push(fileInfo);
+					const filePojo = this.fileTransformer.toPojo(e);
+					result.push(filePojo);
 				});
 				resolve(result);
 			})

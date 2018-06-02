@@ -17,7 +17,7 @@
 		<div class="image-info-error" *ngIf="fileInfo.status=='ERROR'">
 			<div>{{fileInfo.error}}</div>
 		</div>
-		<figure class="image-info" *ngIf="fileInfo.status=='STORED'">
+		<figure class="image-info" *ngIf="fileInfo.thumbnailUrl">
 			<img src="{{fileInfo.thumbnailUrl}}">
 		</figure>
 	</div>

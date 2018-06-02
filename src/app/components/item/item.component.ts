@@ -7,6 +7,7 @@ import { ItemService } from '../../services/item.service';
 import { Message } from '../message/message';
 import { NavigationService } from '../../services/navigation.service';
 import { FileUpload, FileUploadStatus } from '../../classes/pojo/file-upload';
+import { FileTransformer } from '../../classes/transformers/file-transformer';
 import { noUndefined } from '@angular/compiler/src/util';
 import { Observable } from 'rxjs/Observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
@@ -27,13 +28,14 @@ export class ItemComponent implements OnInit {
   descriptionFormControl: AbstractControl;
   message: Message = new Message();
 	tradeMembershipHref: string;
+	fileTransformer = new FileTransformer();
 	files: FileUpload[] = [];
 
   constructor(
     private route: ActivatedRoute,
     formBuilder: FormBuilder,
 		private itemService: ItemService,
-		private fileStorageService: FileStorageService;
+		private fileStorageService: FileStorageService,
     private navigationService: NavigationService
   ) {
     this.buildForm(formBuilder);
@@ -55,7 +57,12 @@ export class ItemComponent implements OnInit {
 					const filesUrl = v._links.find(link => link.rel == 'files');
 					return this.fileStorageService.get(filesUrl.href);
 				})
-				.then(v => this.files = v)
+				.then(filePojos => {
+					filePojos.forEach(filePojo => {
+						const fileUpload = this.fileTransformer.toFileUpload(filePojo);
+						this.files.push(fileUpload);
+					})
+				})
 				.catch(e => {
 					this.message.setErrorItems(e);
 				})
