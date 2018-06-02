@@ -1,12 +1,12 @@
 <div class="file is-centered is-small">
-	<label class="file-label">
-		<input class="file-input" type="file" (change)="onInputFileChange($event)" multiple>
-		<span class="file-cta">
-			<span class="file-label">
-				Add images &nbsp;
-			</span>
+	<label [class]="'file-label ' + uploadDisabledClass()">
+		<input class="file-input" type="file" (change)="onInputFileChange($event)" [disabled]="uploadDisabledClass()" multiple >
+		<span [class]="'file-cta ' + uploadDisabledClass()">
 			<span class="file-icon">
-				<i class="fas fa-upload"></i>
+				<i class="fas fa-image"></i>
+			</span>
+			<span>
+				Add images &nbsp;
 			</span>
 		</span>
 	</label>

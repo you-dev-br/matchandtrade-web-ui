@@ -18,6 +18,16 @@
 	color: white;
 }
 
+.file-cta.disabled {
+	background-color: gainsboro;
+	color: greay;
+	cursor: not-allowed;
+}
+
+.file-label.disabled {
+	cursor: not-allowed;
+}
+
 .gallery  {
 	align-items: center;
 	display: flex;

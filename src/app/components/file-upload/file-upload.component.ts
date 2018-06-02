@@ -53,9 +53,14 @@ export class FileUploadComponent implements OnInit {
 		}
 	}
 
-	isUploadButtonEnabled() {
-		return true;
+	isUploadEnabled() {
+		return this.files.length < 3;
 	}
+
+	uploadDisabledClass() {
+		return this.isUploadEnabled() ? '' : 'disabled';
+	}
+
 	
 	onInputFileChange(event: Event) {
 		const inputElement = <HTMLInputElement> event.target;
