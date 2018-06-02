@@ -4,7 +4,6 @@ export class FileUpload {
 	status: FileUploadStatus;
 	percentageUploaded: number;
 	thumbnailUrl: string;
-	url: string;
 }
 
 export enum FileUploadStatus {

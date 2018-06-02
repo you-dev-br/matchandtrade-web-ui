@@ -120,10 +120,10 @@ export class ItemComponent implements OnInit {
 			})
 			.then(v => {
 				const addFilePromisses = new Array<Promise<any>>();
-				for (let i=0; i<this.files.length; i++) {
-					const addFilePromise = this.itemService.addFile(v._href, this.files[i].fileId);
-					addFilePromisses.push(addFilePromise);
-				}
+				this.files.forEach(f => {
+					const addFilePromise = this.itemService.addFile(v._href, f.fileId);
+					addFilePromisses.push(addFilePromise);					
+				});
 				return Promise.all(addFilePromisses);
 			})
 			.then(v => {

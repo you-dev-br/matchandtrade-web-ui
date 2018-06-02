@@ -10,15 +10,15 @@
 </div>
 
 <div class="file-upload-content is-fullwidth">
-	<div *ngFor='let fileInfo of filesInfo'>
-		<div class="image-info-uploading" *ngIf="fileInfo.status=='UPLOADING'">
-			<div>Uploading<br><i class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;{{fileInfo.percentageUploaded}}%</div>
+	<div *ngFor='let file of files'>
+		<div class="image-info-uploading" *ngIf="file.status=='UPLOADING'">
+			<div>Uploading<br><i class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;{{file.percentageUploaded}}%</div>
 		</div>
-		<div class="image-info-error" *ngIf="fileInfo.status=='ERROR'">
-			<div>{{fileInfo.error}}</div>
+		<div class="image-info-error" *ngIf="file.status=='ERROR'">
+			<div>{{f.error}}</div>
 		</div>
-		<figure class="image-info" *ngIf="fileInfo.thumbnailUrl">
-			<img src="{{fileInfo.thumbnailUrl}}">
+		<figure class="image-info" *ngIf="file.thumbnailUrl">
+			<img src="{{file.thumbnailUrl}}">
 		</figure>
 	</div>
 </div>
