@@ -12,13 +12,13 @@ import { AttachmentTransformer } from '../../classes/transformers/attachment-tra
 import { noUndefined } from '@angular/compiler/src/util';
 import { Observable } from 'rxjs/Observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
-import { FileStorageService } from '../../services/file-storage.service';
+import { FileService } from '../../services/file.service';
 
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss'],
-  providers: [ ItemService, FileStorageService ]
+  providers: [ ItemService, FileService ]
 })
 export class ItemComponent implements OnInit {
 	attachments: Attachment[] = [];
@@ -37,7 +37,7 @@ export class ItemComponent implements OnInit {
     private route: ActivatedRoute,
     formBuilder: FormBuilder,
 		private itemService: ItemService,
-		private fileStorageService: FileStorageService,
+		private fileStorageService: FileService,
     private navigationService: NavigationService
   ) {
     this.buildForm(formBuilder);

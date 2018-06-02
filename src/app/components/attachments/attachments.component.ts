@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FileStorageService } from '../../services/file-storage.service';
+import { FileService } from '../../services/file.service';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
 import { error } from 'selenium-webdriver';
 import { Message } from '../message/message';
@@ -11,7 +11,7 @@ import { AttachmentTransformer } from '../../classes/transformers/attachment-tra
   selector: 'app-attachments',
   templateUrl: './attachments.component.html',
 	styleUrls: ['./attachments.component.scss'],
-	providers: [ FileStorageService ]
+	providers: [ FileService ]
 })
 export class AttachmentsComponent {
 
@@ -22,7 +22,7 @@ export class AttachmentsComponent {
 	attachmentTransformer = new AttachmentTransformer();
 	error: string;
 
-  constructor(private fileStorageService: FileStorageService) { }
+  constructor(private fileStorageService: FileService) { }
 
 	private handleUploadCompleted(fileUpload: Attachment) {
 		fileUpload.status = AttachmentStatus.STORED;

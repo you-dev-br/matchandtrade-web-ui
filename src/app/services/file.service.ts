@@ -10,7 +10,7 @@ import { RequestOptions } from '@angular/http';
 import { FilePojo } from '../classes/pojo/file-pojo';
 
 @Injectable()
-export class FileStorageService {
+export class FileService {
 
 	fileTransformer = new FileTransformer();
 
