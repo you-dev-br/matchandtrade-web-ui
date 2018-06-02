@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions, Response } from '@angular/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
@@ -19,6 +20,17 @@ export class AuthenticationService {
         .then(v => {
           let headers = new Headers();          
           headers.append("Authorization", v.authorizationHeader);
+          resolve(headers);
+        })
+        .catch(e => reject(e));
+    });
+	}
+	
+	public authorizationHttpHeaders(): Promise<HttpHeaders> {
+    return new Promise<HttpHeaders>((resolve, reject) => {
+      this.get()
+        .then(v => {
+					const headers = new HttpHeaders({'authorization': v.authorizationHeader});
           resolve(headers);
         })
         .catch(e => reject(e));
