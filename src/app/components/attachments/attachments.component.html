@@ -17,15 +17,15 @@
 </div>
 
 <div class="gallery is-fullwidth">
-	<div *ngFor='let file of files'>
-		<div class="thumbnail-uploading" *ngIf="file.status=='UPLOADING'">
-			<div>Uploading<br><i class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;{{file.percentageUploaded}}%</div>
+	<div *ngFor='let attachment of attachments'>
+		<div class="thumbnail-uploading" *ngIf="attachment.status=='UPLOADING'">
+			<div>Uploading<br><i class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;{{attachment.percentageUploaded}}%</div>
 		</div>
-		<div class="thumbnail-error" *ngIf="file.status=='ERROR'">
+		<div class="thumbnail-error" *ngIf="attachment.status=='ERROR'">
 			<div>{{f.error}}</div>
 		</div>
-		<figure class="thumbnail" *ngIf="file.thumbnailUrl">
-			<img src="{{file.thumbnailUrl}}">
+		<figure class="thumbnail" *ngIf="attachment.thumbnailUrl">
+			<img src="{{attachment.thumbnailUrl}}">
 		</figure>
 	</div>
 </div>

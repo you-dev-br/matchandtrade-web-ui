@@ -1,23 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FileUploadComponent } from './file-upload.component';
+import { AttachmentsComponent } from './attachments.component';
 import { By } from '@angular/platform-browser';
 import { FileStorageService } from '../../services/file-storage.service';
 
-describe('FileUploadComponent', () => {
+describe('AttachmentsComponent', () => {
 	
 	class FileStorageServiceMock {
 
 	}
 	
-	let component: FileUploadComponent;
-  let fixture: ComponentFixture<FileUploadComponent>;
+	let component: AttachmentsComponent;
+  let fixture: ComponentFixture<AttachmentsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-			declarations: [ FileUploadComponent ]
+			declarations: [ AttachmentsComponent ]
 		})
-		.overrideComponent(FileUploadComponent, {
+		.overrideComponent(AttachmentsComponent, {
 			set: {
 				providers: [{provide: FileStorageService, useClass: FileStorageServiceMock}]
 			}
@@ -26,7 +26,7 @@ describe('FileUploadComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FileUploadComponent);
+    fixture = TestBed.createComponent(AttachmentsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -3,7 +3,6 @@ import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common
 import { AuthenticationService } from './authentication.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx'
-import { FileUploadStatus, FileUpload } from '../classes/pojo/file-upload';
 import { FileTransformer } from '../classes/transformers/file-transformer';
 import { HttpEventType } from '@angular/common/http';
 import { HttpResponse } from '@angular/common/http';

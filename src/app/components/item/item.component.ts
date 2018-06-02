@@ -6,8 +6,9 @@ import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
 import { Message } from '../message/message';
 import { NavigationService } from '../../services/navigation.service';
-import { FileUpload, FileUploadStatus } from '../../classes/pojo/file-upload';
+import { Attachment, AttachmentStatus } from '../../classes/pojo/attachment';
 import { FileTransformer } from '../../classes/transformers/file-transformer';
+import { AttachmentTransformer } from '../../classes/transformers/attachment-transformer';
 import { noUndefined } from '@angular/compiler/src/util';
 import { Observable } from 'rxjs/Observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
@@ -20,16 +21,17 @@ import { FileStorageService } from '../../services/file-storage.service';
   providers: [ ItemService, FileStorageService ]
 })
 export class ItemComponent implements OnInit {
+	attachments: Attachment[] = [];
+	attachmentTransformer = new AttachmentTransformer();
+  descriptionFormControl: AbstractControl;
+	fileTransformer = new FileTransformer();
   item: Item = new Item();
   itemFormGroup: FormGroup;
 	itemHref: string;
   loading: boolean = true;
   nameFormControl: AbstractControl;
-  descriptionFormControl: AbstractControl;
   message: Message = new Message();
 	tradeMembershipHref: string;
-	fileTransformer = new FileTransformer();
-	files: FileUpload[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -54,8 +56,8 @@ export class ItemComponent implements OnInit {
 				})
 				.then(filePojos => {
 					filePojos.forEach(filePojo => {
-						const fileUpload = this.fileTransformer.toFileUpload(filePojo);
-						this.files.push(fileUpload);
+						const fileUpload = this.attachmentTransformer.toPojo(filePojo);
+						this.attachments.push(fileUpload);
 					})
 				})
 				.catch(e => {
@@ -85,8 +87,8 @@ export class ItemComponent implements OnInit {
 	
 	private isUploading(): boolean {
 		let result: boolean = false;
-		this.files.forEach(v => {
-			if (v.status == FileUploadStatus.UPLOADING) {
+		this.attachments.forEach(v => {
+			if (v.status == AttachmentStatus.UPLOADING) {
 				result = true;
 			}
 		});
@@ -103,8 +105,7 @@ export class ItemComponent implements OnInit {
     }
   }
 	
-	onFileUploadChange(files: FileUpload[]) {
-		this.files = files;
+	onFileUploadChange(attachments: Attachment[]) {
 		this.itemFormGroup.markAsDirty();
 	}
 
@@ -120,7 +121,7 @@ export class ItemComponent implements OnInit {
 			})
 			.then(v => {
 				const addFilePromisses = new Array<Promise<any>>();
-				this.files.forEach(f => {
+				this.attachments.forEach(f => {
 					const addFilePromise = this.itemService.addFile(v._href, f.fileId);
 					addFilePromisses.push(addFilePromise);					
 				});

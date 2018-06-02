@@ -29,7 +29,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { TradeResultComponent } from './components/trade-result/trade-result.component';
 import { MyAccountComponent } from './components/my-account/my-account.component';
 import { AutosizeDirective } from './directives/autosize.directive';
-import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { AttachmentsComponent } from './components/attachments/attachments.component';
 
 @NgModule({
   declarations: [
@@ -50,8 +50,8 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     PageTitleComponent,
     TradeResultComponent,
     MyAccountComponent,
-    AutosizeDirective,
-    FileUploadComponent,
+    AutosizeDirective, // TODO: Remove this if not in use
+    AttachmentsComponent,
   ],
   imports: [
     AppRoutingModule,

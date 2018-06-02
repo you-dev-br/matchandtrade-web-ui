@@ -1,12 +1,12 @@
-export class FileUpload {
+export class Attachment {
 	error: string;
 	fileId: number;
-	status: FileUploadStatus;
+	status: AttachmentStatus;
 	percentageUploaded: number;
 	thumbnailUrl: string;
 }
 
-export enum FileUploadStatus {
+export enum AttachmentStatus {
 	ERROR='ERROR',
 	STORED='STORED',
 	UPLOADING='UPLOADING',
