@@ -18,25 +18,26 @@ export class AttachmentsComponent {
 	@Input() attachments: Attachment[];
 	@Output() onChange = new EventEmitter<Attachment[]>();
 
-	fileTransformer = new FileTransformer();
 	attachmentTransformer = new AttachmentTransformer();
+	attachmentToView;
 	error: string;
+	fileTransformer = new FileTransformer();
 
   constructor(private fileStorageService: FileService) { }
 
-	private handleUploadCompleted(fileUpload: Attachment) {
+	private handleUploadCompleted(fileUpload: Attachment): void {
 		fileUpload.status = AttachmentStatus.STORED;
 		this.error = undefined;
 		this.onChange.emit(this.attachments);
 	}
 
-	private handleUploadError(fileUpload: Attachment) {
+	private handleUploadError(fileUpload: Attachment): void {
 		fileUpload.status = AttachmentStatus.ERROR;
 		fileUpload.error = "Error uploading file";
 		this.onChange.emit(this.attachments);
 	}
 
-	private handleUploadSubscription(v: HttpEvent<{}>, attachment: Attachment) {
+	private handleUploadSubscription(v: HttpEvent<{}>, attachment: Attachment): void {
 		if (v.type == HttpEventType.UploadProgress) {
 			attachment.status = AttachmentStatus.UPLOADING;
 			attachment.percentageUploaded = Math.round(100 * v.loaded / v.total);
@@ -48,11 +49,11 @@ export class AttachmentsComponent {
 		}
 	}
 
-	isUploadEnabled() {
+	isUploadEnabled(): boolean {
 		return this.attachments.length < 3;
 	}
 	
-	onInputFileChange(event: Event) {
+	onInputFileChange(event: Event): void {
 		const inputElement = <HTMLInputElement> event.target;
 		const inputFiles = inputElement.files;
 		if ((inputFiles.length + this.attachments.length) > 3) {
@@ -67,7 +68,7 @@ export class AttachmentsComponent {
 		}
 	}
 
-	private upload(file: File, attachment: Attachment) {
+	private upload(file: File, attachment: Attachment): void {
 		this.fileStorageService.save(file).subscribe(
 			val => this.handleUploadSubscription(val, attachment),
 			err => this.handleUploadError(attachment),
@@ -75,7 +76,7 @@ export class AttachmentsComponent {
 		);
 	}
 
-	uploadDisabledClass() {
+	uploadDisabledClass(): string {
 		return this.isUploadEnabled() ? '' : 'disabled';
 	}
 

@@ -11,6 +11,7 @@ export class AttachmentTransformer extends Transformer<Attachment> {
 		const result = new Attachment();
 		result.fileId = filePojo.fileId;
 		result.thumbnailUrl = filePojo.thumbnailUrl;
+		result.originalUrl = filePojo.originalUrl;
 		return result;
 	}
 

@@ -4,6 +4,7 @@ export class Attachment {
 	status: AttachmentStatus;
 	percentageUploaded: number;
 	thumbnailUrl: string;
+	originalUrl: string;
 }
 
 export enum AttachmentStatus {

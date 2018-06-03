@@ -25,7 +25,9 @@
 			<div>{{f.error}}</div>
 		</div>
 		<figure class="thumbnail" *ngIf="attachment.thumbnailUrl">
-			<img src="{{attachment.thumbnailUrl}}">
+			<a target="_blank" href="{{attachment.originalUrl}}">
+				<img src="{{attachment.thumbnailUrl}}">
+			</a>
 		</figure>
 	</div>
 </div>
