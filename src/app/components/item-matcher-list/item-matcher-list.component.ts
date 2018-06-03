@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { Attachment } from '../../classes/pojo/attachment';
+import { AttachmentTransformer } from '../../classes/transformers/attachment-transformer';
 import { Item } from '../../classes/pojo/item';
+import { FileService } from '../../services/file.service';
 import { Message } from '../message/message';
 import { NavigationService } from '../../services/navigation.service';
 import { Pagination } from '../../classes/search/pagination';
@@ -10,24 +13,40 @@ import { StorageService } from '../../services/storage.service';
 import { TradeMembership } from '../../classes/pojo/trade-membership';
 import { TradeMembershipService } from '../../services/trade-membership.service';
 
+class ItemView {
+	constructor(item: Item) {
+		this.href = item._href;
+		this.name = item.name;
+		this.description = item.description;
+	}
+	href: string;
+	name: string;
+	description: string;
+	thumbnailUrl: string;
+	thumbnailLoaded: boolean;
+}
+
 @Component({
   selector: 'app-item-matcher-list',
   templateUrl: './item-matcher-list.component.html',
   styleUrls: ['./item-matcher-list.component.scss'],
-  providers: [TradeMembershipService, SearchService]
+  providers: [TradeMembershipService, SearchService, FileService]
 })
 export class ItemMatcherListComponent implements OnInit {
 
-	items: Item[] = Array<Item>();
+	items: ItemView[] = Array<ItemView>();
   loading: boolean = true;
   message: Message = new Message();
   pagination: Pagination = new Pagination(1, 10, 0);
   tradeMembership: TradeMembership;
-  tradeMembershipHref: string;
+	tradeMembershipHref: string;
+	
+	attachmentTransformer = new AttachmentTransformer();
 
   constructor(
     private navigationService: NavigationService,
-    private route: ActivatedRoute,
+		private route: ActivatedRoute,
+		private fileService: FileService,
     private searchService: SearchService,
     private storageService: StorageService,
     private tradeMembershipService: TradeMembershipService,
@@ -64,21 +83,34 @@ export class ItemMatcherListComponent implements OnInit {
 				this.loading = false;
 			})
 			.catch((e) => this.message.setErrorItems(e));
-  }
+	}
+	
+	private loadThumbnail(item: ItemView, filesHref: string) {
+		this.fileService.get(filesHref).then(files => {
+			if (files[0] && this.attachmentTransformer.toPojo(files[0])) {
+				item.thumbnailUrl = this.attachmentTransformer.toPojo(files[0]).thumbnailUrl;
+			}
+			item.thumbnailLoaded = true;
+		});
+	}
 
   private search(tradeMembership: TradeMembership): Promise<any> {
     return this.searchService.searchItemsToMatch(tradeMembership, this.pagination.page).then(searchResults => {
-      this.items = searchResults.results;
+			searchResults.results.forEach(v => {
+				const itemProxy = new ItemView(v);
+				this.loadThumbnail(itemProxy, v.getFilesHref());
+				this.items.push(itemProxy);
+			});
       this.pagination = searchResults.pagination;
     });
   }
 
-  navigateToOffer(item: Item) {
-    this.navigationService.navigate('item-matcher-offer', {tradeMembershipHref: this.tradeMembershipHref, itemHref: item._href});
+  navigateToOffer(item: ItemView) {
+    this.navigationService.navigate('item-matcher-offer', {tradeMembershipHref: this.tradeMembershipHref, itemHref: item.href});
   }
 
   navigateBack(): void {
     this.navigationService.back();
-  }
-
+	}
+	
 }

@@ -10,9 +10,16 @@
 <div *ngIf="!loading && pagination.totalEntries" class="mt-content">
 	<table class="table mt-table is-striped is-fullwidth">
 		<tr *ngFor="let item of items"><td>
-			<figure class="pull-left image is-64x64 figure-thumbnail item-thumbnail">
-				No thumbnail available
+			<figure *ngIf="!item.thumbnailLoaded" class="pull-left thumbnail thumbnail-loading image is-64x64">
+				<div><i class="fas fa-spinner fa-pulse fa-3x fa-fw"></i></div>
 			</figure>
+			<figure *ngIf="item.thumbnailLoaded && item.thumbnailUrl" class="pull-left thumbnail image is-64x64">
+				<img src="{{item.thumbnailUrl}}">
+			</figure>
+			<figure *ngIf="item.thumbnailLoaded && !item.thumbnailUrl" class="pull-left thumbnail-not-available image is-64x64">
+				<p>Thumbnail not available</p>
+			</figure>
+
 			<div>{{item.name}}</div>
 			<div class="item-controls">
 				<button class="button is-primary is-small" type="button" (click)="navigateToOffer(item)">

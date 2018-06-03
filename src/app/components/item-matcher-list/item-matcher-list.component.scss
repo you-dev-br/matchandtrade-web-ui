@@ -1,17 +1,5 @@
 @import '~variables.scss';
 
-.figure-thumbnail {
-	background-color: $primary-2;
-	color: $primary-7;
-	float: left;
-	font-size: x-small;	
-	height: 64px;
-	margin: 0em 1em 0em 0em;
-	padding: 1em .2em .2em .2em;
-	text-align: center;
-	width: 64px;
-}
-
 .item-controls {
 	color: $primary-5;
 	margin-top: .8em;
@@ -24,4 +12,32 @@
 
 .small-button-text {
 	margin-left: .5em;
+}
+
+%thumbnail {
+	background-color: $primary-2;
+	color: $primary-7;
+	float: left;
+	font-size: x-small;	
+	margin: 0em 1em 0em 0em;
+	text-align: center;
+}
+
+.thumbnail {
+	@extend %thumbnail;
+}
+
+.thumbnail-loading {
+	@extend %thumbnail;
+	align-items: center;
+	display: flex;
+	color: $primary-4;
+	justify-content: center;
+}
+
+.thumbnail-not-available {
+	@extend %thumbnail;
+	align-items: center;
+	display: flex;
+	padding: .5em .5em .5em .5em;
 }
