@@ -51,11 +51,23 @@
 	@extend %thumbnail;
 }
 
+.thumbnail-done {
+	@extend %thumbnail;
+	display: block;
+}
+
 .thumbnail-error {
 	@extend %thumbnail;
 	background-color: pink;
 	border: 1px solid maroon;
 	color: maroon;
+}
+
+.thumbnail-reading {
+	@extend %thumbnail;
+	background-color: lightskyblue;
+	border: 1px solid navy;
+	color: navy;
 }
 
 .thumbnail-uploading {

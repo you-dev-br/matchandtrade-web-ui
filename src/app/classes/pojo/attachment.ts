@@ -9,6 +9,7 @@ export class Attachment {
 
 export enum AttachmentStatus {
 	ERROR='ERROR',
+	READING='READING',
 	STORED='STORED',
 	UPLOADING='UPLOADING',
 }

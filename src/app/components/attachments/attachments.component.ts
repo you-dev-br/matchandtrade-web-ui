@@ -23,7 +23,25 @@ export class AttachmentsComponent {
 	error: string;
 	fileTransformer = new FileTransformer();
 
-  constructor(private fileStorageService: FileService) { }
+	constructor(private fileStorageService: FileService) { }
+	
+	private blobToFile(blob: Blob, fileName: string, fileType: string, lastModifiedDate: number): File {
+    return new File([blob], fileName, {type: fileType, lastModified: lastModifiedDate});
+	}
+
+	private buildResizedImage(file: File): Promise<File> {
+		return new Promise<File>((resolve, reject) => {
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				const img = new Image();
+				img.src = reader.result;
+				img.onload = (e) => {
+					resolve(this.resizeImage(img, file.name, file.type, file.lastModifiedDate));
+				}
+			}
+			reader.readAsDataURL(file);
+		});
+	}
 
 	private handleUploadCompleted(fileUpload: Attachment): void {
 		fileUpload.status = AttachmentStatus.STORED;
@@ -62,10 +80,41 @@ export class AttachmentsComponent {
 		}
 		this.onChange.emit(this.attachments);
 		for(let i=0; i<inputFiles.length; i++) {
-			const fileUpload = new Attachment();
-			this.attachments.push(fileUpload);
-			this.upload(inputFiles.item(i), fileUpload);
+			const attachment = new Attachment();
+			attachment.status = AttachmentStatus.READING;
+			this.attachments.push(attachment);
+			this.buildResizedImage(inputFiles.item(i)).then(resizedFile => {
+				this.upload(resizedFile, attachment);
+			});
 		}
+	}
+
+	private resizeImage(image: HTMLImageElement, filename: string, filetype: string, lastModifiedDate: number): Promise<File> {
+		return new Promise<File>((resolve, reject) => {
+			let resultingCanvas: HTMLCanvasElement = null;
+			
+			// Maximum image size is proportional to 1280x800
+			const maxDimention = 1280*800;
+			
+			// Resize image to fit max dimention
+			if (image.height * image.width > maxDimention) {
+				const exponentialRatio = (image.height * image.width) / maxDimention;
+				const linearRation = Math.pow(exponentialRatio, 0.5);
+				image.height /= linearRation;
+				image.width /= linearRation;
+			}
+
+			// Draw image into canvas
+			const canvas: HTMLCanvasElement = document.createElement('canvas');
+			let context = canvas.getContext('2d');
+			canvas.width = image.width;
+			canvas.height = image.height;
+			context.drawImage(image, 0, 0, image.width, image.height);
+			canvas.toBlob( blob => {
+				const blobAsFile = this.blobToFile(blob, filename, filetype, lastModifiedDate);
+				resolve(blobAsFile);
+			}, 'image/jpeg', 0.75);
+		});
 	}
 
 	private upload(file: File, attachment: Attachment): void {
