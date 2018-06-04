@@ -1,7 +1,7 @@
 @import '~variables.scss';
 
 .app-container-layout {
-	background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="100"><rect width="10" height="44" style="fill:#ff8000"/><rect y="44" width="10" height="2" style="fill:#cc5600"/><rect y="46" width="10" height="40" style="fill:whitesmoke"/><rect y="86" width="10" height="2" style="fill:#cc5600"/><rect y="88" width="10" height="1" style="fill:silver"/><rect y="89" width="10" height="1" style="fill:whitesmoke"/></svg>');
+	background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="100"><rect width="10" height="44" style="fill:%23ff8000"/><rect y="44" width="10" height="2" style="fill:%23cc5600"/><rect y="46" width="10" height="40" style="fill:whitesmoke"/><rect y="86" width="10" height="2" style="fill:%23cc5600"/><rect y="88" width="10" height="1" style="fill:silver"/><rect y="89" width="10" height="1" style="fill:whitesmoke"/></svg>');
 	background-repeat: repeat-x;
 	display: flex;
 	justify-content: center;
