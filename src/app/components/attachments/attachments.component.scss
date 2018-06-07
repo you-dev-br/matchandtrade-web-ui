@@ -50,12 +50,16 @@
 	background-color: $primary-1;
 	border: 1px solid silver;
 	box-sizing: content-box;
-	display: flex;
+	display: inline-block;
 	justify-content: center;
 	height: 96px;
 	width: 96px;
 	text-align: center;
 	font-size: x-small;
+}
+
+.thumbnail-content p {
+	margin: 40% auto 40% auto;
 }
 
 .thumbnail-footer {
@@ -74,8 +78,8 @@
 
 .READING {
 	background-color: lightskyblue;
-	border-color: navy;
-	color: navy;
+	border-color: $secondary-7;
+	color: $secondary-7;
 }
 
 .STORED {

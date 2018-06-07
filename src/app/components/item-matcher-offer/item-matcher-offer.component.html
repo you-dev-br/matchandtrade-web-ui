@@ -11,9 +11,11 @@
 
 <div *ngIf="!loading && offerableItems.length>0" class="mt-content">
   <p class="wanted-item-paragraph">
-    You want: <i>{{wantedItem.name}}</i>
+    Which item would you offer for <a href="#">{{wantedItem.name}}</a> ?
   </p>
-
+  <p style="font-size: small">
+		Note: only one of the selected items would be exchanged.
+	</p>
   <div>
     <table id="offering-items-table" class="table mt-table-hoverable is-striped is-fullwidth">
 			<tr *ngFor="let offerableItem of obtainOfferableItemsForCurrentPage()">

@@ -14,6 +14,22 @@ caption {
 	outline-offset: 2px;
 }
 
+.is-secondary {
+	background-color: $secondary-5;
+	color: white;
+}
+
+.is-secondary:hover {
+	background-color: $secondary-6;
+	color: white;
+}
+
+.is-secondary:focus {
+	outline: 2px solid $secondary-6;
+	outline-offset: 2px;
+	color: white;
+}
+
 .navbar-item:focus {
 	outline: 1px solid $primary-7;
 	outline-offset: 0px;
