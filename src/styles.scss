@@ -68,6 +68,7 @@ caption {
 // We want to increase the icon 'hit-box'
 .mt-table-icon {
 	color: grey;
+	cursor: pointer;
 	margin: -.5em -.5em -.5em 0em;
 	outline-color: $primary-4;
 	padding: .75em .5em .75em .5em;

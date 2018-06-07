@@ -57,6 +57,10 @@ export class ItemService {
 		return Promise.resolve(this.httpService.post(itemHref + '/files/' + fileId));
 	}
 
+	deleteFile(itemHref: string, fileId: number): Promise<Response> {
+		return Promise.resolve(this.httpService.delete(itemHref + '/files/' + fileId));
+	}
+
   search(page: Page, tradeMembershipHref: string): Promise<SearchResult<Item>> {
     return new Promise<SearchResult<Item>>((resolve, reject) => {
       this.httpService

@@ -10,8 +10,9 @@ export class AttachmentTransformer extends Transformer<Attachment> {
 	public toPojo(filePojo: FilePojo): Attachment {
 		const result = new Attachment();
 		result.fileId = filePojo.fileId;
-		result.thumbnailUrl = filePojo.thumbnailUrl;
+		result.name = filePojo.name;
 		result.originalUrl = filePojo.originalUrl;
+		result.thumbnailUrl = filePojo.thumbnailUrl;
 		return result;
 	}
 

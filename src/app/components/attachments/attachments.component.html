@@ -1,13 +1,8 @@
 <div class="file is-centered is-small">
 	<label [class]="'file-label ' + uploadDisabledClass()">
-		<input class="file-input" type="file" (change)="onInputFileChange($event)" [disabled]="uploadDisabledClass()" multiple >
-		<span [class]="'file-cta ' + uploadDisabledClass()">
-			<span class="file-icon">
-				<i class="fas fa-image"></i>
-			</span>
-			<span>
-				Add images &nbsp;
-			</span>
+		<input class="file-input" type="file" (change)="onInputFileChange($event)" [disabled]="uploadDisabledClass()" accept="image/*" multiple >
+		<span	[class]="'file-cta ' + uploadDisabledClass()">
+			<i class="fas fa-image file-icon"></i> Add images
 		</span>
 	</label>
 </div>
@@ -18,19 +13,27 @@
 
 <div class="gallery is-fullwidth">
 	<div *ngFor='let attachment of attachments'>
-		<div class="thumbnail-uploading" *ngIf="attachment.status=='UPLOADING'">
-			<div>Uploading<br><i class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;{{attachment.percentageUploaded}}%</div>
+
+		<div *ngIf="attachment.status!='DELETED'" class="thumbnail-container">
+			<div [class]="'thumbnail-content ' + attachment.status">
+				<p *ngIf="attachment.status=='STORED' && !attachment.thumbnailUrl">{{attachment.name}}</p>
+				<a *ngIf="attachment.status=='STORED' && attachment.thumbnailUrl" href="{{attachment.originalUrl}}" target="_blank">
+					<img src="{{attachment.thumbnailUrl}}">
+				</a>
+				<p *ngIf="attachment.status=='UPLOADING'">
+					Uploading...<br><i class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;{{attachment.percentageUploaded}}%
+				</p>
+				<p *ngIf="attachment.status=='READING'">
+					Reading file...<br><i class="fas fa-spinner fa-pulse"></i>
+				</p>
+				<p *ngIf="attachment.status=='ERROR'">
+					{{attachment.error}}
+				</p>
+			</div>
+			<div class="thumbnail-footer">
+				<i class="fas fa-trash mt-table-icon" (click)="delete(attachment)"></i>
+			</div>
 		</div>
-		<div class="thumbnail-reading" *ngIf="attachment.status=='READING'">
-			<div>Reading file<br><i class="fas fa-spinner fa-pulse"></i></div>
-		</div>		
-		<div class="thumbnail-error" *ngIf="attachment.status=='ERROR'">
-			<div>{{attachment.error}}</div>
-		</div>
-		<figure class="thumbnail-done" *ngIf="attachment.thumbnailUrl">
-			<a target="_blank" href="{{attachment.originalUrl}}">
-				<img src="{{attachment.thumbnailUrl}}">
-			</a>
-		</figure>
 	</div>
+
 </div>

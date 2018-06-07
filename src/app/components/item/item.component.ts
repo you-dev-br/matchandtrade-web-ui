@@ -57,6 +57,7 @@ export class ItemComponent implements OnInit {
 				.then(filePojos => {
 					filePojos.forEach(filePojo => {
 						const fileUpload = this.attachmentTransformer.toPojo(filePojo);
+						fileUpload.status = AttachmentStatus.STORED;
 						this.attachments.push(fileUpload);
 					})
 				})
@@ -106,6 +107,11 @@ export class ItemComponent implements OnInit {
   }
 	
 	onFileUploadChange(attachments: Attachment[]) {
+		attachments.forEach(v => {
+			if (v.status == AttachmentStatus.DELETED) {
+				this.itemService.deleteFile(this.itemHref, v.fileId).catch(e => this.message.setInfoItems(e));
+			}
+		});
 		this.itemFormGroup.markAsDirty();
 	}
 
@@ -121,9 +127,11 @@ export class ItemComponent implements OnInit {
 			})
 			.then(v => {
 				const addFilePromisses = new Array<Promise<any>>();
-				this.attachments.forEach(f => {
-					const addFilePromise = this.itemService.addFile(v._href, f.fileId);
-					addFilePromisses.push(addFilePromise);					
+				this.attachments.forEach(a => {
+					if (a.status == AttachmentStatus.STORED) {
+						const addFilePromise = this.itemService.addFile(v._href, a.fileId);
+						addFilePromisses.push(addFilePromise);					
+					}
 				});
 				return Promise.all(addFilePromisses);
 			})

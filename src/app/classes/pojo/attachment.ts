@@ -1,13 +1,15 @@
 export class Attachment {
 	error: string;
 	fileId: number;
-	status: AttachmentStatus;
-	percentageUploaded: number;
-	thumbnailUrl: string;
+	name: string;
 	originalUrl: string;
+	percentageUploaded: number;
+	status: AttachmentStatus;
+	thumbnailUrl: string;
 }
 
 export enum AttachmentStatus {
+	DELETED='DELETED',
 	ERROR='ERROR',
 	READING='READING',
 	STORED='STORED',

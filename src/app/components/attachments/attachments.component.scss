@@ -4,6 +4,8 @@
 	text-align: center;
 }
 
+// FILE
+// ====
 .file {
 	margin-bottom: .5em;
 }
@@ -35,55 +37,53 @@
 	flex-wrap: wrap;
 }
 
-%thumbnail {
-	align-items: center;
+// THUMBNAIL
+// =========
+.thumbnail-container {
 	display: flex;
+	flex-direction: column;
+	margin: .5em;
+}
+
+.thumbnail-content {
+	align-items: center;
+	background-color: $primary-1;
 	border: 1px solid silver;
-	font-size: x-small;
-	height: 98px;
+	box-sizing: content-box;
+	display: flex;
 	justify-content: center;
-	margin: .15em .15em .15em .15em;
+	height: 96px;
+	width: 96px;
 	text-align: center;
-	width: 98px;
+	font-size: x-small;
 }
 
-.thumbnail {
-	@extend %thumbnail;
+.thumbnail-footer {
+	border: 1px solid silver;
+	border-top: none;
+	text-align: center;
 }
 
-.thumbnail-done {
-	@extend %thumbnail;
-	display: block;
+// STATUS
+// ======
+.ERROR {
+	background-color: lightpink;
+	border-color: darkred;
+	color: darkred;
 }
 
-.thumbnail-error {
-	@extend %thumbnail;
-	background-color: pink;
-	border: 1px solid maroon;
-	color: maroon;
-}
-
-.thumbnail-reading {
-	@extend %thumbnail;
+.READING {
 	background-color: lightskyblue;
-	border: 1px solid navy;
+	border-color: navy;
 	color: navy;
 }
 
-.thumbnail-uploading {
-	@extend %thumbnail;
+.STORED {
+	background-color: $primary-1;
+	border-color: silver;
+}
+
+.UPLOADING {
 	background-color: $primary-2;
-	border: 1px solid $primary-5;
-	color: $primary-7;
-}
-
-.thumbnail-button {
-	@extend %thumbnail;
-	font-size: small;
-	background-color: #eeeeee;
-	border-radius: 3px;
-}
-
-.thumbnail-button:hover {
-	background-color: gainsboro;
+	border-color: $primary-5;
 }

@@ -43,6 +43,11 @@ export class AttachmentsComponent {
 		});
 	}
 
+	delete(attachment: Attachment): void {
+		attachment.status = AttachmentStatus.DELETED;
+		this.onChange.emit(this.attachments);
+	}
+
 	private handleUploadCompleted(fileUpload: Attachment): void {
 		fileUpload.status = AttachmentStatus.STORED;
 		this.error = undefined;
