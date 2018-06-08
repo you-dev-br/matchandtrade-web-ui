@@ -10,21 +10,22 @@
 <div *ngIf="!loading && pagination.totalEntries" class="mt-content">
 	<table class="table mt-table is-striped is-fullwidth">
 		<tr *ngFor="let item of items"><td>
-			<figure *ngIf="!item.thumbnailLoaded" class="pull-left thumbnail thumbnail-loading image is-64x64">
-				<div><i class="fas fa-spinner fa-pulse fa-3x fa-fw"></i></div>
-			</figure>
-			<figure *ngIf="item.thumbnailLoaded && item.thumbnailUrl" class="pull-left thumbnail image is-64x64">
-				<img src="{{item.thumbnailUrl}}">
-			</figure>
-			<figure *ngIf="item.thumbnailLoaded && !item.thumbnailUrl" class="pull-left thumbnail-not-available image is-64x64">
-				<p>Thumbnail not available</p>
-			</figure>
-
-			<div>{{item.name}}</div>
-			<div class="item-controls">
-				<button class="button is-secondary is-small" type="button" (click)="navigateToOffer(item)">
-					<i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="small-button-text">I Want</span>
-				</button>
+			<div class="item-row">
+				<div class="thumbnail">
+					<span *ngIf="!item.thumbnailLoaded"><i class="fas fa-spinner fa-pulse fa-2x fa-fw"></i></span>
+					<img *ngIf="item.thumbnailLoaded && item.thumbnailUrl" src="{{item.thumbnailUrl}}">
+					<p *ngIf="item.thumbnailLoaded && !item.thumbnailUrl">Thumbnail not available</p>
+				</div>
+				<div class="item-summary">
+					<div class="item-name">
+						{{item.name}}
+					</div>
+					<div class="item-controls">
+						<button class="button is-secondary is-small" type="button" (click)="navigateToOffer(item)">
+							<i class="fas fa-thumbs-up"></i><span class="small-button-text">I Want</span>
+						</button>	
+					</div>	
+				</div>
 			</div>
 		</td></tr>
 	</table>

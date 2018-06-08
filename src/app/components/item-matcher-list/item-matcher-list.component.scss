@@ -1,43 +1,54 @@
 @import '~variables.scss';
 
-.item-controls {
-	color: $primary-5;
-	margin-top: .8em;
-}
-
 .not-found-content {
 	margin-top: 3em;
 	text-align: center;
 }
 
-.small-button-text {
-	margin-left: .5em;
+.button i {
+	margin-right: .5em;
 }
 
-%thumbnail {
-	background-color: $primary-2;
-	color: $primary-7;
-	float: left;
-	font-size: x-small;	
-	margin: 0em 1em 0em 0em;
-	text-align: center;
+// ============
+// ITEM SUMMARY
+// ============
+.item-row {
+	display: flex;
 }
 
+.item-summary {
+	margin: -.25em 0em 0em .5em;
+	display: flex;
+	flex-direction: column;
+}
+
+.item-controls {
+	flex: 0 0 auto;
+}
+
+.item-name {
+	flex: 1 1 auto;
+}
+
+// =========
+// THUMBNAIL
+// =========
 .thumbnail {
-	@extend %thumbnail;
+	background-color: $primary-2;
+	border: 1px solid silver;
+	color: $primary-7;
+	flex: 0 0 auto;
+	font-size: x-small;
+	height: 64px;
+	text-align: center;
+	width: 64px;
 }
 
-.thumbnail-loading {
-	@extend %thumbnail;
-	align-items: center;
-	display: flex;
-	color: $primary-4;
-	justify-content: center;
+.thumbnail p {
+	margin: 1em .5em 1em .5em;
 }
 
-.thumbnail-not-available {
-	@extend %thumbnail;
-	align-items: center;
-	display: flex;
-	padding: .5em .5em .5em .5em;
+.thumbnail span {
+	display: block;
+	margin: 30% 0% 0% 0%;
 }
