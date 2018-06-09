@@ -34,21 +34,20 @@
 // THUMBNAIL
 // =========
 .thumbnail {
+	align-items: center;
 	background-color: $primary-2;
 	border: 1px solid silver;
+	display: flex;
 	color: $primary-7;
-	flex: 0 0 auto;
 	font-size: x-small;
-	height: 64px;
+	justify-content: center;
+	height: 56px;
 	text-align: center;
-	width: 64px;
+	width: 56px;
+	flex: 0 0 auto;
 }
 
-.thumbnail p {
-	margin: 1em .5em 1em .5em;
-}
-
-.thumbnail span {
+.thumbnail.has-thumbnail {
+	background-color: white;
 	display: block;
-	margin: 30% 0% 0% 0%;
 }

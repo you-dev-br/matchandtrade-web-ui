@@ -50,7 +50,25 @@ export class ItemMatcherListComponent implements OnInit {
     private searchService: SearchService,
     private storageService: StorageService,
     private tradeMembershipService: TradeMembershipService,
-  ) { }
+	) { }
+	
+	displayLoadingThumbnail(item: ItemView):boolean {
+		return !item.thumbnailLoaded;
+	}
+	
+	displayThumbnailImage(item: ItemView):boolean {
+		return item.thumbnailLoaded && (item.thumbnailUrl ? true : false);
+	}
+	
+	displayThumbnailNotAvailable(item: ItemView) {
+		return item.thumbnailLoaded && !item.thumbnailUrl;
+	}
+
+	classForThumbnail(item: ItemView): string {
+		let result = 'thumbnail';
+		result += (item.thumbnailUrl ? ' has-thumbnail' : '');
+		return result;
+	}
 
   ngOnInit() {
     this.tradeMembershipHref = this.navigationService.obtainData(this.route).tradeMembershipHref;
@@ -92,6 +110,12 @@ export class ItemMatcherListComponent implements OnInit {
 			}
 			item.thumbnailLoaded = true;
 		});
+	}
+
+	onErrorDisplayingThumbnailImage(event: Event, item: ItemView): void {
+		// TODO: Migrate to a logging lib
+		console.log('ItemMatcherListComponent', 'Error when displaying thumbnail image', event);
+		item.thumbnailUrl = undefined;
 	}
 
   private search(tradeMembership: TradeMembership): Promise<any> {

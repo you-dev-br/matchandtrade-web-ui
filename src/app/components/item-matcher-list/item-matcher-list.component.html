@@ -11,10 +11,12 @@
 	<table class="table mt-table is-striped is-fullwidth">
 		<tr *ngFor="let item of items"><td>
 			<div class="item-row">
-				<div class="thumbnail">
-					<span *ngIf="!item.thumbnailLoaded"><i class="fas fa-spinner fa-pulse fa-2x fa-fw"></i></span>
-					<img *ngIf="item.thumbnailLoaded && item.thumbnailUrl" src="{{item.thumbnailUrl}}">
-					<p *ngIf="item.thumbnailLoaded && !item.thumbnailUrl">Thumbnail not available</p>
+
+
+				<div [class]="classForThumbnail(item)">
+					<p *ngIf="displayLoadingThumbnail(item)"><i class="fas fa-spinner fa-pulse fa-2x fa-fw"></i></p>
+					<img *ngIf="displayThumbnailImage(item)" src="{{item.thumbnailUrl}}" (error)="onErrorDisplayingThumbnailImage($event, item)">
+					<p *ngIf="displayThumbnailNotAvailable(item)">Thumbnail not available</p>
 				</div>
 				<div class="item-summary">
 					<div class="item-name">
@@ -26,6 +28,9 @@
 						</button>	
 					</div>	
 				</div>
+
+
+
 			</div>
 		</td></tr>
 	</table>
