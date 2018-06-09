@@ -14,11 +14,11 @@
 <div class="gallery is-fullwidth">
 	<div *ngFor='let attachment of attachments'>
 
-		<div *ngIf="attachment.status!='DELETED'" class="thumbnail-container">
-			<div [class]="'thumbnail-content ' + attachment.status">
-				<p *ngIf="attachment.status=='STORED' && !attachment.thumbnailUrl">{{attachment.name}}</p>
-				<a *ngIf="attachment.status=='STORED' && attachment.thumbnailUrl" href="{{attachment.originalUrl}}" target="_blank">
-					<img src="{{attachment.thumbnailUrl}}">
+		<div *ngIf="displayThumbnailContent(attachment)" class="thumbnail-container">
+			<div [class]="classForThumbnailContent(attachment)">
+				<a *ngIf="displayThumbnailLink(attachment)" href="{{attachment.originalUrl}}" target="_blank">
+					<p *ngIf="!displayThumbnailImage(attachment)">{{attachment.name}}</p>
+					<img *ngIf="displayThumbnailImage(attachment)" src="{{attachment.thumbnailUrl}}" (error)="thumbnailImageError($event, attachment)">
 				</a>
 				<p *ngIf="attachment.status=='UPLOADING'">
 					Uploading...<br><i class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;{{attachment.percentageUploaded}}%

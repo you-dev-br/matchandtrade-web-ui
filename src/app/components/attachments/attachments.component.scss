@@ -50,7 +50,7 @@
 	background-color: $primary-1;
 	border: 1px solid silver;
 	box-sizing: content-box;
-	display: inline-block;
+	display: flex;
 	justify-content: center;
 	height: 96px;
 	width: 96px;
@@ -58,8 +58,8 @@
 	font-size: x-small;
 }
 
-.thumbnail-content p {
-	margin: 40% auto 40% auto;
+.thumbnail-content.has-thumbnail {
+	display: inline-block;
 }
 
 .thumbnail-footer {

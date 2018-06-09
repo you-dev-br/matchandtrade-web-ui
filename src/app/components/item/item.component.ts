@@ -54,11 +54,11 @@ export class ItemComponent implements OnInit {
 					this.item = v;
 					return this.fileStorageService.get(v.getFilesHref());
 				})
-				.then(filePojos => {
-					filePojos.forEach(filePojo => {
-						const fileUpload = this.attachmentTransformer.toPojo(filePojo);
-						fileUpload.status = AttachmentStatus.STORED;
-						this.attachments.push(fileUpload);
+				.then(attachments => {
+					attachments.forEach(filePojo => {
+						const attachment = this.attachmentTransformer.toPojo(filePojo);
+						attachment.status = AttachmentStatus.STORED;
+						this.attachments.push(attachment);
 					})
 				})
 				.catch(e => {

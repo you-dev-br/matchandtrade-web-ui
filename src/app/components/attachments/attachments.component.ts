@@ -48,6 +48,25 @@ export class AttachmentsComponent {
 		this.onChange.emit(this.attachments);
 	}
 
+	displayThumbnailLink(attachment: Attachment): boolean {
+		return (attachment.status == AttachmentStatus.STORED);
+	}
+
+	displayThumbnailContent(attachment: Attachment): boolean {
+		return attachment.status != AttachmentStatus.DELETED;
+	}
+
+	displayThumbnailImage(attachment: Attachment): boolean {
+		return (attachment.thumbnailUrl ? true : false);
+	}
+
+	classForThumbnailContent(attachment: Attachment): string {
+		let result: string = 'thumbnail-content';
+		result += ' ' + attachment.status;
+		result += (attachment.thumbnailUrl ? ' has-thumbnail' : '');
+		return result;
+	}
+
 	private handleUploadCompleted(fileUpload: Attachment): void {
 		fileUpload.status = AttachmentStatus.STORED;
 		this.error = undefined;
@@ -132,6 +151,12 @@ export class AttachmentsComponent {
 
 	uploadDisabledClass(): string {
 		return this.isUploadEnabled() ? '' : 'disabled';
+	}
+
+	thumbnailImageError(event: Event, attachment: Attachment): void {
+		// TODO: Migrate to a logging lib
+		console.log("AttachmentsComponent", "Error loading thumbnail image", attachment);
+		attachment.thumbnailUrl = undefined;
 	}
 
 }
