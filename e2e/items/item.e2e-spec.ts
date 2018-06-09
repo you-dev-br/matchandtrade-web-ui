@@ -6,7 +6,6 @@ import { SignInHelper } from '../sign-in-helper';
 import { TradePage } from '../trades/trade.po';
 import { ItemHelper } from './item-helper';
 
-
 describe('Items', () => {
 	const page: ItemPage = new ItemPage();
 	const itemHelper: ItemHelper = new ItemHelper();
@@ -23,6 +22,17 @@ describe('Items', () => {
 		const tradeName: string = 'Test - Should create new item ' + salt;
 		tradeHelper.createTrade(tradeName);
 		itemHelper.createItem('Apple');
+	});
+
+	it('should attach an image to a new item', () => {
+		const tradeName: string = 'Test - Should attach an image to a new item ' + salt;
+		tradeHelper.createTrade(tradeName);
+		page.elementItemsButton().click();
+		page.elementCreateButton().click();
+		page.elementItemName().sendKeys('Apple');
+		page.elementAddImagesInput().sendKeys(__dirname + '/item-image.png');
+		page.elementSaveItemButton().click();
+		expect(page.elementSavedMessage()).toBeDefined();
 	});
 
 	it('should update an existing item', () => {

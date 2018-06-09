@@ -2,6 +2,14 @@ import { browser, by, element } from 'protractor';
 
 export class ItemPage {
 
+	elementAddImagesInput() {
+		return element(by.css('.file-input'));
+	}
+
+	elementAddImagesButton() {
+		return element(by.cssContainingText('button', 'Add images'));
+	}
+
   elementItemsButton() {
 		return element(by.cssContainingText('button', 'Items'));
 	}
