@@ -10,18 +10,23 @@ import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
 import { NavigationService } from '../../services/navigation.service';
 import { PageTitleComponent } from '../page-title/page-title.component';
-import { FileUploadComponent } from '../file-upload/file-upload.component';
+import { AttachmentsComponent } from '../attachments/attachments.component';
+import { FileService } from '../../services/file.service';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthenticationService } from '../../services/authentication.service';
+
+class FileServiceMock {}
 
 describe('item.component-create', () => {
   let component: ItemComponent;
-  let fixture: ComponentFixture<ItemComponent>;
+	let fixture: ComponentFixture<ItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ ReactiveFormsModule ],
+      imports: [ ReactiveFormsModule, HttpClientModule ],
       declarations: [ 
 				ItemComponent,
-				FileUploadComponent,
+				AttachmentsComponent,
         LoadingComponent,
 				MessageComponent,
 				PageTitleComponent
@@ -33,7 +38,9 @@ describe('item.component-create', () => {
           {provide: ActivatedRoute, useValue: new ActivatedRouteMock()},
           {provide: Router, useValue: RouterTestingModule.withRoutes([])},
           {provide: NavigationService, useClass: NavigationServiceMock},
-          {provide: ItemService, useValue: 'itemServiceDummy'},
+					{provide: ItemService, useValue: 'itemServiceDummy'},
+					{provide: FileService, useClass: FileServiceMock },
+					{provide: AuthenticationService, useClass: FileServiceMock },
         ]
       }
     })
@@ -45,13 +52,6 @@ describe('item.component-create', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  it('should display an empty form', () => {
-		fixture.whenStable().then(() => {
-			expect(fixture.nativeElement.querySelector('#item-name').value).toBe('');
-			expect(fixture.nativeElement.querySelector('#save-item-button').disabled).toBeTruthy();
-		});
-	});
 
 	it('should enable the save button after editing the form', () => {
 		fixture.nativeElement.querySelector('#item-name').value = 'newName';

@@ -69,8 +69,7 @@ describe('item-matcher-offer.component', () => {
   it('should display wanted item name', () => {
     component.ngOnInit();
     fixture.whenStable().then(() => {
-      fixture.detectChanges();
-			expect(fixture.nativeElement.querySelector('.wanted-item-paragraph i').innerHTML).toBe('ItemServiceMock.GET.name');
+			expect(component.wantedItem.name).toBe('ItemServiceMock.GET.name');
     });
   });
 

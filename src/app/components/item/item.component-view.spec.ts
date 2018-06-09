@@ -11,7 +11,12 @@ import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
 import { NavigationService } from '../../services/navigation.service';
 import { PageTitleComponent } from '../page-title/page-title.component';
-import { FileUploadComponent } from '../file-upload/file-upload.component';
+import { AttachmentsComponent } from '../attachments/attachments.component';
+import { FileService } from '../../services/file.service';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthenticationService } from '../../services/authentication.service';
+
+class FileServiceMock {}
 
 class ItemServiceMock {
   get(href) {
@@ -38,10 +43,10 @@ describe('item.component-view', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ ReactiveFormsModule ],
+      imports: [ ReactiveFormsModule, HttpClientModule ],
       declarations: [ 
 				ItemComponent,
-				FileUploadComponent,
+				AttachmentsComponent,
         LoadingComponent,
 				MessageComponent,
 				PageTitleComponent
@@ -53,7 +58,9 @@ describe('item.component-view', () => {
           { provide: ActivatedRoute, useValue: new ActivatedRouteMock({itemHref:'itemHrefMock'}) },
           { provide: ItemService, useClass: ItemServiceMock },
           { provide: NavigationService, useClass: NavigationServiceMock },
-          { provide: Router, useValue: RouterTestingModule.withRoutes([]) },
+					{ provide: Router, useValue: RouterTestingModule.withRoutes([]) },
+					{ provide: FileService, useClass: FileServiceMock },
+					{ provide: AuthenticationService, useClass: FileServiceMock }
         ]
       }
     })
@@ -84,23 +91,6 @@ describe('item.component-view', () => {
 			fixture.detectChanges();
 			expect(fixture.nativeElement.querySelector('#item-name').value).toBe('newName');
 			expect(fixture.nativeElement.querySelector('#save-item-button').disabled).toBeFalsy();
-		});
-	});
-
-	it('should show error message when saving invalid item', () => {
-		let injectedItemService = fixture.debugElement.injector.get(ItemService);
-		spyOn(injectedItemService, 'save').and.callFake((a,b) => {
-			return Promise.reject(new Error('Mocked error message.'));
-		});
-		component.ngOnInit();
-		fixture.whenStable().then(() => {
-			component.onSubmit();
-		})
-		.then(() => {
-			fixture.whenStable().then(() => {
-				fixture.detectChanges();
-				expect(fixture.nativeElement.querySelector('#message-body div').innerHTML).toContain('Mocked error message.')
-			})
 		});
 	});
 

@@ -3,7 +3,7 @@
 //import { AppComponent } from './app.component';
 //import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 
-// describe('AppComponent', () => {
+// xdescribe('AppComponent', () => {
 //   beforeEach(async(() => {
 //     TestBed.configureTestingModule({
 //       imports: [
