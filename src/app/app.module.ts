@@ -30,6 +30,7 @@ import { TradeResultComponent } from './components/trade-result/trade-result.com
 import { MyAccountComponent } from './components/my-account/my-account.component';
 import { AutosizeDirective } from './directives/autosize.directive';
 import { AttachmentsComponent } from './components/attachments/attachments.component';
+import { ItemMiniViewComponent } from './components/item-mini-view/item-mini-view.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import { AttachmentsComponent } from './components/attachments/attachments.compo
     TradeResultComponent,
     MyAccountComponent,
     AutosizeDirective, // TODO: Remove this if not in use
-    AttachmentsComponent,
+    AttachmentsComponent, ItemMiniViewComponent,
   ],
   imports: [
     AppRoutingModule,

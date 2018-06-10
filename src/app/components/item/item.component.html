@@ -36,7 +36,7 @@
       </p>    
 	</div>
 	<div class="file-upload">
-		<app-attachments [attachments]="attachments" (onChange)="onFileUploadChange($event)"></app-attachments>
+		<app-attachments [attachments]="attachments" [canDelete]="true" [canUpload]="true" (onChange)="onFileUploadChange($event)"></app-attachments>
 	</div>
   <div class="mt-cmd-panel-container">
     <button 

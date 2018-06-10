@@ -23,6 +23,7 @@
 }
 
 .item-controls {
+	margin-top: .5em;
 	flex: 0 0 auto;
 }
 
@@ -41,9 +42,9 @@
 	color: $primary-7;
 	font-size: x-small;
 	justify-content: center;
-	height: 56px;
+	height: 64px;
 	text-align: center;
-	width: 56px;
+	width: 64px;
 	flex: 0 0 auto;
 }
 

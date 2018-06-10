@@ -11,8 +11,6 @@
 	<table class="table mt-table is-striped is-fullwidth">
 		<tr *ngFor="let item of items"><td>
 			<div class="item-row">
-
-
 				<div [class]="classForThumbnail(item)">
 					<p *ngIf="displayLoadingThumbnail(item)"><i class="fas fa-spinner fa-pulse fa-2x fa-fw"></i></p>
 					<img *ngIf="displayThumbnailImage(item)" src="{{item.thumbnailUrl}}" (error)="onErrorDisplayingThumbnailImage($event, item)">
@@ -25,13 +23,19 @@
 					<div class="item-controls">
 						<button class="button is-secondary is-small" type="button" (click)="navigateToOffer(item)">
 							<i class="fas fa-thumbs-up"></i><span class="small-button-text">I Want</span>
-						</button>	
-					</div>	
+						</button>
+						<button *ngIf="!item.displayItemMiniView" class="button is-secondary is-small" type="button" (click)="toogleItemMiniView(item)">
+							<i class="fas fa-info"></i><span class="small-button-text">More Info</span>
+						</button>
+						<button *ngIf="item.displayItemMiniView" class="button is-secondary is-small" type="button" (click)="toogleItemMiniView(item)">
+							<i class="fas fa-info"></i><span class="small-button-text">Less Info</span>
+						</button>						
+					</div>
 				</div>
-
-
-
 			</div>
+
+			<app-item-mini-view *ngIf="item.displayItemMiniView" [itemHref]="item.href"></app-item-mini-view>
+
 		</td></tr>
 	</table>
 

@@ -1,4 +1,4 @@
-<div class="file is-centered is-small">
+<div *ngIf="canUpload" class="file is-centered is-small">
 	<label [class]="'file-label ' + uploadDisabledClass()">
 		<input class="file-input" type="file" (change)="onInputFileChange($event)" [disabled]="uploadDisabledClass()" accept="image/*" multiple >
 		<span	[class]="'file-cta ' + uploadDisabledClass()">
@@ -30,10 +30,10 @@
 					{{attachment.error}}
 				</p>
 			</div>
-			<div class="thumbnail-footer">
+			<div *ngIf="canDelete" class="thumbnail-footer">
 				<i class="fas fa-trash mt-table-icon" (click)="delete(attachment)"></i>
 			</div>
 		</div>
+		
 	</div>
-
 </div>

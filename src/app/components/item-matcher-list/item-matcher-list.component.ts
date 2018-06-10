@@ -22,6 +22,7 @@ class ItemView {
 	href: string;
 	name: string;
 	description: string;
+	displayItemMiniView: boolean = false;
 	thumbnailUrl: string;
 	thumbnailLoaded: boolean;
 }
@@ -135,6 +136,10 @@ export class ItemMatcherListComponent implements OnInit {
 
   navigateBack(): void {
     this.navigationService.back();
+	}
+
+	toogleItemMiniView(item: ItemView): void {
+		item.displayItemMiniView = !item.displayItemMiniView;
 	}
 	
 }

@@ -2,13 +2,20 @@ import {Item} from '../app/classes/pojo/item';
 import {Page} from '../app/classes/search/page';
 import {Pagination} from '../app/classes/search/pagination';
 import {SearchResult} from '../app/classes/search/search-result';
+import { Link } from '../app/classes/pojo/link';
 
 export class ItemServiceMock {
   get(href) {
     return new Promise<Item>((resolve, reject) => {
       const item = new Item();
       item.name = 'ItemServiceMock.GET.name';
-      item._href = 'ItemServiceMock.GET.href';
+			item._href = 'ItemServiceMock.GET.href';
+			item.description = 'ItemServiceMock.GET.description';
+			item.itemId = 1;
+			const link = new Link();
+			link.rel = 'files';
+			link.href = 'ItemServiceMock.GET.files.link.href';
+			item._links = [link];
       resolve(item);
     });
   };

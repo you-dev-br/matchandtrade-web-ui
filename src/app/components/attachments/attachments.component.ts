@@ -16,6 +16,8 @@ import { AttachmentTransformer } from '../../classes/transformers/attachment-tra
 export class AttachmentsComponent {
 
 	@Input() attachments: Attachment[];
+	@Input() canUpload: boolean;
+	@Input() canDelete: boolean;
 	@Output() onChange = new EventEmitter<Attachment[]>();
 
 	attachmentTransformer = new AttachmentTransformer();
