@@ -14,8 +14,9 @@
         <i *ngIf="isOwner(t)" class="owner-icon fas fa-user"></i>
 				<i *ngIf="isMember(t)" class="member-icon fas fa-address-card"></i>
 				<i *ngIf="!isMember(t) && !isOwner(t)" class="not-member-icon fas fa-address-card"></i>
-        {{t.name}}
+				{{t.name}}
 				<div class="trade-info">
+					<div *ngIf="t.description" class="trade-info-status is-size-7 has-text-grey"><b>Description:</b> {{buildDescription(t)}}</div>
 					<div class="trade-info-status is-size-7 has-text-grey"><b>Status:</b> {{t.statusText}}</div>
 					<div *ngIf="authenticatedUser" class="is-size-7 has-text-grey"><b>Organizer:</b> {{t.organizerName}} <i *ngIf="!t.organizerName" class="loading-organizer fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>
 				</div>

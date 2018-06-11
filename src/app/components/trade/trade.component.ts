@@ -24,15 +24,16 @@ import { TradeTransformer } from '../../classes/transformers/trade-transformer';
 })
 export class TradeComponent implements OnInit {
   loading: boolean = true;
+  descriptionFormControl: AbstractControl;
+  message: Message = new Message();
+  nameFormControl: AbstractControl;
+  stateFormControl: AbstractControl;
+  states: KeyValuePair[] = [];
   trade: Trade = new Trade();
   tradeFormGroup: FormGroup;
   tradeHref: string; // When truthy, it also means it that it should render a VIEW page
   tradeMembership: TradeMembership;
   tradeTransformer = new TradeTransformer()
-  nameFormControl: AbstractControl;
-  message: Message = new Message();
-  stateFormControl: AbstractControl;
-  states: KeyValuePair[] = [];
 
   constructor( 
       private route: ActivatedRoute,
@@ -75,9 +76,11 @@ export class TradeComponent implements OnInit {
 
   private buildForm(formBuilder: FormBuilder): void {
     this.tradeFormGroup = formBuilder.group({
-      'name': ['',Validators.compose([Validators.required, this.nameValidator])],
+			'description': ['',Validators.compose([this.descriptionValidator])],
+			'name': ['',Validators.compose([Validators.required, this.nameValidator])],
       'state': []
-    });
+		});
+		this.descriptionFormControl = this.tradeFormGroup.controls['description'];
     this.nameFormControl = this.tradeFormGroup.controls['name'];
     this.stateFormControl = this.tradeFormGroup.controls['state'];
 		// We do not want the user to be able to set the state as "Results Generated" nor "Results Generated", this status should only be valid when it is coming from the server.
@@ -85,6 +88,12 @@ export class TradeComponent implements OnInit {
 			if (v != TradeState.GENERATING_RESULTS && v != TradeState.RESULTS_GENERATED) {
 				this.states.push(new KeyValuePair(v, this.tradeTransformer.toStateText(v)));
 			}
+    }
+	}
+	
+  private descriptionValidator(control: FormControl): {[s: string]: boolean} {
+    if (control.value && (control.value.length < 3 || control.value.length > 1000)) {
+      return {invalid: true};
     }
   }
 
@@ -98,7 +107,8 @@ export class TradeComponent implements OnInit {
 			this.states.push(new KeyValuePair(trade.state, this.tradeTransformer.toStateText(trade.state)));
 		}
     this.stateFormControl.setValue(trade.state);
-    this.nameFormControl.setValue(trade.name);
+		this.nameFormControl.setValue(trade.name);
+		this.descriptionFormControl.setValue(trade.description);
     if (!(tradeMembership && TradeMembershipType[tradeMembership.type] == TradeMembershipType.OWNER)) {
       this.tradeFormGroup.disable();
     }
@@ -140,7 +150,8 @@ export class TradeComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    this.sanitizeName();
+		this.sanitizeName();
+		this.trade.description = this.descriptionFormControl.value;
     this.trade.name = this.nameFormControl.value;
     this.trade.state = this.stateFormControl.value;
     this.tradeService.save(this.trade)

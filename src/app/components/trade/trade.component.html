@@ -15,10 +15,27 @@
         class="textarea"
         [formControl]="tradeFormGroup.controls['name']"
         type="text"
-        placeholder="Trade name"></textarea>
+        placeholder="Name"></textarea>
     </div>
     <p class="help is-danger" *ngIf="!nameFormControl.valid && nameFormControl.touched">
-      <i class="fa fa-warning"></i>Trade name is mandatory and its length must be between 3 and 150.
+      <i class="fa fa-warning"></i>Name is mandatory and its length must be between 3 and 150.
+    </p>
+  </div>
+
+	<div class="field">
+    <label class="label" for="trade-description">Description</label>
+    <div class="control">
+      <textarea
+        autosize
+        rows=2
+        (keydown.enter)="onSubmit()"
+        class="textarea"
+        [formControl]="tradeFormGroup.controls['description']"
+        type="text"
+        placeholder="Description"></textarea>
+    </div>
+    <p class="help is-danger" *ngIf="!descriptionFormControl.valid && descriptionFormControl.touched">
+      <i class="fa fa-warning"></i>Description length must be between 3 and 1000.
     </p>
   </div>
 

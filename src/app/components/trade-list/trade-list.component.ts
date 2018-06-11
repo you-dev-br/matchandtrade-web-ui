@@ -10,12 +10,14 @@ import { Trade, TradeState } from '../../classes/pojo/trade';
 import { TradeTransformer } from '../../classes/transformers/trade-transformer';
 import { TradeMembershipService } from '../../services/trade-membership.service';
 import { Page } from '../../classes/search/page';
+import { StringUtil } from '../../classes/util/string-util';
 import { TradeMembershipType } from '../../classes/pojo/trade-membership';
 import { User } from '../../classes/pojo/user';
 import { UserService } from '../../services/user.service';
 
 class TradeProxy {
 	_href: string;
+	description: string;
   tradeId: number = null;
   name: string = null;
 	state: TradeState = null;
@@ -52,6 +54,15 @@ export class TradeListComponent implements OnInit {
 			.catch(e => console.log('User not authenticated. Continue normally.'))
 			.then(() => this.search())
 			.catch(e => this.message.setErrorItems(e));
+	}
+
+	buildDescription(trade: TradeProxy): string {
+		const shortDescription = StringUtil.shorttenWithEllipsis(trade.description, 300);
+		if (shortDescription && shortDescription.length > 3) {
+			return shortDescription;
+		} else {
+			return undefined;
+		}
 	}
 
   createTrade() {

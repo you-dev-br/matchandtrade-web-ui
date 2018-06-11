@@ -10,6 +10,7 @@ export class TradeTransformer extends Transformer<Trade> {
     public toPojo(json: any): Trade {
         const result = new Trade();
         result._href = this.extractHref(json._links);
+        result.description = json.description;
         result.name = json.name;
         result.tradeId = json.tradeId;
         result.state = json.state;
