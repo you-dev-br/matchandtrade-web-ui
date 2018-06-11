@@ -129,6 +129,9 @@ caption {
   margin-right: 0.25em;
 }
 
+.label:not(:last-child) {
+  margin-bottom: .25em;
+}
 
 // ================================================
 // disabled form elements (input, textarea, select)
@@ -138,7 +141,7 @@ caption {
   border: 0em solid transparent;
   color: $text;
   cursor: default;
-	-webkit-appearance: none;
+  padding: 0em;
 	resize: none;
 }
 

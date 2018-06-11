@@ -2,7 +2,7 @@ export class StringUtil {
 
 	public static shorttenWithEllipsis(text: string, lengthTrashold?: number): string {
 		let trashold = 100;
-		if (!lengthTrashold) {
+		if (lengthTrashold) {
 			trashold = lengthTrashold;
 		}
 		if (text && text.length > trashold) {

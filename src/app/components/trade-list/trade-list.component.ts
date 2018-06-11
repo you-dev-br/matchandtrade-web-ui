@@ -16,12 +16,12 @@ import { User } from '../../classes/pojo/user';
 import { UserService } from '../../services/user.service';
 
 class TradeProxy {
-	_href: string;
-	description: string;
+  _href: string;
+  description: string;
   tradeId: number = null;
   name: string = null;
-	state: TradeState = null;
-	statusText: string = null;
+  state: TradeState = null;
+  statusText: string = null;
   organizerName: string = null;
   tradeMembershipType: TradeMembershipType = null;
 }
@@ -36,62 +36,62 @@ export class TradeListComponent implements OnInit {
   loading: boolean = true;
   message: Message = new Message();
   pagination: Pagination;
-	trades: TradeProxy[];
-	tradeTransformer: TradeTransformer = new TradeTransformer();
+  trades: TradeProxy[];
+  tradeTransformer: TradeTransformer = new TradeTransformer();
 
   constructor(
-			private router: Router, 
-			private navigationService: NavigationService, 
-			private tradeService: TradeService, 
-			private tradeMembershipService: TradeMembershipService,
-			private userService: UserService) {
-	}
-	
-	ngOnInit() {
+      private router: Router, 
+      private navigationService: NavigationService, 
+      private tradeService: TradeService, 
+      private tradeMembershipService: TradeMembershipService,
+      private userService: UserService) {
+  }
+  
+  ngOnInit() {
     this.pagination = new Pagination(1, 10, 0);
     this.userService.getAuthenticatedUser()
-			.then(v => this.authenticatedUser = v)
-			.catch(e => console.log('User not authenticated. Continue normally.'))
-			.then(() => this.search())
-			.catch(e => this.message.setErrorItems(e));
-	}
+      .then(v => this.authenticatedUser = v)
+      .catch(e => console.log('User not authenticated. Continue normally.'))
+      .then(() => this.search())
+      .catch(e => this.message.setErrorItems(e));
+  }
 
-	buildDescription(trade: TradeProxy): string {
-		const shortDescription = StringUtil.shorttenWithEllipsis(trade.description, 300);
-		if (shortDescription && shortDescription.length > 3) {
-			return shortDescription;
-		} else {
-			return undefined;
-		}
-	}
+  buildDescription(trade: TradeProxy): string {
+    const shortDescription = StringUtil.shorttenWithEllipsis(trade.description, 250);
+    if (shortDescription && shortDescription.length > 3) {
+      return shortDescription;
+    } else {
+      return undefined;
+    }
+  }
 
   createTrade() {
     this.navigationService.navigate('trades');
-	}
-	
-	private loadProxy(trade: Trade): TradeProxy {
-		const result = new TradeProxy();
-		Object.assign(result, trade);
-		result.statusText = this.tradeTransformer.toStateText(trade.state);
+  }
+  
+  private loadProxy(trade: Trade): TradeProxy {
+    const result = new TradeProxy();
+    Object.assign(result, trade);
+    result.statusText = this.tradeTransformer.toStateText(trade.state);
 
-		// Load organizer data only if the current user is an authenticated user
-		if (this.authenticatedUser) {
-			this.tradeMembershipService.search(new Page(1, 1), trade.tradeId, undefined, TradeMembershipType.OWNER)
-				.then(v => this.userService.get(v.results[0].userId))
-				.then(v => result.organizerName = v.name)
-				.then(() => {
-					this.tradeMembershipService.search(new Page(1,1), trade.tradeId, this.authenticatedUser.userId)
-						.then(membership => {
-							if (membership.results.length > 0) {
-								result.tradeMembershipType = membership.results[0].type;
-							}
-						});
-				})
-				.catch(e => {
-					console.log('Unable to get owner of Trade.tradeId: ' + trade.tradeId)
-				});
-		}
-		return result;
+    // Load organizer data only if the current user is an authenticated user
+    if (this.authenticatedUser) {
+      this.tradeMembershipService.search(new Page(1, 1), trade.tradeId, undefined, TradeMembershipType.OWNER)
+        .then(v => this.userService.get(v.results[0].userId))
+        .then(v => result.organizerName = v.name)
+        .then(() => {
+          this.tradeMembershipService.search(new Page(1,1), trade.tradeId, this.authenticatedUser.userId)
+            .then(membership => {
+              if (membership.results.length > 0) {
+                result.tradeMembershipType = membership.results[0].type;
+              }
+            });
+        })
+        .catch(e => {
+          console.log('Unable to get owner of Trade.tradeId: ' + trade.tradeId)
+        });
+    }
+    return result;
   }
   
   isOwner(trade: TradeProxy):boolean {
@@ -102,23 +102,23 @@ export class TradeListComponent implements OnInit {
     return trade.tradeMembershipType == TradeMembershipType.MEMBER;
   }
 
-	private loadProxies(trades: Trade[]): TradeProxy[] {
-		const result = new Array<TradeProxy>();
-		trades.forEach(v => {
-			result.push(this.loadProxy(v));
-		});
-		return result;
-	}
+  private loadProxies(trades: Trade[]): TradeProxy[] {
+    const result = new Array<TradeProxy>();
+    trades.forEach(v => {
+      result.push(this.loadProxy(v));
+    });
+    return result;
+  }
 
   navigateToTrade(trade: TradeProxy) {
     this.navigationService.navigate('trades', {tradeHref: trade._href});
-	}
-	
-	goToPage(pageNumber: number) {
-		this.pagination.page.number = pageNumber;
-		this.loading = true;
-		this.search();
-	}
+  }
+  
+  goToPage(pageNumber: number) {
+    this.pagination.page.number = pageNumber;
+    this.loading = true;
+    this.search();
+  }
 
   search(): void {
     this.tradeService.search(this.pagination.page)
@@ -130,6 +130,6 @@ export class TradeListComponent implements OnInit {
         this.loading = false;
         this.message.setErrorItems(e);
       });
-	}
+  }
 
 }
