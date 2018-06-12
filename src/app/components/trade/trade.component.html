@@ -22,7 +22,18 @@
     </p>
   </div>
 
-	<div class="field">
+  <div class="field" *ngIf="isStateDisplayable()">
+    <label class="label" for="trade-state">Status</label>
+    <div class="control">
+      <div class="select">
+        <select id="trade-state" [formControl]="tradeFormGroup.controls['state']">
+          <option *ngFor="let s of states" [value]='s.key'>{{s.value}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+	<div *ngIf="displayDescription()" class="field">
     <label class="label" for="trade-description">Description</label>
     <div class="control">
       <textarea
@@ -37,17 +48,6 @@
     <p class="help is-danger" *ngIf="!descriptionFormControl.valid && descriptionFormControl.touched">
       <i class="fa fa-warning"></i>Description length must be between 3 and 1000.
     </p>
-  </div>
-
-  <div class="field" *ngIf="isStateDisplayable()">
-    <label class="label" for="trade-state">Status</label>
-    <div class="control">
-      <div class="select">
-        <select id="trade-state" [formControl]="tradeFormGroup.controls['state']">
-          <option *ngFor="let s of states" [value]='s.key'>{{s.value}}</option>
-        </select>
-      </div>
-    </div>
   </div>
 
   <div class="mt-cmd-panel-container">

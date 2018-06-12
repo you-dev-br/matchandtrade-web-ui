@@ -31,6 +31,7 @@ export class ItemMatcherOfferComponent implements OnInit {
   pagination = new Pagination(1, 20, 0);
   tradeMembershipHref: string;
   wantedItem: Item;
+  moreInfoMap = {};
 
   constructor(
     private itemService: ItemService,
@@ -151,6 +152,16 @@ export class ItemMatcherOfferComponent implements OnInit {
         this.navigateBack();  
       })
       .catch(e => this.message.setErrorItems(e));
+  }
+
+  toogleMoreInfo(item: Item): boolean {
+    const visible: boolean = (this.moreInfoMap[item.itemId]);
+    this.moreInfoMap[item.itemId] = !visible;
+    return !visible;
+  }
+
+  displayMoreInfo(item: Item): boolean {
+    return (this.moreInfoMap[item.itemId]);
   }
 
   toogleOfferableItem(checkableItem: CheckableItem) {

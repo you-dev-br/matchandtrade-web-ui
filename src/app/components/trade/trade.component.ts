@@ -92,6 +92,8 @@ export class TradeComponent implements OnInit {
 	}
 	
   private descriptionValidator(control: FormControl): {[s: string]: boolean} {
+    console.log('val', control.value, (control.value));
+    // Allow no description or any description between 3 and 1000
     if (control.value && (control.value.length < 3 || control.value.length > 1000)) {
       return {invalid: true};
     }
@@ -150,8 +152,11 @@ export class TradeComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-		this.sanitizeName();
-		this.trade.description = this.descriptionFormControl.value;
+    this.sanitizeName();
+    this.trade.description = this.descriptionFormControl.value;
+    if (!this.trade.description || this.trade.description.length < 3) {
+      this.trade.description = undefined;
+    }
     this.trade.name = this.nameFormControl.value;
     this.trade.state = this.stateFormControl.value;
     this.tradeService.save(this.trade)
@@ -226,6 +231,10 @@ export class TradeComponent implements OnInit {
 	
 	displayResultsButton(): boolean {
     return this.trade.state == TradeState.RESULTS_GENERATED;
+  }
+
+  displayDescription(): boolean {
+    return this.tradeFormGroup.enabled || (this.trade.description ? true : false);
   }
   
   navigateBack() {
