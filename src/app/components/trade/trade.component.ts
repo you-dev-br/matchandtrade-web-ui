@@ -92,8 +92,6 @@ export class TradeComponent implements OnInit {
 	}
 	
   private descriptionValidator(control: FormControl): {[s: string]: boolean} {
-    console.log('val', control.value, (control.value));
-    // Allow no description or any description between 3 and 1000
     if (control.value && (control.value.length < 3 || control.value.length > 1000)) {
       return {invalid: true};
     }
