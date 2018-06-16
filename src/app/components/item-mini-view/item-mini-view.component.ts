@@ -44,4 +44,11 @@ export class ItemMiniViewComponent implements OnInit {
 		.catch(e => this.message.setErrorItems(e));
   }
 
+  displayInfo(): boolean {
+    if (!this.item.description && this.attachments.length == 0) {
+      return false
+    }
+    return true;
+  }
+
 }

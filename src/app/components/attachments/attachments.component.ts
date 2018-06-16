@@ -14,7 +14,7 @@ import { AttachmentTransformer } from '../../classes/transformers/attachment-tra
 	providers: [ FileService ]
 })
 export class AttachmentsComponent {
-
+  @Input() align?: string;
 	@Input() attachments: Attachment[];
 	@Input() canUpload: boolean;
 	@Input() canDelete: boolean;
@@ -25,8 +25,8 @@ export class AttachmentsComponent {
 	error: string;
 	fileTransformer = new FileTransformer();
 
-	constructor(private fileStorageService: FileService) { }
-	
+  constructor(private fileStorageService: FileService) { }
+  
 	private blobToFile(blob: Blob, fileName: string, fileType: string, lastModifiedDate: number): File {
     return new File([blob], fileName, {type: fileType, lastModified: lastModifiedDate});
 	}
@@ -43,8 +43,8 @@ export class AttachmentsComponent {
 			}
 			reader.readAsDataURL(file);
 		});
-	}
-
+  }
+  
 	delete(attachment: Attachment): void {
 		attachment.status = AttachmentStatus.DELETED;
 		this.onChange.emit(this.attachments);
@@ -54,7 +54,7 @@ export class AttachmentsComponent {
 		return (attachment.status == AttachmentStatus.STORED);
 	}
 
-	displayThumbnailContent(attachment: Attachment): boolean {
+	displayThumbnailContainer(attachment: Attachment): boolean {
 		return attachment.status != AttachmentStatus.DELETED;
 	}
 
@@ -62,7 +62,15 @@ export class AttachmentsComponent {
 		return (attachment.thumbnailUrl ? true : false);
 	}
 
-	classForThumbnailContent(attachment: Attachment): string {
+  classGalery(): string {
+    const basicClass = 'gallery is-fullwidth'
+    if (!this.align) {
+      return basicClass + ' align-center';
+    }
+    return basicClass + ' align-' + this.align;
+  }
+  
+	classThumbnailContent(attachment: Attachment): string {
 		let result: string = 'thumbnail-content';
 		result += ' ' + attachment.status;
 		result += (attachment.thumbnailUrl ? ' has-thumbnail' : '');

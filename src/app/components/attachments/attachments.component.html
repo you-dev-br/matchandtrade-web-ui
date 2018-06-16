@@ -11,11 +11,11 @@
 	<i class="fa fa-warning"></i>{{error}}
 </div>
 
-<div class="gallery is-fullwidth">
+<div [class]="classGalery()">
 	<div *ngFor='let attachment of attachments'>
 
-		<div *ngIf="displayThumbnailContent(attachment)" class="thumbnail-container">
-			<div [class]="classForThumbnailContent(attachment)">
+		<div *ngIf="displayThumbnailContainer(attachment)" class="thumbnail-container">
+			<div [class]="classThumbnailContent(attachment)">
 				<a *ngIf="displayThumbnailLink(attachment)" href="{{attachment.originalUrl}}" target="_blank">
 					<p *ngIf="!displayThumbnailImage(attachment)">{{attachment.name}}</p>
 					<img *ngIf="displayThumbnailImage(attachment)" src="{{attachment.thumbnailUrl}}" (error)="thumbnailImageError($event, attachment)">

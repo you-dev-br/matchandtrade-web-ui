@@ -37,6 +37,11 @@
 	flex-wrap: wrap;
 }
 
+.gallery.align-left  {
+	justify-content: left;
+}
+
+
 // THUMBNAIL
 // =========
 .thumbnail-container {
@@ -56,6 +61,10 @@
 	width: 96px;
 	text-align: center;
 	font-size: x-small;
+}
+
+.thumbnail-content.align-left {
+	justify-content: left;
 }
 
 .thumbnail-content.has-thumbnail {

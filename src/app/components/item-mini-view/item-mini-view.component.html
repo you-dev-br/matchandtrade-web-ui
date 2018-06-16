@@ -2,8 +2,11 @@
 <app-loading [loading]="loading" [containerHeight]="5" [imageHeight]="100"></app-loading>
 
 <div *ngIf="!loading" class="mini-view-container">
-
-<p>{{item.description}}</p>
-<app-attachments [attachments]="attachments" [canDelete]="false" [canUpload]="false"></app-attachments>
-
+  <div *ngIf="!displayInfo()" class="no-info">
+    <p>No extra information available.</p>
+  </div>
+  <div *ngIf="displayInfo()">
+    <p>{{item.description}}</p>
+    <app-attachments [attachments]="attachments" [canDelete]="false" [canUpload]="false" [align]="'left'"></app-attachments>  
+  </div>
 </div>
