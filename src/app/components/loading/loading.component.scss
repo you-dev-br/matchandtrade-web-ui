@@ -2,13 +2,8 @@
 @import '~variables.scss';
 
 .app-loading {
-    width: 100%;
-    text-align: center;
-    color: $primary-5;
-}
-
-.app-loading-align-helper {
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
+  align-items: center;
+  color: $primary-4;
+  display: flex;
+  justify-content: center;
 }

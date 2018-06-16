@@ -1,5 +1,5 @@
 <app-page-title [template]="'item-matcher-offer'"></app-page-title>
-<app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
+<app-loading [loading]="loading"></app-loading>
 <app-message [message]="message"></app-message>
 
 <div *ngIf="!loading && offerableItems.length<1" class="not-found-container mt-content">

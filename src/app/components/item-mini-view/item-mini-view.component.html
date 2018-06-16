@@ -1,9 +1,9 @@
 <app-message [message]="message"></app-message>
-<app-loading [loading]="loading" [containerHeight]="5" [imageHeight]="100"></app-loading>
+<app-loading [loading]="loading" [iconSize]="1.5" [containerHeight]="1.2"></app-loading>
 
 <div *ngIf="!loading" class="mini-view-container">
   <div *ngIf="!displayInfo()" class="no-info">
-    <p>No extra information available.</p>
+    No extra information available.
   </div>
   <div *ngIf="displayInfo()">
     <p>{{item.description}}</p>

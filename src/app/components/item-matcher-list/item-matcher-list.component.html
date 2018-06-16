@@ -1,6 +1,6 @@
 <app-page-title [template]="'item-matcher-list'"></app-page-title>
 <app-message [message]="message"></app-message>
-<app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
+<app-loading [loading]="loading"></app-loading>
 
 <div *ngIf="!loading && !pagination.totalEntries" class="not-found-content mt-content">
 		<p>No items for matching.</p>
@@ -29,12 +29,12 @@
 						</button>
 						<button *ngIf="item.displayItemMiniView" class="button is-secondary is-small" type="button" (click)="toogleItemMiniView(item)">
 							<i class="fas fa-info"></i><span class="small-button-text">Less Info</span>
-						</button>						
+						</button>
 					</div>
 				</div>
 			</div>
 
-			<app-item-mini-view *ngIf="item.displayItemMiniView" [itemHref]="item.href"></app-item-mini-view>
+			<app-item-mini-view *ngIf="item.displayItemMiniView" [itemHref]="item.href" class="item-mini-view"></app-item-mini-view>
 
 		</td></tr>
 	</table>

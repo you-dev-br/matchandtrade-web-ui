@@ -1,6 +1,6 @@
 <app-page-title [template]="(itemHref ? 'existing' : 'new') + '-item'"></app-page-title>
 <app-message [message]="message"></app-message>
-<app-loading [loading]="loading" [containerHeight]="15" [imageHeight]="5"></app-loading>
+<app-loading [loading]="loading"></app-loading>
 
 <div class="mt-content">
 <form *ngIf="!loading" [formGroup]="itemFormGroup" (ngSubmit)="onSubmit()">
