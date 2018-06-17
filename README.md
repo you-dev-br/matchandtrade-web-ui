@@ -1,45 +1,45 @@
-# MatchandtradeWebUi
+Match and Trade Web UI
+======================
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.0.
+Web interface for Match and Trade.
 
-## Development server
+Development
+-----------
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-### Allow external access
-
-Add `--host` argument to allow external income requests. Example:
+Setup a development environment
 
 ```
-ng serve --proxy-config proxy.config.json --sourcemap false --host=192.168.2.15
+# Install NodeJS v9.0
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+## Need to exit and reopen the current terminal so the changes take effect
+exit
+nvm install 9.0.0
+node -v
+npm -v
+
+# Checkout the project
+git clone https://github.com/rafasantos/matchandtrade-web-ui.git
+
+# Install angular/cli
+npm install -g @angular/cli
+
+# Install node_modules
+cd matchandtrade-web-ui
+npm install
 ```
 
-## Code scaffolding
+Useful commands
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+# Build
+npm run build
 
-## Build
+# Build and run a localhost server on port 4200
+npm start
 
-Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+# Run unit tests
+npm run test
 
-## Running unit tests
-
-Run `npm run test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `npm run e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
-
-
-
-## Resources
-SVG Images
-(https://github.com/SamHerbert/SVG-Loaders/tree/master/svg-loaders)
-
-ngx-autosize
-https://github.com/chrum/ngx-autosize
+# Run end-to-end tests
+npm run e2e
+```
