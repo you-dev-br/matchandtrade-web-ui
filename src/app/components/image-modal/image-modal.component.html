@@ -1,0 +1,9 @@
+<div [class]="classModal()">
+  <div class="modal-background" (click)="closeModal()"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img src="{{imageSource}}">
+    </p>
+  </div>
+  <button class="modal-close is-large" (click)="closeModal()"></button>
+</div>

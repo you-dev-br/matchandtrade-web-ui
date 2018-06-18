@@ -21,9 +21,9 @@ export class AttachmentsComponent {
 	@Output() onChange = new EventEmitter<Attachment[]>();
 
 	attachmentTransformer = new AttachmentTransformer();
-	attachmentToView;
 	error: string;
 	fileTransformer = new FileTransformer();
+	openedAttachments = new Set<string>();
 
   constructor(private fileStorageService: FileService) { }
   
@@ -38,13 +38,17 @@ export class AttachmentsComponent {
 				const img = new Image();
 				img.src = reader.result;
 				img.onload = (e) => {
-					resolve(this.resizeImage(img, file.name, file.type, file.lastModifiedDate));
+					resolve(this.resizeImage(img, file.name, file.type, file.lastModifiedDate.getTime()));
 				}
 			}
 			reader.readAsDataURL(file);
 		});
   }
-  
+
+  closeAttachment(originalUrl) {
+	  this.openedAttachments.delete(originalUrl);
+  }
+ 
 	delete(attachment: Attachment): void {
 		attachment.status = AttachmentStatus.DELETED;
 		this.onChange.emit(this.attachments);
@@ -101,6 +105,10 @@ export class AttachmentsComponent {
 		}
 	}
 
+	isAttachmentOpen(attachment: Attachment): boolean {
+		return this.openedAttachments.has(attachment.originalUrl);
+	}
+
 	isUploadEnabled(): boolean {
 		return this.attachments.length < 3;
 	}
@@ -121,6 +129,10 @@ export class AttachmentsComponent {
 				this.upload(resizedFile, attachment);
 			});
 		}
+	}
+
+	openAttachment(attachment: Attachment) {
+		this.openedAttachments.add(attachment.originalUrl);
 	}
 
 	private resizeImage(image: HTMLImageElement, filename: string, filetype: string, lastModifiedDate: number): Promise<File> {
