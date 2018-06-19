@@ -7,14 +7,15 @@ When a new `matchandtrade-web-ui` version is released we need to update
 the docker image to reflect the newly released version.
 
 ```
+# Delete old distribution folders
+rm -rf docker/dist
+rm -rf dist
+
 # Build 'matchandtrade-web-ui'
 ng build --prod --build-optimizer
 
-# Delete old distribution folder
-rm -rf docker/dist/
-
 # Copy the distribution folder to `docker/dist
-cp -r dist/ docker/
+cp -r dist docker/
 
 # Build the docker image with a new tag
 sudo docker build -t rafaelsantosbra/matchandtrade-web-ui:0.0-SNAPSHOT docker/

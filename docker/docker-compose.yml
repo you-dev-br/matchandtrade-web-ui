@@ -1,7 +1,7 @@
 version: '2'
 services:
   matchandtrade-web-ui:
-    image: matchandtrade-web-ui:0.0-SNAPSHOT
+    image: rafaelsantosbra/matchandtrade-web-ui:0.0-SNAPSHOT
     container_name: matchandtrade-web-ui
     build:
       context: .
@@ -12,7 +12,7 @@ services:
      - ./config/httpd.conf:/usr/local/apache2/conf/httpd.conf
      - ./log-ui:/usr/local/apache2/logs
   matchandtrade-web-api:
-    image: matchandtrade-web-api:0.0-SNAPSHOT
+    image: rafaelsantosbra/matchandtrade-web-api:0.0-SNAPSHOT
     container_name: matchandtrade-web-api
     ports:
      - "8080:8080"
@@ -20,8 +20,9 @@ services:
      - ./config:/matchandtrade/config
      - ./database:/matchandtrade/database
      - ./log-api:/matchandtrade/log
+     - ./file-storage:/matchandtrade/file-storage
   mocked-oauth-server:
-    image: mocked-oauth-server:0.0-SNAPSHOT
+    image: rafaelsantosbra/mocked-oauth-server:0.0-SNAPSHOT
     container_name: mocked-oauth-server
     ports:
       - 8081:8081
