@@ -121,6 +121,7 @@ export class ItemMatcherListComponent implements OnInit {
 
   private search(tradeMembership: TradeMembership): Promise<any> {
     return this.searchService.searchItemsToMatch(tradeMembership, this.pagination.page).then(searchResults => {
+      this.items = new Array<ItemView>();
 			searchResults.results.forEach(v => {
 				const itemProxy = new ItemView(v);
 				this.loadThumbnail(itemProxy, v.getFilesHref());
