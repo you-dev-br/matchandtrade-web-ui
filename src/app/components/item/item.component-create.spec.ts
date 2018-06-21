@@ -14,6 +14,8 @@ import { AttachmentsComponent } from '../attachments/attachments.component';
 import { FileService } from '../../services/file.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationService } from '../../services/authentication.service';
+import { AttachmentThumbnailComponent } from '../attachment-thumbnail/attachment-thumbnail.component';
+import { ImageModalComponent } from '../image-modal/image-modal.component';
 
 class FileServiceMock {}
 
@@ -29,7 +31,11 @@ describe('item.component-create', () => {
 				AttachmentsComponent,
         LoadingComponent,
 				MessageComponent,
-				PageTitleComponent
+        PageTitleComponent,
+        AttachmentsComponent,
+        AttachmentThumbnailComponent,
+        ImageModalComponent,
+        AttachmentThumbnailComponent,
        ]
     })
     .overrideComponent(ItemComponent, {

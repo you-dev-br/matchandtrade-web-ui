@@ -20,6 +20,10 @@ import { SearchResult } from '../../classes/search/search-result';
 import { TradeMembershipService } from '../../services/trade-membership.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Message } from '../message/message';
+import { ItemMiniViewComponent } from '../item-mini-view/item-mini-view.component';
+import { AttachmentsComponent } from '../attachments/attachments.component';
+import { AttachmentThumbnailComponent } from '../attachment-thumbnail/attachment-thumbnail.component';
+import { ImageModalComponent } from '../image-modal/image-modal.component';
 
 describe('item-matcher-offer.component', () => {
   let component: ItemMatcherOfferComponent;
@@ -44,7 +48,11 @@ describe('item-matcher-offer.component', () => {
         LoadingComponent,
         ItemMatcherOfferComponent,
 				PaginationComponent,
-				PageTitleComponent
+        PageTitleComponent,
+        ItemMiniViewComponent,
+        AttachmentsComponent,
+        AttachmentThumbnailComponent,
+        ImageModalComponent
       ]})
       .overrideComponent(ItemMatcherOfferComponent, {
         set: {

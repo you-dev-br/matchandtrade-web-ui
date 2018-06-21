@@ -10,6 +10,8 @@ import { ItemServiceMock } from '../../../test/item-service-mock';
 import { LoadingComponent } from '../loading/loading.component';
 import { MessageComponent } from '../message/message.component';
 import { AttachmentsComponent } from '../attachments/attachments.component';
+import { AttachmentThumbnailComponent } from '../attachment-thumbnail/attachment-thumbnail.component';
+import { ImageModalComponent } from '../image-modal/image-modal.component';
 
 describe('item-mini-view-component', () => {
   let component: ItemMiniViewComponent;
@@ -32,7 +34,15 @@ describe('item-mini-view-component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-			declarations: [ ItemMiniViewComponent, LoadingComponent, MessageComponent, AttachmentsComponent ],
+			declarations: [ 
+        ItemMiniViewComponent,
+        LoadingComponent,
+        MessageComponent,
+        AttachmentsComponent,
+        AttachmentThumbnailComponent,
+        ImageModalComponent,
+        AttachmentThumbnailComponent,
+      ],
 			providers: [ItemService, FileService]
 		})
 		.overrideComponent(ItemMiniViewComponent, {
