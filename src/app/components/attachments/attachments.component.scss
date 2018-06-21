@@ -41,7 +41,6 @@
 	justify-content: left;
 }
 
-
 // THUMBNAIL
 // =========
 .thumbnail-container {
@@ -50,53 +49,8 @@
 	margin: .25em;
 }
 
-.thumbnail-content {
-	align-items: center;
-	background-color: $primary-1;
-	border: 1px solid silver;
-	box-sizing: content-box;
-	display: flex;
-	justify-content: center;
-	height: 96px;
-	width: 96px;
-	text-align: center;
-	font-size: x-small;
-}
-
-.thumbnail-content.align-left {
-	justify-content: left;
-}
-
-.thumbnail-content.has-thumbnail {
-	display: inline-block;
-}
-
 .thumbnail-footer {
 	border: 1px solid silver;
 	border-top: none;
 	text-align: center;
-}
-
-// STATUS
-// ======
-.ERROR {
-	background-color: lightpink;
-	border-color: darkred;
-	color: darkred;
-}
-
-.READING {
-	background-color: lightskyblue;
-	border-color: $secondary-7;
-	color: $secondary-7;
-}
-
-.STORED {
-	background-color: $primary-1;
-	border-color: silver;
-}
-
-.UPLOADING {
-	background-color: $primary-2;
-	border-color: $primary-5;
 }

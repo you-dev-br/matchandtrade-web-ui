@@ -1,0 +1,39 @@
+@import '~variables.scss';
+
+.attachment-thumbnail {
+  align-items: center;
+	background-color: $primary-1;
+  border: 1px solid grey;
+  display: flex;
+  font-size: x-small;
+  justify-content: center;
+  text-align: center;
+}
+
+.attachment-thumbnail a {
+  display: grid;
+}
+
+// STATUS
+// ======
+.ERROR {
+	background-color: lightpink;
+	border-color: darkred;
+	color: darkred;
+}
+
+.READING {
+	background-color: lightskyblue;
+	border-color: $secondary-7;
+	color: $secondary-7;
+}
+
+.STORED {
+	background-color: $primary-1;
+	border-color: silver;
+}
+
+.UPLOADING {
+	background-color: $primary-2;
+	border-color: $primary-5;
+}

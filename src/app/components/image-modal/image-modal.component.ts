@@ -21,7 +21,6 @@ export class ImageModalComponent implements OnInit {
   }
 
   closeModal(): boolean {
-    console.log('closing');
     this.onClose.emit(this.imageSource);
     return false; // Return false to prevent browser to submit when button is clicked
   }

@@ -19,7 +19,8 @@ export class AttachmentsComponent {
 	@Input() canUpload: boolean;
 	@Input() canDelete: boolean;
 	@Output() onChange = new EventEmitter<Attachment[]>();
-
+  @Input() maxAttachments ?:number = 3;
+  
 	attachmentTransformer = new AttachmentTransformer();
 	error: string;
 	fileTransformer = new FileTransformer();
@@ -110,13 +111,24 @@ export class AttachmentsComponent {
 	}
 
 	isUploadEnabled(): boolean {
-		return this.attachments.length < 3;
-	}
+    let nonDeletedAttachments = this.obtainNumberOfNonDeletedAttachments();
+		return (nonDeletedAttachments < this.maxAttachments);
+  }
+  
+  obtainNumberOfNonDeletedAttachments(): number {
+    let result = 0;
+    for (let i=0; i<this.attachments.length; i++) {
+      if (this.attachments[i] && this.attachments[i].status != AttachmentStatus.DELETED) {
+        result++;
+      }
+    }
+    return result;
+  }
 	
 	onInputFileChange(event: Event): void {
 		const inputElement = <HTMLInputElement> event.target;
 		const inputFiles = inputElement.files;
-		if ((inputFiles.length + this.attachments.length) > 3) {
+		if ((inputFiles.length + this.obtainNumberOfNonDeletedAttachments()) > this.maxAttachments) {
 			this.error = 'Items cannot have more than 3 images.';
 			return;
 		}

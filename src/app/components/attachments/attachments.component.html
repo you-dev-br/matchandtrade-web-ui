@@ -1,6 +1,11 @@
 <div *ngIf="canUpload" class="file is-centered is-small">
 	<label [class]="'file-label ' + uploadDisabledClass()">
-		<input class="file-input" type="file" (change)="onInputFileChange($event)" [disabled]="uploadDisabledClass()" accept="image/*" multiple >
+    <input class="file-input" 
+      type="file" 
+      (change)="onInputFileChange($event)" 
+      [disabled]="uploadDisabledClass()" 
+      accept="image/*" 
+      multiple >
 		<span	[class]="'file-cta ' + uploadDisabledClass()">
 			<i class="fas fa-image file-icon"></i> Add images
 		</span>
@@ -13,27 +18,18 @@
 
 <div [class]="classGalery()">
 	<div *ngFor='let attachment of attachments'>
-
 		<div *ngIf="displayThumbnailContainer(attachment)" class="thumbnail-container">
 			<div [class]="classThumbnailContent(attachment)">
-				<a *ngIf="displayThumbnailLink(attachment)" (click)="openAttachment(attachment)">
-					<p *ngIf="!displayThumbnailImage(attachment)">{{attachment.name}}</p>
-					<img *ngIf="displayThumbnailImage(attachment)" src="{{attachment.thumbnailUrl}}" (error)="thumbnailImageError($event, attachment)">
-				</a>
-				<p *ngIf="attachment.status=='UPLOADING'">
-					Uploading...<br><i class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;{{attachment.percentageUploaded}}%
-				</p>
-				<p *ngIf="attachment.status=='READING'">
-					Reading file...<br><i class="fas fa-spinner fa-pulse"></i>
-				</p>
-				<p *ngIf="attachment.status=='ERROR'">
-					{{attachment.error}}
-				</p>
+        <app-attachment-thumbnail [attachment]="attachment" [size]="96"></app-attachment-thumbnail>
 			</div>
 			<div *ngIf="canDelete" class="thumbnail-footer">
 				<i class="fas fa-trash mt-table-icon" (click)="delete(attachment)"></i>
 			</div>
 		</div>
-		<app-image-modal [isActive]="isAttachmentOpen(attachment)" [imageSource]="attachment.originalUrl" (onClose)="closeAttachment($event)"></app-image-modal>
+    <app-image-modal 
+      [isActive]="isAttachmentOpen(attachment)" 
+      [imageSource]="attachment.originalUrl" 
+      (onClose)="closeAttachment($event)">
+    </app-image-modal>
 	</div>
 </div>

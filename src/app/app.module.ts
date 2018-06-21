@@ -32,6 +32,7 @@ import { AutosizeDirective } from './directives/autosize.directive';
 import { AttachmentsComponent } from './components/attachments/attachments.component';
 import { ItemMiniViewComponent } from './components/item-mini-view/item-mini-view.component';
 import { ImageModalComponent } from './components/image-modal/image-modal.component';
+import { AttachmentThumbnailComponent } from './components/attachment-thumbnail/attachment-thumbnail.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import { ImageModalComponent } from './components/image-modal/image-modal.compon
     TradeResultComponent,
     MyAccountComponent,
     AutosizeDirective, // TODO: Remove this if not in use
-    AttachmentsComponent, ItemMiniViewComponent, ImageModalComponent,
+    AttachmentsComponent, ItemMiniViewComponent, ImageModalComponent, AttachmentThumbnailComponent,
   ],
   imports: [
     AppRoutingModule,
