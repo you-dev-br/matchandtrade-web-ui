@@ -81,7 +81,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "matchandtrade-web-ui:build"
+            "browserTarget": "matchandtrade-web-ui:build",
+            "proxyConfig": "proxy.config.json"
           },
           "configurations": {
             "local": {
