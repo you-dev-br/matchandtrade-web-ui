@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-image-modal',
   templateUrl: './image-modal.component.html',
   styleUrls: ['./image-modal.component.scss']
 })
-export class ImageModalComponent implements OnInit {
+export class ImageModalComponent {
 
   @Input() isActive: boolean = false;
   @Input() imageSource: string = "http://via.placeholder.com/1280x960.png";
@@ -13,16 +13,12 @@ export class ImageModalComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  classModal(): string {
+    return 'modal' + (this.isActive ? ' is-active' : '');
   }
 
-  classModal():string {
-    return 'modal ' + (this.isActive ? 'is-active' : '');
-  }
-
-  closeModal(): boolean {
+  closeModal(): void {
     this.onClose.emit(this.imageSource);
-    return false; // Return false to prevent browser to submit when button is clicked
   }
 
 }

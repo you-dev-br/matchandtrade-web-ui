@@ -19,7 +19,21 @@ describe('ImageModalComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should get class modal', () => {
+    component.isActive = true;
+    expect(component.classModal()).toBe('modal is-active');
+    component.isActive = false;
+    expect(component.classModal()).toBe('modal');
   });
+
+  it('should emit event when modal is closed', () => {
+    const imageSource = 'http://test.com/test.jpg';
+    component.imageSource = imageSource;
+    const closeEvent = component.onClose;
+    closeEvent.subscribe(next => {
+      expect(next).toBe(imageSource);
+    })
+    component.closeModal();
+  });
+
 });
