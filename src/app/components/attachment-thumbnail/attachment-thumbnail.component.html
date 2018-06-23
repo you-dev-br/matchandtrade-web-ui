@@ -1,20 +1,20 @@
 <div [style.width.px]="size" [style.height.px]="size" [class]="classAttachmentThumbnail()">
-  <a *ngIf="attachment.status=='STORED'" (click)="openAttachment()">
+  <a *ngIf="isAttachmentStatusStored()" (click)="openAttachment()">
     <img *ngIf="getThumbnailUrl()" src="{{getThumbnailUrl()}}" (error)="onError($event)">
-    <p *ngIf="!getThumbnailUrl() && attachment.status=='STORED'">{{obtainName()}}</p>
+    <p *ngIf="displayName()">{{obtainName()}}</p>
   </a>
-  <p *ngIf="attachment.status=='UPLOADING'">
+  <p *ngIf="isAttachmentStatusUploading()">
     Uploading...<br><i class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;{{attachment.percentageUploaded}}%
   </p>
-  <p *ngIf="attachment.status=='READING'">
+  <p *ngIf="isAttachmentStatusReading()">
     Reading file...<br><i class="fas fa-spinner fa-pulse"></i>
   </p>
-  <p *ngIf="attachment.status=='ERROR'">
+  <p *ngIf="isAttachmentStatusError()">
     {{attachment.error}}
   </p>
 </div>
 <app-image-modal
-  *ngIf="attachment.status=='STORED'"
+  *ngIf="isAttachmentStatusStored()"
   [isActive]="isAttachmentOpen()"
   [imageSource]="getOriginalUrl()"
   (onClose)="closeAttachment($event)">

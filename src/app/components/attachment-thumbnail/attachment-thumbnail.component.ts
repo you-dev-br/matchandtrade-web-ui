@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FileService } from '../../services/file.service';
-import { Attachment } from '../../classes/pojo/attachment';
+import { Attachment, AttachmentStatus } from '../../classes/pojo/attachment';
+import { StringUtil } from '../../classes/util/string-util';
 
 @Component({
   selector: 'app-attachment-thumbnail',
@@ -8,19 +9,14 @@ import { Attachment } from '../../classes/pojo/attachment';
   styleUrls: ['./attachment-thumbnail.component.scss'],
   providers: [ FileService ]
 })
-export class AttachmentThumbnailComponent implements OnInit {
+export class AttachmentThumbnailComponent {
 
-  attachmentOpen: boolean = false;
-  loading: boolean = true;
-  hasError: boolean = false;
   @Input() attachment: Attachment;
+  attachmentOpen: boolean = false;
+  hasError: boolean = false;
   @Input() size?: number = 96;
 
   constructor(private fileService: FileService) { }
-
-  ngOnInit() {
-    this.loading = false;
-  }
 
   classAttachmentThumbnail(): string {
     return 'attachment-thumbnail ' + this.attachment.status;
@@ -30,13 +26,8 @@ export class AttachmentThumbnailComponent implements OnInit {
     this.attachmentOpen = false;
   }
 
-  obtainName(): string {
-    if (this.attachment && this.attachment.name) {
-      const maxLength = 45;
-      const ellipisis = (this.attachment.name.length >= maxLength ? '...' : '');
-      return this.attachment.name.substring(0, maxLength) + ellipisis;
-    }
-    return 'Open attachment';
+  displayName(): boolean {
+    return !this.getThumbnailUrl() && this.isAttachmentStatusStored();
   }
 
   getOriginalUrl(): string {
@@ -49,6 +40,30 @@ export class AttachmentThumbnailComponent implements OnInit {
 
   isAttachmentOpen(): boolean {
     return this.attachmentOpen;
+  }
+
+  isAttachmentStatusStored(): boolean {
+    return this.attachment.status == AttachmentStatus.STORED;
+  }
+
+  isAttachmentStatusError(): boolean {
+    return this.attachment.status == AttachmentStatus.ERROR;
+  }
+
+  isAttachmentStatusReading(): boolean {
+    return this.attachment.status == AttachmentStatus.READING;
+  }
+
+  isAttachmentStatusUploading(): boolean {
+    return this.attachment.status == AttachmentStatus.UPLOADING;
+  }
+
+  obtainName(): string {
+    const shorttenName = StringUtil.shorttenWithEllipsis(this.attachment.name, 45);
+    if (shorttenName) {
+      return shorttenName;
+    }
+    return 'Open attachment';
   }
 
   openAttachment(): void {
