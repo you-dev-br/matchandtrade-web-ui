@@ -11,13 +11,13 @@ import { MessageComponent } from '../message/message.component';
 import { NavigationService } from '../../services/navigation.service';
 import { PageTitleComponent } from '../page-title/page-title.component';
 import { AttachmentsComponent } from '../attachments/attachments.component';
-import { FileService } from '../../services/file.service';
+import { AttachmentService } from '../../services/attachment.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AttachmentThumbnailComponent } from '../attachment-thumbnail/attachment-thumbnail.component';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
 
-class FileServiceMock {}
+class AttachmentServiceMock {}
 
 describe('item.component-create', () => {
   let component: ItemComponent;
@@ -45,8 +45,8 @@ describe('item.component-create', () => {
           {provide: Router, useValue: RouterTestingModule.withRoutes([])},
           {provide: NavigationService, useClass: NavigationServiceMock},
 					{provide: ItemService, useValue: 'itemServiceDummy'},
-					{provide: FileService, useClass: FileServiceMock },
-					{provide: AuthenticationService, useClass: FileServiceMock },
+					{provide: AttachmentService, useClass: AttachmentServiceMock },
+					{provide: AuthenticationService, useClass: AttachmentServiceMock },
         ]
       }
     })

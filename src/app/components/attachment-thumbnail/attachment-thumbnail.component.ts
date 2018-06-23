@@ -1,13 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FileService } from '../../services/file.service';
+import { Component, Input } from '@angular/core';
 import { Attachment, AttachmentStatus } from '../../classes/pojo/attachment';
 import { StringUtil } from '../../classes/util/string-util';
 
 @Component({
   selector: 'app-attachment-thumbnail',
   templateUrl: './attachment-thumbnail.component.html',
-  styleUrls: ['./attachment-thumbnail.component.scss'],
-  providers: [ FileService ]
+  styleUrls: ['./attachment-thumbnail.component.scss']
 })
 export class AttachmentThumbnailComponent {
 
@@ -16,7 +14,7 @@ export class AttachmentThumbnailComponent {
   hasError: boolean = false;
   @Input() size?: number = 96;
 
-  constructor(private fileService: FileService) { }
+  constructor() { }
 
   classAttachmentThumbnail(): string {
     return 'attachment-thumbnail ' + this.attachment.status;

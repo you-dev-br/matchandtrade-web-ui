@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FileService } from '../../services/file.service';
+import { AttachmentService } from '../../services/attachment.service';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
-import { error } from 'selenium-webdriver';
-import { Message } from '../message/message';
 import { Attachment, AttachmentStatus } from '../../classes/pojo/attachment';
 import { FileTransformer } from '../../classes/transformers/file-transformer';
 import { AttachmentTransformer } from '../../classes/transformers/attachment-transformer';
@@ -11,7 +9,7 @@ import { AttachmentTransformer } from '../../classes/transformers/attachment-tra
   selector: 'app-attachments',
   templateUrl: './attachments.component.html',
 	styleUrls: ['./attachments.component.scss'],
-	providers: [ FileService ]
+	providers: [ AttachmentService ]
 })
 export class AttachmentsComponent {
   @Input() align?: string;
@@ -26,7 +24,7 @@ export class AttachmentsComponent {
 	fileTransformer = new FileTransformer();
 	openedAttachments = new Set<string>();
 
-  constructor(private fileStorageService: FileService) { }
+  constructor(private attachmentService: AttachmentService) { }
   
 	private blobToFile(blob: Blob, fileName: string, fileType: string, lastModifiedDate: number): File {
     return new File([blob], fileName, {type: fileType, lastModified: lastModifiedDate});
@@ -176,7 +174,7 @@ export class AttachmentsComponent {
 	}
 
 	private upload(file: File, attachment: Attachment): void {
-		this.fileStorageService.save(file).subscribe(
+		this.attachmentService.save(file).subscribe(
 			val => this.handleUploadSubscription(val, attachment),
 			err => this.handleUploadError(attachment),
 			( ) => this.handleUploadCompleted(attachment)

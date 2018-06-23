@@ -3,9 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AttachmentThumbnailComponent } from './attachment-thumbnail.component';
 import { Attachment, AttachmentStatus } from '../../classes/pojo/attachment';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
-import { FileService } from '../../services/file.service';
-
-class FileServiceMock {}
 
 describe('AttachmentThumbnailComponent', () => {
   let component: AttachmentThumbnailComponent;
@@ -14,12 +11,6 @@ describe('AttachmentThumbnailComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AttachmentThumbnailComponent, ImageModalComponent ]
-    })
-    .overrideComponent(AttachmentThumbnailComponent, {
-      set: { 
-        providers: [
-          { provide: FileService, useClass: FileServiceMock} 
-        ]}
     })
     .compileComponents();
   }));

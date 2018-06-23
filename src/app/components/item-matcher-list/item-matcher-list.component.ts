@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Attachment } from '../../classes/pojo/attachment';
 import { AttachmentTransformer } from '../../classes/transformers/attachment-transformer';
 import { Item } from '../../classes/pojo/item';
-import { FileService } from '../../services/file.service';
+import { AttachmentService } from '../../services/attachment.service';
 import { Message } from '../message/message';
 import { NavigationService } from '../../services/navigation.service';
 import { Pagination } from '../../classes/search/pagination';
@@ -31,7 +31,7 @@ class ItemView {
   selector: 'app-item-matcher-list',
   templateUrl: './item-matcher-list.component.html',
   styleUrls: ['./item-matcher-list.component.scss'],
-  providers: [TradeMembershipService, SearchService, FileService]
+  providers: [TradeMembershipService, SearchService, AttachmentService]
 })
 export class ItemMatcherListComponent implements OnInit {
 
@@ -47,7 +47,7 @@ export class ItemMatcherListComponent implements OnInit {
   constructor(
     private navigationService: NavigationService,
 		private route: ActivatedRoute,
-		private fileService: FileService,
+		private attachmentService: AttachmentService,
     private searchService: SearchService,
     private storageService: StorageService,
     private tradeMembershipService: TradeMembershipService,
@@ -105,7 +105,7 @@ export class ItemMatcherListComponent implements OnInit {
 	}
 	
 	private loadThumbnail(item: ItemView, filesHref: string) {
-		this.fileService.get(filesHref).then(files => {
+		this.attachmentService.get(filesHref).then(files => {
 			if (files[0] && this.attachmentTransformer.toPojo(files[0])) {
 				item.thumbnailUrl = this.attachmentTransformer.toPojo(files[0]).thumbnailUrl;
 			}

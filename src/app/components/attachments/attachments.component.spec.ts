@@ -2,14 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AttachmentsComponent } from './attachments.component';
 import { By } from '@angular/platform-browser';
-import { FileService } from '../../services/file.service';
+import { AttachmentService } from '../../services/attachment.service';
 import { AttachmentThumbnailComponent } from '../attachment-thumbnail/attachment-thumbnail.component';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
 
 describe('AttachmentsComponent', () => {
 	
-	class FileStorageServiceMock {
-
+	class AttachmentServiceMock {
 	}
 	
 	let component: AttachmentsComponent;
@@ -21,7 +20,7 @@ describe('AttachmentsComponent', () => {
 		})
 		.overrideComponent(AttachmentsComponent, {
 			set: {
-				providers: [{provide: FileService, useClass: FileStorageServiceMock}]
+				providers: [{provide: AttachmentService, useClass: AttachmentServiceMock}]
 			}
 		})
     .compileComponents();

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ItemMiniViewComponent } from './item-mini-view.component';
 import { Item } from '../../classes/pojo/item';
 import { Link } from '../../classes/pojo/link';
-import { FileService } from '../../services/file.service';
+import { AttachmentService } from '../../services/attachment.service';
 import { FilePojo } from '../../classes/pojo/file-pojo';
 import { ItemService } from '../../services/item.service';
 import { ItemServiceMock } from '../../../test/item-service-mock';
@@ -17,7 +17,7 @@ describe('item-mini-view-component', () => {
   let component: ItemMiniViewComponent;
 	let fixture: ComponentFixture<ItemMiniViewComponent>;
 	
-	class FileServiceMock {
+	class AttachmentServiceMock {
 		get(fileHref: string): Promise<FilePojo[]> {
 			const file = new FilePojo();
 			file._href = 'myHref';
@@ -43,13 +43,13 @@ describe('item-mini-view-component', () => {
         ImageModalComponent,
         AttachmentThumbnailComponent,
       ],
-			providers: [ItemService, FileService]
+			providers: [ItemService, AttachmentService]
 		})
 		.overrideComponent(ItemMiniViewComponent, {
 			set: {
 				providers: [
 					{ provide: ItemService, useClass: ItemServiceMock },
-					{ provide: FileService, useClass: FileServiceMock },
+					{ provide: AttachmentService, useClass: AttachmentServiceMock },
 				]
 			}
 		})
