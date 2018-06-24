@@ -3,30 +3,27 @@ import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common
 import { AuthenticationService } from './authentication.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx'
-import { FileTransformer } from '../classes/transformers/file-transformer';
-import { HttpEventType } from '@angular/common/http';
-import { HttpResponse } from '@angular/common/http';
-import { RequestOptions } from '@angular/http';
-import { FilePojo } from '../classes/pojo/file-pojo';
+import { AttachmentTransformer } from '../classes/transformers/attachment-transformer';
+import { Attachment } from '../classes/pojo/attachment';
 
 @Injectable()
 export class AttachmentService {
 
-	fileTransformer = new FileTransformer();
+	attachmentTransformer = new AttachmentTransformer();
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService ) { }
 
-	get(fileHref: string): Promise<FilePojo[]> {
-		return new Promise<FilePojo[]>((resolve, reject) => {
+	get(attachmentHref: string): Promise<Attachment[]> {
+		return new Promise<Attachment[]>((resolve, reject) => {
 			this.authenticationService.authorizationHttpHeaders().then(v => {
-				return this.http.get(fileHref, {headers: v, responseType: 'text'}).toPromise();
+				return this.http.get(attachmentHref, {headers: v, responseType: 'text'}).toPromise();
 			})
 			.then(v => {
-				const result = new Array<FilePojo>();
+				const result = new Array<Attachment>();
 				const response = JSON.parse(v);
 				response.forEach(e => {
-					const filePojo = this.fileTransformer.toPojo(e);
-					result.push(filePojo);
+					const attachment = this.attachmentTransformer.toPojo(e);
+					result.push(attachment);
 				});
 				resolve(result);
 			})
@@ -38,7 +35,7 @@ export class AttachmentService {
 		return Observable.fromPromise(this.authenticationService.authorizationHttpHeaders()).flatMap(v => {
 			const formData = new FormData();
 			formData.append('file', file);
-			const request = new HttpRequest('POST', "/matchandtrade-web-api/v1/files/", formData, {
+			const request = new HttpRequest('POST', "/matchandtrade-web-api/v1/attachments/", formData, {
 				headers: v,
 				reportProgress: true,
 				responseType: 'text'

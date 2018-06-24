@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Attachment } from '../../classes/pojo/attachment';
-import { AttachmentTransformer } from '../../classes/transformers/attachment-transformer';
 import { Item } from '../../classes/pojo/item';
 import { AttachmentService } from '../../services/attachment.service';
 import { Message } from '../message/message';
@@ -42,8 +40,6 @@ export class ItemMatcherListComponent implements OnInit {
   tradeMembership: TradeMembership;
 	tradeMembershipHref: string;
 	
-	attachmentTransformer = new AttachmentTransformer();
-
   constructor(
     private navigationService: NavigationService,
 		private route: ActivatedRoute,
@@ -104,10 +100,10 @@ export class ItemMatcherListComponent implements OnInit {
 			.catch((e) => this.message.setErrorItems(e));
 	}
 	
-	private loadThumbnail(item: ItemView, filesHref: string) {
-		this.attachmentService.get(filesHref).then(files => {
-			if (files[0] && this.attachmentTransformer.toPojo(files[0])) {
-				item.thumbnailUrl = this.attachmentTransformer.toPojo(files[0]).thumbnailUrl;
+	private loadThumbnail(item: ItemView, attachmentHref: string) {
+		this.attachmentService.get(attachmentHref).then(attachments => {
+			if (attachments[0]) {
+				item.thumbnailUrl = attachments[0].thumbnailUrl;
 			}
 			item.thumbnailLoaded = true;
 		});
@@ -124,7 +120,7 @@ export class ItemMatcherListComponent implements OnInit {
       this.items = new Array<ItemView>();
 			searchResults.results.forEach(v => {
 				const itemProxy = new ItemView(v);
-				this.loadThumbnail(itemProxy, v.getFilesHref());
+				this.loadThumbnail(itemProxy, v.getAttachmentsHref());
 				this.items.push(itemProxy);
 			});
       this.pagination = searchResults.pagination;

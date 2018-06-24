@@ -53,12 +53,12 @@ export class ItemService {
 		return result;
 	}
 	
-	addFile(itemHref: string, fileId: number): Promise<Response> {
-		return Promise.resolve(this.httpService.post(itemHref + '/files/' + fileId));
+	addAttachment(itemHref: string, attachmentId: number): Promise<Response> {
+		return Promise.resolve(this.httpService.post(itemHref + '/attachments/' + attachmentId));
 	}
 
-	deleteFile(itemHref: string, fileId: number): Promise<Response> {
-		return Promise.resolve(this.httpService.delete(itemHref + '/files/' + fileId));
+	deleteAttachment(itemHref: string, attachmentId: number): Promise<Response> {
+		return Promise.resolve(this.httpService.delete(itemHref + '/attachments/' + attachmentId));
 	}
 
   search(page: Page, tradeMembershipHref: string): Promise<SearchResult<Item>> {

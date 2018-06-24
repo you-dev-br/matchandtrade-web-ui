@@ -7,7 +7,9 @@ export class Item {
 	description: string = null;
 	_links: Link[];
 	
-	public getFilesHref(): string {
-		return this._links.find(link => link.rel == 'files').href;
+	public getAttachmentsHref(): string {
+		const link: Link = this._links.find(v => v.rel == 'attachments');
+		return (link ? link.href : undefined);
 	}
+
 }

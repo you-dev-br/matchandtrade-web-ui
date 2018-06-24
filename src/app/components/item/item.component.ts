@@ -2,17 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { Attachment, AttachmentStatus } from '../../classes/pojo/attachment';
+import { AttachmentService } from '../../services/attachment.service';
 import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
 import { Message } from '../message/message';
 import { NavigationService } from '../../services/navigation.service';
-import { Attachment, AttachmentStatus } from '../../classes/pojo/attachment';
-import { FileTransformer } from '../../classes/transformers/file-transformer';
-import { AttachmentTransformer } from '../../classes/transformers/attachment-transformer';
-import { noUndefined } from '@angular/compiler/src/util';
-import { Observable } from 'rxjs/Observable';
-import { fromPromise } from 'rxjs/observable/fromPromise';
-import { AttachmentService } from '../../services/attachment.service';
 
 @Component({
   selector: 'app-item',
@@ -22,9 +17,7 @@ import { AttachmentService } from '../../services/attachment.service';
 })
 export class ItemComponent implements OnInit {
 	attachments: Attachment[] = [];
-	attachmentTransformer = new AttachmentTransformer();
   descriptionFormControl: AbstractControl;
-	fileTransformer = new FileTransformer();
   item: Item = new Item();
   itemFormGroup: FormGroup;
 	itemHref: string;
@@ -52,11 +45,10 @@ export class ItemComponent implements OnInit {
 			this.itemService.get(this.itemHref)
 				.then(v => {
 					this.item = v;
-					return this.attachmentService.get(v.getFilesHref());
+					return this.attachmentService.get(v.getAttachmentsHref());
 				})
 				.then(attachments => {
-					attachments.forEach(filePojo => {
-						const attachment = this.attachmentTransformer.toPojo(filePojo);
+					attachments.forEach(attachment => {
 						attachment.status = AttachmentStatus.STORED;
 						this.attachments.push(attachment);
 					})
@@ -109,7 +101,7 @@ export class ItemComponent implements OnInit {
 	onFileUploadChange(attachments: Attachment[]) {
 		attachments.forEach(v => {
 			if (v.status == AttachmentStatus.DELETED) {
-				this.itemService.deleteFile(this.itemHref, v.fileId).catch(e => this.message.setInfoItems(e));
+				this.itemService.deleteAttachment(this.itemHref, v.attachmentId).catch(e => this.message.setInfoItems(e));
 			}
 		});
 		this.itemFormGroup.markAsDirty();
@@ -126,14 +118,14 @@ export class ItemComponent implements OnInit {
 				return v;
 			})
 			.then(v => {
-				const addFilePromisses = new Array<Promise<any>>();
+				const addAttachmentsPromisses = new Array<Promise<any>>();
 				this.attachments.forEach(a => {
 					if (a.status == AttachmentStatus.STORED) {
-						const addFilePromise = this.itemService.addFile(v._href, a.fileId);
-						addFilePromisses.push(addFilePromise);					
+						const attachmentAdded = this.itemService.addAttachment(v._href, a.attachmentId);
+						addAttachmentsPromisses.push(attachmentAdded);					
 					}
 				});
-				return Promise.all(addFilePromisses);
+				return Promise.all(addAttachmentsPromisses);
 			})
 			.then(v => {
 				this.navigationService.setNavigationMessage('Item saved.');

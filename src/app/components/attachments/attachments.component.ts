@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { AttachmentService } from '../../services/attachment.service';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
 import { Attachment, AttachmentStatus } from '../../classes/pojo/attachment';
-import { FileTransformer } from '../../classes/transformers/file-transformer';
 import { AttachmentTransformer } from '../../classes/transformers/attachment-transformer';
 
 @Component({
@@ -19,9 +18,8 @@ export class AttachmentsComponent {
 	@Output() onChange = new EventEmitter<Attachment[]>();
   @Input() maxAttachments ?:number = 3;
   
-	attachmentTransformer = new AttachmentTransformer();
 	error: string;
-	fileTransformer = new FileTransformer();
+	attachmentTransformer = new AttachmentTransformer();
 	openedAttachments = new Set<string>();
 
   constructor(private attachmentService: AttachmentService) { }
@@ -40,6 +38,9 @@ export class AttachmentsComponent {
 					resolve(this.resizeImage(img, file.name, file.type, file.lastModifiedDate.getTime()));
 				}
 			}
+			reader.onerror = (e) => {
+				reject(e);
+			};
 			reader.readAsDataURL(file);
 		});
   }
@@ -80,15 +81,15 @@ export class AttachmentsComponent {
 		return result;
 	}
 
-	private handleUploadCompleted(fileUpload: Attachment): void {
-		fileUpload.status = AttachmentStatus.STORED;
+	private handleUploadCompleted(attachment: Attachment): void {
+		attachment.status = AttachmentStatus.STORED;
 		this.error = undefined;
 		this.onChange.emit(this.attachments);
 	}
 
-	private handleUploadError(fileUpload: Attachment): void {
-		fileUpload.status = AttachmentStatus.ERROR;
-		fileUpload.error = "Error uploading file";
+	private handleUploadError(attachment: Attachment): void {
+		attachment.status = AttachmentStatus.ERROR;
+		attachment.error = "Error uploading file";
 		this.onChange.emit(this.attachments);
 	}
 
@@ -98,8 +99,7 @@ export class AttachmentsComponent {
 			attachment.percentageUploaded = Math.round(100 * v.loaded / v.total);
 		} else if (v.type == HttpEventType.Response) {
 			let responseBody = JSON.parse(v.body.toString());
-			let responseFile = this.fileTransformer.toPojo(responseBody);
-			let responseAttachment = this.attachmentTransformer.toPojo(responseFile);
+			let responseAttachment = this.attachmentTransformer.toPojo(responseBody);
 			Object.assign(attachment, responseAttachment);
 		}
 	}
@@ -147,6 +147,7 @@ export class AttachmentsComponent {
 
 	private resizeImage(image: HTMLImageElement, filename: string, filetype: string, lastModifiedDate: number): Promise<File> {
 		return new Promise<File>((resolve, reject) => {
+			// TODO: add a reject for this promise
 			let resultingCanvas: HTMLCanvasElement = null;
 			
 			// Maximum image size is proportional to 1280x800

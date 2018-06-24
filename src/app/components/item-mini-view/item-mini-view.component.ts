@@ -1,12 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AttachmentService } from '../../services/attachment.service';
 import { Attachment, AttachmentStatus } from '../../classes/pojo/attachment';
-import { FileTransformer } from '../../classes/transformers/file-transformer';
-import { AttachmentTransformer } from '../../classes/transformers/attachment-transformer';
 import { Item } from '../../classes/pojo/item';
 import { ItemService } from '../../services/item.service';
-import { ItemHelper } from '../../../../e2e/items/item-helper';
 import { Message } from '../message/message';
+import { AttachmentTransformer } from '../../classes/transformers/attachment-transformer';
 
 @Component({
   selector: 'app-item-mini-view',
@@ -31,11 +29,11 @@ export class ItemMiniViewComponent implements OnInit {
   ngOnInit() {
 		this.itemService.get(this.itemHref).then(item => {
 			this.item = item;
-			return item.getFilesHref();
+			return item.getAttachmentsHref();
 		})
-		.then(filesHref => this.attachmentService.get(filesHref))
-		.then(file => {
-			this.attachmentTransformer.toPojos(file).forEach(a => {
+		.then(attachmentHref => this.attachmentService.get(attachmentHref))
+		.then(attachment => {
+			this.attachmentTransformer.toPojos(attachment).forEach(a => {
 				a.status = AttachmentStatus.STORED;
 				this.attachments.push(a);
 			});
