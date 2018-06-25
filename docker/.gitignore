@@ -2,3 +2,4 @@ database/
 dist/
 log-api/
 log-ui/
+essence-storage/
