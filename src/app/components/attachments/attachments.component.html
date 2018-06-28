@@ -1,13 +1,13 @@
-<div *ngIf="canUpload" class="file is-centered is-small">
-	<label [class]="'file-label ' + uploadDisabledClass()">
+<div *ngIf="isUploadEnabled()" class="file is-centered is-small">
+	<label [class]="classAddImagesLabel()">
     <input class="file-input" 
       type="file" 
       (change)="onInputFileChange($event)" 
-      [disabled]="uploadDisabledClass()" 
+      [disabled]="classUploadDisabled()" 
       accept="image/*" 
       multiple >
-		<span	[class]="'file-cta ' + uploadDisabledClass()">
-			<i class="fas fa-image file-icon"></i> Add images
+		<span	[class]="classAddImagesButton()">
+			<i class="fas fa-image file-icon"></i>Add images
 		</span>
 	</label>
 </div>
@@ -26,9 +26,9 @@
 				<i class="fas fa-trash mt-table-icon" (click)="delete(attachment)"></i>
 			</div>
 		</div>
-    <app-image-modal 
-      [isActive]="isAttachmentOpen(attachment)" 
-      [imageSource]="attachment.originalUrl" 
+    <app-image-modal
+      [isActive]="isAttachmentOpen(attachment)"
+      [imageSource]="attachment.originalUrl"
       (onClose)="closeAttachment($event)">
     </app-image-modal>
 	</div>

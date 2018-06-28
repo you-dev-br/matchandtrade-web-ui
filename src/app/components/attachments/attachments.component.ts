@@ -13,14 +13,13 @@ import { AttachmentTransformer } from '../../classes/transformers/attachment-tra
 export class AttachmentsComponent {
   @Input() align?: string;
 	@Input() attachments: Attachment[];
+	attachmentTransformer = new AttachmentTransformer();
 	@Input() canUpload: boolean;
 	@Input() canDelete: boolean;
-	@Output() onChange = new EventEmitter<Attachment[]>();
-  @Input() maxAttachments ?:number = 3;
-  
 	error: string;
-	attachmentTransformer = new AttachmentTransformer();
+	@Output() onChange = new EventEmitter<Attachment[]>();
 	openedAttachments = new Set<string>();
+  @Input() maxAttachments?: number = 3;
 
   constructor(private attachmentService: AttachmentService) { }
   
@@ -45,10 +44,37 @@ export class AttachmentsComponent {
 		});
   }
 
+  classAddImagesLabel(): string {
+    return 'file-label ' + this.classUploadDisabled();
+  }
+
+  classAddImagesButton(): string {
+    return 'file-cta ' + this.classUploadDisabled();
+  }
+
+  classUploadDisabled(): string {
+		return this.isUploadEnabled() ? '' : 'disabled';
+	}
+
   closeAttachment(originalUrl) {
 	  this.openedAttachments.delete(originalUrl);
   }
- 
+  
+  classGalery(): string {
+    const basicClass = 'gallery is-fullwidth'
+    if (!this.align) {
+      return basicClass + ' align-center';
+    }
+    return basicClass + ' align-' + this.align;
+  }
+  
+	classThumbnailContent(attachment: Attachment): string {
+		let result: string = 'thumbnail-content';
+		result += ' ' + attachment.status;
+		result += (attachment.thumbnailUrl ? ' has-thumbnail' : '');
+		return result;
+	}
+
 	delete(attachment: Attachment): void {
 		attachment.status = AttachmentStatus.DELETED;
 		this.onChange.emit(this.attachments);
@@ -64,21 +90,6 @@ export class AttachmentsComponent {
 
 	displayThumbnailImage(attachment: Attachment): boolean {
 		return (attachment.thumbnailUrl ? true : false);
-	}
-
-  classGalery(): string {
-    const basicClass = 'gallery is-fullwidth'
-    if (!this.align) {
-      return basicClass + ' align-center';
-    }
-    return basicClass + ' align-' + this.align;
-  }
-  
-	classThumbnailContent(attachment: Attachment): string {
-		let result: string = 'thumbnail-content';
-		result += ' ' + attachment.status;
-		result += (attachment.thumbnailUrl ? ' has-thumbnail' : '');
-		return result;
 	}
 
 	private handleUploadCompleted(attachment: Attachment): void {
@@ -110,10 +121,10 @@ export class AttachmentsComponent {
 
 	isUploadEnabled(): boolean {
     let nonDeletedAttachments = this.obtainNumberOfNonDeletedAttachments();
-		return (nonDeletedAttachments < this.maxAttachments);
+		return (nonDeletedAttachments < this.maxAttachments) && this.canUpload;
   }
   
-  obtainNumberOfNonDeletedAttachments(): number {
+  private obtainNumberOfNonDeletedAttachments(): number {
     let result = 0;
     for (let i=0; i<this.attachments.length; i++) {
       if (this.attachments[i] && this.attachments[i].status != AttachmentStatus.DELETED) {
@@ -145,9 +156,11 @@ export class AttachmentsComponent {
 		this.openedAttachments.add(attachment.originalUrl);
 	}
 
+  // TODO: We need to handle iOS issues, we might have to change this to a more powerful library
 	private resizeImage(image: HTMLImageElement, filename: string, filetype: string, lastModifiedDate: number): Promise<File> {
 		return new Promise<File>((resolve, reject) => {
-			// TODO: add a reject for this promise
+      // TODO: add a reject for this promise
+      
 			let resultingCanvas: HTMLCanvasElement = null;
 			
 			// Maximum image size is proportional to 1280x800
@@ -180,10 +193,6 @@ export class AttachmentsComponent {
 			err => this.handleUploadError(attachment),
 			( ) => this.handleUploadCompleted(attachment)
 		);
-	}
-
-	uploadDisabledClass(): string {
-		return this.isUploadEnabled() ? '' : 'disabled';
 	}
 
 	thumbnailImageError(event: Event, attachment: Attachment): void {
