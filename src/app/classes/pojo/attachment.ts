@@ -6,21 +6,17 @@ export class Attachment extends LinkSupport {
 	contentType: string;
 	error: string;
 	name: string;
-	originalUrl: string;
 	percentageUploaded: number;
-	status: AttachmentStatus;
-	thumbnailUrl: string;
+  status: AttachmentStatus;
+  
+  getOriginalUrl(): string {
+    return this.getLinkByRel('original');
+  }
 
-	getOriginalUrl(): string {
-		const link: Link = this.links.find(v => v.rel == 'original');
-		return (link ? link.href : undefined);
-	}
-
-	getThumbnailUrl(): string {
-		const link: Link = this.links.find(v => v.rel == 'thumbnail');
-		return (link ? link.href : undefined);
-	}
-
+  getThumbnailUrl(): string {
+    return this.getLinkByRel('thumbnail');
+  }
+  
 }
 
 export enum AttachmentStatus {

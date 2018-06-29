@@ -6,6 +6,7 @@ import { AttachmentService } from '../../services/attachment.service';
 import { AttachmentThumbnailComponent } from '../attachment-thumbnail/attachment-thumbnail.component';
 import { By } from '@angular/platform-browser';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
+import { Link } from '../../classes/pojo/link';
 
 class FileUtil {
   public static makeBlobFromBase64(b64Data: string, contentType: string): Blob {
@@ -19,7 +20,7 @@ class FileUtil {
   }
 }
 
-fdescribe('AttachmentsComponent', () => {
+describe('AttachmentsComponent', () => {
 	
 	class AttachmentServiceMock {}
 
@@ -142,7 +143,7 @@ fdescribe('AttachmentsComponent', () => {
   it('should display thumbnail when attachment has thumbnail', () => {
     const attachment = new Attachment();
     expect(component.classThumbnailContent(attachment)).not.toContain('has-thumbnail');
-    attachment.thumbnailUrl = 'attachment.component.spec.jpg';
+    attachment.links.push(new Link('thumbnail', 'attachment.component.spec.jpg'));
     expect(component.classThumbnailContent(attachment)).toContain('has-thumbnail');
   });
 

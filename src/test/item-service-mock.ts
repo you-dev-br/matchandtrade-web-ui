@@ -12,9 +12,7 @@ export class ItemServiceMock {
 			item._href = 'ItemServiceMock.GET.href';
 			item.description = 'ItemServiceMock.GET.description';
 			item.itemId = 1;
-			const link = new Link();
-			link.rel = 'files';
-			link.href = 'ItemServiceMock.GET.files.link.href';
+			const link = new Link('files', 'ItemServiceMock.GET.files.link.href');
 			item._links = [link];
       resolve(item);
     });

@@ -29,11 +29,11 @@ export class AttachmentThumbnailComponent {
   }
 
   getOriginalUrl(): string {
-    return (this.attachment && this.attachment.originalUrl ? this.attachment.originalUrl : undefined);
+    return (this.attachment && this.attachment.getOriginalUrl() ? this.attachment.getOriginalUrl() : undefined);
   }
 
   getThumbnailUrl(): string {
-    return (this.attachment && this.attachment.thumbnailUrl ? this.attachment.thumbnailUrl : undefined);
+    return (this.attachment && this.attachment.getThumbnailUrl() ? this.attachment.getThumbnailUrl() : undefined);
   }
 
   isAttachmentOpen(): boolean {

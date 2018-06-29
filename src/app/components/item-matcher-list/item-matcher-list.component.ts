@@ -102,16 +102,14 @@ export class ItemMatcherListComponent implements OnInit {
 	
 	private loadThumbnail(item: ItemView, attachmentHref: string) {
 		this.attachmentService.get(attachmentHref).then(attachments => {
-			if (attachments[0]) {
-				item.thumbnailUrl = attachments[0].thumbnailUrl;
+			if (attachments.length > 0) {
+				item.thumbnailUrl = attachments[0].getThumbnailUrl();
 			}
 			item.thumbnailLoaded = true;
 		});
 	}
 
 	onErrorDisplayingThumbnailImage(event: Event, item: ItemView): void {
-		// TODO: Migrate to a logging lib
-		console.log('ItemMatcherListComponent', 'Error when displaying thumbnail image', event);
 		item.thumbnailUrl = undefined;
 	}
 

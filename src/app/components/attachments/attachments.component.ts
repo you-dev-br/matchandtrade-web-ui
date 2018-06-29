@@ -18,7 +18,7 @@ export class AttachmentsComponent {
 	@Input() canDelete: boolean;
 	error: string;
 	@Output() onChange = new EventEmitter<Attachment[]>();
-	openedAttachments = new Set<string>();
+	openedAttachments = new Set<Attachment>();
   @Input() maxAttachments?: number = 3;
 
   constructor(private attachmentService: AttachmentService) { }
@@ -71,7 +71,7 @@ export class AttachmentsComponent {
 	classThumbnailContent(attachment: Attachment): string {
 		let result: string = 'thumbnail-content';
 		result += ' ' + attachment.status;
-		result += (attachment.thumbnailUrl ? ' has-thumbnail' : '');
+		result += (attachment.getThumbnailUrl() ? ' has-thumbnail' : '');
 		return result;
 	}
 
@@ -89,7 +89,7 @@ export class AttachmentsComponent {
 	}
 
 	displayThumbnailImage(attachment: Attachment): boolean {
-		return (attachment.thumbnailUrl ? true : false);
+		return (attachment.getThumbnailUrl() ? true : false);
 	}
 
 	private handleUploadCompleted(attachment: Attachment): void {
@@ -116,7 +116,7 @@ export class AttachmentsComponent {
 	}
 
 	isAttachmentOpen(attachment: Attachment): boolean {
-		return this.openedAttachments.has(attachment.originalUrl);
+		return this.openedAttachments.has(attachment);
 	}
 
 	isUploadEnabled(): boolean {
@@ -153,7 +153,7 @@ export class AttachmentsComponent {
 	}
 
 	openAttachment(attachment: Attachment) {
-		this.openedAttachments.add(attachment.originalUrl);
+		this.openedAttachments.add(attachment);
 	}
 
   // TODO: We need to handle iOS issues, we might have to change this to a more powerful library
@@ -198,7 +198,7 @@ export class AttachmentsComponent {
 	thumbnailImageError(event: Event, attachment: Attachment): void {
 		// TODO: Migrate to a logging lib
 		console.log("AttachmentsComponent", "Error loading thumbnail image", attachment);
-		attachment.thumbnailUrl = undefined;
+		// attachment.getThumbnailUrl() = undefined;
 	}
 
 }

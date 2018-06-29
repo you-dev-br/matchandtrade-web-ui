@@ -10,6 +10,7 @@ import { AttachmentsComponent } from '../attachments/attachments.component';
 import { AttachmentThumbnailComponent } from '../attachment-thumbnail/attachment-thumbnail.component';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
 import { Attachment } from '../../classes/pojo/attachment';
+import { Link } from '../../classes/pojo/link';
 
 describe('item-mini-view-component', () => {
   let component: ItemMiniViewComponent;
@@ -20,9 +21,9 @@ describe('item-mini-view-component', () => {
 			const attachment = new Attachment();
 			attachment.contentType = 'myContentType';
 			attachment.attachmentId = 1;
-			attachment.name = 'myName';
-			attachment.originalUrl = 'myOriginalUrl';
-			attachment.thumbnailUrl = 'myThumbnailUrl';
+      attachment.name = 'myName';
+      attachment.links.push(new Link('originalUrl', 'myOriginalUrl'));
+      attachment.links.push(new Link('thumbnailUrl', 'myThumbnailUrl'));
 			const result: Attachment[] = [];
 			result.push(attachment);
 			return Promise.resolve(result);

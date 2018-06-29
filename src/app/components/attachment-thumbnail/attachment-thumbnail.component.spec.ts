@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AttachmentThumbnailComponent } from './attachment-thumbnail.component';
 import { Attachment, AttachmentStatus } from '../../classes/pojo/attachment';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
+import { Link } from '../../classes/pojo/link';
 
 describe('AttachmentThumbnailComponent', () => {
   let component: AttachmentThumbnailComponent;
@@ -42,10 +43,11 @@ describe('AttachmentThumbnailComponent', () => {
   });
 
   it('should display name', () => {
-    component.attachment.thumbnailUrl = 'test';
+    const thumbnailLink = new Link('thumbnail', 'thumbnail.jpg');
+    component.attachment.links.push(thumbnailLink);
     component.attachment.status = AttachmentStatus.STORED;
     expect(component.displayName()).toBe(false);
-    component.attachment.thumbnailUrl = undefined;
+    component.attachment.links.pop();
     component.attachment.status = AttachmentStatus.STORED;
     expect(component.displayName()).toBe(true);
   });

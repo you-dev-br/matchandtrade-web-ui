@@ -23,7 +23,6 @@ export class ItemMiniViewComponent implements OnInit {
 	private attachmentTransformer: AttachmentTransformer = new AttachmentTransformer();
 	
 	constructor(private itemService: ItemService, private attachmentService: AttachmentService) {
-		
 	}
 
   ngOnInit() {
@@ -33,10 +32,10 @@ export class ItemMiniViewComponent implements OnInit {
 		})
 		.then(attachmentHref => this.attachmentService.get(attachmentHref))
 		.then(attachment => {
-			this.attachmentTransformer.toPojos(attachment).forEach(a => {
-				a.status = AttachmentStatus.STORED;
-				this.attachments.push(a);
-			});
+      attachment.forEach(v => {
+        v.status = AttachmentStatus.STORED;
+        this.attachments.push(v);
+      });
 		})
 		.then(() => this.loading = false)
 		.catch(e => this.message.setErrorItems(e));
