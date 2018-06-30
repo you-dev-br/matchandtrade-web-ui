@@ -12,8 +12,8 @@
 		<tr *ngFor="let item of items"><td>
 			<div class="item-row">
 				<div [class]="classForThumbnail(item)">
-					<p *ngIf="displayLoadingThumbnail(item)"><i class="fas fa-spinner fa-pulse fa-2x fa-fw"></i></p>
-					<img *ngIf="displayThumbnailImage(item)" src="{{item.thumbnail}}" (error)="onErrorDisplayingThumbnailImage($event, item)">
+          <p *ngIf="displayLoadingThumbnail(item)"><i class="fas fa-spinner fa-pulse fa-2x fa-fw"></i></p>
+          <app-attachment-thumbnail [attachment]="obtainAttachment(item)" [size]="64"></app-attachment-thumbnail>
 					<p *ngIf="displayThumbnailNotAvailable(item)">Thumbnail not available</p>
 				</div>
 				<div class="item-summary">

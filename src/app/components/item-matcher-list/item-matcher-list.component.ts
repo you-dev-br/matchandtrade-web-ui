@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Item } from '../../classes/pojo/item';
+import { Attachment, AttachmentStatus } from '../../classes/pojo/attachment';
 import { AttachmentService } from '../../services/attachment.service';
 import { Message } from '../message/message';
 import { NavigationService } from '../../services/navigation.service';
 import { Pagination } from '../../classes/search/pagination';
+import { race } from 'rxjs/operators/race';
 import { SearchService } from '../../services/search.service';
 import { StorageService } from '../../services/storage.service';
 import { TradeMembership } from '../../classes/pojo/trade-membership';
@@ -17,12 +19,12 @@ class ItemView {
 		this.name = item.name;
 		this.description = item.description;
 	}
-	href: string;
-	name: string;
+  attachment: Attachment;
 	description: string;
 	displayItemMiniView: boolean = false;
-	thumbnailUrl: string;
-	thumbnailLoaded: boolean;
+	href: string;
+	name: string;
+  thumbnailLoaded: boolean = false;
 }
 
 @Component({
@@ -53,17 +55,13 @@ export class ItemMatcherListComponent implements OnInit {
 		return !item.thumbnailLoaded;
 	}
 	
-	displayThumbnailImage(item: ItemView):boolean {
-		return item.thumbnailLoaded && (item.thumbnailUrl ? true : false);
-	}
-	
 	displayThumbnailNotAvailable(item: ItemView) {
-		return item.thumbnailLoaded && !item.thumbnailUrl;
+		return item.thumbnailLoaded && !item.attachment;
 	}
 
 	classForThumbnail(item: ItemView): string {
 		let result = 'thumbnail';
-		result += (item.thumbnailUrl ? ' has-thumbnail' : '');
+		result += (item.attachment ? ' has-thumbnail' : '');
 		return result;
 	}
 
@@ -103,15 +101,16 @@ export class ItemMatcherListComponent implements OnInit {
 	private loadThumbnail(item: ItemView, attachmentHref: string) {
 		this.attachmentService.get(attachmentHref).then(attachments => {
 			if (attachments.length > 0) {
-				item.thumbnailUrl = attachments[0].getThumbnailUrl();
+        item.attachment = attachments[0];
+        item.attachment.status = AttachmentStatus.STORED;
 			}
 			item.thumbnailLoaded = true;
 		});
-	}
-
-	onErrorDisplayingThumbnailImage(event: Event, item: ItemView): void {
-		item.thumbnailUrl = undefined;
-	}
+  }
+  
+  obtainAttachment(item: ItemView): Attachment {
+    return item.attachment;
+  }
 
   private search(tradeMembership: TradeMembership): Promise<any> {
     return this.searchService.searchItemsToMatch(tradeMembership, this.pagination.page).then(searchResults => {

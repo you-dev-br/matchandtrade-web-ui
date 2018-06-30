@@ -4,6 +4,13 @@ import { AttachmentThumbnailComponent } from './attachment-thumbnail.component';
 import { Attachment, AttachmentStatus } from '../../classes/pojo/attachment';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
 import { Link } from '../../classes/pojo/link';
+import { AttachmentService } from '../../services/attachment.service';
+
+class AttachmentServiceMock {
+  getOneAttachment(a: any): Promise<Attachment> {
+    return Promise.resolve(new Attachment());
+  }
+}
 
 describe('AttachmentThumbnailComponent', () => {
   let component: AttachmentThumbnailComponent;
@@ -13,6 +20,11 @@ describe('AttachmentThumbnailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AttachmentThumbnailComponent, ImageModalComponent ]
     })
+		.overrideComponent(AttachmentThumbnailComponent, {
+			set: {
+				providers: [{provide: AttachmentService, useClass: AttachmentServiceMock}]
+			}
+		})    
     .compileComponents();
   }));
 

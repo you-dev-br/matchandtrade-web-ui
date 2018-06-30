@@ -31,6 +31,19 @@ export class AttachmentService {
 		});
 	}
 
+  getOneAttachment(attachmentHref: string): Promise<Attachment> {
+		return new Promise<Attachment>((resolve, reject) => {
+			this.authenticationService.authorizationHttpHeaders().then(v => {
+				return this.http.get(attachmentHref, {headers: v, responseType: 'text'}).toPromise();
+			})
+			.then(v => {
+        const response = JSON.parse(v);
+        resolve(this.attachmentTransformer.toPojo(response));
+			})
+			.catch(e => reject(e));
+		});
+	}
+
 	save(file: File): Observable<HttpEvent<{}>> {
 		return Observable.fromPromise(this.authenticationService.authorizationHttpHeaders()).flatMap(v => {
 			const formData = new FormData();

@@ -1,20 +1,36 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Attachment, AttachmentStatus } from '../../classes/pojo/attachment';
 import { StringUtil } from '../../classes/util/string-util';
+import { AttachmentService } from '../../services/attachment.service';
 
 @Component({
   selector: 'app-attachment-thumbnail',
   templateUrl: './attachment-thumbnail.component.html',
   styleUrls: ['./attachment-thumbnail.component.scss']
 })
-export class AttachmentThumbnailComponent {
+export class AttachmentThumbnailComponent implements OnInit {
 
-  @Input() attachment: Attachment;
+  @Input() attachment?: Attachment;
+  @Input() attachmentHref?: string;
   attachmentOpen: boolean = false;
+  loading: boolean = true;
   hasError: boolean = false;
   @Input() size?: number = 96;
 
-  constructor() { }
+  constructor(private attachmentService: AttachmentService) { }
+
+  ngOnInit() {
+    if (!this.attachment && !this.attachmentHref) {
+      this.hasError = true;
+    } else if (!this.attachment) {
+      this.attachmentService.getOneAttachment(this.attachmentHref)
+        .then(v => this.attachment = v)
+        .catch(e => this.hasError = true)
+        .then(() => this.loading = false);
+    } else {
+      this.loading = false;
+    }
+  }
 
   classAttachmentThumbnail(): string {
     return 'attachment-thumbnail ' + this.attachment.status;
@@ -41,19 +57,19 @@ export class AttachmentThumbnailComponent {
   }
 
   isAttachmentStatusStored(): boolean {
-    return this.attachment.status == AttachmentStatus.STORED;
+    return (this.attachment && this.attachment.status == AttachmentStatus.STORED);
   }
 
   isAttachmentStatusError(): boolean {
-    return this.attachment.status == AttachmentStatus.ERROR;
+    return (this.attachment && this.attachment.status == AttachmentStatus.ERROR);
   }
 
   isAttachmentStatusReading(): boolean {
-    return this.attachment.status == AttachmentStatus.READING;
+    return (this.attachment && this.attachment.status == AttachmentStatus.READING);
   }
 
   isAttachmentStatusUploading(): boolean {
-    return this.attachment.status == AttachmentStatus.UPLOADING;
+    return (this.attachment && this.attachment.status == AttachmentStatus.UPLOADING);
   }
 
   obtainName(): string {

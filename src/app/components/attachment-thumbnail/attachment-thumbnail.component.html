@@ -1,4 +1,4 @@
-<div [style.width.px]="size" [style.height.px]="size" [class]="classAttachmentThumbnail()">
+<div *ngIf="attachment" [style.width.px]="size" [style.height.px]="size" [class]="classAttachmentThumbnail()">
   <a *ngIf="isAttachmentStatusStored()" (click)="openAttachment()">
     <img *ngIf="getThumbnailUrl()" src="{{getThumbnailUrl()}}" (error)="onError($event)">
     <p *ngIf="displayName()">{{obtainName()}}</p>
