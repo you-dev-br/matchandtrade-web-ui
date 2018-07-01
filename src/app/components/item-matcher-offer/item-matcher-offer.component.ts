@@ -14,12 +14,14 @@ import { Pagination } from '../../classes/search/pagination';
 import { TradeMembershipService } from '../../services/trade-membership.service';
 import { SearchResult } from '../../classes/search/search-result';
 import { promise } from 'selenium-webdriver';
+import { Attachment, AttachmentStatus } from '../../classes/pojo/attachment';
+import { AttachmentService } from '../../services/attachment.service';
 
 @Component({
   selector: 'app-item-matcher-offer',
   templateUrl: './item-matcher-offer.component.html',
   styleUrls: ['./item-matcher-offer.component.scss'],
-  providers: [ ItemService, OfferService ]
+  providers: [ AttachmentService, ItemService, OfferService ]
 })
 export class ItemMatcherOfferComponent implements OnInit {
 
@@ -31,9 +33,11 @@ export class ItemMatcherOfferComponent implements OnInit {
   pagination = new Pagination(1, 20, 0);
   tradeMembershipHref: string;
   wantedItem: Item;
-  moreInfoMap = {};
+  wantedItemAttachment: Attachment;
+  wantedItemExpandedInfo: boolean;
 
   constructor(
+    private attachmentService: AttachmentService,
     private itemService: ItemService,
     private navigationService: NavigationService,
     private offerService: OfferService,
@@ -50,7 +54,8 @@ export class ItemMatcherOfferComponent implements OnInit {
       .then(() => this.fetchOffers())
       .then(() => this.initCheckableItems())
       .catch(e => this.message.setErrorItems(e))
-      .then(() => this.loading = false);
+      .then(() => this.loading = false)
+      .then(() => this.fetchWantedItemAttachment());
   }
 
   private initCheckableItems(): void {
@@ -117,6 +122,20 @@ export class ItemMatcherOfferComponent implements OnInit {
         });
       });
   }
+
+  fetchWantedItemAttachment(): void {
+    this.attachmentService.get(this.wantedItem.getAttachmentsHref())
+      .then(v => {
+        if (v.length > 0) {
+          this.wantedItemAttachment = v[0];
+          this.wantedItemAttachment.status = AttachmentStatus.STORED;
+        }
+      });
+  }
+
+  obtainInfoText(): string {
+    return (this.wantedItemExpandedInfo ? 'More Info' : 'Less Info');
+  }
   
   navigateBack(): void {
     this.navigationService.back();
@@ -154,14 +173,9 @@ export class ItemMatcherOfferComponent implements OnInit {
       .catch(e => this.message.setErrorItems(e));
   }
 
-  toogleMoreInfo(item: Item): boolean {
-    const visible: boolean = (this.moreInfoMap[item.itemId]);
-    this.moreInfoMap[item.itemId] = !visible;
-    return !visible;
-  }
-
-  displayMoreInfo(item: Item): boolean {
-    return (this.moreInfoMap[item.itemId]);
+  toogleMoreInfo(): boolean {
+    this.wantedItemExpandedInfo = !this.wantedItemExpandedInfo;
+    return this.wantedItemExpandedInfo;
   }
 
   toogleOfferableItem(checkableItem: CheckableItem) {

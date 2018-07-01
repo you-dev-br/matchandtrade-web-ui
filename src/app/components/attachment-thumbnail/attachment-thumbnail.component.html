@@ -1,8 +1,11 @@
-<div *ngIf="attachment" [style.width.px]="size" [style.height.px]="size" [class]="classAttachmentThumbnail()">
+<div [style.width.px]="size" [style.height.px]="size" [class]="classAttachmentThumbnail()">
   <a *ngIf="isAttachmentStatusStored()" (click)="openAttachment()">
     <img *ngIf="getThumbnailUrl()" src="{{getThumbnailUrl()}}" (error)="onError($event)">
     <p *ngIf="displayName()">{{obtainName()}}</p>
   </a>
+  <p *ngIf="!isAttachmentDefined()">
+    <i class="fas fa-spinner fa-pulse fa-2x fa-fw"></i>
+  </p>
   <p *ngIf="isAttachmentStatusUploading()">
     Uploading...<br><i class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;{{attachment.percentageUploaded}}%
   </p>

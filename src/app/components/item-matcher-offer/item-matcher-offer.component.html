@@ -10,11 +10,18 @@
 </div>
 
 <div *ngIf="!loading && offerableItems.length>0" class="mt-content">
-  <p>{{wantedItem.name}}
-    <a *ngIf="!displayMoreInfo(wantedItem)" class="more-info" (click)="toogleMoreInfo(wantedItem)">more info...</a>
-    <a *ngIf="displayMoreInfo(wantedItem)" class="more-info" (click)="toogleMoreInfo(wantedItem)">less info...</a>
-  </p>
-  <app-item-mini-view *ngIf="displayMoreInfo(wantedItem)" [itemHref]="wantedItem._href"></app-item-mini-view>
+  <div class="wanted-item-header">
+    <app-attachment-thumbnail [attachment]="wantedItemAttachment" [size]="64"></app-attachment-thumbnail>
+    <div class="wanted-item-summary">
+      <div class="wanted-item-summary-name">{{wantedItem.name}}</div>
+      <div>
+        <button class="button is-secondary is-small" type="button" (click)="toogleMoreInfo(wantedItem)">
+          <i class="fas fa-info"></i><span class="small-button-text">{{obtainInfoText()}}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <app-item-mini-view *ngIf="wantedItemExpandedInfo" [itemHref]="wantedItem._href"></app-item-mini-view>
   <p class="selection-note">
 		Note: you can select multiple items to increase your chances but only one of the selected items would be exchanged.
 	</p>
@@ -56,4 +63,3 @@
   </div>
 
 </div>
- 

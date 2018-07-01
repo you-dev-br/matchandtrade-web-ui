@@ -1,3 +1,16 @@
+app-attachment-thumbnail {
+  margin-right: .5em;
+}
+
+app-item-mini-view {
+  display: block;
+  margin-top: 1em;
+}
+
+button i {
+  margin-right: .5em;
+}
+
 .item-offer-checkbox {
   width: 1.25em;
   height: 1.25em;
@@ -21,9 +34,23 @@
 
 .selection-note {
   font-size: smaller;
+  font-style: italic;
   margin-top: 1em;
 }
 
 .offering-item-cell {
 	display: flex;
+}
+
+.wanted-item-header {
+  display: flex;
+}
+
+.wanted-item-summary-name {
+  flex: 1 0 auto;
+}
+
+.wanted-item-summary {
+  display: flex;
+  flex-direction: column;
 }

@@ -14,6 +14,12 @@
   display: grid;
 }
 
+.loading {
+	background-color: $primary-2;
+  border-color: $primary-5;
+  color: $primary-4;
+}
+
 // STATUS
 // ======
 .ERROR {

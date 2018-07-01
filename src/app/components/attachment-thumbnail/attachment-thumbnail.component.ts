@@ -17,23 +17,23 @@ export class AttachmentThumbnailComponent implements OnInit {
   hasError: boolean = false;
   @Input() size?: number = 96;
 
-  constructor(private attachmentService: AttachmentService) { }
+  constructor() { }
 
   ngOnInit() {
-    if (!this.attachment && !this.attachmentHref) {
-      this.hasError = true;
-    } else if (!this.attachment) {
-      this.attachmentService.getOneAttachment(this.attachmentHref)
-        .then(v => this.attachment = v)
-        .catch(e => this.hasError = true)
-        .then(() => this.loading = false);
-    } else {
-      this.loading = false;
-    }
+    // if (!this.attachment && !this.attachmentHref) {
+    //   this.hasError = true;
+    // } else if (!this.attachment) {
+    //   this.attachmentService.getOneAttachment(this.attachmentHref)
+    //     .then(v => this.attachment = v)
+    //     .catch(e => this.hasError = true)
+    //     .then(() => this.loading = false);
+    // } else {
+    //   this.loading = false;
+    // }
   }
 
   classAttachmentThumbnail(): string {
-    return 'attachment-thumbnail ' + this.attachment.status;
+    return 'attachment-thumbnail ' + (this.attachment ? this.attachment.status : 'loading');
   }
 
   closeAttachment(originalUrl: string): void {
@@ -70,6 +70,10 @@ export class AttachmentThumbnailComponent implements OnInit {
 
   isAttachmentStatusUploading(): boolean {
     return (this.attachment && this.attachment.status == AttachmentStatus.UPLOADING);
+  }
+
+  isAttachmentDefined(): boolean {
+    return (this.attachment != undefined && this.attachment != null);
   }
 
   obtainName(): string {
