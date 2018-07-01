@@ -33,7 +33,7 @@ export class ItemMatcherOfferComponent implements OnInit {
   pagination = new Pagination(1, 20, 0);
   tradeMembershipHref: string;
   wantedItem: Item;
-  wantedItemAttachment: Attachment;
+  wantedItemAttachment: Attachment = new Attachment();
   wantedItemExpandedInfo: boolean;
 
   constructor(
@@ -43,7 +43,9 @@ export class ItemMatcherOfferComponent implements OnInit {
     private offerService: OfferService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {
+    this.wantedItemAttachment.status = AttachmentStatus.LOADING;
+  }
 
   ngOnInit() {
     this.tradeMembershipHref = this.navigationService.obtainData(this.route).tradeMembershipHref
@@ -128,7 +130,8 @@ export class ItemMatcherOfferComponent implements OnInit {
       .then(v => {
         if (v.length > 0) {
           this.wantedItemAttachment = v[0];
-          this.wantedItemAttachment.status = AttachmentStatus.STORED;
+        } else {
+          this.wantedItemAttachment = undefined;
         }
       });
   }

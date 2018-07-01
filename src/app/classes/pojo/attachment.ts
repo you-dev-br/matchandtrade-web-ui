@@ -21,8 +21,9 @@ export class Attachment extends LinkSupport {
 
 export enum AttachmentStatus {
 	DELETED='DELETED',
-	ERROR='ERROR',
+  ERROR='ERROR',
+  LOADING='LOADING',
 	READING='READING',
 	STORED='STORED',
-	UPLOADING='UPLOADING',
+  UPLOADING='UPLOADING'
 }

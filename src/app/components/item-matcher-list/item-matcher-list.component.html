@@ -14,7 +14,6 @@
 				<div [class]="classForThumbnail(item)">
           <p *ngIf="displayLoadingThumbnail(item)"><i class="fas fa-spinner fa-pulse fa-2x fa-fw"></i></p>
           <app-attachment-thumbnail [attachment]="obtainAttachment(item)" [size]="64"></app-attachment-thumbnail>
-					<p *ngIf="displayThumbnailNotAvailable(item)">Thumbnail not available</p>
 				</div>
 				<div class="item-summary">
 					<div class="item-name">
@@ -24,11 +23,8 @@
 						<button class="button is-secondary is-small" type="button" (click)="navigateToOffer(item)">
 							<i class="fas fa-thumbs-up"></i><span class="small-button-text">I Want</span>
 						</button>
-						<button *ngIf="!item.displayItemMiniView" class="button is-secondary is-small" type="button" (click)="toogleItemMiniView(item)">
-							<i class="fas fa-info"></i><span class="small-button-text">More Info</span>
-						</button>
-						<button *ngIf="item.displayItemMiniView" class="button is-secondary is-small" type="button" (click)="toogleItemMiniView(item)">
-							<i class="fas fa-info"></i><span class="small-button-text">Less Info</span>
+						<button class="button is-secondary is-small" type="button" (click)="toogleItemMiniView(item)">
+							<i class="fas fa-info"></i><span class="small-button-text">{{obtainInfoText(item)}}</span>
 						</button>
 					</div>
 				</div>

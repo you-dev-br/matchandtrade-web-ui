@@ -14,14 +14,14 @@
   display: grid;
 }
 
-.loading {
-	background-color: $primary-2;
-  border-color: $primary-5;
-  color: $primary-4;
-}
-
 // STATUS
 // ======
+.NOT-AVAILABLE {
+	background-color: $primary-2;
+  border-color: $primary-5;
+  color: $primary-7;
+}
+
 .ERROR {
 	background-color: lightpink;
 	border-color: darkred;
@@ -32,6 +32,12 @@
 	background-color: lightskyblue;
 	border-color: $secondary-7;
 	color: $secondary-7;
+}
+
+.LOADING {
+	background-color: $primary-2;
+  border-color: $primary-5;
+  color: $primary-4;
 }
 
 .STORED {

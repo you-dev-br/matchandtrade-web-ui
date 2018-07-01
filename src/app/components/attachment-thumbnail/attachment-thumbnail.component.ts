@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Attachment, AttachmentStatus } from '../../classes/pojo/attachment';
 import { StringUtil } from '../../classes/util/string-util';
 import { AttachmentService } from '../../services/attachment.service';
@@ -8,7 +8,7 @@ import { AttachmentService } from '../../services/attachment.service';
   templateUrl: './attachment-thumbnail.component.html',
   styleUrls: ['./attachment-thumbnail.component.scss']
 })
-export class AttachmentThumbnailComponent implements OnInit {
+export class AttachmentThumbnailComponent {
 
   @Input() attachment?: Attachment;
   @Input() attachmentHref?: string;
@@ -19,21 +19,8 @@ export class AttachmentThumbnailComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    // if (!this.attachment && !this.attachmentHref) {
-    //   this.hasError = true;
-    // } else if (!this.attachment) {
-    //   this.attachmentService.getOneAttachment(this.attachmentHref)
-    //     .then(v => this.attachment = v)
-    //     .catch(e => this.hasError = true)
-    //     .then(() => this.loading = false);
-    // } else {
-    //   this.loading = false;
-    // }
-  }
-
   classAttachmentThumbnail(): string {
-    return 'attachment-thumbnail ' + (this.attachment ? this.attachment.status : 'loading');
+    return 'attachment-thumbnail ' + (this.attachment ? this.attachment.status : 'NOT-AVAILABLE');
   }
 
   closeAttachment(originalUrl: string): void {
@@ -66,6 +53,10 @@ export class AttachmentThumbnailComponent implements OnInit {
 
   isAttachmentStatusReading(): boolean {
     return (this.attachment && this.attachment.status == AttachmentStatus.READING);
+  }
+  
+  isAttachmentStatusLoading(): boolean {
+    return (this.attachment && this.attachment.status == AttachmentStatus.LOADING);
   }
 
   isAttachmentStatusUploading(): boolean {

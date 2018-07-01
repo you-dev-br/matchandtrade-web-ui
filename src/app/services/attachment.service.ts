@@ -4,7 +4,7 @@ import { AuthenticationService } from './authentication.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx'
 import { AttachmentTransformer } from '../classes/transformers/attachment-transformer';
-import { Attachment } from '../classes/pojo/attachment';
+import { Attachment, AttachmentStatus } from '../classes/pojo/attachment';
 
 @Injectable()
 export class AttachmentService {
@@ -22,23 +22,11 @@ export class AttachmentService {
 				const result = new Array<Attachment>();
 				const response = JSON.parse(v);
 				response.forEach(e => {
-					const attachment = this.attachmentTransformer.toPojo(e);
+          const attachment = this.attachmentTransformer.toPojo(e);
+          attachment.status = AttachmentStatus.STORED;
 					result.push(attachment);
 				});
 				resolve(result);
-			})
-			.catch(e => reject(e));
-		});
-	}
-
-  getOneAttachment(attachmentHref: string): Promise<Attachment> {
-		return new Promise<Attachment>((resolve, reject) => {
-			this.authenticationService.authorizationHttpHeaders().then(v => {
-				return this.http.get(attachmentHref, {headers: v, responseType: 'text'}).toPromise();
-			})
-			.then(v => {
-        const response = JSON.parse(v);
-        resolve(this.attachmentTransformer.toPojo(response));
 			})
 			.catch(e => reject(e));
 		});

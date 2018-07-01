@@ -6,12 +6,6 @@ import { ImageModalComponent } from '../image-modal/image-modal.component';
 import { Link } from '../../classes/pojo/link';
 import { AttachmentService } from '../../services/attachment.service';
 
-class AttachmentServiceMock {
-  getOneAttachment(a: any): Promise<Attachment> {
-    return Promise.resolve(new Attachment());
-  }
-}
-
 describe('AttachmentThumbnailComponent', () => {
   let component: AttachmentThumbnailComponent;
   let fixture: ComponentFixture<AttachmentThumbnailComponent>;
@@ -22,7 +16,7 @@ describe('AttachmentThumbnailComponent', () => {
     })
 		.overrideComponent(AttachmentThumbnailComponent, {
 			set: {
-				providers: [{provide: AttachmentService, useClass: AttachmentServiceMock}]
+				providers: [{provide: AttachmentService, useValue: {} }]
 			}
 		})    
     .compileComponents();

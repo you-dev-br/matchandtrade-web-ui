@@ -55,10 +55,6 @@ export class ItemMatcherListComponent implements OnInit {
 		return !item.thumbnailLoaded;
 	}
 	
-	displayThumbnailNotAvailable(item: ItemView) {
-		return item.thumbnailLoaded && !item.attachment;
-	}
-
 	classForThumbnail(item: ItemView): string {
 		let result = 'thumbnail';
 		result += (item.attachment ? ' has-thumbnail' : '');
@@ -110,6 +106,10 @@ export class ItemMatcherListComponent implements OnInit {
   
   obtainAttachment(item: ItemView): Attachment {
     return item.attachment;
+  }
+
+  obtainInfoText(item: ItemView): string {
+    return (item.displayItemMiniView ? 'Less Info' : 'More Info');
   }
 
   private search(tradeMembership: TradeMembership): Promise<any> {

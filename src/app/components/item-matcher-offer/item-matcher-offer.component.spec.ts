@@ -24,6 +24,14 @@ import { ItemMiniViewComponent } from '../item-mini-view/item-mini-view.componen
 import { AttachmentsComponent } from '../attachments/attachments.component';
 import { AttachmentThumbnailComponent } from '../attachment-thumbnail/attachment-thumbnail.component';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
+import { AttachmentService } from '../../services/attachment.service';
+import { Attachment } from '../../classes/pojo/attachment';
+
+class AttachmentServiceMock {
+  get(a: any): Promise<Attachment[]> {
+    return Promise.resolve([]);
+  }
+}
 
 describe('item-matcher-offer.component', () => {
   let component: ItemMatcherOfferComponent;
@@ -57,6 +65,7 @@ describe('item-matcher-offer.component', () => {
       .overrideComponent(ItemMatcherOfferComponent, {
         set: {
           providers:[
+            { provide: AttachmentService, useClass: AttachmentServiceMock },
             { provide: ActivatedRoute, useValue: new ActivatedRouteMock() },
             { provide: ItemService, useClass: ItemServiceMock },
             { provide: NavigationService, useClass: NavigationServiceMock },
