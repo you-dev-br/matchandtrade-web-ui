@@ -54,7 +54,7 @@ export class ItemListComponent implements OnInit {
 
   deleteItem(item: Item) {
     this.loading = true;
-    this.itemService.delete(item._href)
+    this.itemService.delete(item.getHref())
       .then(() =>{
         this.items = this.items.filter(v => {
           return v.itemId != item.itemId;
@@ -76,7 +76,7 @@ export class ItemListComponent implements OnInit {
   }
 
   navigateToItem(item: Item) {
-    this.navigationService.navigate('items', {itemHref: item._href});
+    this.navigationService.navigate('items', {itemHref: item.getHref()});
   }
 
   search(): void {

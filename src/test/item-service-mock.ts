@@ -9,11 +9,10 @@ export class ItemServiceMock {
     return new Promise<Item>((resolve, reject) => {
       const item = new Item();
       item.name = 'ItemServiceMock.GET.name';
-			item._href = 'ItemServiceMock.GET.href';
 			item.description = 'ItemServiceMock.GET.description';
 			item.itemId = 1;
-			const link = new Link('files', 'ItemServiceMock.GET.files.link.href');
-			item._links = [link];
+      item.links.push(new Link('files', 'ItemServiceMock.GET.files.link.href'));
+      item.links.push(new Link('self', 'ItemServiceMock.GET.href'));
       resolve(item);
     });
   };
@@ -34,7 +33,6 @@ export class ItemServiceMock {
     const i = new Item();
     i.name = 'ItemServiceMock.SEARCH.name' + n;
     i.itemId = n;
-    i._href = 'ItemServiceMock.SEARCH.href' + n;
     return i;
   }
   
@@ -42,7 +40,6 @@ export class ItemServiceMock {
     return new Promise<Item>((resolve, reject) => {
       let result: Item = Object.assign({}, item);
       result.itemId = 1;
-      result._href = 'itemHrefMocked';
       resolve(result);
     });
   };

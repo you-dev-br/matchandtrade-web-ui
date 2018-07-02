@@ -1,15 +1,13 @@
 import { Link } from './link';
+import { LinkSupport } from './link-support';
 
-export class Item {
-	_href: string;
+export class Item extends LinkSupport {
 	itemId: number = null;
 	name: string = null;
 	description: string = null;
-	_links: Link[];
 	
 	public getAttachmentsHref(): string {
-		const link: Link = this._links.find(v => v.rel == 'attachments');
-		return (link ? link.href : undefined);
+    return this.getLinkByRel('attachments');
 	}
 
 }

@@ -37,9 +37,9 @@ export class ItemService {
 
   save(item: Item, tradeMembershipHref?: string): Promise<Item> {
 		let result: Promise<Item>;
-		if (item._href) {
+		if (item.getHref()) {
 			result = new Promise((resolve, reject) => {
-				this.httpService.put(item._href, item)
+				this.httpService.put(item.getHref(), item)
 					.then(v => resolve(this.itemTransformer.toPojo(v.json())))
 					.catch(e => reject(e));
 			});

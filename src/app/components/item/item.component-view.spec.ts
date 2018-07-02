@@ -33,7 +33,6 @@ class ItemServiceMock {
     return new Promise<Item>((resolve, reject) => {
 			let result: Item = Object.assign({}, item);
 			result.itemId = 1;
-			result._href = 'itemHrefMocked';
       resolve(result);
     });
   };

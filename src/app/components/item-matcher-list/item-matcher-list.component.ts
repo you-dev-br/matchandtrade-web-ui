@@ -15,7 +15,7 @@ import { TradeMembershipService } from '../../services/trade-membership.service'
 
 class ItemView {
 	constructor(item: Item) {
-		this.href = item._href;
+		this.href = item.getHref();
 		this.name = item.name;
 		this.description = item.description;
 	}

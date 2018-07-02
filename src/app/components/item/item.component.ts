@@ -121,7 +121,7 @@ export class ItemComponent implements OnInit {
 				const addAttachmentsPromisses = new Array<Promise<any>>();
 				this.attachments.forEach(a => {
 					if (a.status == AttachmentStatus.STORED) {
-						const attachmentAdded = this.itemService.addAttachment(v._href, a.attachmentId);
+						const attachmentAdded = this.itemService.addAttachment(v.getHref(), a.attachmentId);
 						addAttachmentsPromisses.push(attachmentAdded);					
 					}
 				});
