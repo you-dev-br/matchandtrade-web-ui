@@ -204,11 +204,11 @@ export class TradeComponent implements OnInit {
   }
 
   onItems(): void {
-    this.navigationService.navigate('item-list', {tradeMembershipHref: this.tradeMembership._href});
+    this.navigationService.navigate('item-list', {tradeMembershipHref: this.tradeMembership.getHref()});
   }
   
   onMatchItems(): void {
-    this.navigationService.navigate('item-matcher-list', {tradeMembershipHref: this.tradeMembership._href});
+    this.navigationService.navigate('item-matcher-list', {tradeMembershipHref: this.tradeMembership.getHref()});
   }
 
 	onResults(): void {

@@ -16,7 +16,7 @@ import { User } from '../../classes/pojo/user';
 import { UserService } from '../../services/user.service';
 
 class TradeProxy {
-  _href: string;
+  href: string;
   description: string;
   tradeId: number = null;
   name: string = null;
@@ -72,7 +72,7 @@ export class TradeListComponent implements OnInit {
   private loadProxy(trade: Trade): TradeProxy {
     const result = new TradeProxy();
     Object.assign(result, trade);
-    result._href = trade.getHref();
+    result.href = trade.getHref();
     result.statusText = this.tradeTransformer.toStateText(trade.state);
 
     // Load organizer data only if the current user is an authenticated user
@@ -112,7 +112,7 @@ export class TradeListComponent implements OnInit {
   }
 
   navigateToTrade(trade: TradeProxy) {
-    this.navigationService.navigate('trades', {tradeHref: trade._href});
+    this.navigationService.navigate('trades', {tradeHref: trade.href});
   }
   
   goToPage(pageNumber: number) {
