@@ -72,6 +72,7 @@ export class TradeListComponent implements OnInit {
   private loadProxy(trade: Trade): TradeProxy {
     const result = new TradeProxy();
     Object.assign(result, trade);
+    result._href = trade.getHref();
     result.statusText = this.tradeTransformer.toStateText(trade.state);
 
     // Load organizer data only if the current user is an authenticated user

@@ -56,9 +56,9 @@ export class TradeService {
 	
   save(trade: Trade): Promise<Trade> {
     let result = new Promise<Trade>( (resolve, reject) => {
-      if (trade._href) {
+      if (trade.getHref()) {
         this.httpService
-          .put(trade._href, trade)
+          .put(trade.getHref(), trade)
           .then(v => resolve(this.tradeTransformer.toPojo(v.json())))
           .catch(e => reject(e));
       } else {

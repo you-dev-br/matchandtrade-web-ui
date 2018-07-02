@@ -1,3 +1,5 @@
+import { LinkSupport } from "./link-support";
+
 export enum TradeState {
   SUBMITTING_ITEMS='SUBMITTING_ITEMS',
   MATCHING_ITEMS='MATCHING_ITEMS',
@@ -7,8 +9,7 @@ export enum TradeState {
   CANCELED='CANCELED'
 };
 
-export class Trade {
-  _href: string;
+export class Trade extends LinkSupport {
   description: string;
   tradeId: number = null;
   name: string = null;

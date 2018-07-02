@@ -172,7 +172,7 @@ export class TradeComponent implements OnInit {
 				 * "The current trade". Hence I am adding the extra navigation below so angular's router pushes the 
 				 * 'tradeHref' to the path and pushing it to the browsers history.
 				 */
-				this.navigationService.navigate('trades',  {tradeHref: v._href}, true);
+				this.navigationService.navigate('trades',  {tradeHref: v.getHref()}, true);
         return v;
       })
       .then(v => {
@@ -212,7 +212,7 @@ export class TradeComponent implements OnInit {
   }
 
 	onResults(): void {
-    this.navigationService.navigate('trade-result', {tradeHref: this.trade._href});
+    this.navigationService.navigate('trade-result', {tradeHref: this.trade.getHref()});
 	}
 	
   displaySubscribeButton(): boolean {
