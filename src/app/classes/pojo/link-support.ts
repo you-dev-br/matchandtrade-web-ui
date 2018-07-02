@@ -4,10 +4,6 @@ export class LinkSupport {
   
   links: Link[] = new Array<Link>();
 
-  constructor(links?: Link[]) {
-    this.links = (links ? links : new Array<Link>());
-  }
-
   getHref(): string {
     return this.getLinkByRel('self');
   }

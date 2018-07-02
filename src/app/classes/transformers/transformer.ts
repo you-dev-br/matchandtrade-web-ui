@@ -4,12 +4,17 @@ import { Page } from '../search/page';
 import { Pagination } from '../../classes/search/pagination';
 import { SearchResult } from '../search/search-result';
 import { Trade } from '../pojo/trade';
+import { Link } from '../pojo/link';
 
 export abstract class Transformer<T> {
 
     private buildPagination(page: Page, response: Response) {
         let paginationTotalCount = parseInt(response.headers.get('x-pagination-total-count'));
         return new Pagination(page.number, page.size, paginationTotalCount)
+    }
+
+    public buildLinks(links: any): Link[] {
+      return (links ? links : new Array<Link>());
     }
 
     public extractHref(_links: any): string {
