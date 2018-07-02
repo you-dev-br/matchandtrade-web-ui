@@ -137,7 +137,7 @@ export class ItemMatcherOfferComponent implements OnInit {
   }
 
   obtainInfoText(): string {
-    return (this.wantedItemExpandedInfo ? 'More Info' : 'Less Info');
+    return (this.wantedItemExpandedInfo ? 'Less Info' : 'More Info');
   }
   
   navigateBack(): void {
