@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-  <app-item-mini-view *ngIf="wantedItemExpandedInfo" [itemHref]="wantedItem._href"></app-item-mini-view>
+  <app-item-mini-view *ngIf="wantedItemExpandedInfo" [itemHref]="wantedItem.getHref()"></app-item-mini-view>
   <p class="selection-note">
 		Note: you can select multiple items to increase your chances but only one of the selected items would be exchanged.
 	</p>
