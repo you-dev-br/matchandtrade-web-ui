@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'match-and-trade';
+  isMobileMenuExpanded = false;
+
+  classMobileMenu(): string {
+    let expanded = this.isMobileMenuExpanded ? 'x-menu-mobile-expanded' : '';
+    return 'x-header-menu-mobile-items ' + expanded;
+  }
+
+  toogleMobileMenu() {
+    this.isMobileMenuExpanded = !this.isMobileMenuExpanded;
+  }
 }

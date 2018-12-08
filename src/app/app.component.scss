@@ -1,0 +1,53 @@
+.x-layout {
+  display: flex;
+}
+.x-layout-center {
+  max-width: 1024px;
+}
+.x-layout-side {
+  flex: 1 1 auto;
+  background-color: black;
+}
+.x-header {
+  border-bottom: lavender solid 3px;
+  background-color: #5755d9;
+  height: 3em;
+}
+.x-header-container {
+  display: flex;
+}
+.x-title {
+  padding: .7em 0em 0em 1em;
+  background-color: #5755d9;
+  color: white;
+  flex: 1 1 auto;
+}
+.x-menu-mobile-icon {
+  padding: .6em 1.5em 0em 0em;
+}
+.x-menu-mobile-icon .icon {
+  color: white;
+}
+.x-header-menu-mobile-items {
+  background-color: #5755d9;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.15s ease-out;
+}
+.x-menu-mobile-expanded {
+  max-height: 500px;
+  transition: max-height 0.25s ease-in;
+}
+.x-header-menu-desktop {
+  padding: .6em 1.5em 0em 0em;
+  flex: 0 1 auto;
+}
+.x-header-menu-desktop .icon {
+  color: white;
+}
+.x-avatar {
+  padding: .4em 1em 0em 0em;
+}
+.x-body-content {
+  background-color: white;
+}

@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+html {
+  height: 100%;
+}
+body {
+  background-color: #fafafa;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAyNCIgaGVpZ2h0PSIxMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KIDxnPgogIDxyZWN0IHdpZHRoPSIxMDI0IiBoZWlnaHQ9IjEwIiBmaWxsPSJ3aGl0ZSIvPgogPC9nPgo8L3N2Zz4=");
+  background-position: center;
+  background-repeat: repeat-y;
+  min-height: 100%;
+}
