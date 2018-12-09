@@ -1,5 +1,19 @@
 # MatchAndTrade
 
+## Setup
+```
+nvm install 10.14.1
+nvm use 10.14.1
+npm install -g @angular/cli
+npm install
+npm --version
+#-> 6.4.1
+node --version
+#-> v10.14.1
+ng version
+#-> Angular CLI: 7.1.2
+```
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.
 
 ## Development server
