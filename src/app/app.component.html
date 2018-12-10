@@ -1,1 +1,44 @@
-<mat-toolbar>My App</mat-toolbar>
+<div class="layout">
+	<div class="layout-side primary-background-color"></div>
+	<div class="layout-center">
+		<mat-toolbar color="primary">
+			<span>Match &amp; Trade</span>
+			<span class="layout-center"></span>
+			<span>
+				<button mat-icon-button [matMenuTriggerFor]="menu">
+					<mat-icon>menu</mat-icon>
+				</button>
+				<mat-menu #menu="matMenu">
+					<button mat-menu-item>
+						<mat-icon>swap_horiz</mat-icon>
+						<span>Trades</span>
+					</button>
+					<button mat-menu-item disabled>
+						<mat-icon>redeem</mat-icon>
+						<span>Articles</span>
+					</button>
+					<button mat-menu-item>
+						<mat-icon>account_circle</mat-icon>
+						<span>Profile</span>
+					</button>
+				</mat-menu>
+				<button mat-icon-button>
+					<mat-icon>account_circle</mat-icon>
+				</button>	
+			</span>
+		</mat-toolbar>
+	</div>
+	<div class="layout-side primary-background-color"></div>
+</div>
+
+<div class="layout">
+	<div class="layout-side"></div>
+	<div class="layout-content">
+		<router-outlet></router-outlet>
+		The Tour of Heroes tutorial covers the fundamentals of Angular. In this tutorial you will build an app that helps a staffing
+		agency manage its stable of heroes. This basic app has many of the features you'd expect to find in a data-driven
+		application. It acquires and displays a list of heroes, edits a selected hero's detail, and navigates among different
+		views of heroic data.
+	</div>
+	<div class="layout-side"></div>
+</div>
