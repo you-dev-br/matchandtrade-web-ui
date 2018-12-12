@@ -12,7 +12,7 @@ import {
   declarations: [],
   imports: [
 		MatButtonModule, 
-		MatCheckboxModule, 
+		MatCheckboxModule,
 		MatIconModule,
 		MatMenuModule, 
 		MatToolbarModule,

@@ -4,7 +4,12 @@
 		<mat-toolbar color="primary">
 			<span>Match &amp; Trade</span>
 			<span class="layout-center"></span>
-			<span>
+			<span class="menu-mobile hide-in-large-devices">
+				<button mat-icon-button (click)="toggleMobileMenu()">
+					<mat-icon>menu</mat-icon>
+				</button>
+			</span>	
+			<span class="menu-desktop hide-in-small-devices">
 				<button mat-icon-button [matMenuTriggerFor]="menu">
 					<mat-icon>menu</mat-icon>
 				</button>
@@ -22,23 +27,36 @@
 						<span>Profile</span>
 					</button>
 				</mat-menu>
-				<button mat-icon-button>
+				<button class="hide-in-small-devices" mat-icon-button>
 					<mat-icon>account_circle</mat-icon>
-				</button>	
+				</button>
 			</span>
 		</mat-toolbar>
 	</div>
 	<div class="layout-side primary-background-color"></div>
 </div>
 
+<div class=horizontal-divider></div>
+
+
+
 <div class="layout">
 	<div class="layout-side"></div>
 	<div class="layout-content">
+		<div [class]="classMobileMenu()">
+			<div class="menu-mobile-item"><mat-icon>swap_horiz</mat-icon>Trades</div>
+			<div class="menu-mobile-item"><mat-icon>redeem</mat-icon>Articles</div>
+			<div class="menu-mobile-item"><mat-icon>account_circle</mat-icon>Profile</div>
+			<div class="menu-mobile-item"><mat-icon>exit_to_app</mat-icon>Sign-off</div> <!-- TODO: Better icon-->
+		</div>
 		<router-outlet></router-outlet>
-		The Tour of Heroes tutorial covers the fundamentals of Angular. In this tutorial you will build an app that helps a staffing
-		agency manage its stable of heroes. This basic app has many of the features you'd expect to find in a data-driven
-		application. It acquires and displays a list of heroes, edits a selected hero's detail, and navigates among different
-		views of heroic data.
+		<p>
+			The Tour of Heroes tutorial covers the fundamentals of Angular. In this tutorial you will build an app that helps a
+			staffing
+			agency manage its stable of heroes. This basic app has many of the features you'd expect to find in a data-driven
+			application. It acquires and displays a list of heroes, edits a selected hero's detail, and navigates among different
+			views of heroic data.
+		</p>	
 	</div>
 	<div class="layout-side"></div>
 </div>

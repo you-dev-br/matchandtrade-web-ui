@@ -1,8 +1,21 @@
+// Breakpoints as defined in material design specs
+@media not screen and (max-width: 600px) {
+	.hide-in-large-devices {
+		display: none;
+	}
+} 
+@media only screen and (max-width: 600px) {
+	.hide-in-small-devices {
+		display: none;
+	}
+}
+
 html, body {
   height: 100%;
 }
+
 body {
-	background-color: #fafafa;
+	background-color: #fafafa; // TODO: Variable
 	// White square 1024px width
   background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAyNCIgaGVpZ2h0PSIxMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KIDxnPgogIDxyZWN0IHdpZHRoPSIxMDI0IiBoZWlnaHQ9IjEwIiBmaWxsPSJ3aGl0ZSIvPgogPC9nPgo8L3N2Zz4=");
   background-position: center;
