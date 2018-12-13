@@ -1,37 +1,27 @@
+@import '../styles/variables.scss';
 
 .horizontal-divider {
-	background-color: lavender;
+	background-color: $primary-color-200;
 	height: 3px;
 }
-
 .layout {
   display: flex;
 }
-
 .layout-center {
-	flex: 10 0 auto;
+	flex: 100 0 auto;
   max-width: 1024px;
 }
-
 .layout-content {
 	display: block;
 	flex: 1 1 auto;
 	max-width: 1024px;
 }
-
 .layout-side {
 	flex: 1 0 auto;
 }
 
-.primary-background-color {
-	background-color: #673ab7; // TODO: Variable
-}
-
-
-
-
 .menu-mobile-items {
-	background-color: rebeccapurple; // TODO: variable
+	background-color: $primary-color-700;
 	color: white;
   max-height: 0px;
   overflow: hidden;
@@ -45,10 +35,15 @@
 	margin: 0em .5em 0em 0em;
 }
 .menu-mobile-item:hover {
-	background-color: #673ab7; // TODO: variable
+	background-color: $primary-color;
+	cursor: pointer;
 }
 .menu-mobile-expanded {
-  max-height: 500px;
+  max-height: 800px;
   transition: max-height 0.25s ease-in;
+}
+
+.primary-background-color {
+	background-color: $primary-color;
 }
 

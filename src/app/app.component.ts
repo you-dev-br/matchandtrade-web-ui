@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-	isMobileMenuExpanded = true;
+	isMobileMenuExpanded = false;
 	
 	classMobileMenu(): string {
 		let expanded = this.isMobileMenuExpanded ? 'menu-mobile-expanded' : '';
