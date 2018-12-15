@@ -5,6 +5,7 @@ import { MaterialDesignModule } from '../config/material-design.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ListComponent } from './list/list.component';
 import { TradeRoutingModule } from './trade-routing.module';
+import { AppCommonModule } from '../common/common.module';
 
 @NgModule({
 	declarations: [EntryComponent, ListComponent],
@@ -12,7 +13,8 @@ import { TradeRoutingModule } from './trade-routing.module';
 		CommonModule,
 		ReactiveFormsModule,
 		MaterialDesignModule,
-		TradeRoutingModule
+		TradeRoutingModule,
+		AppCommonModule,
 	]
 })
 export class TradeModule { }

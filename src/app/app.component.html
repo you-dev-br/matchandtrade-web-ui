@@ -2,7 +2,7 @@
 	<div class="layout-side primary-background-color"></div>
 	<div class="layout-center">
 		<mat-toolbar color="primary">
-			<span class="home-title" routerLink="/welcome">Match &amp; Trade</span>
+			<span class="home-title" (click)="navigate('welcome')">Match &amp; Trade</span>
 			<span class="layout-center"></span>
 			<span class="menu-mobile hide-in-large-devices">
 				<button mat-icon-button (click)="toggleMobileMenu()">
@@ -14,7 +14,7 @@
 					<mat-icon>menu</mat-icon>
 				</button>
 				<mat-menu #menu="matMenu">
-					<button mat-menu-item routerLink="/trades">
+					<button mat-menu-item (click)="navigate('trades')">
 						<mat-icon>swap_horiz</mat-icon>
 						<span>Trades</span>
 					</button>
@@ -42,7 +42,7 @@
 	<div class="layout-side"></div>
 	<div class="layout-content">
 		<div [class]="classMobileMenu()">
-			<div class="menu-mobile-item" routerLink="/trades"><mat-icon>swap_horiz</mat-icon>Trades</div>
+			<div class="menu-mobile-item" (click)="navigate('trades')"><mat-icon>swap_horiz</mat-icon>Trades</div>
 			<div class="menu-mobile-item"><mat-icon>redeem</mat-icon>Articles</div>
 			<div class="menu-mobile-item"><mat-icon>account_circle</mat-icon>Profile</div>
 			<div class="menu-mobile-item"><mat-icon>exit_to_app</mat-icon>Sign-off</div> <!-- TODO: Better icon-->

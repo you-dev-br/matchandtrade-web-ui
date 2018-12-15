@@ -49,6 +49,10 @@
 	background-color: $primary-color;
 	cursor: pointer;
 }
+.menu-mobile-item:active {
+	background-color: $primary-color-900;
+	cursor: pointer;
+}
 .menu-mobile-expanded {
   max-height: 800px;
   transition: max-height 0.25s ease-in;

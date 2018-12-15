@@ -1,0 +1,15 @@
+@import '../../../styles/variables.scss';
+
+div {
+  display: flex;
+  align-items: center;
+  color: $primary-color;
+}
+h3 {
+  display: inline;
+  color: $primary-color;
+  margin-left: .2em;
+}
+i {
+  font-size: 1.8em;
+}
