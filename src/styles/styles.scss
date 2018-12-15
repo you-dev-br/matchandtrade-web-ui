@@ -3,10 +3,16 @@
 	.hide-in-large-devices {
 		display: none;
 	}
+	.mt-content {
+		padding: 1em 1em 0em 1em;
+	}
 } 
 @media only screen and (max-width: 600px) {
 	.hide-in-small-devices {
 		display: none;
+	}
+	.mt-content {
+		padding: 0em .5em 0em .5em;
 	}
 }
 
@@ -22,4 +28,12 @@ body {
   background-repeat: repeat-y;
 	font-family: Roboto, "Helvetica Neue", sans-serif;
 	margin: 0;
+}
+
+.mt-form {
+  display: flex;
+  flex-direction: column;
+}
+.mt-form > * {
+  width: 100%;
 }
