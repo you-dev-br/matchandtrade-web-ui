@@ -14,7 +14,7 @@
 					<mat-icon>menu</mat-icon>
 				</button>
 				<mat-menu #menu="matMenu">
-					<button mat-menu-item>
+					<button mat-menu-item routerLink="/trades">
 						<mat-icon>swap_horiz</mat-icon>
 						<span>Trades</span>
 					</button>
@@ -42,13 +42,12 @@
 	<div class="layout-side"></div>
 	<div class="layout-content">
 		<div [class]="classMobileMenu()">
-			<div class="menu-mobile-item"><mat-icon>swap_horiz</mat-icon>Trades</div>
+			<div class="menu-mobile-item" routerLink="/trades"><mat-icon>swap_horiz</mat-icon>Trades</div>
 			<div class="menu-mobile-item"><mat-icon>redeem</mat-icon>Articles</div>
 			<div class="menu-mobile-item"><mat-icon>account_circle</mat-icon>Profile</div>
 			<div class="menu-mobile-item"><mat-icon>exit_to_app</mat-icon>Sign-off</div> <!-- TODO: Better icon-->
 		</div>
 		<router-outlet></router-outlet>
-		<app-trade-list></app-trade-list>
 	</div>
 	<div class="layout-side"></div>
 </div>

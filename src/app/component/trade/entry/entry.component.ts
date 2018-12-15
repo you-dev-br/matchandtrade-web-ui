@@ -9,7 +9,7 @@ import { Trade } from 'src/app/pojo/trade';
 	styleUrls: ['./entry.component.scss'],
 	providers: [TradeService]
 })
-export class TradeListComponent implements OnInit {
+export class EntryComponent implements OnInit {
 	trade: Trade = new Trade();
   tradeFormGroup: FormGroup;
   descriptionFormControl: AbstractControl;

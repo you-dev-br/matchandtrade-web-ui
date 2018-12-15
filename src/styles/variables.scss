@@ -102,7 +102,10 @@ $color-map-warn: (
 );
 
 $primary-color: map-get($color-map-primary, 500);
+$primary-color-50: map-get($color-map-primary, 50);
+$primary-color-100: map-get($color-map-primary, 100);
 $primary-color-200: map-get($color-map-primary, 200);
 $primary-color-700: map-get($color-map-primary, 700);
+$gray-50: #eceff1;
 $accent-color: map-get($color-map-accent, 500);
 $warn-color: map-get($color-map-warn, 500);

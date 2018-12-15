@@ -10,6 +10,7 @@ import {
 	MatMenuModule,
 	MatRadioModule,
 	MatSelectModule,
+	MatTableModule,
 	MatToolbarModule,
 } from '@angular/material';
 
@@ -25,6 +26,7 @@ import {
 		MatMenuModule, 
 		MatRadioModule,
 		MatSelectModule,
+		MatTableModule,
 		MatToolbarModule,
 	],
 	exports: [
@@ -37,6 +39,7 @@ import {
 		MatMenuModule, 
 		MatRadioModule,
 		MatSelectModule,
+		MatTableModule,
 		MatToolbarModule,
 	],
 })

@@ -14,7 +14,7 @@ export class TradeService {
 	findAll(): Trade[] {
 		return [
 				{name: 'first', description: 'First trade'},
-				{name: 'second', description: 'Second trade'},
+				{name: 'second', description: 'Second trade. Location: 401 Games\nSubmission Starts: 10/10/2018\nSubmission Ends: 20/10/2018'},
 				{name: 'Three', description: 'Third trade'},
 				{name: '4th', description: 'Fourth trade'},
 			];
