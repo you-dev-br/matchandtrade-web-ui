@@ -4,6 +4,16 @@
 	background-color: $primary-color-200;
 	height: 3px;
 }
+
+.home-title {
+	cursor: pointer;
+	height: 3em;
+	line-height: 3em;
+	// Increase hitting area
+	margin: 0em 2em 0em -1em;
+	padding: 0em 1em 0em 1em;
+}
+
 .layout {
   display: flex;
 }

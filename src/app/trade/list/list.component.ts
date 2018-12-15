@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TradeService } from 'src/app/service/trade.service';
-import { Trade } from 'src/app/pojo/trade';
-import { NavigationService } from 'src/app/service/navigation.service';
+import { TradeService } from '../../service/trade.service';
+import { Trade } from '../../pojo/trade';
+import { NavigationService } from '../../service/navigation.service';
 
 @Component({
   selector: 'app-list',
@@ -21,6 +21,6 @@ export class ListComponent implements OnInit {
 	}
 	
 	navigate(trade: Trade) {
-		this.navigationService.navigate("trade-entries", trade.name);
+		this.navigationService.navigate("trades/entries", trade.name);
 	}
 }

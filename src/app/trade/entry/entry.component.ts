@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { TradeService } from 'src/app/service/trade.service';
-import { Trade } from 'src/app/pojo/trade';
+import { TradeService } from '../../service/trade.service';
+import { Trade } from '../../pojo/trade';
 
 @Component({
   selector: 'app-trade-list',
