@@ -12,7 +12,9 @@
 			matInput
 			[formControl]="tradeFormGroup.controls['description']"
 			placeholder="Description"
-			rows="4">
+			cdkTextareaAutosize
+			cdkAutosizeMinRows="2"
+			cdkAutosizeMaxRows="30">
 		</textarea>
 	</mat-form-field>
 	<div>
