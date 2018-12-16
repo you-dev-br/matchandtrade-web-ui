@@ -6,6 +6,7 @@ import { AppComponent } from '../app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialDesignModule } from './material-design.module';
 import { TradeModule } from '../trade/trade.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { TradeModule } from '../trade/trade.module';
     AppRoutingModule,
 		BrowserAnimationsModule,
 		MaterialDesignModule,
-		TradeModule
+    HttpClientModule,
+    TradeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

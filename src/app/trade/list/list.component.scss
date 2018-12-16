@@ -3,6 +3,7 @@
 table {
   width: 100%;
 }
+
 .row:hover {
 	cursor: pointer;
 	background-color: $gray-50;
@@ -12,11 +13,12 @@ table {
 }
 
 .trade-name {
-	font-size: large;
-	font-weight: bold;
 	margin: 1em 0em .5em 0em;
 }
 .trade-description {
-	font-size: medium;
-	margin: 0em 0em 1em 0em;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+	font-size: small;
+	font-weight: lighter;
+	margin: 0em 0em 1em 1em;
+  white-space: pre-wrap;
 }

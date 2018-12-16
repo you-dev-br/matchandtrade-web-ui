@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TradeService } from '../../service/trade.service';
-import { Trade } from '../../pojo/trade';
+import { Trade } from '../../class/pojo/trade';
 
 @Component({
   selector: 'app-trade-list',
@@ -57,5 +57,4 @@ export class EntryComponent implements OnInit {
 	onSubmit(): void {
 		console.log(this.trade);
 	}
-
 }

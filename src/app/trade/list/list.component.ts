@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TradeService } from '../../service/trade.service';
-import { Trade } from '../../pojo/trade';
+import { Trade } from '../../class/pojo/trade';
 import { NavigationService } from '../../service/navigation.service';
+import { Page } from '../../class/search/page';
 
 @Component({
   selector: 'app-list',
@@ -17,7 +18,11 @@ export class ListComponent implements OnInit {
 		private tradeService: TradeService) { }
 
   ngOnInit() {
-		this.trades = this.tradeService.findAll();
+		const page: Page = new Page(1, 20);
+		this.tradeService
+			.findAll(page)
+			.then(v => this.trades = v)
+			.catch(e => console.log(e));
 	}
 	
 	navigate(trade: Trade) {
