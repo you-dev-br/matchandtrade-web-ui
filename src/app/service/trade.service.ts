@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { filter, map} from 'rxjs/operators';
+import { map} from 'rxjs/operators';
 import { Trade } from '../class/pojo/trade';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { TradeTransformer } from '../class/transformer/trade-transformer';

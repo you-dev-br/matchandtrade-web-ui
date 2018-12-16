@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TradeService } from '../../service/trade.service';
 import { Trade } from '../../class/pojo/trade';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trade-list',
@@ -16,16 +17,15 @@ export class EntryComponent implements OnInit {
   nameFormControl: AbstractControl;
 
 	constructor(
+		private formBuilder: FormBuilder,
 		private tradeService: TradeService,
-		private formBuilder: FormBuilder) {
-  }
+		private router: Router) { }
 
   ngOnInit() {
 		this.trade = this.tradeService.find(1);
 		this.buildForm();
 		this.populateForm();
 	}
-	
 
 	private buildForm(): void {
     this.tradeFormGroup = this.formBuilder.group({

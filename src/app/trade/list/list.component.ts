@@ -37,7 +37,7 @@ export class ListComponent implements OnInit {
 	}
 
 	navigate(trade: Trade) {
-		this.navigationService.navigate("trades/entries", trade.name);
+		this.navigationService.navigate("trades/entries", trade.getHref());
 	}
 
 	onPageChange(pageEvent: PageEvent) {
