@@ -4,6 +4,7 @@ import { Trade } from '../class/pojo/trade';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { TradeTransformer } from '../class/transformer/trade-transformer';
 import { Page } from '../class/search/page';
+import { SearchResult } from '../class/search/search-result';
 
 @Injectable({
   providedIn: 'root'
@@ -26,14 +27,15 @@ export class TradeService {
 		return this.buildTrade('Board games in Toronto - Summer 2018', 'Location: 401 Games\nSubmission Starts: 10/10/2018\nSubmission Ends: 20/10/2018');
 	}
 
-	findAll(page: Page): Promise<Trade[]> {
+	findAll(page: Page): Promise<SearchResult<Trade>> {
+		
 		return this.http
 			.get(this.findAllBuildUrl(page), {observe: 'response'})
-			.pipe(map(response => this.findAllMapResponse(response)))
+			.pipe(map(response => this.findAllMapResponse(response, page)))
 			.toPromise();
 	}
 
-	private findAllBuildUrl(page?: Page): string {
+	private findAllBuildUrl(page: Page): string {
 		let result = '/matchandtrade-api/v1/trades';
 		if (page) {
 			result += `?_pageNumber=${page.number}&_pageSize=${page.size}`;
@@ -41,10 +43,10 @@ export class TradeService {
 		return result;
 	}
 
-	private findAllMapResponse(response: HttpResponse<any>) {
+	private findAllMapResponse(response: HttpResponse<any>, page: Page) {
 		if (response.status != 200) {
 			throw new Error(`Unable to GET trades. HttpStatus: ${response.status}`);
 		}
-		return this.tradeTransformer.toPojos(response.body);
+		return this.tradeTransformer.toSearchResult(response, page);
 	}
 }

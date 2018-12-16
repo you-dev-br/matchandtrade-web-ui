@@ -3,9 +3,10 @@ import { Pagination } from '../search/pagination';
 import { SearchResult } from '../search/search-result';
 import { Trade } from '../pojo/trade';
 import { Link } from '../pojo/link';
+import { HttpResponse } from '@angular/common/http';
 
 export abstract class Transformer<T> {
-    private buildPagination(page: Page, response: Response) {
+    private buildPagination(page: Page, response: HttpResponse<any>) {
         let paginationTotalCount = parseInt(response.headers.get('x-pagination-total-count'));
         return new Pagination(page.number, page.size, paginationTotalCount)
     }
@@ -36,9 +37,9 @@ export abstract class Transformer<T> {
         return result;
     }
 
-    public toSearchResult(response: Response, page: Page): SearchResult<T> {
+    public toSearchResult(response: HttpResponse<any>, page: Page): SearchResult<T> {
         let pagination = this.buildPagination(page, response);
-        let results = this.toPojos(response.json());
+        let results = this.toPojos(response.body);
         return new SearchResult<T>(results, pagination);
     }
 }

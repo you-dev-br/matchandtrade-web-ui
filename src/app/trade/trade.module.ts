@@ -10,9 +10,9 @@ import { AppCommonModule } from '../common/common.module';
 @NgModule({
 	declarations: [EntryComponent, ListComponent],
   imports: [
+		MaterialDesignModule,
 		CommonModule,
 		ReactiveFormsModule,
-		MaterialDesignModule,
 		TradeRoutingModule,
 		AppCommonModule,
 	]
