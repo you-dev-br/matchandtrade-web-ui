@@ -28,12 +28,20 @@ export class TradeService {
 
 	findAll(page: Page): Promise<Trade[]> {
 		return this.http
-			.get('/matchandtrade-api/v1/trades', {observe: 'response'})
-			.pipe(map(response => this.mapFindAllResponse(response)))
+			.get(this.findAllBuildUrl(page), {observe: 'response'})
+			.pipe(map(response => this.findAllMapResponse(response)))
 			.toPromise();
 	}
 
-	mapFindAllResponse(response: HttpResponse<any>) {
+	private findAllBuildUrl(page?: Page): string {
+		let result = '/matchandtrade-api/v1/trades';
+		if (page) {
+			result += `?_pageNumber=${page.number}&_pageSize=${page.size}`;
+		}
+		return result;
+	}
+
+	private findAllMapResponse(response: HttpResponse<any>) {
 		if (response.status != 200) {
 			throw new Error(`Unable to GET trades. HttpStatus: ${response.status}`);
 		}
