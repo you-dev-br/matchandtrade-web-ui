@@ -1,0 +1,11 @@
+@import '../../../styles/variables.scss';
+
+mat-card {
+  border: 2px solid $warn-color-300;
+}
+mat-card-subtitle {
+  color: $warn-color-300;
+}
+div {
+  color: $warn-color-900;
+}

@@ -1,6 +1,9 @@
 <div class="mt-content">
 	<app-content-title title="Trade" icon="swap_horiz"></app-content-title>
 </div>
+
+<app-message-panel class="mt-content" message="{{errorMessage}}"></app-message-panel>
+
 <form class="mt-content mt-form" [formGroup]="tradeFormGroup" (ngSubmit)="onSubmit()">
 	<mat-form-field>
 		<input

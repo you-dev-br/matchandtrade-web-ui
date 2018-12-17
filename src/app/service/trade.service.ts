@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { map} from 'rxjs/operators';
+import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { throwError } from 'rxjs';
+import { map, catchError, } from 'rxjs/operators';
+
 import { Trade } from '../class/pojo/trade';
-import { HttpClient, HttpResponse } from '@angular/common/http';
 import { TradeTransformer } from '../class/transformer/trade-transformer';
 import { Page } from '../class/search/page';
 import { SearchResult } from '../class/search/search-result';
@@ -10,43 +12,45 @@ import { SearchResult } from '../class/search/search-result';
   providedIn: 'root'
 })
 export class TradeService {
-	tradeTransformer: TradeTransformer = new TradeTransformer();
+  tradeTransformer: TradeTransformer = new TradeTransformer();
 
-	constructor(
-		private http: HttpClient) {}
+  constructor(
+    private http: HttpClient) { }
 
-	private buildTrade(name: string, desc: string): Trade {
-		const result = new Trade();
-		result.tradeId = 1;
-		result.name = name;
-		result.description = desc;
-		return result;
-	}
+  find(href: string): Promise<Trade> {
+    return this.http
+      .get<Trade>(href)
+      .pipe(catchError(this.findErrorHanlder))
+      .toPromise();
+  }
 
-	find(tradeId: number): Trade {
-		return this.buildTrade('Board games in Toronto - Summer 2018', 'Location: 401 Games\nSubmission Starts: 10/10/2018\nSubmission Ends: 20/10/2018');
-	}
+  findAll(page: Page): Promise<SearchResult<Trade>> {
+    return this.http
+      .get(this.findAllBuildUrl(page), { observe: 'response' })
+      .pipe(map(response => this.findAllMapResponse(response, page)))
+      .toPromise();
+  }
 
-	findAll(page: Page): Promise<SearchResult<Trade>> {
-		
-		return this.http
-			.get(this.findAllBuildUrl(page), {observe: 'response'})
-			.pipe(map(response => this.findAllMapResponse(response, page)))
-			.toPromise();
-	}
+  private findAllBuildUrl(page: Page): string {
+    return `/matchandtrade-api/v1/trades?_pageNumber=${page.number}&_pageSize=${page.size}`;
+  }
 
-	private findAllBuildUrl(page: Page): string {
-		let result = '/matchandtrade-api/v1/trades';
-		if (page) {
-			result += `?_pageNumber=${page.number}&_pageSize=${page.size}`;
-		}
-		return result;
-	}
+  private findAllMapResponse(response: HttpResponse<any>, page: Page) {
+    if (response.status != 200) {
+      throw new Error(`Unable to GET trades. HttpStatus: ${response.status}`);
+    }
+    return this.tradeTransformer.toSearchResult(response, page);
+  }
 
-	private findAllMapResponse(response: HttpResponse<any>, page: Page) {
-		if (response.status != 200) {
-			throw new Error(`Unable to GET trades. HttpStatus: ${response.status}`);
-		}
-		return this.tradeTransformer.toSearchResult(response, page);
-	}
+  private findErrorHanlder(error: HttpErrorResponse) {
+    let errorMessage;
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      errorMessage = `Client error: ${error.error.message}`;
+    } else {
+      // The backend returned an unsuccessful response code.
+      errorMessage = `${error.status}: ${error.error.description}`;
+    }
+    return throwError(errorMessage);
+  };
 }

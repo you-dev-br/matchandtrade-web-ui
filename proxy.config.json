@@ -1,6 +1,6 @@
 {
 	"/matchandtrade-api": {
-		"__comment": "Request to be redirected to matchandtrade-web-api",
+		"__comment": "Request to be redirected to matchandtrade-api",
 		"target":"http://localhost:8080",
 		"secure":"false",
 		"logLevel":"debug"

@@ -3,7 +3,6 @@ import { Pagination } from '../search/pagination';
 import { SearchResult } from '../search/search-result';
 import { Link } from '../pojo/link';
 import { HttpResponse } from '@angular/common/http';
-import { link } from 'fs';
 
 export abstract class Transformer<T> {
   private buildPagination(page: Page, response: HttpResponse<any>) {
@@ -14,8 +13,7 @@ export abstract class Transformer<T> {
   public buildLinks(links: any): Link[] {
     let result: Link[] = [];
     if (links) {
-      const linkEntries = Object.entries(links);
-      result = linkEntries.map(v => {
+      result = Object.entries(links).map(v => {
         return new Link(v[0], v[1]['href']);
       });
     }
