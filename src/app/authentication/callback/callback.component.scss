@@ -1,0 +1,12 @@
+@import '../../../styles/variables.scss';
+
+.error-card {
+  margin-top: 5em;
+}
+.error-messsage {
+  color: $warn-color;
+}
+
+mat-card-actions {
+  text-align: center;
+}

@@ -22,6 +22,10 @@
 						<mat-icon>redeem</mat-icon>
 						<span>Articles</span>
 					</button>
+					<button mat-menu-item (click)="navigate('authentication')">
+						<mat-icon>exit_to_app</mat-icon>
+						<span>Sign-in</span>
+					</button>
 					<button mat-menu-item>
 						<mat-icon>account_circle</mat-icon>
 						<span>Profile</span>
@@ -45,7 +49,7 @@
 			<div class="menu-mobile-item" (click)="navigate('trades')"><mat-icon>swap_horiz</mat-icon>Trades</div>
 			<div class="menu-mobile-item"><mat-icon>redeem</mat-icon>Articles</div>
 			<div class="menu-mobile-item"><mat-icon>account_circle</mat-icon>Profile</div>
-			<div class="menu-mobile-item"><mat-icon>exit_to_app</mat-icon>Sign-off</div> <!-- TODO: Better icon-->
+			<div class="menu-mobile-item" (click)="navigate('authentication')"><mat-icon>exit_to_app</mat-icon>Sign-in</div> <!-- TODO: Better icon-->
 		</div>
 		<router-outlet></router-outlet>
 	</div>

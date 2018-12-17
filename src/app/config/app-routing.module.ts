@@ -3,8 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 // TODO: Lazy loading
 const routes: Routes = [
-  { path: 'trades', loadChildren: '../trade/trade.module#TradeModule' },
   { path: '', loadChildren: '../home/home.module#HomeModule' },
+  { path: 'authentication', loadChildren: '../authentication/authentication.module#AuthenticationModule' },
+  { path: 'trades', loadChildren: '../trade/trade.module#TradeModule' },
 ];
 
 @NgModule({
