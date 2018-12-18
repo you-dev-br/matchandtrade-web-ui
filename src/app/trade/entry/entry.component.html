@@ -3,7 +3,7 @@
 
 	<app-message-panel *ngIf="errorMessage" message="{{errorMessage}}"></app-message-panel>
 
-	<form class="mt-content mt-form" [formGroup]="tradeFormGroup" (ngSubmit)="onSubmit()">
+	<form *ngIf="tradeFormGroup" class="mt-content mt-form" [formGroup]="tradeFormGroup" (ngSubmit)="onSubmit()">
 		<mat-form-field>
 			<input
 				class="mt-input"
