@@ -3,6 +3,7 @@ import { Link } from "./link";
 export class LinkSupport {
   links: Link[] = new Array<Link>();
 
+	// TODO: Rename
   getHref(): string {
     return this.getLinkByRel('self');
   }
@@ -13,5 +14,11 @@ export class LinkSupport {
       return link.href;
     }
     return undefined;
-  }
+	}
+	
+	// TODO: Rename
+	setHref(href: string): any {
+		const link = new Link('self', href);
+		this.links.push(link);
+	}
 }

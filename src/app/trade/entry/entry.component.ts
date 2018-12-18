@@ -32,6 +32,7 @@ export class EntryComponent extends LoadingAndErrorSupport implements OnInit {
     this.href = this.navigationService.obtainData(this.route);
     try {
       this.trade = await this.tradeService.find(this.href);
+      this.trade.setHref(this.href);
       this.buildForm();
       this.populateForm();
     } catch (e) {
@@ -68,7 +69,11 @@ export class EntryComponent extends LoadingAndErrorSupport implements OnInit {
     this.descriptionFormControl.setValue(this.trade.description);
   }
 
-  onSubmit(): void {
-    console.log(this.trade);
+  onSubmit() {
+    this.loading = true;
+    this.tradeService
+      .save(this.trade)
+      .catch(e => this.errorMessage = e)
+      .then(() => this.loading = false);
   }
 }

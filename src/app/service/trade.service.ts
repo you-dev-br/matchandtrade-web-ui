@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpRequest, HttpHeaders } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { map, catchError, } from 'rxjs/operators';
 
@@ -21,10 +21,13 @@ export class TradeService {
     private http: HttpClient) { }
 
   async find(href: string): Promise<Trade> {
-    const authorizationHeader = await this.authenticationService.obtainAuthorizationHeader();
+		const authorizationHeader = await this.authenticationService.obtainAuthorizationHeader();
 		return this.http
-			.get<Trade>(href, { headers: { 'Authorization': authorizationHeader } })
-			.pipe(catchError(HttpUtil.httpErrorResponseHandler))
+			.get(href, { headers: authorizationHeader })
+			.pipe(
+				catchError(HttpUtil.httpErrorResponseHandler),
+				map(response => this.tradeTransformer.toPojo(response))
+			)
 			.toPromise();
   }
 
@@ -40,5 +43,17 @@ export class TradeService {
 
   private findAllBuildUrl(page: Page): string {
     return `/matchandtrade-api/v1/trades?_pageNumber=${page.number}&_pageSize=${page.size}`;
-  }
+	}
+
+	async save(trade: Trade): Promise<Trade> {
+		const authorizationHeader = await this.authenticationService.obtainAuthorizationHeader();
+		const request = new HttpRequest<Trade>('PUT', trade.getHref(), trade, { headers: authorizationHeader });
+		return this.http
+			.request(request)
+			.pipe(
+				catchError(HttpUtil.httpErrorResponseHandler),
+				map(response => this.tradeTransformer.toPojo(response))
+			)
+			.toPromise();
+	}
 }
