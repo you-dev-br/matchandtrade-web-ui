@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TradeService } from '../../service/trade.service';
 import { Trade } from '../../class/pojo/trade';
 import { NavigationService } from '../../service/navigation.service';
-import { Page } from '../../class/search/page';
 import { PageEvent } from '@angular/material';
 import { Pagination } from '../../class/search/pagination';
-import { SearchResult } from '../../class/search/search-result';
 
 @Component({
   selector: 'app-list',
@@ -14,16 +12,16 @@ import { SearchResult } from '../../class/search/search-result';
 	providers: [NavigationService]
 })
 export class ListComponent implements OnInit {
-	trades: Trade[] = [];
-	pagination: Pagination = new Pagination(1, 25);
 	errorMessage: string;
+	isLoading: boolean = true;
+	pagination: Pagination = new Pagination(1, 25);
+	trades: Trade[] = [];
 
 	constructor(
 		private navigationService: NavigationService,
 		private tradeService: TradeService) { }
 
   ngOnInit() {
-		// TODO: Message error!
 		this.findAll();
 	}
 	
@@ -34,7 +32,8 @@ export class ListComponent implements OnInit {
 				this.trades = searchResult.results;
 				this.pagination = searchResult.pagination;
 			})
-			.catch(e => this.errorMessage = e);
+			.catch(e => this.errorMessage = e)
+			.then(() => this.isLoading = false);
 	}
 
 	navigate(trade: Trade) {

@@ -1,9 +1,14 @@
 <div class="mt-content">
-
 	<app-content-title title="Trades" icon="swap_horiz"></app-content-title>
+</div>
 
+<div class="mt-content">
 	<app-message-panel *ngIf="errorMessage" message="{{errorMessage}}"></app-message-panel>
+</div>
 
+<app-spinner [visible]="isLoading"></app-spinner>
+
+<div *ngIf="!isLoading" class="mt-content">
 	<table mat-table [dataSource]="trades" class="mat-elevation-z3">
 		<ng-container matColumnDef="name">
 			<th mat-header-cell *matHeaderCellDef> Name </th>
@@ -20,5 +25,4 @@
 		[pageSize]="pagination.page.size"
 		[pageSizeOptions]="[5, 10, 25, 50]">
 	</mat-paginator>
-
 </div>

@@ -15,7 +15,8 @@ import { TradeService } from '../../service/trade.service';
 export class EntryComponent implements OnInit {
   descriptionFormControl: AbstractControl;
   errorMessage: string;
-  href: string;
+	href: string;
+	isLoading: boolean = true;
   nameFormControl: AbstractControl;
   trade: Trade = new Trade();
   tradeFormGroup: FormGroup;
@@ -34,7 +35,8 @@ export class EntryComponent implements OnInit {
       .catch(e => this.errorMessage = e)
 			.then(() => {
 				this.buildForm();
-				this.populateForm();		
+				this.populateForm();
+				this.isLoading = false;		
 			});
   }
 
