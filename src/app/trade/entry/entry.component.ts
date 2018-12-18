@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from '../../service/navigation.service';
 import { Trade } from '../../class/pojo/trade';
 import { TradeService } from '../../service/trade.service';
+import { LoadingAndErrorSupport } from 'src/app/class/util/loading-and-error-support';
 
 @Component({
   selector: 'app-trade-list',
@@ -12,32 +13,32 @@ import { TradeService } from '../../service/trade.service';
   styleUrls: ['./entry.component.scss'],
   providers: [TradeService]
 })
-export class EntryComponent implements OnInit {
+export class EntryComponent extends LoadingAndErrorSupport implements OnInit {
   descriptionFormControl: AbstractControl;
-  errorMessage: string;
-	href: string;
-	isLoading: boolean = true;
+  href: string;
   nameFormControl: AbstractControl;
   trade: Trade = new Trade();
   tradeFormGroup: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private navigationService: NavigationService,
-    private route: ActivatedRoute,
-    private tradeService: TradeService) { }
+      private formBuilder: FormBuilder,
+      private navigationService: NavigationService,
+      private route: ActivatedRoute,
+      private tradeService: TradeService) {
+    super();
+  }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.href = this.navigationService.obtainData(this.route);
-    this.tradeService
-      .find(this.href)
-      .then(v => this.trade = v)
-      .catch(e => this.errorMessage = e)
-			.then(() => {
-				this.buildForm();
-				this.populateForm();
-				this.isLoading = false;		
-			});
+    try {
+      this.trade = await this.tradeService.find(this.href);
+      this.buildForm();
+      this.populateForm();
+    } catch (e) {
+      this.errorMessage = e;
+    } finally {
+      this.loading = false;
+    }
   }
 
   private buildForm(): void {
@@ -55,7 +56,7 @@ export class EntryComponent implements OnInit {
       return { invalid: true };
     }
   }
-
+  
   private nameValidator(control: FormControl): { [s: string]: boolean } {
     if (control.value && (control.value.length < 3 || control.value.length > 150)) {
       return { invalid: true };

@@ -1,35 +1,35 @@
 <div class="mt-content">
-	<app-content-title title="Trade" icon="swap_horiz"></app-content-title>
+  <app-content-title title="Trade" icon="swap_horiz"></app-content-title>
 </div>
 
 <div class="mt-content">
-	<app-message-panel *ngIf="errorMessage" message="{{errorMessage}}"></app-message-panel>
+  <app-message-panel *ngIf="errorMessage" message="{{errorMessage}}"></app-message-panel>
 </div>
 
-<app-spinner [visible]="isLoading"></app-spinner>
+<app-spinner [visible]="loading"></app-spinner>
 
-<div class="mt-content">
-	<form *ngIf="tradeFormGroup" class="mt-content mt-form" [formGroup]="tradeFormGroup" (ngSubmit)="onSubmit()">
-		<mat-form-field>
-			<input
-				class="mt-input"
-				matInput 
-				[formControl]="tradeFormGroup.controls['name']"
-				placeholder="Name">
-		</mat-form-field>
-		<mat-form-field>
-			<textarea
-				class="mt-input"
-				matInput
-				[formControl]="tradeFormGroup.controls['description']"
-				placeholder="Description"
-				cdkTextareaAutosize
-				cdkAutosizeMinRows="2"
-				cdkAutosizeMaxRows="30">
-			</textarea>
-		</mat-form-field>
-		<div>
-			<button mat-flat-button color="primary" type="submit">OK</button>
-		</div>
-	</form>
+<div *ngIf="showContent()" class="mt-content">
+  <form class="mt-form" [formGroup]="tradeFormGroup" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input
+        class="mt-input"
+        matInput 
+        [formControl]="tradeFormGroup.controls['name']"
+        placeholder="Name">
+    </mat-form-field>
+    <mat-form-field>
+      <textarea
+        class="mt-input"
+        matInput
+        [formControl]="tradeFormGroup.controls['description']"
+        placeholder="Description"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="2"
+        cdkAutosizeMaxRows="30">
+      </textarea>
+    </mat-form-field>
+    <div>
+      <button mat-flat-button color="primary" type="submit">OK</button>
+    </div>
+  </form>
 </div>

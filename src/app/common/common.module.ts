@@ -8,13 +8,13 @@ import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [ContentTitleComponent, MessagePanelComponent, SpinnerComponent],
   imports: [
-		CommonModule,
+    CommonModule,
     MaterialDesignModule,
   ],
   exports: [
     ContentTitleComponent,
-		MessagePanelComponent,
-		SpinnerComponent,
+    MessagePanelComponent,
+    SpinnerComponent,
   ]
 })
 export class AppCommonModule { }
