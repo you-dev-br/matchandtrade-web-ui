@@ -31,11 +31,11 @@ export class EntryComponent implements OnInit {
     this.tradeService
       .find(this.href)
       .then(v => this.trade = v)
-      .catch(e => {
-        this.errorMessage = e;
-      });
-    this.buildForm();
-    this.populateForm();
+      .catch(e => this.errorMessage = e)
+			.then(() => {
+				this.buildForm();
+				this.populateForm();		
+			});
   }
 
   private buildForm(): void {

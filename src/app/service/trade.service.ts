@@ -7,6 +7,7 @@ import { Trade } from '../class/pojo/trade';
 import { TradeTransformer } from '../class/transformer/trade-transformer';
 import { Page } from '../class/search/page';
 import { SearchResult } from '../class/search/search-result';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,19 +16,28 @@ export class TradeService {
   tradeTransformer: TradeTransformer = new TradeTransformer();
 
   constructor(
+    private authenticationService: AuthenticationService,
     private http: HttpClient) { }
 
   find(href: string): Promise<Trade> {
-    return this.http
-      .get<Trade>(href)
-      .pipe(catchError(this.findErrorHanlder))
-      .toPromise();
+		// TODO: Simplify this by checking if is authenticated.
+    return this.authenticationService
+      .obtainAuthorizationHeader()
+      .then(authorizationHeader => {
+        return this.http
+					.get<Trade>(href, {headers: {'Authorization': authorizationHeader}})
+					.pipe(catchError(this.httpErrorResponseHandler))
+					.toPromise();
+      });
   }
 
   findAll(page: Page): Promise<SearchResult<Trade>> {
     return this.http
       .get(this.findAllBuildUrl(page), { observe: 'response' })
-      .pipe(map(response => this.findAllMapResponse(response, page)))
+			.pipe(
+				catchError(this.httpErrorResponseHandler),
+				map(response => this.tradeTransformer.toSearchResult(response, page))
+			)
       .toPromise();
   }
 
@@ -35,22 +45,13 @@ export class TradeService {
     return `/matchandtrade-api/v1/trades?_pageNumber=${page.number}&_pageSize=${page.size}`;
   }
 
-  private findAllMapResponse(response: HttpResponse<any>, page: Page) {
-    if (response.status != 200) {
-      throw new Error(`Unable to GET trades. HttpStatus: ${response.status}`);
-    }
-    return this.tradeTransformer.toSearchResult(response, page);
-  }
-
-  private findErrorHanlder(error: HttpErrorResponse) {
-    let errorMessage;
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      errorMessage = `Client error: ${error.error.message}`;
-    } else {
-      // The backend returned an unsuccessful response code.
-      errorMessage = `${error.status}: ${error.error.description}`;
-    }
+  private httpErrorResponseHandler(error: HttpErrorResponse) {
+		let errorMessage;
+		if (error.status && error.status > 100) {
+      errorMessage = `${error.status}: ${error.error.error}`;			
+		} else {
+			errorMessage = `Client error: ${error.message}`;
+		}
     return throwError(errorMessage);
   };
 }

@@ -1,29 +1,30 @@
 <div class="mt-content">
 	<app-content-title title="Trade" icon="swap_horiz"></app-content-title>
+
+	<app-message-panel *ngIf="errorMessage" message="{{errorMessage}}"></app-message-panel>
+
+	<form class="mt-content mt-form" [formGroup]="tradeFormGroup" (ngSubmit)="onSubmit()">
+		<mat-form-field>
+			<input
+				class="mt-input"
+				matInput 
+				[formControl]="tradeFormGroup.controls['name']"
+				placeholder="Name">
+		</mat-form-field>
+		<mat-form-field>
+			<textarea
+				class="mt-input"
+				matInput
+				[formControl]="tradeFormGroup.controls['description']"
+				placeholder="Description"
+				cdkTextareaAutosize
+				cdkAutosizeMinRows="2"
+				cdkAutosizeMaxRows="30">
+			</textarea>
+		</mat-form-field>
+		<div>
+			<button mat-flat-button color="primary" type="submit">OK</button>
+		</div>
+	</form>
+
 </div>
-
-<app-message-panel class="mt-content" message="{{errorMessage}}"></app-message-panel>
-
-<form class="mt-content mt-form" [formGroup]="tradeFormGroup" (ngSubmit)="onSubmit()">
-	<mat-form-field>
-		<input
-			class="mt-input"
-			matInput 
-			[formControl]="tradeFormGroup.controls['name']"
-			placeholder="Name">
-	</mat-form-field>
-	<mat-form-field>
-		<textarea
-			class="mt-input"
-			matInput
-			[formControl]="tradeFormGroup.controls['description']"
-			placeholder="Description"
-			cdkTextareaAutosize
-			cdkAutosizeMinRows="2"
-			cdkAutosizeMaxRows="30">
-		</textarea>
-	</mat-form-field>
-	<div>
-		<button mat-flat-button color="primary" type="submit">OK</button>
-	</div>
-</form>

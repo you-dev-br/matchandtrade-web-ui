@@ -16,6 +16,7 @@ import { SearchResult } from '../../class/search/search-result';
 export class ListComponent implements OnInit {
 	trades: Trade[] = [];
 	pagination: Pagination = new Pagination(1, 25);
+	errorMessage: string;
 
 	constructor(
 		private navigationService: NavigationService,
@@ -33,7 +34,7 @@ export class ListComponent implements OnInit {
 				this.trades = searchResult.results;
 				this.pagination = searchResult.pagination;
 			})
-			.catch(e => console.log(e));
+			.catch(e => this.errorMessage = e);
 	}
 
 	navigate(trade: Trade) {

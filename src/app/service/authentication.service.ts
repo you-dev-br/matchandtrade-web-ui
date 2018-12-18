@@ -18,12 +18,12 @@ export class AuthenticationService {
       .toPromise();
   }
   
-  authorizeMap(response: HttpResponse<any>): string {
+  private authorizeMap(response: HttpResponse<any>): string {
       this.authorizationHeader = response.body['authenticationHeader'];
       return this.authorizationHeader;
   }
 
-  authorizeErrorHandler(error: HttpErrorResponse) {
+  private authorizeErrorHandler(error: HttpErrorResponse) {
     let errorMessage;
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -33,5 +33,13 @@ export class AuthenticationService {
       errorMessage = `${error.status}: ${error.statusText}`;
     }
     return throwError(errorMessage);
+  }
+	
+	// TODO: Cache it locally
+  obtainAuthorizationHeader(): Promise<string> {
+    if (!this.authorizationHeader) {
+      return this.authorize();
+    }
+    return Promise.resolve(this.authorizationHeader);
   }
 }
