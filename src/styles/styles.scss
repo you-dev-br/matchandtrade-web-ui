@@ -48,19 +48,7 @@ body {
 // ========================
 // Material Design Override
 // ========================
-// <mat-paginator/> : Center 'Items per page'
-.mat-select-value {
-	text-align: center;
-}
-// <mat-paginator/> : Remove next/previous page when disabled
+// <mat-paginator/>: Hide next/previous page when disabled
 .mat-icon-button[disabled][disabled] {
 	color: transparent;
-}
-// <mat-paginator/> : Shrink 'page of pages' so it can fit on mobile displays
-mat-paginator > div > div > div.mat-paginator-range-actions > .mat-paginator-range-label {
-	margin: 0;
-	min-width: 6em;
-}
-body > app-root > div:nth-child(3) > div.layout-content > app-list > div > mat-paginator > div > div {
-	padding: 0;
 }

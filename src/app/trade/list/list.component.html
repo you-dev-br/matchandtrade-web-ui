@@ -19,10 +19,11 @@
     </ng-container>
     <tr class="row" mat-row *matRowDef="let row; columns: ['name']"></tr>
   </table>
-  <mat-paginator
+	<mat-paginator
+		[hidePageSize]="true"
     [length]="pagination.totalEntries"
-    (page)="onPageChange($event)"
-    [pageSize]="pagination.page.size"
-    [pageSizeOptions]="[5, 10, 25, 50]">
+		(page)="onPageChange($event)"
+		[pageIndex]="pagination.page.number-1"
+    [pageSize]="pagination.page.size">
   </mat-paginator>
 </div>
