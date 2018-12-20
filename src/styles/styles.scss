@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 // Breakpoints as defined in material design specs
 @media not screen and (max-width: 600px) {
 	.hide-in-large-devices {
@@ -51,4 +53,14 @@ body {
 // <mat-paginator/>: Hide next/previous page when disabled
 .mat-icon-button[disabled][disabled] {
 	color: transparent;
+}
+
+// <mat-form-field/>: Hide border when disabled
+.mat-input-element:disabled  {
+	color: $dark-text;
+}
+// <mat-form-field/>: Add left border
+mat-form-field > div > div {
+	border-left: 3px solid $primary-color-200;
+	padding-left: .25em;
 }

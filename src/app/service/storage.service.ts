@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 enum LocalStorageKey {
 	AUTHENTICATION='AUTHENTICATION',
+	USER_ID='USER_ID',
 }
 
 @Injectable({
@@ -13,11 +14,22 @@ export class StorageService {
 	}
 
 	findAuthentication(): string {
-		const authenticationAsString = localStorage.getItem(LocalStorageKey.AUTHENTICATION);
-		return JSON.parse(authenticationAsString);
+		return localStorage.getItem(LocalStorageKey.AUTHENTICATION);
+	}
+
+	findUserId(): number {
+		const userIdFromStorage = localStorage.getItem(LocalStorageKey.USER_ID);
+		if (userIdFromStorage) {
+			return Number.parseInt(userIdFromStorage);
+		}
+		return null;
 	}
 
 	saveAuthentication(authentication: string): void {
-		localStorage.setItem(LocalStorageKey.AUTHENTICATION, JSON.stringify(authentication));
+		localStorage.setItem(LocalStorageKey.AUTHENTICATION, authentication);
+	}
+
+	saveUserId(userId: number): void {
+		localStorage.setItem(LocalStorageKey.USER_ID, userId.toString());
 	}
 }

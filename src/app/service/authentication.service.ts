@@ -8,11 +8,12 @@ import { HttpUtil } from '../class/util/http-util';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private authorizationHeader: string;
+	private authorizationHeader: string;
+	private userId: number;
 
   constructor(
     private storageService: StorageService,
-    private http: HttpClient) { console.log('Authentication service constructor!') }
+    private http: HttpClient) { }
 
   authorize(): Promise<string> {
     return this.http
@@ -23,12 +24,11 @@ export class AuthenticationService {
 
   private authorizeMap(response: HttpResponse<any>): string {
     this.authorizationHeader = response.body['authenticationHeader'];
-    console.log('map', this.authorizationHeader);
     return this.authorizationHeader;
   }
 
   async obtainAuthorizationHeader(): Promise<HttpHeaders> {
-    // Try to get if from memory for fast performance
+    // Try to get if from memory
     if (!this.authorizationHeader) {
       // If is not in memomry; then find in local storage
       this.authorizationHeader = this.storageService.findAuthentication();
@@ -40,5 +40,31 @@ export class AuthenticationService {
     this.storageService.saveAuthentication(this.authorizationHeader);
     const headers = new HttpHeaders({'Authorization': this.authorizationHeader});
     return Promise.resolve(headers);
-  }
+	}
+	
+	async obtainUserId(): Promise<number> {
+		// Try to get if from memory
+		if (!this.userId) {
+			// If is not in memomry; then find in local storage
+      this.userId = this.storageService.findUserId();
+			// If is not is local storate; then try getting from the server
+			if (!this.userId) {
+				this.userId = await this.findUserId();
+			}
+		}
+		this.storageService.saveUserId(this.userId);
+		return this.userId;
+	}
+
+	private async findUserId(): Promise<number> {
+		const authorizationHeader = await this.obtainAuthorizationHeader();
+    return this.http
+      .get('matchandtrade-api/v1/authentications/', { headers: authorizationHeader })
+      .pipe(catchError(HttpUtil.httpErrorResponseHandler), map(this.findUserIdMap))
+      .toPromise();
+	}
+
+	private findUserIdMap(response: HttpResponse<any>): number {
+    return response['userId'];
+	}
 }
