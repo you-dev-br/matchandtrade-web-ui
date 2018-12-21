@@ -3,12 +3,12 @@
 </div>
 
 <div class="mt-content">
-  <app-message-panel *ngIf="errorMessage" message="{{errorMessage}}"></app-message-panel>
+  <app-message-panel *ngIf="hasMessage()" [message]="messageText" [type]="messageType" [icon]="messageIcon"></app-message-panel>
 </div>
 
 <app-spinner [visible]="loading"></app-spinner>
 
-<div *ngIf="showContent()" class="mt-content">
+<div *ngIf="!loading" class="mt-content">
   <form class="mt-form" [formGroup]="tradeFormGroup" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <input

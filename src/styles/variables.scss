@@ -110,6 +110,11 @@ $primary-color-900: map-get($color-map-primary, 900);
 $gray-50: #fafafa;
 $gray-200: #eeeeee;
 $accent-color: map-get($color-map-accent, 500);
+// TODO: Create an info color-map
+$info-color-50: #E0F2F1;
+$info-color-100: #B2DFDB;
+$info-color-800: #00695C;
 $warn-color: map-get($color-map-warn, 500);
+$warn-color-50: map-get($color-map-warn, 50);
 $warn-color-300: map-get($color-map-warn, 300);
-$warn-color-900: map-get($color-map-warn, 900);
+$warn-color-800: map-get($color-map-warn, 900);

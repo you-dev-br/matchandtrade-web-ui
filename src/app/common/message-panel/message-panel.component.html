@@ -1,4 +1,8 @@
-<mat-card>
-  <mat-card-subtitle>Error</mat-card-subtitle>
-  <div>{{message}}</div>
-</mat-card>
+<div [class]="classType()">
+  <div class="icon">
+    <i class="material-icons">{{obtainIcon()}}</i>
+  </div>
+  <div class="message">
+    {{message}}
+  </div>
+</div>

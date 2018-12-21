@@ -64,7 +64,15 @@ body {
 	color: $dark-text;
 }
 // <mat-form-field/>: Add left border
-mat-form-field > div > div {
-	border-left: 3px solid $primary-color-200;
-	padding-left: .25em;
+.mat-form-field-infix {
+	margin-left: 6px;
+}
+.mat-form-field-infix::before {
+	background-color: $primary-color-200;
+	content: "";
+	height:100%;
+	margin-left: -6px;
+	position:absolute;
+	top:0;
+	width:3px;
 }

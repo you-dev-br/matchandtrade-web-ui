@@ -8,7 +8,7 @@
 
 <app-spinner [visible]="loading"></app-spinner>
 
-<div *ngIf="showContent()" class="mt-content">
+<div *ngIf="!loading" class="mt-content">
 	<table mat-table [dataSource]="trades" class="mat-elevation-z3">
 		<ng-container matColumnDef="name">
 			<th mat-header-cell *matHeaderCellDef> Name </th>
@@ -28,6 +28,6 @@
 </mat-paginator>
 </div>
 
-<div *ngIf="showContent()" class="mt-content mt-action-panel">
+<div *ngIf="!loading" class="mt-content mt-action-panel">
 	<button mat-flat-button color="primary" (click)="navigate()">Create</button>
 </div>

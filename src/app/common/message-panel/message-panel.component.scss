@@ -1,11 +1,35 @@
 @import '../../../styles/variables.scss';
 
-mat-card {
+%message {
+  align-items: center;
+  border-radius: 5px;
+  display: flex;
+  margin-bottom: 1em;
+  padding: .3em .5em .3em .5em;
+}
+
+.info-message {
+  @extend %message;
+  background-color: $info-color-50;
+  border: 2px solid $info-color-800;
+  color: $info-color-800;
+}
+
+.error-message {
+  @extend %message;
+  background-color: $warn-color-50;
   border: 2px solid $warn-color-300;
+  color: $warn-color-800;
 }
-mat-card-subtitle {
-  color: $warn-color-300;
+
+.icon {
+  margin-top: .3em;
 }
-div {
-  color: $warn-color-900;
+
+.material-icons {
+  font-size: 1.75em;
+}
+
+.message {
+  margin-left: .5em;
 }
