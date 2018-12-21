@@ -3,7 +3,7 @@
 </div>
 
 <div class="mt-content">
-  <app-message-panel *ngIf="errorMessage" message="{{errorMessage}}"></app-message-panel>
+  <app-message-banner *ngIf="hasMessage()" [message]="messageText" [type]="messageType" [icon]="messageIcon"></app-message-banner>
 </div>
 
 <app-spinner [visible]="loading"></app-spinner>

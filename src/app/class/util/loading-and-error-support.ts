@@ -1,6 +1,6 @@
-import { MessageType } from '../../common/message-panel/message-panel.component';
+import { MessageType } from '../../common/message-banner/message-banner.component';
 
-export class LoadingAndErrorSupport {
+export class LoadingAndMessageBannerSupport {
   loading: boolean = true;
   messageText: string;
   messageType: MessageType;

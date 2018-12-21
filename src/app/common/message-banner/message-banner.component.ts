@@ -24,11 +24,11 @@ export class Message {
 }
 
 @Component({
-  selector: 'app-message-panel',
-  templateUrl: './message-panel.component.html',
-  styleUrls: ['./message-panel.component.scss']
+  selector: 'app-message-banner',
+  templateUrl: './message-banner.component.html',
+  styleUrls: ['./message-banner.component.scss']
 })
-export class MessagePanelComponent {
+export class MessageBannerComponent {
   @Input()
   icon: string;
   @Input()

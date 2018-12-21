@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { ContentTitleComponent } from './content-title/content-title.component';
-import { MessagePanelComponent } from './message-panel/message-panel.component';
+import { MessageBannerComponent } from './message-banner/message-banner.component';
 import { MaterialDesignModule } from '../config/material-design.module';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-  declarations: [ContentTitleComponent, MessagePanelComponent, SpinnerComponent],
+  declarations: [ContentTitleComponent, MessageBannerComponent, SpinnerComponent],
   imports: [
     CommonModule,
     MaterialDesignModule,
   ],
   exports: [
     ContentTitleComponent,
-    MessagePanelComponent,
+    MessageBannerComponent,
     SpinnerComponent,
   ]
 })

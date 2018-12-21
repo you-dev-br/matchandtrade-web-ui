@@ -5,7 +5,7 @@ import { NavigationService } from '../../service/navigation.service';
 import { PageEvent } from '@angular/material';
 import { Pagination } from '../../class/search/pagination';
 import { SearchResult } from 'src/app/class/search/search-result';
-import { LoadingAndErrorSupport } from 'src/app/class/util/loading-and-error-support';
+import { LoadingAndMessageBannerSupport } from 'src/app/class/util/loading-and-error-support';
 
 @Component({
   selector: 'app-list',
@@ -13,7 +13,7 @@ import { LoadingAndErrorSupport } from 'src/app/class/util/loading-and-error-sup
   styleUrls: ['./list.component.scss'],
   providers: [NavigationService]
 })
-export class ListComponent extends LoadingAndErrorSupport implements OnInit {
+export class ListComponent extends LoadingAndMessageBannerSupport implements OnInit {
   pagination: Pagination = new Pagination(1, 15);
   trades: Trade[] = [];
 
@@ -34,7 +34,7 @@ export class ListComponent extends LoadingAndErrorSupport implements OnInit {
       this.trades = searchResult.results;
       this.pagination = searchResult.pagination;
     } catch (e) {
-      this.errorMessage = e;
+			this.showErrorMessage(e);
     } finally {
       this.loading = false;
     }

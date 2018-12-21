@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
-import { LoadingAndErrorSupport } from 'src/app/class/util/loading-and-error-support';
+import { LoadingAndMessageBannerSupport } from 'src/app/class/util/loading-and-error-support';
 import { MembershipService } from 'src/app/service/membership.service';
 import { NavigationService } from '../../service/navigation.service';
 import { Trade } from '../../class/pojo/trade';
 import { TradeService } from '../../service/trade.service';
 import { Membership, MembershipType } from 'src/app/class/pojo/membership';
-import { Message } from '../../common/message-panel/message-panel.component';
 
 @Component({
   selector: 'app-trade-list',
@@ -16,7 +15,7 @@ import { Message } from '../../common/message-panel/message-panel.component';
   styleUrls: ['./entry.component.scss'],
   providers: [TradeService]
 })
-export class EntryComponent extends LoadingAndErrorSupport implements OnInit {
+export class EntryComponent extends LoadingAndMessageBannerSupport implements OnInit {
   descriptionFormControl: AbstractControl;
   href: string;
   tradeOwner: false;
@@ -90,11 +89,25 @@ export class EntryComponent extends LoadingAndErrorSupport implements OnInit {
     this.descriptionFormControl.setValue(this.trade.description);
   }
 
+  private obtainTradeFromForm(): Trade {
+    const result = new Trade();
+    result.name = this.nameFormControl.value;
+    result.description = this.descriptionFormControl.value;
+    // Sanitize description, empty string must be treated as undefined or we get server error: description must be bigger than 3 chars
+    if (result.description != null) {
+      if (result.description.length == 0) {
+        result.description = undefined;
+      } else {
+        result.description = result.description.trim();
+      }
+    }
+    return result;
+  }
+
   async onSubmit() {
     this.loading = true;
     try {
-      this.trade.name = this.nameFormControl.value;
-      this.trade.description = this.descriptionFormControl.value;
+      this.trade = this.obtainTradeFromForm();
       await this.tradeService.save(this.trade);
       this.showInfoMessage('Trade saved', 'save');
     } catch (e) {
