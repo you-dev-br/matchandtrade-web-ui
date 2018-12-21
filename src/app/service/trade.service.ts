@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpRequest, HttpHeaders } from '@angular/common/http';
-import { throwError } from 'rxjs';
+import { HttpClient, HttpRequest, HttpHeaders } from '@angular/common/http';
 import { map, catchError, } from 'rxjs/operators';
 
 import { Trade } from '../class/pojo/trade';
@@ -19,6 +18,12 @@ export class TradeService {
   constructor(
     private authenticationService: AuthenticationService,
     private http: HttpClient) { }
+
+	private buildSaveRequest(authorizationHeader: HttpHeaders, trade: Trade): HttpRequest<Trade> {
+		let httpMethod = trade.getHref() ? 'PUT' : 'POST';
+		let url = trade.getHref() ? trade.getHref() : '/matchandtrade-api/v1/trades/';
+		return new HttpRequest<Trade>(httpMethod, url, trade, { headers: authorizationHeader });
+	}
 
   async find(href: string): Promise<Trade> {
 		const authorizationHeader = await this.authenticationService.obtainAuthorizationHeader();
@@ -46,8 +51,8 @@ export class TradeService {
 	}
 
 	async save(trade: Trade): Promise<Trade> {
-		const authorizationHeader = await this.authenticationService.obtainAuthorizationHeader();
-		const request = new HttpRequest<Trade>('PUT', trade.getHref(), trade, { headers: authorizationHeader });
+		const authorizationHeader: HttpHeaders = await this.authenticationService.obtainAuthorizationHeader();
+		const request: HttpRequest<Trade> = this.buildSaveRequest(authorizationHeader, trade);
 		return this.http
 			.request(request)
 			.pipe(

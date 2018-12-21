@@ -14,7 +14,7 @@ import { LoadingAndErrorSupport } from 'src/app/class/util/loading-and-error-sup
   providers: [NavigationService]
 })
 export class ListComponent extends LoadingAndErrorSupport implements OnInit {
-  pagination: Pagination = new Pagination(1, 25);
+  pagination: Pagination = new Pagination(1, 15);
   trades: Trade[] = [];
 
   constructor(
@@ -40,8 +40,9 @@ export class ListComponent extends LoadingAndErrorSupport implements OnInit {
     }
   }
 
-  navigate(trade: Trade) {
-    this.navigationService.navigate("trades/entries", trade.getHref());
+  navigate(trade?: Trade) {
+		const href = trade ? trade.getHref() : null;
+    this.navigationService.navigate("trades/entries", {href: href});
   }
 
   onPageChange(pageEvent: PageEvent) {
