@@ -22,13 +22,13 @@ export class TradeService {
 	private buildSaveRequest(authorizationHeader: HttpHeaders, trade: Trade): HttpRequest<Trade> {
 		let httpMethod = trade.getHref() ? 'PUT' : 'POST';
 		let url = trade.getHref() ? trade.getHref() : '/matchandtrade-api/v1/trades/';
-		return new HttpRequest<Trade>(httpMethod, url, trade, { headers: authorizationHeader });
+		return new HttpRequest<Trade>(httpMethod, url, trade, {headers: authorizationHeader});
 	}
 
   async find(href: string): Promise<Trade> {
 		const authorizationHeader = await this.authenticationService.obtainAuthorizationHeader();
 		return this.http
-			.get(href, { headers: authorizationHeader })
+			.get(href, { headers: authorizationHeader, observe: 'response' })
 			.pipe(
 				catchError(HttpUtil.httpErrorResponseHandler),
 				map(response => this.tradeTransformer.toPojo(response))

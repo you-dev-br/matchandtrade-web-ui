@@ -89,26 +89,24 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
     this.descriptionFormControl.setValue(this.trade.description);
   }
 
-  private obtainTradeFromForm(): Trade {
-    const result = new Trade();
-    result.name = this.nameFormControl.value;
-    result.description = this.descriptionFormControl.value;
+  private loadTradeFromForm() {
+    this.trade.name = this.nameFormControl.value;
+    this.trade.description = this.descriptionFormControl.value;
     // Sanitize description, empty string must be treated as undefined or we get server error: description must be bigger than 3 chars
-    if (result.description != null) {
-      if (result.description.length == 0) {
-        result.description = undefined;
+    if (this.trade.description != null) {
+      if (this.trade.description.length == 0) {
+        this.trade.description = undefined;
       } else {
-        result.description = result.description.trim();
+        this.trade.description = this.trade.description.trim();
       }
     }
-    return result;
   }
 
   async onSubmit() {
     this.loading = true;
     try {
-      this.trade = this.obtainTradeFromForm();
-      await this.tradeService.save(this.trade);
+			this.loadTradeFromForm();
+      this.trade = await this.tradeService.save(this.trade);
       this.showInfoMessage('Trade saved', 'save');
     } catch (e) {
       this.showErrorMessage(e);

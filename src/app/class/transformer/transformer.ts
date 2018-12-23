@@ -13,21 +13,11 @@ export abstract class Transformer<T> {
   public buildLinks(links: any): Link[] {
     let result: Link[] = [];
     if (links) {
-      result = Object.entries(links).map(v => {
-        return new Link(v[0], v[1]['href']);
-      });
-    }
-    return result;
-  }
-
-  public extractHref(_links: any): string {
-    let result;
-    if (_links) {
-      _links.forEach(v => {
-        if (v.rel == 'self') {
-          result = v.href;
-        }
-      });
+      for (let link of links) {
+        const rel = Object.getOwnPropertyNames(link)[0];
+        const href = link[rel];
+        result.push(new Link(rel, href));
+      }
     }
     return result;
   }

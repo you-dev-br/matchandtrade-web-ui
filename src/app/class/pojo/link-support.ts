@@ -9,7 +9,10 @@ export class LinkSupport {
   }
 
   getLinkByRel(rel: string): string {
-    const link = this.links.find(v => v.rel == rel);
+    const link: Link = this.links.find(v => {
+			console.log(v, v.rel, rel);
+			return v.rel == rel;
+		});
     if (link) {
       return link.href;
     }
