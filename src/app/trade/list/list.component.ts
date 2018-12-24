@@ -41,8 +41,8 @@ export class ListComponent extends LoadingAndMessageBannerSupport implements OnI
   }
 
   navigate(trade?: Trade) {
-		const href = trade ? trade.getHref() : null;
-    this.navigationService.navigate("trades/entries", {href: href});
+		const href = trade ? trade.getSelfHref() : null;
+    this.navigationService.navigate("trades/entries", {tradeHref: href});
   }
 
   onPageChange(pageEvent: PageEvent) {

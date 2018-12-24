@@ -17,8 +17,6 @@ import { Membership, MembershipType } from 'src/app/class/pojo/membership';
 })
 export class EntryComponent extends LoadingAndMessageBannerSupport implements OnInit {
   descriptionFormControl: AbstractControl;
-  href: string;
-  tradeOwner: false;
   nameFormControl: AbstractControl;
   trade: Trade = new Trade();
   tradeFormGroup: FormGroup;
@@ -33,33 +31,14 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
   }
 
   async ngOnInit() {
-    this.href = this.navigationService.obtainData(this.route).href;
-    if (this.href) {
-      await this.loadExistingTrade();
+    const tradeHref = this.navigationService.obtainData(this.route).tradeHref;
+    if (tradeHref) {
+      await this.loadExistingTrade(tradeHref);
     } else {
-      this.loadNewTrade();
+      this.buildForm();
+      this.populateForm();  
     }
     this.loading = false;
-  }
-
-  private loadNewTrade(): void {
-    this.buildForm();
-    this.populateForm();
-  }
-
-  private async loadExistingTrade(): Promise<void> {
-    try {
-      this.trade = await this.tradeService.find(this.href);
-      this.trade.setHref(this.href);
-      this.buildForm();
-      this.populateForm();
-      const membership: Membership = await this.membershipService.findByTradeId(this.trade.tradeId);
-      if (!membership || membership.type != MembershipType.OWNER) {
-        this.tradeFormGroup.disable();
-      }
-    } catch (e) {
-      this.showErrorMessage(e);
-    }
   }
 
   private buildForm(): void {
@@ -78,15 +57,19 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
     }
   }
 
-  private nameValidator(control: FormControl): { [s: string]: boolean } {
-    if (control.value && (control.value.length < 3 || control.value.length > 150)) {
-      return { invalid: true };
+  private async loadExistingTrade(tradeHref: string): Promise<void> {
+    try {
+      this.trade = await this.tradeService.find(tradeHref);
+      this.buildForm();
+      this.populateForm();
+      // Disable form if autheticated user is not the trade owner
+      const membership: Membership = await this.membershipService.findByTradeId(this.trade.tradeId);
+      if (!membership || membership.type != MembershipType.OWNER) {
+        this.tradeFormGroup.disable();
+      }
+    } catch (e) {
+      this.showErrorMessage(e);
     }
-  }
-
-  private populateForm() {
-    this.nameFormControl.setValue(this.trade.name);
-    this.descriptionFormControl.setValue(this.trade.description);
   }
 
   private loadTradeFromForm() {
@@ -102,15 +85,26 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
     }
   }
 
+  private nameValidator(control: FormControl): { [s: string]: boolean } {
+    if (control.value && (control.value.length < 3 || control.value.length > 150)) {
+      return { invalid: true };
+    }
+  }
+
   async onSubmit() {
     this.loading = true;
     try {
-			this.loadTradeFromForm();
+      this.loadTradeFromForm();
       this.trade = await this.tradeService.save(this.trade);
       this.showInfoMessage('Trade saved', 'save');
     } catch (e) {
       this.showErrorMessage(e);
     }
     this.loading = false;
+  }
+
+  private populateForm() {
+    this.nameFormControl.setValue(this.trade.name);
+    this.descriptionFormControl.setValue(this.trade.description);
   }
 }

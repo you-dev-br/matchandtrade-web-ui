@@ -19,46 +19,46 @@ export class TradeService {
     private authenticationService: AuthenticationService,
     private http: HttpClient) { }
 
-	private buildSaveRequest(authorizationHeader: HttpHeaders, trade: Trade): HttpRequest<Trade> {
-		let httpMethod = trade.getHref() ? 'PUT' : 'POST';
-		let url = trade.getHref() ? trade.getHref() : '/matchandtrade-api/v1/trades/';
-		return new HttpRequest<Trade>(httpMethod, url, trade, {headers: authorizationHeader});
-	}
+  private buildSaveRequest(authorizationHeader: HttpHeaders, trade: Trade): HttpRequest<Trade> {
+    let httpMethod = trade.getSelfHref() ? 'PUT' : 'POST';
+    let url = trade.getSelfHref() ? trade.getSelfHref() : '/matchandtrade-api/v1/trades/';
+    return new HttpRequest<Trade>(httpMethod, url, trade, {headers: authorizationHeader});
+  }
 
   async find(href: string): Promise<Trade> {
-		const authorizationHeader = await this.authenticationService.obtainAuthorizationHeader();
-		return this.http
-			.get(href, { headers: authorizationHeader, observe: 'response' })
-			.pipe(
-				catchError(HttpUtil.httpErrorResponseHandler),
-				map(response => this.tradeTransformer.toPojo(response))
-			)
-			.toPromise();
+    const authorizationHeader = await this.authenticationService.obtainAuthorizationHeader();
+    return this.http
+      .get(href, { headers: authorizationHeader, observe: 'response' })
+      .pipe(
+        catchError(HttpUtil.httpErrorResponseHandler),
+        map(response => this.tradeTransformer.toPojo(response))
+      )
+      .toPromise();
   }
 
   findAll(page: Page): Promise<SearchResult<Trade>> {
     return this.http
       .get(this.findAllBuildUrl(page), { observe: 'response' })
-			.pipe(
-				catchError(HttpUtil.httpErrorResponseHandler),
-				map(response => this.tradeTransformer.toSearchResult(response, page))
-			)
+      .pipe(
+        catchError(HttpUtil.httpErrorResponseHandler),
+        map(response => this.tradeTransformer.toSearchResult(response, page))
+      )
       .toPromise();
   }
 
   private findAllBuildUrl(page: Page): string {
     return `/matchandtrade-api/v1/trades?_pageNumber=${page.number}&_pageSize=${page.size}`;
-	}
+  }
 
-	async save(trade: Trade): Promise<Trade> {
-		const authorizationHeader: HttpHeaders = await this.authenticationService.obtainAuthorizationHeader();
-		const request: HttpRequest<Trade> = this.buildSaveRequest(authorizationHeader, trade);
-		return this.http
-			.request(request)
-			.pipe(
-				catchError(HttpUtil.httpErrorResponseHandler),
-				map(response => this.tradeTransformer.toPojo(response))
-			)
-			.toPromise();
-	}
+  async save(trade: Trade): Promise<Trade> {
+    const authorizationHeader: HttpHeaders = await this.authenticationService.obtainAuthorizationHeader();
+    const request: HttpRequest<Trade> = this.buildSaveRequest(authorizationHeader, trade);
+    return this.http
+      .request(request)
+      .pipe(
+        catchError(HttpUtil.httpErrorResponseHandler),
+        map(response => this.tradeTransformer.toPojo(response))
+      )
+      .toPromise();
+  }
 }
