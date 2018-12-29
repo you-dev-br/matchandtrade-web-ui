@@ -11,8 +11,9 @@ export class LoadingAndMessageBannerSupport {
   }
 
   showErrorMessage(text: any, icon?: string) {
+    const code: string = text.code && text.code != 400 ? `${text.code} : ` : '';
     if (text instanceof Error) {
-      this.messageText = text.message;
+      this.messageText = `${code} ${text.message}`;
     } else {
       this.messageText = String(text);
     }

@@ -5,7 +5,7 @@ import { NavigationService } from '../../service/navigation.service';
 import { PageEvent } from '@angular/material';
 import { Pagination } from '../../class/search/pagination';
 import { SearchResult } from 'src/app/class/search/search-result';
-import { LoadingAndMessageBannerSupport } from 'src/app/class/util/loading-and-error-support';
+import { LoadingAndMessageBannerSupport } from 'src/app/class/common/loading-and-error-support';
 
 @Component({
   selector: 'app-list',

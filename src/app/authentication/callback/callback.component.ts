@@ -8,18 +8,20 @@ import { NavigationService } from '../../service/navigation.service';
   styleUrls: ['./callback.component.scss']
 })
 export class CallbackComponent implements OnInit {
-
   errorMessage: string;
 
   constructor(
     private authenticationService: AuthenticationService,
     private navigationService: NavigationService) { }
 
-  ngOnInit() {
-    this.authenticationService
-      .authorize()
-      .then(() => this.navigationService.navigate('/'))
-      .catch(e => this.errorMessage = e);
+  async ngOnInit() {
+		try {
+			const authorizationHeader: string = await this.authenticationService.findAuthenticationInfo();
+			this.authenticationService.setAuthorizationHeader(authorizationHeader);
+			this.navigationService.navigate('/');
+		} catch (e) {
+			this.errorMessage = e;
+		}
   }
 
   onTryGain() {

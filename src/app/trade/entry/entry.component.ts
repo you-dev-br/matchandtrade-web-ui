@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
-import { LoadingAndMessageBannerSupport } from 'src/app/class/util/loading-and-error-support';
+import { LoadingAndMessageBannerSupport } from 'src/app/class/common/loading-and-error-support';
 import { MembershipService } from 'src/app/service/membership.service';
+import { Membership, MembershipType } from 'src/app/class/pojo/membership';
 import { NavigationService } from '../../service/navigation.service';
 import { Trade } from '../../class/pojo/trade';
 import { TradeService } from '../../service/trade.service';
-import { Membership, MembershipType } from 'src/app/class/pojo/membership';
 
 @Component({
   selector: 'app-trade-list',
@@ -31,14 +31,17 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
   }
 
   async ngOnInit() {
-    const tradeHref = this.navigationService.obtainData(this.route).tradeHref;
-    if (tradeHref) {
-      await this.loadExistingTrade(tradeHref);
-    } else {
-      this.buildForm();
-      this.populateForm();  
+    this.buildForm();
+    try {
+      const tradeHref = this.navigationService.obtainData(this.route).tradeHref;
+      if (tradeHref) {
+        await this.loadExistingTrade(tradeHref);
+      }
+    } catch (e) {
+      this.showErrorMessage(e);
+    } finally {
+      this.loading = false;
     }
-    this.loading = false;
   }
 
   private buildForm(): void {
@@ -58,11 +61,11 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
   }
 
   private async loadExistingTrade(tradeHref: string): Promise<void> {
+    this.trade = await this.tradeService.find(tradeHref);
+    this.nameFormControl.setValue(this.trade.name);
+    this.descriptionFormControl.setValue(this.trade.description);
+    // Disable form if autheticated user is not the trade owner
     try {
-      this.trade = await this.tradeService.find(tradeHref);
-      this.buildForm();
-      this.populateForm();
-      // Disable form if autheticated user is not the trade owner
       const membership: Membership = await this.membershipService.findByTradeId(this.trade.tradeId);
       if (!membership || membership.type != MembershipType.OWNER) {
         this.tradeFormGroup.disable();
@@ -99,12 +102,8 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
       this.showInfoMessage('Trade saved', 'save');
     } catch (e) {
       this.showErrorMessage(e);
+    } finally {
+      this.loading = false;
     }
-    this.loading = false;
-  }
-
-  private populateForm() {
-    this.nameFormControl.setValue(this.trade.name);
-    this.descriptionFormControl.setValue(this.trade.description);
   }
 }

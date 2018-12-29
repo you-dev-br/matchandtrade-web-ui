@@ -7,7 +7,7 @@ import { TradeTransformer } from '../class/transformer/trade-transformer';
 import { Page } from '../class/search/page';
 import { SearchResult } from '../class/search/search-result';
 import { AuthenticationService } from './authentication.service';
-import { HttpUtil } from '../class/util/http-util';
+import { HttpUtil } from '../class/common/http-util';
 
 @Injectable({
   providedIn: 'root'

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { map, catchError, } from 'rxjs/operators';
-import { HttpUtil } from '../class/util/http-util';
+import { HttpUtil } from '../class/common/http-util';
 import { MembershipTransformer } from '../class/transformer/membeship-transformer';
 import { Membership } from '../class/pojo/membership';
 import { Page } from '../class/search/page';

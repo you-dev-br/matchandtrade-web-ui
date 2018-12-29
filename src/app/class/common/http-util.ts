@@ -1,10 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
+import { AppError } from '../app-error';
 
 export class HttpUtil {
   public static httpErrorResponseHandler(e: HttpErrorResponse) {
-    let errorMessage;
-    if (e.status && e.status > 100) {
+		let result: AppError;
+    if (e.status) {
       let errorText;
       if (e.error && e.error.message) {
         errorText = e.error.message;
@@ -15,11 +16,10 @@ export class HttpUtil {
       } else {
         errorText = "Unknown error";
 			}
-			const errorStatus = e.statusText ? e.statusText : e.status;
-      errorMessage = `${errorStatus}: ${errorText}`;
+      result = new AppError(errorText, e.status);
     } else {
-      errorMessage = `Client error: ${e.message}`;
+    	result = new AppError(`Client error: ${e.message}`);
     }
-    return throwError(errorMessage);
+    return throwError(result);
   };
 }
