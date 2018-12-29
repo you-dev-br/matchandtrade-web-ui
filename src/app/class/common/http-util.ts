@@ -4,7 +4,7 @@ import { AppError } from '../app-error';
 
 export class HttpUtil {
   public static httpErrorResponseHandler(e: HttpErrorResponse) {
-		let result: AppError;
+    let result: AppError;
     if (e.status) {
       let errorText;
       if (e.error && e.error.message) {
@@ -15,10 +15,10 @@ export class HttpUtil {
         errorText = e.message;
       } else {
         errorText = "Unknown error";
-			}
+      }
       result = new AppError(errorText, e.status);
     } else {
-    	result = new AppError(`Client error: ${e.message}`);
+      result = new AppError(`Client error: ${e.message}`);
     }
     return throwError(result);
   };

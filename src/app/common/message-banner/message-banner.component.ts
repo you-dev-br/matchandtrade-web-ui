@@ -9,11 +9,11 @@ export class Message {
 
   info(text: string): void {
     this.text = text;
-		this.type = MessageType.INFO;
-	}
+    this.type = MessageType.INFO;
+  }
   error(text: string): void {
     this.text = text;
-		this.type = MessageType.ERROR;
+    this.type = MessageType.ERROR;
   }
   isError(): boolean {
     return this.type == MessageType.ERROR;

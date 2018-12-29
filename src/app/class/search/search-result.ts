@@ -7,9 +7,9 @@ export class SearchResult <T> {
   constructor(results: T[], pagination: Pagination) {
     this.results = results;
     this.pagination = pagination;
-	}
-	
-	isEmpty(): boolean {
-		return !this.pagination.totalEntries || this.pagination.totalEntries < 1;
-	}
+  }
+  
+  isEmpty(): boolean {
+    return !this.pagination.totalEntries || this.pagination.totalEntries < 1;
+  }
 }

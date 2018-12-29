@@ -8,13 +8,13 @@ import { TradeRoutingModule } from './trade-routing.module';
 import { AppCommonModule } from '../common/common.module';
 
 @NgModule({
-	declarations: [EntryComponent, ListComponent],
+  declarations: [EntryComponent, ListComponent],
   imports: [
-		MaterialDesignModule,
-		CommonModule,
-		ReactiveFormsModule,
-		TradeRoutingModule,
-		AppCommonModule,
-	]
+    MaterialDesignModule,
+    CommonModule,
+    ReactiveFormsModule,
+    TradeRoutingModule,
+    AppCommonModule,
+  ]
 })
 export class TradeModule { }

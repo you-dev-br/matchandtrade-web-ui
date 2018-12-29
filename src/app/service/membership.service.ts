@@ -12,36 +12,36 @@ import { SearchResult } from '../class/search/search-result';
   providedIn: 'root'
 })
 export class MembershipService {
-	membershipTransformer: MembershipTransformer = new MembershipTransformer();
+  membershipTransformer: MembershipTransformer = new MembershipTransformer();
 
-	constructor(
-		private authenticationService: AuthenticationService,
-		private http: HttpClient) { }
+  constructor(
+    private authenticationService: AuthenticationService,
+    private http: HttpClient) { }
 
-		
-	async findByTradeId(tradeId: number): Promise<Membership> {
-		const userId: number = await this.authenticationService.obtainUserId();
-		return this.findByUserIdAndTradeId(userId, tradeId);
-	}
-	
-	async findByUserIdAndTradeId(userId: number, tradeId: number): Promise<Membership> {
-		const authorizationHeader = await this.authenticationService.obtainAuthorizationHeader();
-		return this.http
-			.get(`/matchandtrade-api/v1/memberships/?userId=${userId}&tradeId=${tradeId}`,
-				{ headers: authorizationHeader, observe: 'response' })
-			.pipe(
-				catchError(HttpUtil.httpErrorResponseHandler),
-				map(response => this.findByUserIdAndTradeIdMap(response))
-			)
-			.toPromise();
-	}
+    
+  async findByTradeId(tradeId: number): Promise<Membership> {
+    const userId: number = await this.authenticationService.obtainUserId();
+    return this.findByUserIdAndTradeId(userId, tradeId);
+  }
+  
+  async findByUserIdAndTradeId(userId: number, tradeId: number): Promise<Membership> {
+    const authorizationHeader = await this.authenticationService.obtainAuthorizationHeader();
+    return this.http
+      .get(`/matchandtrade-api/v1/memberships/?userId=${userId}&tradeId=${tradeId}`,
+        { headers: authorizationHeader, observe: 'response' })
+      .pipe(
+        catchError(HttpUtil.httpErrorResponseHandler),
+        map(response => this.findByUserIdAndTradeIdMap(response))
+      )
+      .toPromise();
+  }
 
-	private findByUserIdAndTradeIdMap(response: HttpResponse<any>): Membership {
-		const searchResult: SearchResult<Membership> = this.membershipTransformer.toSearchResult(response, new Page(1, 1));
-		if (searchResult.isEmpty()) {
-			return null;
-		} else {
-			return searchResult.results[0];
-		}
-	}
+  private findByUserIdAndTradeIdMap(response: HttpResponse<any>): Membership {
+    const searchResult: SearchResult<Membership> = this.membershipTransformer.toSearchResult(response, new Page(1, 1));
+    if (searchResult.isEmpty()) {
+      return null;
+    } else {
+      return searchResult.results[0];
+    }
+  }
 }

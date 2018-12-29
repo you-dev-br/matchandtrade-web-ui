@@ -15,13 +15,13 @@ export class CallbackComponent implements OnInit {
     private navigationService: NavigationService) { }
 
   async ngOnInit() {
-		try {
-			const authorizationHeader: string = await this.authenticationService.findAuthenticationInfo();
-			this.authenticationService.setAuthorizationHeader(authorizationHeader);
-			this.navigationService.navigate('/');
-		} catch (e) {
-			this.errorMessage = e;
-		}
+    try {
+      const authorizationHeader: string = await this.authenticationService.findAuthenticationInfo();
+      this.authenticationService.setAuthorizationHeader(authorizationHeader);
+      this.navigationService.navigate('/');
+    } catch (e) {
+      this.errorMessage = e;
+    }
   }
 
   onTryGain() {

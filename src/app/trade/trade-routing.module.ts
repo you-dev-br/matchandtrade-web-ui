@@ -4,7 +4,7 @@ import { ListComponent } from './list/list.component';
 import { EntryComponent } from './entry/entry.component';
 
 const routes: Routes = [
-	{ path: '', component: ListComponent },
+  { path: '', component: ListComponent },
   { path: 'entries', component: EntryComponent },
 ];
 

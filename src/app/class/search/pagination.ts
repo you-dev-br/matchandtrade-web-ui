@@ -2,7 +2,7 @@ import { Page } from './page';
 
 export class Pagination {
   page: Page;
-	totalEntries: number;
+  totalEntries: number;
   totalPages: number;
 
   constructor(pageNumber: number, pageSize: number, totalEntries?: number) {

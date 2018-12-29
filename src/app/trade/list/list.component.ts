@@ -34,14 +34,14 @@ export class ListComponent extends LoadingAndMessageBannerSupport implements OnI
       this.trades = searchResult.results;
       this.pagination = searchResult.pagination;
     } catch (e) {
-			this.showErrorMessage(e);
+      this.showErrorMessage(e);
     } finally {
       this.loading = false;
     }
   }
 
   navigate(trade?: Trade) {
-		const href = trade ? trade.getSelfHref() : null;
+    const href = trade ? trade.getSelfHref() : null;
     this.navigationService.navigate("trades/entries", {tradeHref: href});
   }
 

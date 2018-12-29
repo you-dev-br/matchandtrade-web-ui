@@ -17,8 +17,8 @@ import { TradeService } from '../../service/trade.service';
 })
 export class EntryComponent extends LoadingAndMessageBannerSupport implements OnInit {
   descriptionFormControl: AbstractControl;
-	nameFormControl: AbstractControl;
-	membership: Membership;
+  nameFormControl: AbstractControl;
+  membership: Membership;
   trade: Trade = new Trade();
   tradeFormGroup: FormGroup;
 
@@ -45,9 +45,9 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
     }
   }
 
-	private authenticatedUserIsTradeOwner(): boolean {
-		return this.membership && this.membership.type == MembershipType.OWNER;
-	}
+  private authenticatedUserIsTradeOwner(): boolean {
+    return this.membership && this.membership.type == MembershipType.OWNER;
+  }
 
   private buildForm(): void {
     this.tradeFormGroup = this.formBuilder.group({
@@ -97,16 +97,16 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
     if (!control.value || (control.value.length < 3 || control.value.length > 150)) {
       return { invalid: true };
     }
-	}
+  }
 
-	showSaveButton(): boolean {
-		return this.authenticatedUserIsTradeOwner() || this.trade.getSelfHref() == null;
-	}
+  showSaveButton(): boolean {
+    return this.authenticatedUserIsTradeOwner() || this.trade.getSelfHref() == null;
+  }
 
-	showDescription(): boolean {
-		return this.trade && this.trade.description && this.trade.description.length > 0;
-	}
-	
+  showDescription(): boolean {
+    return this.trade && this.trade.description && this.trade.description.length > 0;
+  }
+  
   async onSubmit() {
     this.loading = true;
     try {
