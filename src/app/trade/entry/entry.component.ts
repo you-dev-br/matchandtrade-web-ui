@@ -17,7 +17,8 @@ import { TradeService } from '../../service/trade.service';
 })
 export class EntryComponent extends LoadingAndMessageBannerSupport implements OnInit {
   descriptionFormControl: AbstractControl;
-  nameFormControl: AbstractControl;
+	nameFormControl: AbstractControl;
+	membership: Membership;
   trade: Trade = new Trade();
   tradeFormGroup: FormGroup;
 
@@ -44,6 +45,10 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
     }
   }
 
+	private authenticatedUserIsTradeOwner(): boolean {
+		return this.membership && this.membership.type == MembershipType.OWNER;
+	}
+
   private buildForm(): void {
     this.tradeFormGroup = this.formBuilder.group({
       'description': ['', Validators.compose([this.descriptionValidator])],
@@ -66,8 +71,8 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
     this.descriptionFormControl.setValue(this.trade.description);
     // Disable form if autheticated user is not the trade owner
     try {
-      const membership: Membership = await this.membershipService.findByTradeId(this.trade.tradeId);
-      if (!membership || membership.type != MembershipType.OWNER) {
+      this.membership = await this.membershipService.findByTradeId(this.trade.tradeId);
+      if (!this.authenticatedUserIsTradeOwner()) {
         this.tradeFormGroup.disable();
       }
     } catch (e) {
@@ -89,11 +94,19 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
   }
 
   private nameValidator(control: FormControl): { [s: string]: boolean } {
-    if (control.value && (control.value.length < 3 || control.value.length > 150)) {
+    if (!control.value || (control.value.length < 3 || control.value.length > 150)) {
       return { invalid: true };
     }
-  }
+	}
 
+	showSaveButton(): boolean {
+		return this.authenticatedUserIsTradeOwner() || this.trade.getSelfHref() == null;
+	}
+
+	showDescription(): boolean {
+		return this.trade && this.trade.description && this.trade.description.length > 0;
+	}
+	
   async onSubmit() {
     this.loading = true;
     try {

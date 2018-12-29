@@ -16,8 +16,8 @@
         [formControl]="tradeFormGroup.controls['name']"
         placeholder="Name">
     </mat-form-field>
-    <mat-form-field>
-      <textarea
+    <mat-form-field *ngIf="showDescription()">
+			<textarea
         matInput
         [formControl]="tradeFormGroup.controls['description']"
         placeholder="Description"
@@ -27,7 +27,7 @@
       </textarea>
     </mat-form-field>
     <div>
-      <button *ngIf="!tradeFormGroup.disabled" mat-flat-button color="primary" type="submit">OK</button>
+      <button *ngIf="showSaveButton()" mat-flat-button color="primary" type="submit">Save</button>
     </div>
   </form>
 </div>
