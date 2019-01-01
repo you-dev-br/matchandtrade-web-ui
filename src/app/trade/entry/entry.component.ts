@@ -6,8 +6,9 @@ import { LoadingAndMessageBannerSupport } from 'src/app/class/common/loading-and
 import { MembershipService } from 'src/app/service/membership.service';
 import { Membership, MembershipType } from 'src/app/class/pojo/membership';
 import { NavigationService } from '../../service/navigation.service';
-import { Trade } from '../../class/pojo/trade';
+import { Trade, TradeState, TradeUtil } from '../../class/pojo/trade';
 import { TradeService } from '../../service/trade.service';
+import { KeyValue } from '@angular/common';
 
 @Component({
   selector: 'app-trade-list',
@@ -16,9 +17,12 @@ import { TradeService } from '../../service/trade.service';
   providers: [TradeService]
 })
 export class EntryComponent extends LoadingAndMessageBannerSupport implements OnInit {
+  availableStatuses: KeyValue<TradeState, string>[] = [];
   descriptionFormControl: AbstractControl;
   nameFormControl: AbstractControl;
+  stateFormControl: AbstractControl;
   membership: Membership;
+  newTrade: boolean = true;
   trade: Trade = new Trade();
   tradeFormGroup: FormGroup;
 
@@ -36,6 +40,7 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
     try {
       const tradeHref = this.navigationService.obtainData(this.route).tradeHref;
       if (tradeHref) {
+        this.newTrade = false;
         await this.loadExistingTrade(tradeHref);
       }
     } catch (e) {
@@ -57,6 +62,7 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
     });
     this.descriptionFormControl = this.tradeFormGroup.controls['description'];
     this.nameFormControl = this.tradeFormGroup.controls['name'];
+    this.stateFormControl = this.tradeFormGroup.controls['state'];
   }
 
   private descriptionValidator(control: FormControl): { [s: string]: boolean } {
@@ -69,6 +75,14 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
     this.trade = await this.tradeService.find(tradeHref);
     this.nameFormControl.setValue(this.trade.name);
     this.descriptionFormControl.setValue(this.trade.description);
+    
+    //Show only available statuses
+    const statuses: TradeState[] = TradeUtil.toAvailableStates(this.trade.state);
+    for (let status of statuses) {
+      this.availableStatuses.push(TradeUtil.toKeyValue(status));
+    }
+    this.stateFormControl.setValue(this.trade.state);
+
     // Disable form if autheticated user is not the trade owner
     try {
       this.membership = await this.membershipService.findByTradeId(this.trade.tradeId);
@@ -91,6 +105,7 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
         this.trade.description = this.trade.description.trim();
       }
     }
+    this.trade.state = this.stateFormControl.value;
   }
 
   private nameValidator(control: FormControl): { [s: string]: boolean } {
@@ -99,14 +114,14 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
     }
   }
 
+  showStatus(): boolean {
+    return !this.newTrade;
+  }
+
   showSaveButton(): boolean {
     return this.authenticatedUserIsTradeOwner() || this.trade.getSelfHref() == null;
   }
 
-  showDescription(): boolean {
-    return this.trade && this.trade.description && this.trade.description.length > 0;
-  }
-  
   async onSubmit() {
     this.loading = true;
     try {

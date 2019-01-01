@@ -16,8 +16,13 @@
         [formControl]="tradeFormGroup.controls['name']"
         placeholder="Name">
     </mat-form-field>
-    <mat-form-field *ngIf="showDescription()">
-			<textarea
+    <mat-form-field *ngIf="showStatus()" class="trade-status">
+      <mat-select placeholder="Status" [formControl]="stateFormControl" required>
+        <mat-option *ngFor="let state of availableStatuses" [value]="state.key">{{state.value}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea
         matInput
         [formControl]="tradeFormGroup.controls['description']"
         placeholder="Description"

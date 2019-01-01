@@ -1,4 +1,4 @@
-import { Trade } from '../pojo/trade';
+import { Trade, TradeState } from '../pojo/trade';
 import { Transformer } from './transformer';
 import { HttpResponse } from '@angular/common/http';
 
@@ -13,6 +13,7 @@ export class TradeTransformer extends Transformer<Trade>{
     result.description = json.description;
     result.name = json.name;
     result.tradeId = json.tradeId;
+    result.state = TradeState[String(json.state)];
     return result;
   }
 }

@@ -2,20 +2,20 @@
 
 // Breakpoints as defined in material design specs
 @media not screen and (max-width: 600px) {
-	.hide-in-large-devices {
-		display: none;
-	}
-	.mt-content {
-		padding: 0em 1em 0em 1em;
-	}
+  .hide-in-large-devices {
+    display: none;
+  }
+  .mt-content {
+    padding: 0em 1em 0em 1em;
+  }
 } 
 @media only screen and (max-width: 600px) {
-	.hide-in-small-devices {
-		display: none;
-	}
-	.mt-content {
-		padding: 0em .5em 0em .5em;
-	}
+  .hide-in-small-devices {
+    display: none;
+  }
+  .mt-content {
+    padding: 0em .5em 0em .5em;
+  }
 }
 
 html, body {
@@ -23,13 +23,13 @@ html, body {
 }
 
 body {
-	background-color: #fafafa; // TODO: Variable
-	// White square 1024px width
+  background-color: #fafafa; // TODO: Variable
+  // White square 1024px width
   background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAyNCIgaGVpZ2h0PSIxMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KIDxnPgogIDxyZWN0IHdpZHRoPSIxMDI0IiBoZWlnaHQ9IjEwIiBmaWxsPSJ3aGl0ZSIvPgogPC9nPgo8L3N2Zz4=");
   background-position: center;
   background-repeat: repeat-y;
-	font-family: Roboto, "Helvetica Neue", sans-serif;
-	margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
 }
 
 .mt-form {
@@ -41,14 +41,14 @@ body {
 }
 
 .mt-spinner {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 20em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20em;
 }
 
 .mt-action-panel {
-	margin: 1em 0 1em 0;
+  margin: 1em 0 1em 0;
 }
 
 // ========================
@@ -56,22 +56,41 @@ body {
 // ========================
 // <mat-paginator/>: Hide next/previous page when disabled
 .mat-icon-button[disabled][disabled] {
-	color: transparent;
+  color: transparent;
 }
-// <mat-form-field/>: Hide border when disabled
+// <mat-paginator/>: Margin
+.mat-paginator .mat-paginator-container {
+  min-height: 0;
+}
+// <mat-form-field>: Hide border when disabled
 .mat-input-element:disabled  {
-	color: $dark-text;
+  color: $dark-text;
 }
-// <mat-form-field/>: Add left border
+// <mat-form-field>: Add left border
 .mat-form-field-infix {
-	margin-left: 6px;
+  margin-left: 6px;
+}
+%mat-form-field-infix-common {
+  content: "";
+  height: 100%;
+  margin-left: -6px;
+  position: absolute;
+  top: 0;
+  width: 3px;
+}
+.mat-form-field-disabled .mat-form-field-flex .mat-form-field-infix::before {
+  @extend %mat-form-field-infix-common;
+  background-color: transparent;
 }
 .mat-form-field-infix::before {
-	background-color: $primary-color-200;
-	content: "";
-	height:100%;
-	margin-left: -6px;
-	position:absolute;
-	top:0;
-	width:3px;
+  @extend %mat-form-field-infix-common;
+  background-color: $primary-color-200;
+}
+// <mat-select>: Change text color when disabled
+.mat-select-disabled .mat-select-value {
+  color: $dark-text;
+}
+// <mat-select>: Hide arrow when disabled
+.mat-form-field .mat-select.mat-select-disabled .mat-select-arrow {
+  color: transparent;
 }
