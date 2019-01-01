@@ -8,14 +8,14 @@ import { HttpUtil } from '../class/common/http-util';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private authorizationHeader: string;
-  private userId: number;
+  private authorizationHeaderInMemory: string;
+  private userIdInMemory: number;
 
   constructor(
     private storageService: StorageService,
     private http: HttpClient) { }
 
-  findAuthenticationInfo(): Promise<string> {
+  private findAuthenticationInfo(): Promise<string> {
     return this.http
       .get('/matchandtrade-api/v1/authenticate/info', { observe: 'response' })
       .pipe(catchError(HttpUtil.httpErrorResponseHandler), map(this.findAuthenticationInfoMap))
@@ -23,14 +23,14 @@ export class AuthenticationService {
   }
 
   private findAuthenticationInfoMap(response: HttpResponse<any>): string {
-    this.authorizationHeader = response.body['authenticationHeader'];
-    return this.authorizationHeader;
+    this.authorizationHeaderInMemory = response.body['authorizationHeader'];
+    return this.authorizationHeaderInMemory;
   }
 
   private async findUserId(): Promise<number> {
-    const authorizationHeader = await this.obtainAuthorizationHeader();
+    const authorizationHeaders = await this.obtainAuthorizationHeaders();
     return this.http
-      .get('matchandtrade-api/v1/authentications/', { headers: authorizationHeader })
+      .get('matchandtrade-api/v1/authentications/', { headers: authorizationHeaders })
       .pipe(catchError(HttpUtil.httpErrorResponseHandler), map(this.findUserIdMap))
       .toPromise();
   }
@@ -39,36 +39,54 @@ export class AuthenticationService {
     return response['userId'];
   }
 
-  setAuthorizationHeader(authorizationHeader: string): void {
-    this.authorizationHeader = authorizationHeader;
+  isAuthenticated(): boolean {
+    if (this.authorizationHeaderInMemory) {
+      return true;
+    } else {
+      return !!this.storageService.findAuthentication();
+    }
   }
 
-  async obtainAuthorizationHeader(): Promise<HttpHeaders> {
+  async singOff(): Promise<void> {
+    this.authorizationHeaderInMemory = undefined;
+    this.storageService.deleteAuthentication();
+    this.userIdInMemory = undefined;
+    this.storageService.deleteUserId();
+    try {
+      const headers = await this.obtainAuthorizationHeaders();
+      await this.http.get('matchandtrade-api/v1/authenticate/sign-off', { headers: headers }).toPromise();
+    } catch (e) {
+      console.log('Unable get authorization header, attempting to sign-off without it', e);
+      await this.http.get('matchandtrade-api/v1/authenticate/sign-off').toPromise();
+    }
+  }
+
+  async obtainAuthorizationHeaders(): Promise<HttpHeaders> {
     // Try to get if from memory
-    if (!this.authorizationHeader) {
+    if (!this.authorizationHeaderInMemory) {
       // If is not in memomry; then find in local storage
-      this.authorizationHeader = this.storageService.findAuthentication();
+      this.authorizationHeaderInMemory = this.storageService.findAuthentication();
       // If is not is local storate; then try getting from the server
-      if (!this.authorizationHeader) {
-        this.authorizationHeader = await this.findAuthenticationInfo();
+      if (!this.authorizationHeaderInMemory) {
+        this.authorizationHeaderInMemory = await this.findAuthenticationInfo();
       }
     }
-    this.storageService.saveAuthentication(this.authorizationHeader);
-    const headers = new HttpHeaders({'Authorization': this.authorizationHeader});
+    this.storageService.saveAuthentication(this.authorizationHeaderInMemory);
+    const headers = new HttpHeaders({'Authorization': this.authorizationHeaderInMemory});
     return Promise.resolve(headers);
   }
   
   async obtainUserId(): Promise<number> {
     // Try to get if from memory
-    if (!this.userId) {
+    if (!this.userIdInMemory) {
       // If is not in memomry; then find in local storage
-      this.userId = this.storageService.findUserId();
+      this.userIdInMemory = this.storageService.findUserId();
       // If is not is local storate; then try getting from the server
-      if (!this.userId) {
-        this.userId = await this.findUserId();
+      if (!this.userIdInMemory) {
+        this.userIdInMemory = await this.findUserId();
       }
     }
-    this.storageService.saveUserId(this.userId);
-    return this.userId;
+    this.storageService.saveUserId(this.userIdInMemory);
+    return this.userIdInMemory;
   }
 }

@@ -1,57 +1,62 @@
 <div class="layout">
-	<div class="layout-side primary-background-color"></div>
-	<div class="layout-center">
-		<mat-toolbar color="primary">
-			<span class="home-title" (click)="navigate('welcome')">Match &amp; Trade</span>
-			<span class="layout-center"></span>
-			<span class="menu-mobile hide-in-large-devices">
-				<button mat-icon-button (click)="toggleMobileMenu()">
-					<mat-icon>menu</mat-icon>
-				</button>
-			</span>	
-			<span class="menu-desktop hide-in-small-devices">
-				<button mat-icon-button [matMenuTriggerFor]="menu">
-					<mat-icon>menu</mat-icon>
-				</button>
-				<mat-menu #menu="matMenu">
-					<button mat-menu-item (click)="navigate('trades')">
-						<mat-icon>swap_horiz</mat-icon>
-						<span>Trades</span>
-					</button>
-					<button mat-menu-item disabled>
-						<mat-icon>redeem</mat-icon>
-						<span>Articles</span>
-					</button>
-					<button mat-menu-item (click)="navigate('authentication')">
-						<mat-icon>exit_to_app</mat-icon>
-						<span>Sign-in</span>
-					</button>
-					<button mat-menu-item>
-						<mat-icon>account_circle</mat-icon>
-						<span>Profile</span>
-					</button>
-				</mat-menu>
-				<button class="hide-in-small-devices" mat-icon-button>
-					<mat-icon>account_circle</mat-icon>
-				</button>
-			</span>
-		</mat-toolbar>
-	</div>
-	<div class="layout-side primary-background-color"></div>
+  <div class="layout-side primary-background-color"></div>
+  <div class="layout-center">
+    <mat-toolbar color="primary">
+      <span class="home-title" (click)="navigate('welcome')">Match &amp; Trade</span>
+      <span class="layout-center"></span>
+      <span class="menu-mobile hide-in-large-devices">
+        <button mat-icon-button (click)="toggleMobileMenu()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </span>	
+      <span class="menu-desktop hide-in-small-devices">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="navigate('trades')">
+            <mat-icon>swap_horiz</mat-icon>
+            <span>Trades</span>
+          </button>
+          <button mat-menu-item disabled>
+            <mat-icon>redeem</mat-icon>
+            <span>Articles</span>
+          </button>
+          <button *ngIf="!isAuthenticated()" mat-menu-item (click)="navigate('authentication')">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Sign-in</span>
+          </button>
+          <button *ngIf="isAuthenticated()" mat-menu-item (click)="signOff()"> <!-- TODO: Better icon-->
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Sign-off</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>account_circle</mat-icon>
+            <span>Profile</span>
+          </button>
+        </mat-menu>
+        <button class="hide-in-small-devices" mat-icon-button>
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </span>
+    </mat-toolbar>
+  </div>
+  <div class="layout-side primary-background-color"></div>
 </div>
 
 <div class=horizontal-divider></div>
 
 <div class="layout">
-	<div class="layout-side"></div>
-	<div class="layout-content">
-		<div [class]="classMobileMenu()">
-			<div class="menu-mobile-item" (click)="navigate('trades')"><mat-icon>swap_horiz</mat-icon>Trades</div>
-			<div class="menu-mobile-item"><mat-icon>redeem</mat-icon>Articles</div>
-			<div class="menu-mobile-item"><mat-icon>account_circle</mat-icon>Profile</div>
-			<div class="menu-mobile-item" (click)="navigate('authentication')"><mat-icon>exit_to_app</mat-icon>Sign-in</div> <!-- TODO: Better icon-->
-		</div>
-		<router-outlet></router-outlet>
-	</div>
-	<div class="layout-side"></div>
+  <div class="layout-side"></div>
+  <div class="layout-content">
+    <div [class]="classMobileMenu()">
+      <div class="menu-mobile-item" (click)="navigate('trades')"><mat-icon>swap_horiz</mat-icon>Trades</div>
+      <div class="menu-mobile-item"><mat-icon>redeem</mat-icon>Articles</div>
+      <div class="menu-mobile-item"><mat-icon>account_circle</mat-icon>Profile</div>
+      <div class="menu-mobile-item" (click)="navigate('authentication')"><mat-icon>exit_to_app</mat-icon>Sign-in</div> <!-- TODO: Better icon-->
+      <div class="menu-mobile-item" (click)="signOff()"><mat-icon>exit_to_app</mat-icon>Sign-off</div> <!-- TODO: Better icon-->
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+  <div class="layout-side"></div>
 </div>

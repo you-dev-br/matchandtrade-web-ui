@@ -16,8 +16,9 @@ export class CallbackComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      const authorizationHeader: string = await this.authenticationService.findAuthenticationInfo();
-      this.authenticationService.setAuthorizationHeader(authorizationHeader);
+      // Calling obtainAuthorizationHeaders; so we can validate the authentication cycle.
+      // And it also caches the authorization headers.
+      await this.authenticationService.obtainAuthorizationHeaders();
       this.navigationService.navigate('/');
     } catch (e) {
       this.errorMessage = e;

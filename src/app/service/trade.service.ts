@@ -26,7 +26,7 @@ export class TradeService {
   }
 
   async find(href: string): Promise<Trade> {
-    const authorizationHeader = await this.authenticationService.obtainAuthorizationHeader();
+    const authorizationHeader = await this.authenticationService.obtainAuthorizationHeaders();
     return this.http
       .get(href, { headers: authorizationHeader, observe: 'response' })
       .pipe(
@@ -51,7 +51,7 @@ export class TradeService {
   }
 
   async save(trade: Trade): Promise<Trade> {
-    const authorizationHeader: HttpHeaders = await this.authenticationService.obtainAuthorizationHeader();
+    const authorizationHeader: HttpHeaders = await this.authenticationService.obtainAuthorizationHeaders();
     const request: HttpRequest<Trade> = this.buildSaveRequest(authorizationHeader, trade);
     return this.http
       .request(request)

@@ -13,6 +13,10 @@ export class StorageService {
     localStorage.removeItem(LocalStorageKey.AUTHENTICATION);
   }
 
+  deleteUserId(): void {
+    localStorage.removeItem(LocalStorageKey.USER_ID);
+  }
+
   findAuthentication(): string {
     return localStorage.getItem(LocalStorageKey.AUTHENTICATION);
   }

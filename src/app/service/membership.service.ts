@@ -25,7 +25,7 @@ export class MembershipService {
   }
   
   async findByUserIdAndTradeId(userId: number, tradeId: number): Promise<Membership> {
-    const authorizationHeader = await this.authenticationService.obtainAuthorizationHeader();
+    const authorizationHeader = await this.authenticationService.obtainAuthorizationHeaders();
     return this.http
       .get(`/matchandtrade-api/v1/memberships/?userId=${userId}&tradeId=${tradeId}`,
         { headers: authorizationHeader, observe: 'response' })
