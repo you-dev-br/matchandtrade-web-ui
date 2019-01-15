@@ -1,13 +1,18 @@
 import { LinkSupport } from './link-support';
 import { KeyValue } from '@angular/common';
 
+/*
+* State for a Trade.
+* Important: this is an ordered enumeration, be mindful when changing the order.
+* See: compareStates()
+*/
 export enum TradeState {
-  CANCELED='CANCELED',
+  SUBMITTING_ARTICLES='SUBMITTING_ARTICLES',
+  MATCHING_ARTICLES='MATCHING_ARTICLES',
   GENERATE_RESULTS='GENERATE_RESULTS',
   GENERATING_RESULTS='GENERATING_RESULTS',
-  MATCHING_ARTICLES='MATCHING_ARTICLES',
   RESULTS_GENERATED='RESULTS_GENERATED',
-  SUBMITTING_ARTICLES='SUBMITTING_ARTICLES',
+  CANCELED='CANCELED',
 };
 
 export class Trade extends LinkSupport {
@@ -18,6 +23,10 @@ export class Trade extends LinkSupport {
 }
 
 export class TradeUtil {
+  static compareStates(a: TradeState, b: TradeState): number {
+    return Object.keys(TradeState).indexOf(a) - Object.keys(TradeState).indexOf(b);
+  }
+  
   static toAvailableStates(state: TradeState): TradeState[] {
     const result: TradeState[] = [];
     result.push(TradeState.CANCELED);
@@ -28,6 +37,7 @@ export class TradeUtil {
         break;
       }
       case TradeState.MATCHING_ARTICLES: {
+        result.push(TradeState.SUBMITTING_ARTICLES);
         result.push(TradeState.MATCHING_ARTICLES);
         result.push(TradeState.GENERATE_RESULTS);
         break;
@@ -36,10 +46,17 @@ export class TradeUtil {
         result.push(TradeState.GENERATE_RESULTS);
         break;
       }
+      case TradeState.GENERATING_RESULTS: {
+        result.push(TradeState.GENERATING_RESULTS);
+        break;
+      }
+      case TradeState.RESULTS_GENERATED: {
+        result.push(TradeState.RESULTS_GENERATED);
+        break;
+      }
       default: {
         result.push(TradeState.GENERATE_RESULTS);
         result.push(TradeState.MATCHING_ARTICLES);
-        result.push(TradeState.RESULTS_GENERATED);
         result.push(TradeState.SUBMITTING_ARTICLES);	
         break;
       }
@@ -47,8 +64,18 @@ export class TradeUtil {
     return result;
   }
 
-  static toKeyValue(status: TradeState): KeyValue<TradeState, string> {
-    switch (status) {
+  static toAvailableStatesKeyValue(state: TradeState): KeyValue<TradeState, string>[] {
+    const result: KeyValue<TradeState, string>[] = [];
+    const states: TradeState[] = TradeUtil.toAvailableStates(state);
+    for (let state of states) {
+      const stateAsKeyValue = TradeUtil.toKeyValue(state);
+      result.push(stateAsKeyValue);
+    }
+    return result;
+  }
+
+  static toKeyValue(state: TradeState): KeyValue<TradeState, string> {
+    switch (state) {
       case TradeState.CANCELED: {
         return {key: TradeState.CANCELED, value: 'Cancel'};
       }

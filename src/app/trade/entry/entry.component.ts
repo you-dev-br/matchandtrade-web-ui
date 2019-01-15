@@ -17,7 +17,7 @@ import { KeyValue } from '@angular/common';
   providers: [TradeService]
 })
 export class EntryComponent extends LoadingAndMessageBannerSupport implements OnInit {
-  availableStatuses: KeyValue<TradeState, string>[] = [];
+  availableStates: KeyValue<TradeState, string>[] = [];
   descriptionFormControl: AbstractControl;
   nameFormControl: AbstractControl;
   stateFormControl: AbstractControl;
@@ -40,8 +40,8 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
     try {
       const tradeHref = this.navigationService.obtainData(this.route).tradeHref;
       if (tradeHref) {
-        this.newTrade = false;
-        await this.loadExistingTrade(tradeHref);
+        this.trade = await this.tradeService.find(tradeHref);
+        await this.loadTrade();
       }
     } catch (e) {
       this.showErrorMessage(e);
@@ -71,16 +71,15 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
     }
   }
 
-  private async loadExistingTrade(tradeHref: string): Promise<void> {
-    this.trade = await this.tradeService.find(tradeHref);
+  private async loadTrade(): Promise<void> {
+    this.newTrade = false;
     this.nameFormControl.setValue(this.trade.name);
     this.descriptionFormControl.setValue(this.trade.description);
     
-    //Show only available statuses
-    const statuses: TradeState[] = TradeUtil.toAvailableStates(this.trade.state);
-    for (let status of statuses) {
-      this.availableStatuses.push(TradeUtil.toKeyValue(status));
-    }
+    // Populate with only available states
+    this.availableStates = TradeUtil.toAvailableStatesKeyValue(this.trade.state)
+      .sort((a, b) => TradeUtil.compareStates(a.key, b.key));
+    
     this.stateFormControl.setValue(this.trade.state);
 
     // Disable form if autheticated user is not the trade owner
@@ -127,6 +126,7 @@ export class EntryComponent extends LoadingAndMessageBannerSupport implements On
     try {
       this.loadTradeFromForm();
       this.trade = await this.tradeService.save(this.trade);
+      this.loadTrade();
       this.showInfoMessage('Trade saved', 'save');
     } catch (e) {
       this.showErrorMessage(e);
