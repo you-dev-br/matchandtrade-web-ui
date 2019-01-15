@@ -21,5 +21,5 @@ export class HttpUtil {
       result = new AppError(`Client error: ${e.message}`);
     }
     return throwError(result);
-  };
+  }
 }

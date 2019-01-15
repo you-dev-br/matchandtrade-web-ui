@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ListComponent } from './list/list.component';
-import { EntryComponent } from './entry/entry.component';
+import { TradeListComponent } from './list/trade-list.component';
+import { TradeEntryComponent } from './entry/trade-entry.component';
 
 const routes: Routes = [
-  { path: '', component: ListComponent },
-  { path: 'entries', component: EntryComponent },
+  { path: '', component: TradeListComponent },
+  { path: 'entries', component: TradeEntryComponent },
 ];
 
 @NgModule({

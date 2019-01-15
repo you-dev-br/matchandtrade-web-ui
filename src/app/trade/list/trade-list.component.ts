@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { TradeService } from '../../service/trade.service';
-import { Trade } from '../../class/pojo/trade';
+
+import { LoadingAndMessageBannerSupport } from 'src/app/class/common/loading-and-message-banner-support';
 import { NavigationService } from '../../service/navigation.service';
 import { PageEvent } from '@angular/material';
 import { Pagination } from '../../class/search/pagination';
 import { SearchResult } from 'src/app/class/search/search-result';
-import { LoadingAndMessageBannerSupport } from 'src/app/class/common/loading-and-error-support';
+import { TradeService } from '../../service/trade.service';
+import { Trade } from '../../class/pojo/trade';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
+  selector: 'app-trade-list',
+  templateUrl: './trade-list.component.html',
+  styleUrls: ['./trade-list.component.scss'],
   providers: [NavigationService]
 })
-export class ListComponent extends LoadingAndMessageBannerSupport implements OnInit {
+export class TradeListComponent extends LoadingAndMessageBannerSupport implements OnInit {
   pagination: Pagination = new Pagination(1, 15);
   trades: Trade[] = [];
 

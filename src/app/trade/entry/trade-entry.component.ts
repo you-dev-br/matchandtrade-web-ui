@@ -2,21 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
-import { LoadingAndMessageBannerSupport } from 'src/app/class/common/loading-and-error-support';
+import { KeyValue } from '@angular/common';
+import { LoadingAndMessageBannerSupport } from 'src/app/class/common/loading-and-message-banner-support';
 import { MembershipService } from 'src/app/service/membership.service';
 import { Membership, MembershipType } from 'src/app/class/pojo/membership';
 import { NavigationService } from '../../service/navigation.service';
 import { Trade, TradeState, TradeUtil } from '../../class/pojo/trade';
 import { TradeService } from '../../service/trade.service';
-import { KeyValue } from '@angular/common';
 
 @Component({
-  selector: 'app-trade-list',
-  templateUrl: './entry.component.html',
-  styleUrls: ['./entry.component.scss'],
+  selector: 'app-trade-entry',
+  templateUrl: './trade-entry.component.html',
+  styleUrls: ['./trade-entry.component.scss'],
   providers: [TradeService]
 })
-export class EntryComponent extends LoadingAndMessageBannerSupport implements OnInit {
+export class TradeEntryComponent extends LoadingAndMessageBannerSupport implements OnInit {
   availableStates: KeyValue<TradeState, string>[] = [];
   descriptionFormControl: AbstractControl;
   nameFormControl: AbstractControl;
