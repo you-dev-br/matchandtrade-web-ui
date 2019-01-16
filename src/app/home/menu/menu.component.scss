@@ -1,0 +1,37 @@
+@import '../../../styles/variables.scss';
+
+.display-none {
+	display: none;
+}
+
+.menu-mobile-items {
+	background-color: $primary-color-700;
+	color: white;
+  max-height: 0px;
+  overflow: hidden;
+	transition: max-height 0.15s ease-out;
+}
+
+.menu-mobile-item {
+	display: flex;
+	padding: .5em 0em .5em 2em;
+}
+
+.menu-mobile-item .mat-icon {
+	margin: 0em .5em 0em 0em;
+}
+
+.menu-mobile-item:hover {
+	background-color: $primary-color;
+	cursor: pointer;
+}
+
+.menu-mobile-item:active {
+	background-color: $primary-color-900;
+	cursor: pointer;
+}
+
+.menu-mobile-expanded {
+  max-height: 800px;
+  transition: max-height 0.25s ease-in;
+}

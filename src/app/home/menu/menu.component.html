@@ -1,0 +1,45 @@
+<span class="menu-desktop hide-in-small-devices">
+  <button mat-icon-button [matMenuTriggerFor]="desktopMenu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #desktopMenu>
+    <button mat-menu-item (click)="navigate('trades')">
+      <mat-icon>swap_horiz</mat-icon>
+      <span>Trades</span>
+    </button>
+    <button mat-menu-item [class]="classSingIn('mat-menu-item')" (click)="navigate('authentication')">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Sign-in</span> <!-- TODO: Better icon -->
+    </button>
+    <button mat-menu-item [class]="classSingOff('mat-menu-item')" (click)="signOff()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Sign-off</span> <!-- TODO: Better icon -->
+    </button>
+    <button mat-menu-item disabled>
+      <mat-icon>redeem</mat-icon>
+      <span>Articles</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>account_circle</mat-icon>
+      <span>Profile</span>
+    </button>
+  </mat-menu>
+</span>
+
+<div [class]="classMobileMenu()">
+  <div class="menu-mobile-item" (click)="navigate('trades')">
+    <mat-icon>swap_horiz</mat-icon>Trades
+  </div>
+  <div class="menu-mobile-item">
+    <mat-icon>redeem</mat-icon>Articles
+  </div>
+  <div class="menu-mobile-item">
+    <mat-icon>account_circle</mat-icon>Profile
+  </div>
+  <div [class]="classSingIn('menu-mobile-item')" (click)="navigate('authentication')">
+    <mat-icon>exit_to_app</mat-icon>Sign-in
+  </div> <!-- TODO: Better icon-->
+  <div [class]="classSingOff('menu-mobile-item')" (click)="signOff()">
+    <mat-icon>exit_to_app</mat-icon>Sign-off
+  </div> <!-- TODO: Better icon-->
+</div>
