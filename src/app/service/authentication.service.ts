@@ -40,24 +40,10 @@ export class AuthenticationService {
   }
 
   isAuthenticated(): boolean {
-    if (this.authorizationHeaderInMemory) {
+    if (this.authorizationHeaderInMemory && this.authorizationHeaderInMemory.length > 0) {
       return true;
     } else {
       return !!this.storageService.findAuthentication();
-    }
-  }
-
-  async singOff(): Promise<void> {
-    this.authorizationHeaderInMemory = undefined;
-    this.storageService.deleteAuthentication();
-    this.userIdInMemory = undefined;
-    this.storageService.deleteUserId();
-    try {
-      const headers = await this.obtainAuthorizationHeaders();
-      await this.http.get('matchandtrade-api/v1/authenticate/sign-off', { headers: headers }).toPromise();
-    } catch (e) {
-      console.log('Unable get authorization header, attempting to sign-off without it', e);
-      await this.http.get('matchandtrade-api/v1/authenticate/sign-off').toPromise();
     }
   }
 
@@ -68,7 +54,11 @@ export class AuthenticationService {
       this.authorizationHeaderInMemory = this.storageService.findAuthentication();
       // If is not is local storate; then try getting from the server
       if (!this.authorizationHeaderInMemory) {
-        this.authorizationHeaderInMemory = await this.findAuthenticationInfo();
+        try {
+          this.authorizationHeaderInMemory = await this.findAuthenticationInfo();
+        } catch (e) {
+          return Promise.reject(e);
+        }
       }
     }
     this.storageService.saveAuthentication(this.authorizationHeaderInMemory);
@@ -88,5 +78,19 @@ export class AuthenticationService {
     }
     this.storageService.saveUserId(this.userIdInMemory);
     return this.userIdInMemory;
+  }
+
+  async singOff(): Promise<void> {
+    try {
+      const headers = await this.obtainAuthorizationHeaders();
+      await this.http.get('matchandtrade-api/v1/authenticate/sign-off', { headers: headers }).toPromise();
+    } catch (e) {
+      console.log('Unable get authorization header, attempting to sign-off without it');
+      await this.http.get('matchandtrade-api/v1/authenticate/sign-off').toPromise();
+    }
+    this.authorizationHeaderInMemory = undefined;
+    this.storageService.deleteAuthentication();
+    this.userIdInMemory = undefined;
+    this.storageService.deleteUserId();
   }
 }

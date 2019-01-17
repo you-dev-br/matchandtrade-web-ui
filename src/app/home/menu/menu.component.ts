@@ -31,7 +31,7 @@ export class MenuComponent {
     const defaultClasses = this.removeDisplayNoneFromClasses(classes);
     return this.authenticationService.isAuthenticated() ? 'display-none' : defaultClasses;
   }
-
+  
   classSingOff(classes: string): string {
     const defaultClasses = this.removeDisplayNoneFromClasses(classes);
     return this.authenticationService.isAuthenticated() ? defaultClasses : 'display-none';
@@ -43,11 +43,12 @@ export class MenuComponent {
   }
 
   async signOff() {
+    this.mobileMenuExpanded = false;
     await this.authenticationService.singOff();
     this.navigationService.navigate('welcome');
   }
 
-  toggleMobileMenu() {
+  toggleMobileMenu(): void {
     this.mobileMenuExpanded = !this.mobileMenuExpanded;
   }
 }
