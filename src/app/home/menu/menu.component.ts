@@ -9,6 +9,7 @@ import { NavigationService } from 'src/app/service/navigation.service';
 })
 export class MenuComponent {
   mobileMenuExpanded = false;
+  signingOff = false; // Required to avoid UI fliquering between sign-in/sign-off
 
   constructor (
     private authenticationService: AuthenticationService,
@@ -16,10 +17,7 @@ export class MenuComponent {
   }
 
   private removeDisplayNoneFromClasses(classes: string): string {
-    if (classes) {
-      return classes.replace('display-none', '');
-    }
-    return '';
+    return classes.replace('display-none', '');
   }
   
   classMobileMenu(): string {
@@ -29,12 +27,12 @@ export class MenuComponent {
   
   classSingIn(classes: string): string {
     const defaultClasses = this.removeDisplayNoneFromClasses(classes);
-    return this.authenticationService.isAuthenticated() ? 'display-none' : defaultClasses;
+    return this.signingOff || this.authenticationService.isAuthenticated() ? 'display-none' : defaultClasses;
   }
   
   classSingOff(classes: string): string {
     const defaultClasses = this.removeDisplayNoneFromClasses(classes);
-    return this.authenticationService.isAuthenticated() ? defaultClasses : 'display-none';
+    return this.signingOff || this.authenticationService.isAuthenticated() ? defaultClasses : 'display-none';
   }
 
   navigate(path: string): void {
@@ -42,10 +40,11 @@ export class MenuComponent {
     this.navigationService.navigate(path);
   }
 
-  async signOff() {
+  signOff() {
+    this.signingOff = true;
     this.mobileMenuExpanded = false;
-    await this.authenticationService.singOff();
-    this.navigationService.navigate('welcome');
+    this.navigationService.goToLocation('/assets/sign-off.html');
+    this.authenticationService.singOff();
   }
 
   toggleMobileMenu(): void {

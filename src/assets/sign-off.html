@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Match &amp; Trade</title>
+  <style>  
+  body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+    font-size: 14pt;
+  }
+  div {
+    margin: 8em 0em 3em 0em;
+  }
+  </style>
+
+  <script type="text/javascript">
+    function onRequestReady(progressEvent) {
+      if (this.status != 205) {
+        var errorMessage = document.getElementById('error-message');
+        errorMessage.innerHTML = 'Error: ' + this.statusText + ' <br><br> ' + this.response;
+      } else {
+        window.location.replace('/');
+      }
+    }
+    function onLoad() {
+      var request = new XMLHttpRequest();
+      request.open('GET', 'http://localhost:4200/matchandtrade-api/v1/authenticate/sign-off', false);
+      request.onreadystatechange = onRequestReady;
+      request.send();
+    }
+  </script>
+</head>
+
+<body onload="onLoad()">
+  <div>
+    Signing-off...
+  </div>
+  <p id="error-message"></p>
+</body>
+</html>

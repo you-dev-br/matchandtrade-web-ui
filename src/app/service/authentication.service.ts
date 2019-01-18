@@ -82,15 +82,17 @@ export class AuthenticationService {
 
   async singOff(): Promise<void> {
     try {
-      const headers = await this.obtainAuthorizationHeaders();
-      await this.http.get('matchandtrade-api/v1/authenticate/sign-off', { headers: headers }).toPromise();
+      let headers: HttpHeaders = await this.obtainAuthorizationHeaders();
+      this.http.get('matchandtrade-api/v1/authenticate/sign-off', { headers: headers });
+      return;
     } catch (e) {
       console.log('Unable get authorization header, attempting to sign-off without it');
-      await this.http.get('matchandtrade-api/v1/authenticate/sign-off').toPromise();
+      this.http.get('matchandtrade-api/v1/authenticate/sign-off').toPromise();
+    } finally {
+      this.authorizationHeaderInMemory = undefined;
+      this.storageService.deleteAuthentication();
+      this.userIdInMemory = undefined;
+      this.storageService.deleteUserId();
     }
-    this.authorizationHeaderInMemory = undefined;
-    this.storageService.deleteAuthentication();
-    this.userIdInMemory = undefined;
-    this.storageService.deleteUserId();
   }
 }
