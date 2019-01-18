@@ -5,7 +5,7 @@ import { TradeEntryComponent } from './entry/trade-entry.component';
 
 const routes: Routes = [
   { path: '', component: TradeListComponent },
-  { path: 'entries', component: TradeEntryComponent },
+  { path: 'entrie', component: TradeEntryComponent },
 ];
 
 @NgModule({

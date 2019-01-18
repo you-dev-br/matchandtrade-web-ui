@@ -3,9 +3,17 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #desktopMenu>
-    <button mat-menu-item (click)="navigate('trades')">
+    <button mat-menu-item (click)="navigate('trade')">
       <mat-icon>swap_horiz</mat-icon>
       <span>Trades</span>
+    </button>
+    <button mat-menu-item (click)="navigate('trade')">
+      <mat-icon>redeem</mat-icon>
+      <span>Articles</span>
+    </button>  
+    <button mat-menu-item disabled>
+      <mat-icon>account_circle</mat-icon>
+      <span>Profile</span>
     </button>
     <button mat-menu-item [class]="classSingIn('mat-menu-item')" (click)="navigate('authentication')">
       <mat-icon>exit_to_app</mat-icon>
@@ -14,14 +22,6 @@
     <button mat-menu-item [class]="classSingOff('mat-menu-item')" (click)="signOff()">
       <mat-icon>exit_to_app</mat-icon>
       <span>Sign-off</span> <!-- TODO: Better icon -->
-    </button>
-    <button mat-menu-item disabled>
-      <mat-icon>redeem</mat-icon>
-      <span>Articles</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon>account_circle</mat-icon>
-      <span>Profile</span>
     </button>
   </mat-menu>
 </span>

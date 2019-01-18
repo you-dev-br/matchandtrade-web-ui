@@ -5,7 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   { path: '', loadChildren: '../home/home.module#HomeModule' },
   { path: 'authentication', loadChildren: '../authentication/authentication.module#AuthenticationModule' },
-  { path: 'trades', loadChildren: '../trade/trade.module#TradeModule' },
+  { path: 'trade', loadChildren: '../trade/trade.module#TradeModule' },
+  { path: 'article', loadChildren: '../article/article.module#ArticleModule' },
 ];
 
 @NgModule({

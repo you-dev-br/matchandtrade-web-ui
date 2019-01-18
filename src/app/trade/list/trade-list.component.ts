@@ -43,7 +43,7 @@ export class TradeListComponent extends LoadingAndMessageBannerSupport implement
 
   navigate(trade?: Trade) {
     const href = trade ? trade.getSelfHref() : null;
-    this.navigationService.navigate("trades/entries", {tradeHref: href});
+    this.navigationService.navigate("trade/entrie", {tradeHref: href});
   }
 
   onPageChange(pageEvent: PageEvent) {
