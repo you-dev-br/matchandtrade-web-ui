@@ -1,0 +1,27 @@
+@import '../../../styles/variables.scss';
+
+table {
+	margin-bottom: .25em;
+	width: 100%;
+}
+
+.row:hover {
+	cursor: pointer;
+	background-color: $gray-50;
+}
+
+.row:active {
+	background-color: $gray-200;
+}
+
+.article-name {
+	margin: 1em 0em .5em 0em;
+}
+
+.article-description {
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+	font-size: small;
+	font-weight: lighter;
+	margin: 0em 0em 1em 1em;
+  white-space: pre-wrap;
+}

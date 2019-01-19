@@ -10,14 +10,13 @@
 
 <div *ngIf="!loading" class="mt-content">
 	<table mat-table [dataSource]="trades" class="mat-elevation-z3">
-		<ng-container matColumnDef="name">
-			<th mat-header-cell *matHeaderCellDef> Name </th>
+		<ng-container matColumnDef="col-name">
       <td mat-cell *matCellDef="let trade" (click)="navigate(trade)">
         <div class="trade-name">{{trade.name}}</div>
         <pre class="trade-description">{{trade.description}}</pre>
       </td>
     </ng-container>
-    <tr class="row" mat-row *matRowDef="let row; columns: ['name']"></tr>
+    <tr class="row" mat-row *matRowDef="let row; columns: ['col-name']"></tr>
   </table>
 	<mat-paginator
 	[hidePageSize]="true"

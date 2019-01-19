@@ -14,7 +14,7 @@
     display: none;
   }
   .mt-content {
-    padding: 0em .5em 0em .5em;
+    padding: 0em 0em 0em 0em;
   }
 }
 
@@ -48,7 +48,9 @@ body {
 }
 
 .mt-action-panel {
-  margin: 1em 0 1em 0;
+  display: flex;
+  justify-content: center;
+  margin: 1em;
 }
 
 // ========================

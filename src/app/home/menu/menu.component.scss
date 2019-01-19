@@ -9,7 +9,7 @@
 	color: white;
   max-height: 0px;
   overflow: hidden;
-	transition: max-height 0.15s ease-out;
+	transition: max-height .05s ease-out;
 }
 
 .menu-mobile-item {
@@ -33,5 +33,5 @@
 
 .menu-mobile-expanded {
   max-height: 800px;
-  transition: max-height 0.25s ease-in;
+  transition: max-height .25s ease-in;
 }

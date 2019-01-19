@@ -1,0 +1,32 @@
+<div class="mt-content">
+  <app-content-title title="Articles" icon=redeem></app-content-title>
+</div>
+
+<div class="mt-content">
+  <app-message-banner *ngIf="hasMessage()" [message]="messageText" [type]="messageType" [icon]="messageIcon"></app-message-banner>
+</div>
+
+<app-spinner [visible]="loading"></app-spinner>
+
+<div *ngIf="!loading" class="mt-content">
+  <table mat-table [dataSource]="articles" class="mat-elevation-z3">
+    <ng-container matColumnDef="col-name">
+      <td mat-cell *matCellDef="let article" (click)="navigate(article)">
+        <div class="article-name">{{article.name}}</div>
+        <pre class="article-description">{{article.description}}</pre>
+      </td>
+    </ng-container>
+    <tr class="row" mat-row *matRowDef="let row; columns: ['col-name']"></tr>
+  </table>
+  <mat-paginator
+  [hidePageSize]="true"
+  [length]="pagination.totalEntries"
+  (page)="onPageChange($event)"
+  [pageIndex]="pagination.page.number-1"
+  [pageSize]="pagination.page.size">
+</mat-paginator>
+</div>
+
+<div *ngIf="!loading" class="mt-content mt-action-panel">
+  <button mat-flat-button color="primary" (click)="navigate()">Create</button>
+</div>

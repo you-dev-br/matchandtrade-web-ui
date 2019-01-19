@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpHeaders } from '@angular/common/http';
 import { map, catchError, } from 'rxjs/operators';
 
-import { Trade } from '../class/pojo/trade';
-import { TradeTransformer } from '../class/transformer/trade-transformer';
-import { Page } from '../class/search/page';
-import { SearchResult } from '../class/search/search-result';
 import { AuthenticationService } from './authentication.service';
 import { HttpUtil } from '../class/common/http-util';
+import { Page } from '../class/search/page';
+import { SearchResult } from '../class/search/search-result';
+import { Trade } from '../class/pojo/trade';
+import { TradeTransformer } from '../class/transformer/trade-transformer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TradeService {
-  tradeTransformer: TradeTransformer = new TradeTransformer();
+  private tradeTransformer: TradeTransformer = new TradeTransformer();
 
   constructor(
     private authenticationService: AuthenticationService,

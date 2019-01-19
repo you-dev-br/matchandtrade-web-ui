@@ -7,7 +7,7 @@
       <mat-icon>swap_horiz</mat-icon>
       <span>Trades</span>
     </button>
-    <button mat-menu-item (click)="navigate('trade')">
+    <button mat-menu-item (click)="navigate('article')">
       <mat-icon>redeem</mat-icon>
       <span>Articles</span>
     </button>  
@@ -27,10 +27,10 @@
 </span>
 
 <div [class]="classMobileMenu()">
-  <div class="menu-mobile-item" (click)="navigate('trades')">
+  <div class="menu-mobile-item" (click)="navigate('trade')">
     <mat-icon>swap_horiz</mat-icon>Trades
   </div>
-  <div class="menu-mobile-item">
+  <div class="menu-mobile-item" (click)="navigate('article')">
     <mat-icon>redeem</mat-icon>Articles
   </div>
   <div class="menu-mobile-item">
