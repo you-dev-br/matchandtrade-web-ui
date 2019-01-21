@@ -1,10 +1,6 @@
-<div class="mt-content">
-  <app-content-title title="Trades" icon="swap_horiz"></app-content-title>
-</div>
+<app-content-title class="mt-content" title="Trades" icon="swap_horiz"></app-content-title>
 
-<div class="mt-content">
-  <app-message-banner *ngIf="hasMessage()" [message]="messageText" [type]="messageType" [icon]="messageIcon"></app-message-banner>
-</div>
+<app-message-banner class="mt-content" *ngIf="hasMessage()" [message]="messageText" [type]="messageType" [icon]="messageIcon"></app-message-banner>
 
 <app-spinner [visible]="loading"></app-spinner>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -7,6 +7,7 @@ import { LoadingAndMessageBannerSupport } from 'src/app/class/common/loading-and
 import { MembershipService } from 'src/app/service/membership.service';
 import { Membership, MembershipType } from 'src/app/class/pojo/membership';
 import { NavigationService } from '../../service/navigation.service';
+import { TextEditorComponent } from '../../common/text-editor/text-editor.component';
 import { Trade, TradeState, TradeUtil } from '../../class/pojo/trade';
 import { TradeService } from '../../service/trade.service';
 
@@ -18,11 +19,14 @@ import { TradeService } from '../../service/trade.service';
 })
 export class TradeEntryComponent extends LoadingAndMessageBannerSupport implements OnInit {
   availableStates: KeyValue<TradeState, string>[] = [];
-  descriptionFormControl: AbstractControl;
+  @ViewChild('descriptionTextEditor')
+  descriptionTextEditor: TextEditorComponent;
   nameFormControl: AbstractControl;
-  stateFormControl: AbstractControl;
   membership: Membership;
+  stateFormControl: AbstractControl;
   newTrade: boolean = true;
+  @ViewChild('title', { read: ElementRef })
+  title: ElementRef;
   trade: Trade = new Trade();
   tradeFormGroup: FormGroup;
 
@@ -56,30 +60,23 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
 
   private buildForm(): void {
     this.tradeFormGroup = this.formBuilder.group({
-      'description': ['', Validators.compose([this.descriptionValidator])],
       'name': ['', Validators.compose([Validators.required, this.nameValidator])],
       'state': []
     });
-    this.descriptionFormControl = this.tradeFormGroup.controls['description'];
     this.nameFormControl = this.tradeFormGroup.controls['name'];
     this.stateFormControl = this.tradeFormGroup.controls['state'];
   }
 
-  private descriptionValidator(control: FormControl): { [s: string]: boolean } {
-    if (control.value && (control.value.length < 3 || control.value.length > 1000)) {
-      return { invalid: true };
-    }
+  classMainForm(): string {
+    return this.loading ? "mt-content mt-hide" : "mt-content";
   }
 
   private async loadTrade(): Promise<void> {
     this.newTrade = false;
     this.nameFormControl.setValue(this.trade.name);
-    this.descriptionFormControl.setValue(this.trade.description);
     
-    // Populate with only available states
-    this.availableStates = TradeUtil.toAvailableStatesKeyValue(this.trade.state)
-      .sort((a, b) => TradeUtil.compareStates(a.key, b.key));
-    
+    // Populate available states only
+    this.availableStates = TradeUtil.toAvailableStatesKeyValue(this.trade.state).sort((a, b) => TradeUtil.compareStates(a.key, b.key));
     this.stateFormControl.setValue(this.trade.state);
 
     // Disable form if autheticated user is not the trade owner
@@ -95,14 +92,10 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
 
   private loadTradeFromForm() {
     this.trade.name = this.nameFormControl.value;
-    this.trade.description = this.descriptionFormControl.value;
+    this.trade.description = this.descriptionTextEditor.getValue();
     // Sanitize description, empty string must be treated as undefined or we get server error: description must be bigger than 3 chars
-    if (this.trade.description != null) {
-      if (this.trade.description.length == 0) {
+    if (this.trade.description != null && this.trade.description.trim().length == 0) {
         this.trade.description = undefined;
-      } else {
-        this.trade.description = this.trade.description.trim();
-      }
     }
     this.trade.state = this.stateFormControl.value;
   }
@@ -125,6 +118,7 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
     this.loading = true;
     try {
       this.loadTradeFromForm();
+      this.validateTrade();
       this.trade = await this.tradeService.save(this.trade);
       this.loadTrade();
       this.showInfoMessage('Trade saved', 'save');
@@ -132,6 +126,19 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
       this.showErrorMessage(e);
     } finally {
       this.loading = false;
+      this.title.nativeElement.scrollIntoView();
+    }
+  }
+
+  private validateTrade(): any {
+    if (!this.trade.name || this.trade.name.length < 3 || this.trade.name.length > 150) {
+      throw Error('Name is mandatory and must contain between 3 and 150 characters');
+    }
+
+    if (this.trade.description && this.trade.description.trim().length < 3) {
+      throw Error('Description must contain at least 3 characters')
+    } else if (this.trade.description && this.trade.description.trim().length > 20000) {
+      throw Error('Description is too long')
     }
   }
 }

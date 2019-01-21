@@ -14,7 +14,7 @@ import { AppCommonModule } from '../common/common.module';
     CommonModule,
     ReactiveFormsModule,
     TradeRoutingModule,
-    AppCommonModule,
+    AppCommonModule
   ]
 })
 export class TradeModule { }

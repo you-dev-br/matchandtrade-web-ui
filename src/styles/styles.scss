@@ -1,5 +1,6 @@
 @import './material-design-theme.scss';
 @import './variables.scss';
+@import '~jodit/build/jodit.min.css';
 
 // Breakpoints as defined in material design specs
 @media not screen and (max-width: 600px) {
@@ -51,7 +52,11 @@ body {
 .mt-action-panel {
   display: flex;
   justify-content: center;
-  margin: 1em;
+  margin: 1em 0em 1em 0em;
+}
+
+.mt-hide {
+  display: none;
 }
 
 // ========================

@@ -1,0 +1,14 @@
+@import '../../../styles/variables.scss';
+
+div {
+  border-left: solid 2px $primary-color-200;
+}
+
+span {
+  color: rgba(0, 0, 0, 0.54);
+  display: block;
+  font-weight: 500;
+  font-size: 9pt;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  padding: 0em 0em .2em .4em;
+}

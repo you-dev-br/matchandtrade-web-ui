@@ -1,37 +1,21 @@
-<div class="mt-content">
-  <app-content-title title="Trade" icon="swap_horiz"></app-content-title>
-</div>
+<app-content-title #title class="mt-content" title="Trade" icon="swap_horiz"></app-content-title>
 
-<div class="mt-content">
-  <app-message-banner *ngIf="hasMessage()" [message]="messageText" [type]="messageType" [icon]="messageIcon"></app-message-banner>
-</div>
+<app-message-banner class="mt-content" *ngIf="hasMessage()" [message]="messageText" [type]="messageType" [icon]="messageIcon"></app-message-banner>
 
 <app-spinner [visible]="loading"></app-spinner>
 
-<div *ngIf="!loading" class="mt-content">
+<div [class]="classMainForm()">
   <form class="mt-form" [formGroup]="tradeFormGroup" (ngSubmit)="onSubmit()">
     <mat-form-field>
-      <input
-        matInput
-        [formControl]="tradeFormGroup.controls['name']"
-        placeholder="Name">
+      <input matInput [formControl]="tradeFormGroup.controls['name']" placeholder="Name" required>
     </mat-form-field>
     <mat-form-field *ngIf="showStatus()" class="trade-status">
       <mat-select placeholder="Status" [formControl]="stateFormControl" required>
         <mat-option *ngFor="let state of availableStates" [value]="state.key">{{state.value}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
-      <textarea
-        matInput
-        [formControl]="tradeFormGroup.controls['description']"
-        placeholder="Description"
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="4"
-        cdkAutosizeMaxRows="30">
-      </textarea>
-    </mat-form-field>
-    <div>
+    <app-text-editor #descriptionTextEditor *ngIf="!loading" [initialValue]="trade.description" [readOnly]="tradeFormGroup.disabled" [label]="'Description'"></app-text-editor>
+    <div class="mt-action-panel">
       <button *ngIf="showSaveButton()" mat-flat-button color="primary" type="submit">Save</button>
     </div>
   </form>
