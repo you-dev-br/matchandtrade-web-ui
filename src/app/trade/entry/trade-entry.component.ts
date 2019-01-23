@@ -24,7 +24,7 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
   nameFormControl: AbstractControl;
   membership: Membership;
   stateFormControl: AbstractControl;
-  newTrade: boolean = true;
+  newEntry: boolean = true;
   @ViewChild('title', { read: ElementRef })
   title: ElementRef;
   trade: Trade = new Trade();
@@ -72,7 +72,7 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
   }
 
   private async loadTrade(): Promise<void> {
-    this.newTrade = false;
+    this.newEntry = false;
     this.nameFormControl.setValue(this.trade.name);
     
     // Populate available states only
@@ -107,7 +107,7 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
   }
 
   showStatus(): boolean {
-    return !this.newTrade;
+    return !this.newEntry;
   }
 
   showSaveButton(): boolean {

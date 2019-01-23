@@ -9,7 +9,7 @@
 <div *ngIf="!loading" class="mt-content">
   <table mat-table [dataSource]="articles" class="mat-elevation-z3">
     <ng-container matColumnDef="col-name">
-      <td mat-cell *matCellDef="let article" (click)="navigate(article)">
+      <td mat-cell *matCellDef="let article" (click)="navigateToArticle(article)">
         <div class="article-name">{{article.name}}</div>
         <pre class="article-description">{{article.description}}</pre>
       </td>
@@ -26,5 +26,5 @@
 </div>
 
 <div *ngIf="!loading" class="mt-content mt-action-panel">
-  <button mat-flat-button color="primary" (click)="navigate()">Create</button>
+  <button mat-flat-button color="primary" (click)="navigateToArticle()">Create</button>
 </div>

@@ -6,9 +6,10 @@ import { ArticleListComponent } from './list/article-list.component';
 import { ArticleRoutingModule } from './article-routing.module';
 import { MaterialDesignModule } from '../config/material-design.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ArticleEntryComponent } from './article-entry/article-entry.component';
 
 @NgModule({
-  declarations: [ArticleListComponent],
+  declarations: [ArticleListComponent, ArticleEntryComponent],
   imports: [
     CommonModule,
     MaterialDesignModule,

@@ -40,9 +40,9 @@ export class ArticleListComponent extends LoadingAndMessageBannerSupport impleme
     }
   }
 
-  navigate(trade?: Trade) {
-    const href = trade ? trade.getSelfHref() : null;
-    this.navigationService.navigate("trade/entrie", {tradeHref: href});
+  navigateToArticle(article?: Article) {
+    const href = article ? article.getSelfHref() : null;
+    this.navigationService.navigate("article/entry", {articleHref: href});
   }
 
   onPageChange(pageEvent: PageEvent) {
