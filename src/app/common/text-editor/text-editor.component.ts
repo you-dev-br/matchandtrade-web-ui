@@ -1,7 +1,7 @@
 import { AfterViewChecked, Component, Input, OnInit, AfterViewInit, ViewChild, OnChanges, ViewContainerRef } from '@angular/core';
 
-declare const require: any;
-const Jodit: any = require('jodit');
+// TODO: Migrate to import when Jodit fixes their export
+declare const Jodit: any;
 
 @Component({
   selector: 'app-text-editor',
