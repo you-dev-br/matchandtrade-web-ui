@@ -17,7 +17,7 @@ import { AuthenticationService } from 'src/app/service/authentication.service';
 export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implements OnInit {
   article: Article = new Article();
   descriptionFormControl: AbstractControl;
-  authenticatedUserIsArticleOwner: boolean = undefined;
+  authenticatedUserIsArticleOwner: boolean = true;
   formGroup: FormGroup;
   nameFormControl: AbstractControl;
   newEntry: boolean;
