@@ -3,10 +3,10 @@ import { Transformer } from './transformer';
 import { HttpResponse } from '@angular/common/http';
 
 export class TradeTransformer extends Transformer<Trade>{
-  toPojo(pojoObject: any): Trade {
-    let pojo = pojoObject;
-    if (pojoObject instanceof HttpResponse) {
-      pojo = pojoObject.body;
+  toPojo(anyObject: any): Trade {
+    let pojo = anyObject;
+    if (anyObject instanceof HttpResponse) {
+      pojo = anyObject.body;
     }
     const result = new Trade();
     result.links = this.buildLinks(pojo._links);

@@ -24,8 +24,12 @@ export abstract class Transformer<T> {
 
   public abstract toPojo(json: any): T;
 
-  public toPojos(list: any): T[] {
+  public toPojos(anyList: any): T[] {
     const result = [];
+    let list = anyList;
+    if (anyList instanceof HttpResponse) {
+      list = anyList.body;
+    }
     for (let i = 0; i < list.length; i++) {
       result.push(this.toPojo(list[i]));
     }

@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
-import { LoadingAndMessageBannerSupport } from '../../class/common/loading-and-message-banner-support';
-import { NavigationService } from '../../service/navigation.service';
-import { ActivatedRoute } from '@angular/router';
 import { Article } from '../../class/pojo/article';
 import { ArticleService } from '../../service/article.service';
+import { ActivatedRoute } from '@angular/router';
+import { LoadingAndMessageBannerSupport } from '../../class/common/loading-and-message-banner-support';
+import { NavigationService } from '../../service/navigation.service';
+import { SearchService } from 'src/app/service/search.service';
+import { AuthenticationService } from 'src/app/service/authentication.service';
 
 @Component({
   selector: 'app-article-entry',
@@ -15,16 +17,18 @@ import { ArticleService } from '../../service/article.service';
 export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implements OnInit {
   article: Article = new Article();
   descriptionFormControl: AbstractControl;
+  authenticatedUserIsArticleOwner: boolean = undefined;
   formGroup: FormGroup;
   nameFormControl: AbstractControl;
   newEntry: boolean;
   @ViewChild('title', { read: ElementRef })
   title: ElementRef;
 
-
   constructor(
+    private authenticationService: AuthenticationService,
     private articleService: ArticleService,
     private formBuilder: FormBuilder,
+    private searchService: SearchService,
     private navigationService: NavigationService,
     private route: ActivatedRoute,
   ) {
@@ -37,6 +41,7 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
       const articleHref = this.navigationService.obtainData(this.route).articleHref;
       if (articleHref) {
         this.article = await this.articleService.find(articleHref);
+        await this.initAuthenticatedUserIsArticleOwner();
         await this.loadArticle();
       }
     } catch (e) {
@@ -44,11 +49,6 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
     } finally {
       this.loading = false;
     }
-  }
-
-  // TODO: Implement-me
-  private authenticatedUserIsArticleOwner(): boolean {
-    return true;
   }
 
   private buildForm(): void {
@@ -60,11 +60,19 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
     this.descriptionFormControl = this.formGroup.controls['description'];
   }
 
+  private async initAuthenticatedUserIsArticleOwner(): Promise<void> {
+    let userId: number = await this.authenticationService.obtainUserId();
+    let searchResult: Article[] = await this.searchService.findArticle(userId, this.article.articleId);
+    this.authenticatedUserIsArticleOwner = (searchResult.length > 0);
+  }
+
   private async loadArticle(): Promise<void> {
     this.newEntry = false;
     this.nameFormControl.setValue(this.article.name);   
     this.descriptionFormControl.setValue(this.article.description);
-    // TODO: Disable form if autheticated user does not own the article
+    if (!this.authenticatedUserIsArticleOwner) {
+      this.formGroup.disable();
+    }
   }
 
   private loadArticleFromForm() {
@@ -92,6 +100,6 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
   }
 
   showSaveButton(): boolean {
-    return this.authenticatedUserIsArticleOwner();
+    return !this.formGroup.disabled;
   }
 }
