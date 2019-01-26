@@ -1,39 +1,58 @@
 @import '../styles/variables.scss';
 
+@media not screen and (max-width: 600px) {
+  .toolbar {
+    min-height: 64px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .toolbar {
+    min-height: 30px;
+  }
+}
+
 .horizontal-divider {
-	background-color: $primary-color-200;
-	height: 3px;
+  background-color: $primary-color-200;
+  height: 3px;
 }
 
 .home-title {
-	cursor: pointer;
-	height: 3em;
-	line-height: 3em;
-	// Increase hitting area
-	margin: 0em 2em 0em -1em;
-	padding: 0em 1em 0em 1em;
+  cursor: pointer;
+  height: 3em;
+  line-height: 3em;
+  // Increase hitting area
+  margin: 0em 2em 0em -1em;
+  padding: 0em 1em 0em 1em;
 }
 
-.layout {
-  display: flex;
+.toolbar {
+  background-color: $primary-color;
 }
 
-.layout-center {
-	flex: 100 0 auto;
+.toolbar-filler {
+  flex: 100 0 auto;
   max-width: 1024px;
 }
 
-.layout-content {
-	display: block;
-	flex: 1 1 auto;
-	max-width: 1024px;
-	width: 100%;
+.layout-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
 }
 
 .layout-side {
-	flex: 1 0 auto;
+  flex: 1 1 auto;
 }
 
-.primary-background {
-	background-color: $primary-color;
+.layout-center {
+  max-width: 1024px;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+.layout-content {
+  display: flex;
+  flex-direction: column;
 }

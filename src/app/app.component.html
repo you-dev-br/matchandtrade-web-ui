@@ -1,32 +1,37 @@
-<div class="layout">
-  <div class="layout-side primary-background"></div>
+<div class="layout-container">
+  <div class="layout-side">
+    <div class="toolbar"></div>
+    <div class=horizontal-divider></div>
+  </div>
+
   <div class="layout-center">
-    <mat-toolbar color="primary">
-      <span class="home-title" (click)="navigate('welcome')">Match &amp; Trade</span>
-      <span class="layout-center"></span>
-      <span class="hide-in-small-devices">
-        <app-menu></app-menu>
-        <button mat-icon-button>
-          <mat-icon>account_circle</mat-icon>
-        </button>
-      </span>
-      <span class="hide-in-large-devices">
-        <button mat-icon-button (click)="mobileMenu.toggleMobileMenu()">
-          <mat-icon>menu</mat-icon>
-        </button>
-      </span>
-    </mat-toolbar>
-  </div>
-  <div class="layout-side primary-background"></div>
-</div>
+    <div class="toolbar">
+      <mat-toolbar color="primary">
+        <span class="home-title" (click)="navigate('welcome')">Match &amp; Trade</span>
+        <span class="toolbar-filler"></span>
+        <span class="hide-in-small-devices">
+          <app-menu></app-menu>
+          <button mat-icon-button>
+            <mat-icon>account_circle</mat-icon>
+          </button>
+        </span>
+        <span class="hide-in-large-devices">
+          <button mat-icon-button (click)="mobileMenu.toggleMobileMenu()">
+            <mat-icon>menu</mat-icon>
+          </button>
+        </span>
+      </mat-toolbar>
+      <div class=horizontal-divider></div>
+      <app-menu class="hide-in-large-devices" #mobileMenu></app-menu>
+    </div>
 
-<div class=horizontal-divider></div>
-
-<div class="layout">
-  <div class="layout-side"></div>
-  <div class="layout-content">
-    <app-menu class="hide-in-large-devices" #mobileMenu></app-menu>
-    <router-outlet></router-outlet>
+    <div class="layout-content">
+      <router-outlet></router-outlet>
+    </div>
   </div>
-  <div class="layout-side"></div>
+
+  <div class="layout-side">
+    <div class="toolbar"></div>
+    <div class=horizontal-divider></div>
+  </div>
 </div>
