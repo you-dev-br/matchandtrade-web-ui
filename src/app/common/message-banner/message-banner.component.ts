@@ -38,7 +38,10 @@ export class MessageBannerComponent {
 
   constructor() { }
 
-  classType() {
+  classMessagePanel() {
+    if (this.message == undefined || this.message == null || this.message.trim().length < 1) {
+      return 'mt-hide';
+    }
     const messageTypeClass: string = (this.type ==MessageType.ERROR ? 'error-message' : 'info-message');
     return messageTypeClass + ' mat-elevation-z1';
   }
