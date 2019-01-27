@@ -1,0 +1,37 @@
+@import '../../../styles/variables.scss';
+
+.material-icons {
+  font-size: 18px;
+}
+
+.select-label {
+  position: relative;
+  top: 5px;
+  margin-right: .25em;
+}
+
+.select-container {
+  border-radius: 3px;
+  position: relative;
+}
+
+.select-container select {
+  background: $gray-50;
+  appearance: none;
+  cursor: pointer;
+  border: none;
+  font-size: small;
+  height: 30px;
+  padding: 0em 2em 0em .5em;
+}
+
+.select-container:before {
+  color: $dark-text;
+  content: "arrow_drop_down";
+  font-family: 'Material Icons';
+  font-size: 25px;
+  pointer-events: none;
+  position: absolute;
+  right: 0px;
+  top: -2px;
+}
