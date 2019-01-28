@@ -13,7 +13,7 @@ export class TradeTransformer extends Transformer<Trade>{
     result.description = pojo.description;
     result.name = pojo.name;
     result.tradeId = pojo.tradeId;
-    result.state = TradeState[String(pojo.state)];
+    result.state = Transformer.obtainKeyFromEnumeration(pojo.state, TradeState);
     return result;
   }
 }

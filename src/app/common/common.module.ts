@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { ContentTitleComponent } from './content-title/content-title.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
@@ -12,7 +13,8 @@ import { TextEditorComponent } from './text-editor/text-editor.component';
   declarations: [ContentTitleComponent, MessageBannerComponent, SpinnerComponent, TextEditorComponent, DropdownComponent],
   imports: [
     CommonModule,
-    MaterialDesignModule
+    MaterialDesignModule,
+    ReactiveFormsModule
   ],
   exports: [
     ContentTitleComponent,

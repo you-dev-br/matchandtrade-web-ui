@@ -6,8 +6,8 @@ import { HttpResponse } from '@angular/common/http';
 
 export abstract class Transformer<T> {
   private buildPagination(page: Page, response: HttpResponse<any>) {
-    let paginationTotalCount = parseInt(response.headers.get('x-pagination-total-count'));
-    return new Pagination(page.number, page.size, paginationTotalCount)
+    let header: string = response.headers.get('x-pagination-total-count');
+    return new Pagination(page.number, page.size, parseInt(header));
   }
 
   public buildLinks(links: any): Link[] {
@@ -20,6 +20,18 @@ export abstract class Transformer<T> {
       }
     }
     return result;
+  }
+
+  public static obtainKeyFromEnumeration(value: string, enumeration: any) {
+    const enumerationKeys = Object.keys(enumeration);
+    for (let i = 0; i < enumerationKeys.length; i++) {
+      const enumKey = enumerationKeys[i];
+      const enumValue = enumeration[enumKey];
+      if (enumValue == value) {
+        return enumValue;
+      }
+    };
+    return undefined;
   }
 
   public abstract toPojo(json: any): T;

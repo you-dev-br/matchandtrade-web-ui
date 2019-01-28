@@ -28,7 +28,7 @@ export class TradeService {
   async find(href: string): Promise<Trade> {
     const authorizationHeader = await this.authenticationService.obtainAuthorizationHeaders();
     return this.http
-      .post(href, { headers: authorizationHeader, observe: 'response' })
+      .get(href, { headers: authorizationHeader, observe: 'response' })
       .pipe(
         catchError(HttpUtil.httpErrorResponseHandler),
         map(response => this.tradeTransformer.toPojo(response))

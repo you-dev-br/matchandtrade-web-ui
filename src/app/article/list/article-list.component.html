@@ -2,12 +2,12 @@
   <app-content-title title="Articles" icon=redeem></app-content-title>
 </div>
 
-<app-message-banner class="mt-content" *ngIf="hasMessage()" [message]="messageText" [type]="messageType" [icon]="messageIcon"></app-message-banner>
+<app-message-banner class="mt-content" [message]="messageText" [type]="messageType" [icon]="messageIcon"></app-message-banner>
 
 <app-spinner [visible]="loading"></app-spinner>
 
-<div *ngIf="!loading" class="mt-content">
-  <app-dropdown></app-dropdown>
+<div [class]="classLoadingContent()">
+  <app-dropdown (onChange)="onSortBy($event)" [values]="obtainSortByValues()"></app-dropdown>
   <table mat-table [dataSource]="articles" class="mat-elevation-z3">
     <ng-container matColumnDef="col-name">
       <td mat-cell *matCellDef="let article" (click)="navigateToArticle(article)">
@@ -18,14 +18,14 @@
     <tr class="row" mat-row *matRowDef="let row; columns: ['col-name']"></tr>
   </table>
   <mat-paginator
-  [hidePageSize]="true"
-  [length]="pagination.totalEntries"
-  (page)="onPageChange($event)"
-  [pageIndex]="pagination.page.number-1"
-  [pageSize]="pagination.page.size">
-</mat-paginator>
-</div>
+    [hidePageSize]="true"
+    [length]="pagination.totalEntries"
+    (page)="onPageChange($event)"
+    [pageIndex]="pagination.page.number-1"
+    [pageSize]="pagination.page.size">
+  </mat-paginator>
 
-<div *ngIf="!loading" class="mt-content mt-action-panel">
-  <button mat-flat-button color="primary" (click)="navigateToArticle()">Create</button>
+  <div class="mt-action-panel">
+    <button mat-flat-button color="primary" (click)="navigateToArticle()">Create</button>
+  </div>
 </div>

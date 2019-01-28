@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
 import { Article } from '../class/pojo/article';
-import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ArticleTransformer } from '../class/transformer/article-transformer';
 import { HttpUtil } from '../class/common/http-util';
 import { map, catchError, } from 'rxjs/operators';
+import { SearchCriteria, Recipe } from '../class/search/search-criteria';
+import { SearchResult } from '../class/search/search-result';
+import { Page } from '../class/search/page';
 
 @Injectable({
   providedIn: 'root'
@@ -17,27 +20,18 @@ export class SearchService {
     private http: HttpClient
   ) { }
 
-  async findArticle(userId: number, articleId: number): Promise<Article[]> {
+  async findArticle(searchCriteria: SearchCriteria, page: Page): Promise<SearchResult<Article>> {
     const authorizationHeader = await this.authenticationService.obtainAuthorizationHeaders();
-    const requestBody = {
-      recipe: 'ARTICLES',
-      criteria: [{
-        field: 'User.userId',
-        value: userId
-      }, {
-        field: 'Article.articleId',
-        value: articleId
-      }]
-    };
-    let request = new HttpRequest<any>('POST', '/matchandtrade-api/v1/search',
-      requestBody,
-      {headers: authorizationHeader});
-    
+    searchCriteria.recipe = Recipe.ARTICLES;
     return this.http
-      .request(request)
+      .post(
+        '/matchandtrade-api/v1/search',
+        searchCriteria,
+        { headers: authorizationHeader, observe: 'response' })
       .pipe(
         catchError(HttpUtil.httpErrorResponseHandler),
-        map(response => this.articleTransformer.toPojos(response)))
+        map(response => this.articleTransformer.toSearchResult(response, page))
+      )
       .toPromise();
   }
 }

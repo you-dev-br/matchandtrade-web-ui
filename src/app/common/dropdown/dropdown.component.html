@@ -3,9 +3,10 @@
     <i class="material-icons">sort_by_alpha</i>
   </span>
   <span class="select-container mat-elevation-z3">
-    <select>
-      <option value selected>Name</option>
-      <option value="be">Created date</option>
-    </select>
+    <form [formGroup]="formGroup">
+      <select formControlName="value" (change)="onChangeEvent($event)">
+        <option [value]="v.key" *ngFor="let v of values">{{v.value}}</option>
+      </select>
+    </form>
   </span>
 </span>

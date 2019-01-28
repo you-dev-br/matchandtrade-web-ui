@@ -8,6 +8,8 @@ import { LoadingAndMessageBannerSupport } from '../../class/common/loading-and-m
 import { NavigationService } from '../../service/navigation.service';
 import { SearchService } from 'src/app/service/search.service';
 import { AuthenticationService } from 'src/app/service/authentication.service';
+import { SearchCriteria, Field } from '../../class/search/search-criteria';
+import { Page } from '../../class/search/page';
 
 @Component({
   selector: 'app-article-entry',
@@ -61,9 +63,12 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
   }
 
   private async initAuthenticatedUserIsArticleOwner(): Promise<void> {
-    let userId: number = await this.authenticationService.obtainUserId();
-    let searchResult: Article[] = await this.searchService.findArticle(userId, this.article.articleId);
-    this.authenticatedUserIsArticleOwner = (searchResult.length > 0);
+    const userId = await this.authenticationService.obtainUserId();
+    const searchCriteria = new SearchCriteria();
+    searchCriteria.addCriterion(Field.ARTICLE_ID, this.article.articleId);
+    searchCriteria.addCriterion(Field.USER_ID, userId);
+    const searchResult = await this.searchService.findArticle(searchCriteria, new Page(1,1));
+    this.authenticatedUserIsArticleOwner = (searchResult.pagination.totalEntries > 0);
   }
 
   private async loadArticle(): Promise<void> {
