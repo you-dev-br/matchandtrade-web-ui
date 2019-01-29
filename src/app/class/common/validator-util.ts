@@ -2,9 +2,14 @@ import { ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
 export class ValidatorUtil {
 
-	private static isEmptyInputValue(value: any): boolean {
-		// we don't check for string here so it also works with arrays
-		return value == null || value.length === 0;
+	private static isEmpty(value: any): boolean {
+		if (value == null) {
+			return true;
+		} else if (this.isString(value)) {
+			return value.trim().length == 0;
+		} else {
+			return value.length == 0;
+		}
 	}
 
 	private static isString(value: any): boolean {
@@ -14,7 +19,7 @@ export class ValidatorUtil {
 	static minLengthWithTrim(minLength: number): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
 			let value = control.value;
-      if (this.isEmptyInputValue(value)) {
+      if (this.isEmpty(value)) {
         return null;  // don't validate empty values to allow optional controls
 			}
 			
@@ -32,7 +37,7 @@ export class ValidatorUtil {
 	static maxLengthWithTrim(maxLength: number): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
 			let value = control.value;
-      if (this.isEmptyInputValue(value)) {
+      if (this.isEmpty(value)) {
         return null;  // don't validate empty values to allow optional controls
 			}
 			

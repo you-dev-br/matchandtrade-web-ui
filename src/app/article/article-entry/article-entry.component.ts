@@ -116,7 +116,7 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
       throw new Error("Article name is manadatory and must contain between 3 and 150 characters.");
     }
     if (!this.descriptionFormControl.valid) {
-      throw new Error("Article description is manadatory and must contain between 3 and 1000 characters.");
+      throw new Error("Article description must contain between 3 and 1000 characters.");
     }
   }
 }
