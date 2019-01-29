@@ -20,12 +20,16 @@ export class SearchService {
     private http: HttpClient
   ) { }
 
-  async findArticle(searchCriteria: SearchCriteria, page: Page): Promise<SearchResult<Article>> {
+  private buildSearchArticlesUrl(page: Page): string {
+    return `/matchandtrade-api/v1/search?_pageNumber=${page.number}&_pageSize=${page.size}`; 
+  }
+
+  async searchArticles(searchCriteria: SearchCriteria, page: Page): Promise<SearchResult<Article>> {
     const authorizationHeader = await this.authenticationService.obtainAuthorizationHeaders();
     searchCriteria.recipe = Recipe.ARTICLES;
     return this.http
       .post(
-        '/matchandtrade-api/v1/search',
+        this.buildSearchArticlesUrl(page),
         searchCriteria,
         { headers: authorizationHeader, observe: 'response' })
       .pipe(

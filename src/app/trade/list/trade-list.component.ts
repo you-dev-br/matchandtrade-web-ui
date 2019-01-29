@@ -48,8 +48,6 @@ export class TradeListComponent extends LoadingAndMessageBannerSupport implement
 
   onPageChange(pageEvent: PageEvent) {
     this.pagination.page.number = pageEvent.pageIndex + 1;
-    this.pagination.page.size = pageEvent.pageSize;
-    this.pagination.totalEntries = pageEvent.length;
     this.findAll();
   }
 }

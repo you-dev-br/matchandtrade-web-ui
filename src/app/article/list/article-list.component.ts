@@ -44,7 +44,7 @@ export class ArticleListComponent extends LoadingAndMessageBannerSupport impleme
       const searchCriteria = new SearchCriteria();
       searchCriteria.addCriterion(Field.USER_ID, userId);
       searchCriteria.addSort(this.sortBy, SortType.ASC);
-      const searchResult = await this.searchService.findArticle(searchCriteria, new Page(1,1));
+      const searchResult = await this.searchService.searchArticles(searchCriteria, this.pagination.page);
       this.articles = searchResult.results;
       this.pagination = searchResult.pagination;
     } catch (e) {
@@ -65,8 +65,6 @@ export class ArticleListComponent extends LoadingAndMessageBannerSupport impleme
 
   onPageChange(pageEvent: PageEvent) {
     this.pagination.page.number = pageEvent.pageIndex + 1;
-    this.pagination.page.size = pageEvent.pageSize;
-    this.pagination.totalEntries = pageEvent.length;
     this.findAll();
   }
 

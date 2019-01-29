@@ -72,7 +72,7 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
     const searchCriteria = new SearchCriteria();
     searchCriteria.addCriterion(Field.ARTICLE_ID, this.article.articleId);
     searchCriteria.addCriterion(Field.USER_ID, userId);
-    const searchResult = await this.searchService.findArticle(searchCriteria, new Page(1,1));
+    const searchResult = await this.searchService.searchArticles(searchCriteria, new Page(1,1));
     this.authenticatedUserIsArticleOwner = (searchResult.pagination.totalEntries > 0);
   }
 
