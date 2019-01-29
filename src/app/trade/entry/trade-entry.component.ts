@@ -10,6 +10,7 @@ import { NavigationService } from '../../service/navigation.service';
 import { TextEditorComponent } from '../../common/text-editor/text-editor.component';
 import { Trade, TradeState, TradeUtil } from '../../class/pojo/trade';
 import { TradeService } from '../../service/trade.service';
+import { ValidatorUtil } from 'src/app/class/common/validator-util';
 
 @Component({
   selector: 'app-trade-entry',
@@ -60,7 +61,7 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
 
   private buildForm(): void {
     this.tradeFormGroup = this.formBuilder.group({
-      'name': ['', Validators.compose([Validators.required, this.nameValidator])],
+      'name': ['', Validators.compose([Validators.required, ValidatorUtil.minLengthWithTrim(3), ValidatorUtil.maxLengthWithTrim(150)])],
       'state': []
     });
     this.nameFormControl = this.tradeFormGroup.controls['name'];
@@ -91,19 +92,13 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
   }
 
   private loadTradeFromForm() {
-    this.trade.name = this.nameFormControl.value;
+    this.trade.name = this.nameFormControl.value.trim();
     this.trade.description = this.descriptionTextEditor.getValue();
     // Sanitize description, empty string must be treated as undefined or we get server error: description must be bigger than 3 chars
-    if (this.trade.description != null && this.trade.description.trim().length == 0) {
+    if (this.descriptionTextEditor.getValue() == null || this.descriptionTextEditor.getValue().length < 3) {
         this.trade.description = undefined;
     }
     this.trade.state = this.stateFormControl.value;
-  }
-
-  private nameValidator(control: FormControl): { [s: string]: boolean } {
-    if (!control.value || (control.value.length < 3 || control.value.length > 150)) {
-      return { invalid: true };
-    }
   }
 
   showStatus(): boolean {
@@ -117,8 +112,8 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
   async onSubmit() {
     this.loading = true;
     try {
+      this.validate();
       this.loadTradeFromForm();
-      this.validateTrade();
       this.trade = await this.tradeService.save(this.trade);
       this.loadTrade();
       this.showInfoMessage('Trade saved', 'save');
@@ -130,12 +125,11 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
     }
   }
 
-  private validateTrade(): any {
-    if (!this.trade.name || this.trade.name.length < 3 || this.trade.name.length > 150) {
+  private validate(): any {
+    if (!this.nameFormControl.valid) {
       throw Error('Name is mandatory and must contain between 3 and 150 characters');
     }
-
-    if (this.trade.description && this.trade.description.trim().length < 3) {
+    if (this.descriptionTextEditor.getValue() == null || this.descriptionTextEditor.getValue().length < 3) {
       throw Error('Description must contain at least 3 characters')
     } else if (this.trade.description && this.trade.description.trim().length > 20000) {
       throw Error('Description is too long')

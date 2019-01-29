@@ -1,7 +1,11 @@
 @import '../../../styles/variables.scss';
 
-div {
+.inputfield-border {
   border-left: solid 2px $primary-color-200;
+}
+
+.inputfield-borderless {
+  border-left: none;
 }
 
 span {

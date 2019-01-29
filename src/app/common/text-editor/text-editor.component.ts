@@ -61,6 +61,10 @@ export class TextEditorComponent implements AfterViewInit {
     this.jodit.setEditorValue(v);
   }
 
+  classInputField(): string {
+    return this.readOnly ? "inputfield-borderless" : "inputfield-border";
+  }
+
   private requiredString(): string {
     return this.required ? '*' : '';
   }

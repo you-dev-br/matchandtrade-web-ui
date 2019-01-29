@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material';
 
 import { Article } from 'src/app/class/pojo/article';
-import { ArticleService } from 'src/app/service/article.service';
 import { AuthenticationService } from '../../service/authentication.service';
 import { LoadingAndMessageBannerSupport } from 'src/app/class/common/loading-and-message-banner-support';
 import { KeyValue } from '@angular/common';
