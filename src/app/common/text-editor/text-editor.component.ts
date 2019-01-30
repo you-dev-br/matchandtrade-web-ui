@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, OnChanges, OnInit, ViewContainerRef, SimpleChanges} from '@angular/core';
+import { Component, Input, ViewChild, OnDestroy, OnChanges, OnInit, ViewContainerRef, SimpleChanges} from '@angular/core';
 
 // TODO: Migrate to import when Jodit fixes their export
 declare const Jodit: any;
@@ -8,7 +8,7 @@ declare const Jodit: any;
   templateUrl: './text-editor.component.html',
   styleUrls: ['./text-editor.component.scss']
 })
-export class TextEditorComponent implements OnInit, OnChanges {
+export class TextEditorComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   content: string;
   @ViewChild('editorView', { read: ViewContainerRef })
@@ -42,18 +42,23 @@ export class TextEditorComponent implements OnInit, OnChanges {
     toolbarStickyOffset: 20,
   };
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.joditConfig.readonly = this.readOnly;
     this.joditConfig.toolbar = !this.readOnly;
     this.jodit = new Jodit(this.editorView.element.nativeElement, this.joditConfig);
     this.setValue(this.content);
   }
   
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (this.jodit) {
       this.content = String(changes.content.currentValue);
       this.setValue(this.content);
     }
+  }
+
+  ngOnDestroy(): void {
+    // TODO: Follow up on https://github.com/xdan/jodit/issues/137
+    this.jodit = undefined;
   }
 
   classInputField(): string {
@@ -65,10 +70,14 @@ export class TextEditorComponent implements OnInit, OnChanges {
   }
 
   requiredString(): string {
-    return this.required ? '*' : '';
+    return this.required ? '*' : undefined;
   }
 
   setValue(v: string): void {
     this.jodit.setEditorValue(v);
+  }
+
+  showLabel(): boolean {
+    return !!this.label;
   }
 }

@@ -124,17 +124,8 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
   }
 
   private validate(): any {
-    const errors: string[] = [];
-    if (!this.nameFormControl.valid) {
-      errors.push('Name is mandatory and must contain between 3 and 150 characters.');
-    }
-    if (this.descriptionTextEditor.getValue() == null || this.descriptionTextEditor.getValue().length < 3) {
-      errors.push('Description must contain at least 3 characters.')
-    } else if (this.descriptionTextEditor.getValue().length > 20000) {
-      errors.push('Description is too long.')
-    }
-    if (errors.length > 0) {
-      throw new ValidationError(errors);
+    if (this.descriptionTextEditor.getValue().length > 20000) {
+      throw new ValidationError('Description is too long');
     }
   }
 }

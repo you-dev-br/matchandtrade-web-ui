@@ -1,4 +1,6 @@
-<span *ngIf="label">{{label}} {{requiredString()}}</span>
+<span *ngIf="showLabel()">
+  {{label}} {{requiredString()}}
+</span>
 <div [class]="classInputField()">
   <textarea #editorView></textarea>
 </div>
