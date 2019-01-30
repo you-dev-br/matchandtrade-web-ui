@@ -1,27 +1,35 @@
 import { MessageType } from '../../common/message-banner/message-banner.component';
+import { ValidationError } from './validation-error';
 
 export class LoadingAndMessageBannerSupport {
   loading: boolean = true;
-  messageText: string;
+  messages: string[];
   messageType: MessageType;
   messageIcon: string;
 
-  hasMessage(): boolean {
-    return !!this.messageText;
-  }
-
-  showErrorMessage(text: any, icon?: string) {
-    const code: string = text.code && text.code != 400 ? `${text.code} : ` : '';
-    if (text instanceof Error) {
-      this.messageText = `${code} ${text.message}`;
+  private obtainMessagesFromArrayOrString(desiredMessages: any): string[] {
+    const result: string[] = []; 
+    if (desiredMessages instanceof Array) {
+      for (let message of desiredMessages) {
+        result.push(String(message));
+      }
     } else {
-      this.messageText = String(text);
+      result.push(String(desiredMessages));
     }
-    this.messageType = MessageType.ERROR;
+    return result;
   }
 
-  showInfoMessage(text: string, icon?: string) {
-    this.messageText = text;
+  showErrorMessage(text: String | string[] | ValidationError, icon?: string) {
+    this.messageType = MessageType.ERROR;
+    if (text instanceof ValidationError) {
+      this.messages = text.messages;
+    } else {
+      this.messages = this.obtainMessagesFromArrayOrString(text);
+    }
+  }
+
+  showInfoMessage(desiredMessages: string | string[], icon?: string) {
     this.messageType = MessageType.INFO;
+    this.messages = this.obtainMessagesFromArrayOrString(desiredMessages);
   }
 }

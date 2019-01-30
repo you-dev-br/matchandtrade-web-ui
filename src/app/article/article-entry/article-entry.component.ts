@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
 import { Article } from '../../class/pojo/article';
@@ -11,6 +11,7 @@ import { Page } from '../../class/search/page';
 import { SearchCriteria, Field } from '../../class/search/search-criteria';
 import { SearchService } from 'src/app/service/search.service';
 import { ValidatorUtil } from 'src/app/class/common/validator-util';
+import { ValidationError } from 'src/app/class/common/validation-error';
 
 @Component({
   selector: 'app-article-entry',
@@ -24,8 +25,6 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
   formGroup: FormGroup;
   nameFormControl: AbstractControl;
   newEntry: boolean;
-  @ViewChild('title', { read: ElementRef })
-  title: ElementRef;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -99,10 +98,10 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
       this.loadArticle();
       this.showInfoMessage('Article saved', 'save');
     } catch (e) {
+      const boo = e instanceof ValidationError;
       this.showErrorMessage(e);
     } finally {
       this.loading = false;
-      this.title.nativeElement.scrollIntoView();
     }
   }
 
@@ -110,13 +109,16 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
     return !this.formGroup.disabled;
   }
   
-  // TODO: Can we get the error details form Validators?
   validate() {
+    const errors: string[] = [];
     if (!this.nameFormControl.valid) {
-      throw new Error("Article name is manadatory and must contain between 3 and 150 characters.");
+      errors.push("Article name is manadatory and must contain between 3 and 150 characters.");
     }
     if (!this.descriptionFormControl.valid) {
-      throw new Error("Article description must contain between 3 and 1000 characters.");
+      errors.push("Article description must contain between 3 and 1000 characters.");
+    }
+    if (errors.length > 0) {
+      throw new ValidationError(errors);
     }
   }
 }

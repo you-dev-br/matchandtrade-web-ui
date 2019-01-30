@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { KeyValue } from '@angular/common';
@@ -11,6 +11,7 @@ import { TextEditorComponent } from '../../common/text-editor/text-editor.compon
 import { Trade, TradeState, TradeUtil } from '../../class/pojo/trade';
 import { TradeService } from '../../service/trade.service';
 import { ValidatorUtil } from 'src/app/class/common/validator-util';
+import { ValidationError } from 'src/app/class/common/validation-error';
 
 @Component({
   selector: 'app-trade-entry',
@@ -26,8 +27,6 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
   membership: Membership;
   stateFormControl: AbstractControl;
   newEntry: boolean = true;
-  @ViewChild('title', { read: ElementRef })
-  title: ElementRef;
   trade: Trade = new Trade();
   tradeFormGroup: FormGroup;
 
@@ -121,18 +120,21 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
       this.showErrorMessage(e);
     } finally {
       this.loading = false;
-      this.title.nativeElement.scrollIntoView();
     }
   }
 
   private validate(): any {
+    const errors: string[] = [];
     if (!this.nameFormControl.valid) {
-      throw Error('Name is mandatory and must contain between 3 and 150 characters');
+      errors.push('Name is mandatory and must contain between 3 and 150 characters.');
     }
     if (this.descriptionTextEditor.getValue() == null || this.descriptionTextEditor.getValue().length < 3) {
-      throw Error('Description must contain at least 3 characters')
-    } else if (this.trade.description && this.trade.description.trim().length > 20000) {
-      throw Error('Description is too long')
+      errors.push('Description must contain at least 3 characters.')
+    } else if (this.descriptionTextEditor.getValue().length > 20000) {
+      errors.push('Description is too long.')
+    }
+    if (errors.length > 0) {
+      throw new ValidationError(errors);
     }
   }
 }

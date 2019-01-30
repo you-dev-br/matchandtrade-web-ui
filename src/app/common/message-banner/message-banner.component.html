@@ -3,6 +3,13 @@
     <i class="material-icons">{{obtainIcon()}}</i>
   </div>
   <div class="message-text">
-    {{message}}
+    <div *ngIf="isSingleMessage()">
+      {{obtainSingleMessage()}}
+    </div>
+    <div *ngIf="!isSingleMessage()">
+      <ul>
+        <li *ngFor="let message of messages">{{message}}</li>
+      </ul>
+    </div>
   </div>
 </div>

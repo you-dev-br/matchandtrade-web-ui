@@ -3,25 +3,6 @@ import { Component, Input, OnChanges, SimpleChange, SimpleChanges } from '@angul
 export enum MessageType {
   ERROR="ERROR", INFO="INFO"
 }
-export class Message {
-  text: string;
-  type: MessageType;
-
-  info(text: string): void {
-    this.text = text;
-    this.type = MessageType.INFO;
-  }
-  error(text: string): void {
-    this.text = text;
-    this.type = MessageType.ERROR;
-  }
-  isError(): boolean {
-    return this.type == MessageType.ERROR;
-  }
-  isInfo(): boolean {
-    return this.type == MessageType.INFO;
-  }
-}
 
 @Component({
   selector: 'app-message-banner',
@@ -32,22 +13,32 @@ export class MessageBannerComponent {
   @Input()
   icon: string;
   @Input()
-  message: string;
+  messages: string [] = [];
   @Input()
   type: MessageType;
 
-  constructor() { }
-
-  classMessagePanel() {
-    if (this.message == undefined || this.message == null || this.message.trim().length < 1) {
+  classMessagePanel(): string {
+    if (this.isMessageEmpty()) {
       return 'mt-hide';
     }
-    const messageTypeClass: string = (this.type ==MessageType.ERROR ? 'error-message' : 'info-message');
-    return messageTypeClass + ' mat-elevation-z1';
+    const messageType = (this.type == MessageType.ERROR ? 'error-message' : 'info-message');
+    return messageType + ' mat-elevation-z1';
   }
 
-  title(): string {
-    return this.type == MessageType.ERROR ? 'Error' : 'Info';
+  private isMessageEmpty(): boolean {
+    return this.messages == undefined || this.messages == null || this.messages.length < 1;
+  }
+
+  isSingleMessage(): boolean {
+    return !this.isMessageEmpty() && !(this.messages.length > 1);
+  }
+
+  obtainSingleMessage(): string {
+    let result = '';
+    for(let m of this.messages) {
+      result = result.concat(m);
+    }
+    return result;
   }
 
   obtainIcon(): string {
@@ -55,5 +46,9 @@ export class MessageBannerComponent {
       return this.icon;
     }
     return this.type == MessageType.ERROR ? 'error' : 'info';
+  }
+
+  title(): string {
+    return this.type == MessageType.ERROR ? 'Error' : 'Info';
   }
 }
