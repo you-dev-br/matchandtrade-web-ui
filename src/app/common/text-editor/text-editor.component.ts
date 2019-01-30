@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, Input, OnInit, AfterViewInit, ViewChild, OnChanges, ViewContainerRef } from '@angular/core';
+import { Component, Input, ViewChild, OnChanges, OnInit, ViewContainerRef, SimpleChanges} from '@angular/core';
 
 // TODO: Migrate to import when Jodit fixes their export
 declare const Jodit: any;
@@ -8,16 +8,16 @@ declare const Jodit: any;
   templateUrl: './text-editor.component.html',
   styleUrls: ['./text-editor.component.scss']
 })
-export class TextEditorComponent implements AfterViewInit {
+export class TextEditorComponent implements OnInit, OnChanges {
+  @Input()
+  content: string;
   @ViewChild('editorView', { read: ViewContainerRef })
   private editorView: ViewContainerRef;
-  @Input()
-  initialValue: string;
   private jodit: any;
   @Input()
   label: string;
   @Input()
-  readOnly: boolean;
+  readOnly: boolean = true;
   @Input()
   required: boolean = false;
 
@@ -42,30 +42,33 @@ export class TextEditorComponent implements AfterViewInit {
     toolbarStickyOffset: 20,
   };
 
-  /**
-   * Strangely, simply setting 'textEditorView: JoditAngularComponent' throws error.
-   * Alternatively, hence we cast 'textEditorView: any' to 'textEditorViewJodit: JoditAngularComponent'
-   */
-  ngAfterViewInit(): void {
+  ngOnInit() {
     this.joditConfig.readonly = this.readOnly;
     this.joditConfig.toolbar = !this.readOnly;
     this.jodit = new Jodit(this.editorView.element.nativeElement, this.joditConfig);
-    this.setValue(this.initialValue);
+    this.setValue(this.content);
+  }
+  
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.jodit) {
+      this.content = String(changes.content.currentValue);
+      this.setValue(this.content);
+    }
+  }
+
+  classInputField(): string {
+    return this.readOnly ? 'inputfield-borderless' : 'inputfield-border';
   }
 
   getValue(): string {
     return this.jodit.getEditorValue();
   }
 
+  requiredString(): string {
+    return this.required ? '*' : '';
+  }
+
   setValue(v: string): void {
     this.jodit.setEditorValue(v);
-  }
-
-  classInputField(): string {
-    return this.readOnly ? "inputfield-borderless" : "inputfield-border";
-  }
-
-  private requiredString(): string {
-    return this.required ? '*' : '';
   }
 }

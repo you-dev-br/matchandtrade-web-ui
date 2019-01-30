@@ -14,7 +14,12 @@
         <mat-option *ngFor="let state of availableStates" [value]="state.key">{{state.value}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <app-text-editor #descriptionTextEditor *ngIf="!loading" [initialValue]="trade.description" [readOnly]="tradeFormGroup.disabled" [label]="'Description'"></app-text-editor>
+    <app-text-editor
+      #descriptionTextEditor 
+      [content]="trade.description" 
+      [readOnly]="tradeFormGroup.disabled" 
+      [label]="'Description'">
+    </app-text-editor>
     <div class="mt-action-panel">
       <button *ngIf="showSaveButton()" mat-flat-button color="primary" type="submit">Save</button>
     </div>
