@@ -98,7 +98,6 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
       this.loadArticle();
       this.showInfoMessage('Article saved', 'save');
     } catch (e) {
-      const boo = e instanceof ValidationError;
       this.showErrorMessage(e);
     } finally {
       this.loading = false;
@@ -110,15 +109,8 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
   }
   
   validate() {
-    const errors: string[] = [];
-    if (!this.nameFormControl.valid) {
-      errors.push("Article name is manadatory and must contain between 3 and 150 characters.");
-    }
-    if (!this.descriptionFormControl.valid) {
-      errors.push("Article description must contain between 3 and 1000 characters.");
-    }
-    if (errors.length > 0) {
-      throw new ValidationError(errors);
+    if (!this.descriptionFormControl.valid || !this.nameFormControl.valid) {
+      throw new ValidationError("Please ensure that the fields below are valid");
     }
   }
 }

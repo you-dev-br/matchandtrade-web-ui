@@ -9,6 +9,7 @@
   <form class="mt-form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <input matInput [formControl]="formGroup.controls['name']" placeholder="Name" required>
+      <mat-error>Article name is manadatory and must contain between 3 and 150 characters</mat-error>
     </mat-form-field>
     <mat-form-field>
       <textarea
@@ -19,6 +20,7 @@
         cdkAutosizeMinRows="4"
         cdkAutosizeMaxRows="30">
       </textarea>
+      <mat-error>Article description must contain between 3 and 1000 characters</mat-error>
     </mat-form-field>
     <div class="mt-action-panel">
       <button *ngIf="showSaveButton()" mat-flat-button color="primary" type="submit">Save</button>
