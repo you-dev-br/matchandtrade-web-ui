@@ -15,12 +15,9 @@
         <mat-option *ngFor="let state of availableStates" [value]="state.key">{{state.value}}</mat-option>
       </mat-select>
     </mat-form-field>
-
-    <app-form-rich-editor [formControl]="descriptionFormControl"></app-form-rich-editor>
-
+    <app-form-rich-editor [formControl]="descriptionFormControl" [minLength]="10" [maxLength]="10000"></app-form-rich-editor>
     <div class="mt-action-panel">
       <button *ngIf="showSaveButton()" mat-flat-button color="primary" type="submit">Save</button>
     </div>
   </form>
 </div>
-

@@ -7,7 +7,6 @@ import { LoadingAndMessageBannerSupport } from 'src/app/class/common/loading-and
 import { MembershipService } from 'src/app/service/membership.service';
 import { Membership, MembershipType } from 'src/app/class/pojo/membership';
 import { NavigationService } from '../../service/navigation.service';
-import { TextEditorComponent } from '../../common/text-editor/text-editor.component';
 import { Trade, TradeState, TradeUtil } from '../../class/pojo/trade';
 import { TradeService } from '../../service/trade.service';
 import { ValidatorUtil } from 'src/app/class/common/validator-util';
@@ -60,7 +59,7 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
   private buildForm(): void {
     this.tradeFormGroup = this.formBuilder.group({
       'name': ['', Validators.compose([Validators.required, ValidatorUtil.minLengthWithTrim(3), ValidatorUtil.maxLengthWithTrim(150)])],
-      'description': ['', Validators.compose([Validators.required, ValidatorUtil.minLengthWithTrim(3), ValidatorUtil.maxLengthWithTrim(150)])],
+      'description': ['', Validators.compose([Validators.required])],
       'state': []
     });
     this.nameFormControl = this.tradeFormGroup.controls['name'];
@@ -126,9 +125,11 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
   }
 
   private validate(): void {
-    console.log('validateDesc', this.descriptionFormControl.valid, this.descriptionFormControl.value);
-    // if (this.descriptionTextEditor.getValue().length > 20000) {
-      // throw new ValidationError('Description is too long');
-    // }
+    if (this.descriptionFormControl.value.length >= 20000) {
+      throw new ValidationError('Description is too long');
+    }
+    if (!this.descriptionFormControl.valid || !this.nameFormControl.valid) {
+      throw new ValidationError('Please ensure that the fields below are valid');
+    }
   }
 }

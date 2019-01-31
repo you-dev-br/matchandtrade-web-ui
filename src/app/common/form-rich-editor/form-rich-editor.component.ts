@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ElementRef, ViewChild, forwardRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, NG_VALIDATORS, Validator, AbstractControl, ValidationErrors } from '@angular/forms';
 
 // TODO: Import instead of declaring. Also import only relevant Quill modules.
 // Currently we get an error when importing: node_modules/@types/quill/node_modules/quill-delta/dist/Delta.d.ts(1,8): error TS1192
@@ -13,14 +13,28 @@ declare const Quill: any;
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => FormRichEditorComponent),
     multi: true
+  }, {
+    provide: NG_VALIDATORS,
+    useExisting: forwardRef(() => FormRichEditorComponent),
+    multi: true,
   }]
 })
-export class FormRichEditorComponent implements OnInit, ControlValueAccessor {
+export class FormRichEditorComponent implements OnInit, ControlValueAccessor, Validator {
+
+
   @ViewChild('editorElement', {read: ElementRef})
   editorElement: ElementRef;
   editor: any;
   @Input()
-  value: any;
+  value: string;
+
+  @Input()
+  minLength: number;
+  
+  @Input()
+  maxLength: number;
+
+
 
   onChange: any = () => { };
   onTouched: any = () => { };
@@ -33,12 +47,26 @@ export class FormRichEditorComponent implements OnInit, ControlValueAccessor {
     });
   }
 
+  getText(): string {
+    return this.editor.getText();
+  }
+
   registerOnChange(fn: (v: any) => void): void {
      this.onChange = fn;
   }
 
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
+  }
+
+  validate(control: AbstractControl): ValidationErrors {
+    if (this.minLength && this.editor.getText().trim().length < this.minLength) {
+      return {'minLength': true};
+    }
+    if (this.maxLength && this.editor.getText().trim().length > this.maxLength) {
+      return {'maxLength': true};
+    }
+    return null;
   }
 
   writeValue(deltaString: string): void {
