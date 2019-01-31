@@ -1,6 +1,3 @@
-<span *ngIf="showLabel()">
-  {{label}} {{requiredString()}}
-</span>
-<div [class]="classInputField()">
-  <textarea #editorView></textarea>
+<div class="text-editor-container">
+  <div #editorElement (click)="onTouched()"></div>
 </div>

@@ -1,22 +1,3 @@
-@import '../../../styles/variables.scss';
-
-.inputfield-border {
-  border-left: solid 2px $primary-color-200;
-}
-
-.inputfield-borderless {
-  border-left: none;
-}
-
-mat-error {
-  display: inline;
-}
-
-span {
-  color: rgba(0, 0, 0, 0.54);
-  display: block;
-  font-weight: 500;
-  font-size: 9pt;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  padding: 0em 0em .2em .4em;
+img {
+	position: relative;
 }

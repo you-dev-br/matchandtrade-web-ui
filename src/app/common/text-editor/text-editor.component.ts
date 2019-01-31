@@ -1,83 +1,71 @@
-import { Component, Input, ViewChild, OnDestroy, OnChanges, OnInit, ViewContainerRef, SimpleChanges} from '@angular/core';
+import { Component, Input, OnInit, ElementRef, ViewChild, forwardRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, NG_VALIDATORS, Validator, AbstractControl, ValidationErrors } from '@angular/forms';
 
-// TODO: Migrate to import when Jodit fixes their export
-declare const Jodit: any;
+// TODO: Import instead of declaring. Also import only relevant Quill modules.
+// Currently we get an error when importing: node_modules/@types/quill/node_modules/quill-delta/dist/Delta.d.ts(1,8): error TS1192
+declare const Quill: any;
 
 @Component({
   selector: 'app-text-editor',
   templateUrl: './text-editor.component.html',
-  styleUrls: ['./text-editor.component.scss']
+  styleUrls: ['./text-editor.component.scss'],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => TextEditorComponent),
+    multi: true
+  }, {
+    provide: NG_VALIDATORS,
+    useExisting: forwardRef(() => TextEditorComponent),
+    multi: true,
+  }]
 })
-export class TextEditorComponent implements OnInit, OnChanges, OnDestroy {
+export class TextEditorComponent implements OnInit, ControlValueAccessor, Validator {
+  @ViewChild('editorElement', {read: ElementRef})
+  editorElement: ElementRef;
+  editor: any;
   @Input()
-  content: string;
-  @ViewChild('editorView', { read: ViewContainerRef })
-  private editorView: ViewContainerRef;
-  private jodit: any;
+  value: string;
   @Input()
-  label: string;
+  minLength: number;
   @Input()
-  readOnly: boolean = true;
-  @Input()
-  required: boolean = false;
+  maxLength: number;
 
-  private joditConfig = {
-    askBeforePasteHTML: false,
-    askBeforePasteFromWord: false,
-    buttons:   "bold,strikethrough,eraser,|,ul,ol,|,outdent,indent,|,paragraph,|,link,|,align,,selectall,fullsize",
-    buttonsMD: "bold,strikethrough,eraser,|,ul,ol,|,outdent,indent,|,paragraph,|,link,|,align,,selectall,fullsize",
-    buttonsSM: "bold,strikethrough,eraser,|,ul,ol,|,outdent,indent,|,paragraph,|,link,|,align,,selectall,fullsize",
-    buttonsXS: "bold,strikethrough,eraser,|,paragraph,|,align,|,fullsize,|,dots",
-    defaultActionOnPaste: "insert_only_text",
-    disablePlugins: "color,iframe,imageProcessor,imageProperties,inlinePopup,justify,media",
-    readonly: true,
-    showCharsCounter: false,
-    showWordsCounter: false,
-    showXPathInStatusbar: false,
-    spellcheck: false,
-    toolbar: false,
-    toolbarInline: false,
-    toolbarButtonSize: "large",
-    toolbarSticky: false,
-    toolbarStickyOffset: 20,
-  };
+  onChange: any = () => { };
+  onTouched: any = () => { };
 
   ngOnInit(): void {
-    this.joditConfig.readonly = this.readOnly;
-    this.joditConfig.toolbar = !this.readOnly;
-    this.jodit = new Jodit(this.editorView.element.nativeElement, this.joditConfig);
-    this.setValue(this.content);
+    this.editor = new Quill(this.editorElement.nativeElement, {theme: 'snow'});
+    this.editor.on('text-change', () => {
+      const editorContent = JSON.stringify(this.editor.getContents());
+      this.onChange(editorContent);
+    });
   }
-  
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.jodit) {
-      this.content = String(changes.content.currentValue);
-      this.setValue(this.content);
+
+  getText(): string {
+    return this.editor.getText();
+  }
+
+  registerOnChange(fn: (v: any) => void): void {
+     this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  validate(control: AbstractControl): ValidationErrors {
+    if (this.minLength && this.editor.getText().trim().length < this.minLength) {
+      return {'minLength': true};
     }
+    if (this.maxLength && this.editor.getText().trim().length > this.maxLength) {
+      return {'maxLength': true};
+    }
+    return null;
   }
 
-  ngOnDestroy(): void {
-    // TODO: Follow up on https://github.com/xdan/jodit/issues/137
-    this.jodit = undefined;
-  }
-
-  classInputField(): string {
-    return this.readOnly ? 'inputfield-borderless' : 'inputfield-border';
-  }
-
-  getValue(): string {
-    return this.jodit.getEditorValue();
-  }
-
-  requiredString(): string {
-    return this.required ? '*' : undefined;
-  }
-
-  setValue(v: string): void {
-    this.jodit.setEditorValue(v);
-  }
-
-  showLabel(): boolean {
-    return !!this.label;
+  writeValue(deltaString: string): void {
+    if (deltaString && deltaString.length > 0) {
+      this.value = this.editor.setContents(JSON.parse(deltaString));
+    }
   }
 }
