@@ -7,7 +7,7 @@
 <div [class]="classMainForm()">
   <form class="mt-form" [formGroup]="tradeFormGroup" (ngSubmit)="onSubmit()">
     <mat-form-field>
-      <input matInput [formControl]="tradeFormGroup.controls['name']" placeholder="Name" required>
+      <input matInput [formControl]="nameFormControl" placeholder="Name" required>
       <mat-error>Name is mandatory and must contain between 3 and 150 characters</mat-error>
     </mat-form-field>
     <mat-form-field *ngIf="showStatus()" class="trade-status">
@@ -15,14 +15,12 @@
         <mat-option *ngFor="let state of availableStates" [value]="state.key">{{state.value}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <app-text-editor
-      #descriptionTextEditor
-      [content]="trade.description"
-      [readOnly]="tradeFormGroup.disabled"
-      [label]="'Description'">
-    </app-text-editor>
+
+    <app-form-rich-editor [formControl]="descriptionFormControl"></app-form-rich-editor>
+
     <div class="mt-action-panel">
       <button *ngIf="showSaveButton()" mat-flat-button color="primary" type="submit">Save</button>
     </div>
   </form>
 </div>
+

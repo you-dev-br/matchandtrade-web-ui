@@ -1,6 +1,7 @@
 @import './material-design-theme.scss';
 @import './variables.scss';
 @import '~jodit/build/jodit.min.css';
+@import '~quill/dist/quill.snow.css';
 
 // Breakpoints as defined in material design specs
 @media not screen and (max-width: 600px) {

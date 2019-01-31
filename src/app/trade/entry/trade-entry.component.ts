@@ -21,9 +21,8 @@ import { ValidationError } from 'src/app/class/common/validation-error';
 })
 export class TradeEntryComponent extends LoadingAndMessageBannerSupport implements OnInit {
   availableStates: KeyValue<TradeState, string>[] = [];
-  @ViewChild('descriptionTextEditor')
-  descriptionTextEditor: TextEditorComponent;
   nameFormControl: AbstractControl;
+  descriptionFormControl: AbstractControl;
   membership: Membership;
   stateFormControl: AbstractControl;
   newEntry: boolean = true;
@@ -61,9 +60,11 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
   private buildForm(): void {
     this.tradeFormGroup = this.formBuilder.group({
       'name': ['', Validators.compose([Validators.required, ValidatorUtil.minLengthWithTrim(3), ValidatorUtil.maxLengthWithTrim(150)])],
+      'description': ['', Validators.compose([Validators.required, ValidatorUtil.minLengthWithTrim(3), ValidatorUtil.maxLengthWithTrim(150)])],
       'state': []
     });
     this.nameFormControl = this.tradeFormGroup.controls['name'];
+    this.descriptionFormControl = this.tradeFormGroup.controls['description'];
     this.stateFormControl = this.tradeFormGroup.controls['state'];
   }
 
@@ -74,6 +75,7 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
   private async loadTrade(): Promise<void> {
     this.newEntry = false;
     this.nameFormControl.setValue(this.trade.name);
+    this.descriptionFormControl.setValue(this.trade.description);
     
     // Populate available states only
     this.availableStates = TradeUtil.toAvailableStatesKeyValue(this.trade.state).sort((a, b) => TradeUtil.compareStates(a.key, b.key));
@@ -92,9 +94,9 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
 
   private loadTradeFromForm() {
     this.trade.name = this.nameFormControl.value.trim();
-    this.trade.description = this.descriptionTextEditor.getValue();
+    this.trade.description = this.descriptionFormControl.value;
     // Sanitize description, empty string must be treated as undefined or we get server error: description must be bigger than 3 chars
-    if (this.descriptionTextEditor.getValue() == null || this.descriptionTextEditor.getValue().length < 3) {
+    if (this.trade.description == null || this.trade.description.length < 3) {
         this.trade.description = undefined;
     }
     this.trade.state = this.stateFormControl.value;
@@ -123,9 +125,10 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
     }
   }
 
-  private validate(): any {
-    if (this.descriptionTextEditor.getValue().length > 20000) {
-      throw new ValidationError('Description is too long');
-    }
+  private validate(): void {
+    console.log('validateDesc', this.descriptionFormControl.valid, this.descriptionFormControl.value);
+    // if (this.descriptionTextEditor.getValue().length > 20000) {
+      // throw new ValidationError('Description is too long');
+    // }
   }
 }
