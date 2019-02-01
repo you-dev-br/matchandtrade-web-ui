@@ -1,4 +1,5 @@
-import { Component, Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ValidationError } from 'src/app/class/common/validation-error';
 
 export enum MessageType {
   ERROR="ERROR", INFO="INFO"
@@ -10,19 +11,39 @@ export enum MessageType {
   styleUrls: ['./message-banner.component.scss']
 })
 export class MessageBannerComponent {
-  @Input()
   icon: string;
-  @Input()
   messages: string [] = [];
-  @Input()
   type: MessageType;
+  @ViewChild('container')
+  container: ElementRef;
 
-  classMessagePanel(): string {
+  private buildMessages(message: String | string | string[] | ValidationError): string[] {
+    let result: string[];
+    if (message instanceof ValidationError) {
+      result = message.messages;
+    } else {
+      result = this.buildMessagesFromArrayOrString(message);
+    }
+    return result;
+  }
+
+  private buildMessagesFromArrayOrString(message: String | string | string[]): string[] {
+    const result: string[] = []; 
+    if (message instanceof Array) {
+      for (let msg of message) {
+        result.push(msg);
+      }
+    } else {
+      result.push(String(message));
+    }
+    return result;
+  }
+
+  private classContainer(): string {
     if (this.isMessageEmpty()) {
       return 'mt-hide';
     }
-    const messageType = (this.type == MessageType.ERROR ? 'error-message' : 'info-message');
-    return messageType + ' mat-elevation-z1';
+    return (this.type == MessageType.ERROR ? 'error-message' : 'info-message') + ' mat-elevation-z1';
   }
 
   private isMessageEmpty(): boolean {
@@ -31,6 +52,22 @@ export class MessageBannerComponent {
 
   isSingleMessage(): boolean {
     return !this.isMessageEmpty() && !(this.messages.length > 1);
+  }
+
+  showErrorMessage(message: String | string[] | ValidationError): void {
+    this.showMessage(message, MessageType.ERROR);
+  }
+  
+  showInfoMessage(message: String | string[] | ValidationError) {
+    this.showMessage(message, MessageType.INFO);
+  }
+  
+  private showMessage(message: String | string[] | ValidationError, type: MessageType) {
+    this.type = type;
+    this.messages = this.buildMessages(message);
+    this.container.nativeElement.classList = this.classContainer();
+    this.container.nativeElement.scrollIntoView(true);
+    window.scrollTo(0, 0);
   }
 
   obtainSingleMessage(): string {
@@ -46,9 +83,5 @@ export class MessageBannerComponent {
       return this.icon;
     }
     return this.type == MessageType.ERROR ? 'error' : 'info';
-  }
-
-  title(): string {
-    return this.type == MessageType.ERROR ? 'Error' : 'Info';
   }
 }
