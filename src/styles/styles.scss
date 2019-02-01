@@ -22,13 +22,16 @@
 }
 
 html, body {
-  height: 100%;
   margin: 0;
 }
 
 body {
-  background-color: $gray-50;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-image: linear-gradient(to right, white 0px, white 1000px);
+  background-color: $gray-50;
+  background-position: center;
+  background-repeat: repeat-y;
+  background-size: 1000px 10px;
 }
 
 .mt-form {
