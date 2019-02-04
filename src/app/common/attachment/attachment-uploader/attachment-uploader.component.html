@@ -1,0 +1,11 @@
+<div #imagePreviewContainer></div>
+
+<div>
+  <label [for]="inputFileId">Upload file</label>
+  <input class="mt-hide" [id]="inputFileId" type="file" accept="image/*" (change)="onLoadPreviewImage($event)"/>
+</div>
+
+<button (click)="onCrop()">Crop</button>
+<button (click)="onRotateClockWise()">Rotate right</button>
+<button (click)="onRotateCounterClockWise()">Rotate left</button>
+uploadProgress: {{uploadProgress}}
