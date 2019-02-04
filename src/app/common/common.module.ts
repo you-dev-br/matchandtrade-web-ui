@@ -8,14 +8,16 @@ import { MessageBannerComponent } from './message-banner/message-banner.componen
 import { MaterialDesignModule } from '../config/material-design.module';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
+import { AttachmentUploaderComponent } from './attachment/attachment-upload/attachment-uploader.component';
 
 @NgModule({
   declarations: [
     ContentTitleComponent, 
     MessageBannerComponent, 
-    SpinnerComponent, 
+    SpinnerComponent,
     DropdownComponent,
-    TextEditorComponent
+    TextEditorComponent,
+    AttachmentUploaderComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { TextEditorComponent } from './text-editor/text-editor.component';
     MessageBannerComponent,
     SpinnerComponent,
     DropdownComponent,
-    TextEditorComponent
+    TextEditorComponent,
+    AttachmentUploaderComponent
   ]
 })
 export class AppCommonModule { }

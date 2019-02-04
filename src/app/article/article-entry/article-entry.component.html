@@ -13,17 +13,21 @@
     </mat-form-field>
     <mat-form-field>
       <textarea
-        matInput
-        [formControl]="formGroup.controls['description']"
-        placeholder="Description"
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="4"
-        cdkAutosizeMaxRows="30">
-      </textarea>
-      <mat-error>Article description must contain between 3 and 1000 characters</mat-error>
-    </mat-form-field>
-    <div class="mt-action-panel">
-      <button *ngIf="showSaveButton()" mat-flat-button color="primary" type="submit">Save</button>
-    </div>
-  </form>
+      matInput
+      [formControl]="formGroup.controls['description']"
+      placeholder="Description"
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="4"
+      cdkAutosizeMaxRows="30">
+    </textarea>
+    <mat-error>Article description must contain between 3 and 1000 characters</mat-error>
+  </mat-form-field>
+  
+  
+  <div class="mt-action-panel">
+    <button *ngIf="showSaveButton()" mat-flat-button color="primary" type="submit">Save</button>
+  </div>
+</form>
 </div>
+
+<app-attachment-uploader></app-attachment-uploader>

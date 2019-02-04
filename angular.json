@@ -30,8 +30,8 @@
               "src/styles/styles.scss"
             ],
             "scripts": [
-              "node_modules/jodit/build/jodit.min.js",
-              "node_modules/quill/dist/quill.min.js"
+              "node_modules/quill/dist/quill.min.js",
+              "node_modules/croppie/croppie.min.js"
             ]
           },
           "configurations": {
@@ -90,8 +90,8 @@
               "src/styles/styles.scss"
             ],
             "scripts": [
-              "node_modules/jodit/build/jodit.min.js",
-              "node_modules/quill/dist/quill.min.js"
+              "node_modules/quill/dist/quill.min.js",
+              "node_modules/croppie/croppie.min.js"
             ],
             "assets": [
               "src/favicon.ico",
