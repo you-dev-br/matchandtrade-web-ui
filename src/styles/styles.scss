@@ -102,3 +102,11 @@ body {
 .mat-form-field .mat-select.mat-select-disabled .mat-select-arrow {
   color: transparent;
 }
+
+// =======
+// Croppie
+// =======
+// TODO: Can we move it to attachment-uploader.component?
+.croppie-container .cr-viewport, .croppie-container .cr-resizer {
+  box-shadow: 0 0 2000px 2000px rgba(0, 0, 0, 0.25);
+}

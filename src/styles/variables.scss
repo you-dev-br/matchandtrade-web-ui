@@ -109,6 +109,7 @@ $primary-color-700: map-get($color-map-primary, 700);
 $primary-color-900: map-get($color-map-primary, 900);
 $gray-50: #fafafa;
 $gray-200: #eeeeee;
+$gray-400: #666666; // Confirm this value
 $accent-color: map-get($color-map-accent, 500);
 // TODO: Create an info color-map
 $info-color-50: #E0F2F1;

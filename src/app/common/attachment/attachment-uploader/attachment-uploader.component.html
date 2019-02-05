@@ -1,11 +1,22 @@
-<div #imagePreviewContainer></div>
-
-<div>
-  <label [for]="inputFileId">Upload file</label>
-  <input class="mt-hide" [id]="inputFileId" type="file" accept="image/*" (change)="onLoadPreviewImage($event)"/>
+<div class="attachment-uploader-container">
+  <span [class]="classUploadAttachment()"
+    (drop)="onUploadAttachmentDrop($event)"
+    (dragenter)="onUploadAttachmentDraging($event)"
+    (dragexit)="onUploadAttachmentDragexit($event)"
+    (dragover)="onUploadAttachmentDraging($event)"
+    (click)="onUploadAttachmentClick($event)">
+    <p><i class="material-icons">add_a_photo</i></p>
+    <p>Upload images</p>
+  </span>
 </div>
 
-<button (click)="onCrop()">Crop</button>
-<button (click)="onRotateClockWise()">Rotate right</button>
-<button (click)="onRotateCounterClockWise()">Rotate left</button>
-uploadProgress: {{uploadProgress}}
+<input #inputFileElement class="mt-hide" type="file" accept="image/*" (change)="onLoadImage($event)"/>
+
+<div #imagePreviewContainer></div>
+
+<div class="attachment-uploader-container">
+  <button (click)="onPreviewCrop()" type="button">Crop</button>
+  <button (click)="onPreviewRotateClockWise()" type="button">Rotate right</button>
+  <button (click)="onPreviewRotateCounterClockWise()" type="button">Rotate left</button>
+  <span>Progress: {{uploadProgress}}</span>
+</div>

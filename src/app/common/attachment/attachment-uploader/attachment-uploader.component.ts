@@ -14,9 +14,11 @@ export class AttachmentUploaderComponent implements AfterViewInit, OnDestroy {
   croppie: Croppie;
   croppieOptions: Croppie.CroppieOptions;
   currentFile: File;
+  dragginOverUploadAttachment: boolean = false;
   @ViewChild('imagePreviewContainer')
   imagePreviewContainer: ElementRef;
-  inputFileId = 'input-file-id-' + Math.floor(1000000 - Math.random());
+  @ViewChild('inputFileElement')
+  inputFileElement: ElementRef;
   status = Status.PRESTINE;
   uploadProgress: number;
 
@@ -37,15 +39,13 @@ export class AttachmentUploaderComponent implements AfterViewInit, OnDestroy {
     this.croppie.destroy();
   }
 
-  onLoadPreviewImage(event: Event): void {
-    this.status = Status.LOADING;
-    const inputFileElement: HTMLInputElement = <HTMLInputElement> event.target;
-    this.currentFile = inputFileElement.files[0];
-    if (!inputFileElement.files && this.currentFile) {
-      this.status = Status.PRESTINE;
-      return;
-    }
+  classUploadAttachment() {
+    return 'attachment-uploader' + (this.dragginOverUploadAttachment ? ' attachment-uploader-dragging' : '');
+  }
 
+  private loadPreviewImage(file: File): void {
+    this.status = Status.LOADING;
+    this.currentFile = file;
     let reader = new FileReader();
     reader.onload = (progressEvent: Event) =>{
       const dataUrl: string = String(reader.result);
@@ -54,14 +54,46 @@ export class AttachmentUploaderComponent implements AfterViewInit, OnDestroy {
           this.status = Status.LOADED;
         })
         .catch(e => {
-          console.log('catch ', e)
+          console.log('TODO: Catch-me!', e)
         });
     };
     reader.readAsDataURL(this.currentFile);
   }
 
-  onCrop(): void {
+  onLoadImage(event: Event): void {
+    // TODO: Show message when files isn't an image
+    const inputFileElement: HTMLInputElement = <HTMLInputElement> event.target;
+    if (inputFileElement.files.length > 0) {
+      this.loadPreviewImage(inputFileElement.files[0]);
+    }
+  }
+
+  onUploadAttachmentClick(event: Event) {
+    event.preventDefault();
+    this.inputFileElement.nativeElement.click();
+  }
+
+  onUploadAttachmentDraging(event: DragEvent): void {
+    event.preventDefault();
+    this.dragginOverUploadAttachment = true;
+  }
+  
+  onUploadAttachmentDragexit(event: DragEvent): void {
+    event.preventDefault();
+    this.dragginOverUploadAttachment = false;
+  }
+  
+  onUploadAttachmentDrop(event: DragEvent): void {
+    event.preventDefault();
+    if (event.dataTransfer.files.length > 0) {
+      this.loadPreviewImage(event.dataTransfer.files[0]);
+    }
+    this.dragginOverUploadAttachment = false;
+  }
+
+  onPreviewCrop(): void {
     if (this.status != Status.LOADED) {
+      console.log('TODO Show message: No image to upload');
       return;
     }
     this.status = Status.CROPPING;
@@ -74,24 +106,22 @@ export class AttachmentUploaderComponent implements AfterViewInit, OnDestroy {
       })
       .then(croppedBlob => {
         this.status = Status.UPLOADING;
-        const files: File[] = [];
         const file = new File([croppedBlob], this.currentFile.name, {type: croppedBlob.type, lastModified: this.currentFile.lastModified});
-        files.push(file);
-        this.attachmentService.upload(files)
-          .then(progressMap => {
-            progressMap.get(0).subscribe(progress => this.uploadProgress = progress);
+        this.attachmentService.upload(file)
+          .then(progress => {
+            progress.subscribe(progress => this.uploadProgress = progress);
           })
           .finally(() => this.status = Status.DONE);
       });
   }
   
-  onRotateClockWise(): void {
+  onPreviewRotateClockWise(): void {
     if (this.status == Status.LOADED) {
       this.croppie.rotate(-90);
     }
   }
 
-  onRotateCounterClockWise(): void {
+  onPreviewRotateCounterClockWise(): void {
     if (this.status == Status.LOADED) {
       this.croppie.rotate(90);
     }

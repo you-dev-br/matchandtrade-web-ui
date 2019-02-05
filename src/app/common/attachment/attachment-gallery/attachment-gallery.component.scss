@@ -1,0 +1,28 @@
+@import '../../../../styles/variables.scss';
+
+.attachment-actions {
+	display: flex;
+	justify-content: center;
+}
+
+.attachment-action {
+	color: $gray-400;
+	cursor: pointer;
+	margin: -2px;
+	padding: .25em .5em .125em .5em;
+}
+
+.attachment-container {
+	display: flex;
+	justify-content: center;
+}
+
+.attachment-panel {
+	border: 2px solid silver;
+	width: 128px;
+}
+
+.attachment-thumbnail {
+	height: 128px;
+	width: 128px;
+}

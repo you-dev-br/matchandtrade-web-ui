@@ -1,3 +1,28 @@
+@import '../../../../styles/variables.scss';
+
 :host {
 	display: block;
+}
+
+.attachment-uploader-container {
+	display: flex;
+	justify-content: center;
+}
+
+.attachment-uploader {
+	border: 1px solid silver;
+	border-radius: 3px;
+	color: $gray-400;
+	cursor: pointer;
+	padding: .5em;
+	text-align: center;
+	width: 8em;
+}
+
+.attachment-uploader p {
+	margin: .25em;
+}
+
+.attachment-uploader.attachment-uploader-dragging {
+	background-color: $primary-color-100;
 }

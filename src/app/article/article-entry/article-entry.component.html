@@ -23,11 +23,10 @@
     <mat-error>Article description must contain between 3 and 1000 characters</mat-error>
   </mat-form-field>
   
+  <app-attachment-gallery></app-attachment-gallery>
   
   <div class="mt-action-panel">
     <button *ngIf="showSaveButton()" mat-flat-button color="primary" type="submit">Save</button>
   </div>
 </form>
 </div>
-
-<app-attachment-uploader></app-attachment-uploader>
