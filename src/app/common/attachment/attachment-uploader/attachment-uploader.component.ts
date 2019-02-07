@@ -1,7 +1,8 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 
 import * as Croppie from 'croppie';
 import { AttachmentService } from 'src/app/service/attachment.service';
+import { Attachment } from 'src/app/class/attachment';
 
 enum Status { PRESTINE, LOADING, LOADED, CROPPING, UPLOADING, DONE };
 
@@ -11,6 +12,7 @@ enum Status { PRESTINE, LOADING, LOADED, CROPPING, UPLOADING, DONE };
   styleUrls: ['./attachment-uploader.component.scss']
 })
 export class AttachmentUploaderComponent implements AfterViewInit, OnDestroy {
+  attachment: Attachment;
   croppie: Croppie;
   croppieOptions: Croppie.CroppieOptions;
   currentFile: File;
@@ -21,6 +23,9 @@ export class AttachmentUploaderComponent implements AfterViewInit, OnDestroy {
   inputFileElement: ElementRef;
   status = Status.PRESTINE;
   uploadProgress: number;
+
+  @Output()
+  onUploadComplete = new EventEmitter<Attachment>();
 
   constructor(private attachmentService: AttachmentService) {
     this.croppieOptions = {
@@ -98,21 +103,25 @@ export class AttachmentUploaderComponent implements AfterViewInit, OnDestroy {
     }
     this.status = Status.CROPPING;
     this.croppie.result({
-        type: 'blob',
-        size: {width: 1600, height: 1200},
-        format: 'jpeg',
-        quality: .5,
-        circle: false
+      type: 'blob',
+      size: {width: 1600, height: 1200},
+      format: 'jpeg',
+      quality: .5,
+      circle: false
+    })
+    .then(croppedBlob => {
+      this.status = Status.UPLOADING;
+      const file = new File([croppedBlob], this.currentFile.name, {type: croppedBlob.type, lastModified: this.currentFile.lastModified});
+      this.attachmentService.upload(file)
+        .subscribe(next => {
+          this.attachment = next.key;
+          this.uploadProgress = next.value;
+        }, 
+        error => console.log('TODO send error message'),
+        () => this.onUploadComplete.emit(this.attachment));
       })
-      .then(croppedBlob => {
-        this.status = Status.UPLOADING;
-        const file = new File([croppedBlob], this.currentFile.name, {type: croppedBlob.type, lastModified: this.currentFile.lastModified});
-        this.attachmentService.upload(file)
-          .then(progress => {
-            progress.subscribe(progress => this.uploadProgress = progress);
-          })
-          .finally(() => this.status = Status.DONE);
-      });
+    .catch(e => console.log('TODO Send a message:', e))
+    .finally(() => this.status = Status.DONE);
   }
   
   onPreviewRotateClockWise(): void {

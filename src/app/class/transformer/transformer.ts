@@ -5,12 +5,20 @@ import { Link } from '../pojo/link';
 import { HttpResponse } from '@angular/common/http';
 
 export abstract class Transformer<T> {
+  buildBasePojo(anyObject: any): any {
+		let result = anyObject;
+    if (anyObject instanceof HttpResponse) {
+      result = anyObject.body;
+		}
+		return result;
+	}
+
   private buildPagination(page: Page, response: HttpResponse<any>) {
     let header: string = response.headers.get('x-pagination-total-count');
     return new Pagination(page.number, page.size, parseInt(header));
   }
 
-  public buildLinks(links: any): Link[] {
+  buildLinks(links: any): Link[] {
     let result: Link[] = [];
     if (links) {
       for (let link of links) {
@@ -22,7 +30,7 @@ export abstract class Transformer<T> {
     return result;
   }
 
-  public static obtainKeyFromEnumeration(value: string, enumeration: any) {
+  static obtainKeyFromEnumeration(value: string, enumeration: any) {
     const enumerationKeys = Object.keys(enumeration);
     for (let i = 0; i < enumerationKeys.length; i++) {
       const enumKey = enumerationKeys[i];
@@ -34,9 +42,9 @@ export abstract class Transformer<T> {
     return undefined;
   }
 
-  public abstract toPojo(json: any): T;
+  abstract toPojo(json: any): T;
 
-  public toPojos(anyList: any): T[] {
+  toPojos(anyList: any): T[] {
     const result = [];
     let list = anyList;
     if (anyList instanceof HttpResponse) {
@@ -48,7 +56,7 @@ export abstract class Transformer<T> {
     return result;
   }
 
-  public toSearchResult(response: HttpResponse<any>, page: Page): SearchResult<T> {
+  toSearchResult(response: HttpResponse<any>, page: Page): SearchResult<T> {
     let pagination = this.buildPagination(page, response);
     let results = this.toPojos(response.body);
     return new SearchResult<T>(results, pagination);

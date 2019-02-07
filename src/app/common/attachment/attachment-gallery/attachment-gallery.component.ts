@@ -15,5 +15,8 @@ export class AttachmentGalleryComponent implements OnInit {
   ngOnInit() {
   }
 
+  onUploadComplete(event): void {
+    console.log('onUploadComplete', event);
+  }
 
 }

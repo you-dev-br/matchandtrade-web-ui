@@ -18,5 +18,6 @@
   <button (click)="onPreviewCrop()" type="button">Crop</button>
   <button (click)="onPreviewRotateClockWise()" type="button">Rotate right</button>
   <button (click)="onPreviewRotateCounterClockWise()" type="button">Rotate left</button>
-  <span>Progress: {{uploadProgress}}</span>
+  <span>Progress: {{uploadProgress}} </span>
+  <span>Attachment: {{(attachment ? attachment.attachmentId : 'na')}}</span>
 </div>
