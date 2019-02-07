@@ -1,11 +1,11 @@
 <div class="attachment-container">
   <div class="attachment-panel" *ngFor="let attachment of attachments">
     <div class="attachment-thumbnail">
-      <img mat-card-image src="/matchandtrade-api/essences/2019/2/bbd4c194-15e3-433b-8eaf-ce98cdd94317.jpg" height="128" width="128"/>
+      <img mat-card-image [src]="attachment.getThumbnailHref()" height="128" width="128"/>
     </div>
     <div class="attachment-actions">
       <span class="attachment-action"><mat-icon>delete</mat-icon></span>
     </div>
   </div>
+  <app-attachment-uploader (onUploadComplete)="onUploadComplete($event)"></app-attachment-uploader>
 </div>
-<app-attachment-uploader (onUploadComplete)="onUploadComplete($event)"></app-attachment-uploader>

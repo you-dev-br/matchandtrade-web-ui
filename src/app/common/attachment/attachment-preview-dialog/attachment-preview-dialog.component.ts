@@ -35,13 +35,8 @@ export class AttachmentPreviewDialogComponent implements AfterViewInit, OnDestro
     };
   }
 
-  // onNoClick(): void {
-  //   this.dialogRef.close(this.attachment);
-  // }
-
   ngAfterViewInit(): void {
     this.croppie = new Croppie(this.imagePreviewContainer.nativeElement, this.croppieOptions);
-    console.log(this.currentFile);
     this.loadPreviewImage();
   }
 

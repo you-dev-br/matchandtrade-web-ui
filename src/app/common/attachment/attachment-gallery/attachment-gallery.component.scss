@@ -15,14 +15,21 @@
 .attachment-container {
 	display: flex;
 	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
 }
 
 .attachment-panel {
-	border: 2px solid silver;
+	border: 1px solid silver;
+	margin: .125em;
 	width: 128px;
 }
 
 .attachment-thumbnail {
 	height: 128px;
 	width: 128px;
+}
+
+app-attachment-uploader {
+	margin: .5em;
 }

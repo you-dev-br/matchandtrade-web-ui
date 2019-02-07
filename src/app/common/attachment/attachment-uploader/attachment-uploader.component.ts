@@ -32,12 +32,11 @@ export class AttachmentUploaderComponent {
 
   private openPreviewDialog(file: File): any {
     const dialogRef = this.dialog.open(AttachmentPreviewDialogComponent, {
-      maxWidth: '400px',
+      maxWidth: '600px',
       data: file
     });
     dialogRef.afterClosed().subscribe(next => {
       this.onUploadComplete.emit(next);
-      console.log('The dialog was closed', next);
     });
   }
 
