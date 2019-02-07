@@ -10,6 +10,7 @@ import { MessageBannerComponent } from './message-banner/message-banner.componen
 import { MaterialDesignModule } from '../config/material-design.module';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
+import { AttachmentPreviewDialogComponent } from './attachment/attachment-preview-dialog/attachment-preview-dialog.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { TextEditorComponent } from './text-editor/text-editor.component';
     DropdownComponent,
     TextEditorComponent,
     AttachmentUploaderComponent,
-    AttachmentGalleryComponent
+    AttachmentGalleryComponent,
+    AttachmentPreviewDialogComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,9 @@ import { TextEditorComponent } from './text-editor/text-editor.component';
     DropdownComponent,
     TextEditorComponent,
     AttachmentUploaderComponent,
-    AttachmentGalleryComponent
-  ]
+    AttachmentGalleryComponent,
+    AttachmentPreviewDialogComponent
+  ],
+  entryComponents: [ AttachmentPreviewDialogComponent ]
 })
 export class AppCommonModule { }
