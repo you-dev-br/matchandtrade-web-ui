@@ -22,12 +22,11 @@ export class AttachmentGalleryComponent implements OnInit {
     test.links.push(new Link("original", "2019/2/41e6306a-c484-41ae-8d60-94c675058069.jpg"));
     test.links.push(new Link("thumbnail", "2019/2/2a38fea2-8f99-4a91-ab52-575fe0072a5b.jpg"));
     
-    this.attachments.push(test);
-    this.attachments.push(test);
   }
 
   onUploadComplete(attachment: Attachment): void {
-    console.log(attachment);
-    this.attachments.push(attachment);
+    if (attachment) {
+      this.attachments.push(attachment);
+    }
   }
 }

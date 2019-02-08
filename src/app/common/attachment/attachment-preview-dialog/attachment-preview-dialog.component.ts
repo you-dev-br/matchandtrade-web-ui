@@ -1,10 +1,10 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { AttachmentService } from 'src/app/service/attachment.service';
-import { Attachment } from 'src/app/class/attachment';
+import { Component, OnInit, Inject, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import * as Croppie from 'croppie';
 
+import { AttachmentService } from 'src/app/service/attachment.service';
+import { Attachment } from 'src/app/class/attachment';
 
 enum Status { PRESTINE, LOADING, LOADED, CROPPING, UPLOADING, DONE };
 
@@ -13,7 +13,7 @@ enum Status { PRESTINE, LOADING, LOADED, CROPPING, UPLOADING, DONE };
   templateUrl: './attachment-preview-dialog.component.html',
   styleUrls: ['./attachment-preview-dialog.component.scss']
 })
-export class AttachmentPreviewDialogComponent implements AfterViewInit, OnDestroy {
+export class AttachmentPreviewDialogComponent implements OnDestroy, OnInit {
   attachment: Attachment;
   croppie: Croppie;
   croppieOptions: Croppie.CroppieOptions;
@@ -23,9 +23,9 @@ export class AttachmentPreviewDialogComponent implements AfterViewInit, OnDestro
   uploadProgress: number;
 
   constructor(
-      private attachmentService: AttachmentService,
-      public dialogRef: MatDialogRef<AttachmentPreviewDialogComponent>,
-      @Inject(MAT_DIALOG_DATA) public currentFile: File) {
+        private attachmentService: AttachmentService,
+        @Inject(MAT_DIALOG_DATA) private currentFile: File,
+        private dialogRef: MatDialogRef<AttachmentPreviewDialogComponent>) {
     
     this.croppieOptions = {
       viewport: { width: 280, height: 200 },
@@ -35,30 +35,28 @@ export class AttachmentPreviewDialogComponent implements AfterViewInit, OnDestro
     };
   }
 
-  ngAfterViewInit(): void {
-    this.croppie = new Croppie(this.imagePreviewContainer.nativeElement, this.croppieOptions);
-    this.loadPreviewImage();
+  ngOnInit(): void {
+    this.dialogRef.afterOpened().subscribe((next) => {}, (error) => {}, () =>{
+      this.croppie = new Croppie(this.imagePreviewContainer.nativeElement, this.croppieOptions);
+      this.loadPreviewImage();
+    });
   }
 
   ngOnDestroy(): void {
     this.croppie.destroy();
   }
 
-
   private loadPreviewImage(): void {
     this.status = Status.LOADING;
-    let reader = new FileReader();
-    reader.onload = (progressEvent: Event) =>{
-      const dataUrl: string = String(reader.result);
+    let fileReader = new FileReader();
+    fileReader.onload = (progressEvent: Event) =>{
+      const dataUrl: string = String(fileReader.result);
       this.croppie.bind({url: dataUrl})
-        .then(() => {
-          this.status = Status.LOADED;
-        })
-        .catch(e => {
-          console.log('TODO: Catch-me!', e)
-        });
+        .then(() => this.status = Status.LOADED)
+        .catch(e => console.log('TODO: Catch-me!', e));
     };
-    reader.readAsDataURL(this.currentFile);
+    fileReader.readAsDataURL(this.currentFile);
+    
   }
 
 
@@ -69,6 +67,7 @@ export class AttachmentPreviewDialogComponent implements AfterViewInit, OnDestro
       return;
     }
     this.status = Status.CROPPING;
+
     this.croppie.result({
       type: 'blob',
       size: {width: 1600, height: 1200},
@@ -77,6 +76,7 @@ export class AttachmentPreviewDialogComponent implements AfterViewInit, OnDestro
       circle: false
     })
     .then(croppedBlob => {
+      // TODO: Change type to canvas and do not resize small images
       this.status = Status.UPLOADING;
       const file = new File([croppedBlob], this.currentFile.name, {type: croppedBlob.type, lastModified: this.currentFile.lastModified});
       this.attachmentService.upload(file)

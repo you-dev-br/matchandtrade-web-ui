@@ -16,7 +16,7 @@ export class AttachmentUploaderComponent {
   @Output()
   onUploadComplete = new EventEmitter<Attachment>();
 
-  constructor(public dialog: MatDialog) { }
+  constructor(private dialog: MatDialog) { }
 
   classUploadAttachment() {
     return 'attachment-uploader' + (this.dragginOverUploadAttachment ? ' attachment-uploader-dragging' : '');
@@ -26,21 +26,22 @@ export class AttachmentUploaderComponent {
     // TODO: Show message when files isn't an image
     const inputFileElement: HTMLInputElement = <HTMLInputElement> event.target;
     if (inputFileElement.files.length > 0) {
-      this.openPreviewDialog(inputFileElement.files[0]);
+      this.openDialog(inputFileElement.files[0]);
     }
   }
 
-  private openPreviewDialog(file: File): any {
+  private openDialog(file: File): void {
     const dialogRef = this.dialog.open(AttachmentPreviewDialogComponent, {
+      autoFocus: true,
+      restoreFocus: true,
       maxWidth: '600px',
       data: file
     });
-    dialogRef.afterClosed().subscribe(next => {
-      this.onUploadComplete.emit(next);
-    });
+
+    dialogRef.afterClosed().subscribe(next => this.onUploadComplete.emit(next));
   }
 
-  onUploadAttachmentClick(event: Event) {
+  onUploadAttachmentClick(event: Event): void {
     event.preventDefault();
     this.inputFileElement.nativeElement.click();
   }
@@ -58,7 +59,7 @@ export class AttachmentUploaderComponent {
   onUploadAttachmentDrop(event: DragEvent): void {
     event.preventDefault();
     if (event.dataTransfer.files.length > 0) {
-      this.openPreviewDialog(event.dataTransfer.files[0]);
+      this.openDialog(event.dataTransfer.files[0]);
     }
     this.dragginOverUploadAttachment = false;
   }
