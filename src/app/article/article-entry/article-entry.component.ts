@@ -13,6 +13,7 @@ import { SearchService } from 'src/app/service/search.service';
 import { ValidatorUtil } from 'src/app/class/common/validator-util';
 import { ValidationError } from 'src/app/class/common/validation-error';
 import { Attachment } from 'src/app/class/attachment';
+import { AttachmentService } from '../../service/attachment.service';
 
 @Component({
   selector: 'app-article-entry',
@@ -31,6 +32,7 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
   constructor(
     private authenticationService: AuthenticationService,
     private articleService: ArticleService,
+    private attachmentService: AttachmentService,
     private formBuilder: FormBuilder,
     private searchService: SearchService,
     private navigationService: NavigationService,
@@ -47,6 +49,7 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
         this.article = await this.articleService.find(articleHref);
         await this.initAuthenticatedUserIsArticleOwner();
         await this.loadArticle();
+        this.attachments = await this.loadAttachments(this.article.getLinkByRel("attachments"));
       }
     } catch (e) {
       this.showErrorMessage(e);
@@ -86,18 +89,21 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
     }
   }
 
-  private loadArticleFromForm() {
+  private loadArticleFromForm(): void {
     this.article.name = this.nameFormControl.value.trim();
     this.article.description = this.descriptionFormControl.value ? this.descriptionFormControl.value.trim() : undefined;
   }
 
-  async onSubmit() {
+  private async loadAttachments(href: string): Promise<Attachment[]> {
+    return this.attachmentService.findAttachmentsByHref(href);
+  }
+
+  async onSubmit(): Promise<void> {
     this.loading = true;
     try {
       this.validate();
       this.loadArticleFromForm();
       this.article = await this.articleService.save(this.article);
-      console.log('saving attachments', this.attachments);
       await this.articleService.saveAttachments(this.article, this.attachments);
       this.loadArticle();
       this.showInfoMessage('Article saved', 'save');
@@ -112,7 +118,7 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
     return !this.formGroup.disabled;
   }
   
-  validate() {
+  validate(): void {
     if (!this.descriptionFormControl.valid || !this.nameFormControl.valid) {
       throw new ValidationError("Please ensure that the fields below are valid");
     }

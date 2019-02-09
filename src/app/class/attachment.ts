@@ -5,6 +5,6 @@ export class Attachment extends LinkSupport {
 	contentType: string;
 	name: string;
 	getThumbnailHref(): string {
-		return '/matchandtrade-api/essences/' + this.getLinkByRel('thumbnail');
+		return this.getLinkByRel('thumbnail');
 	}
 }

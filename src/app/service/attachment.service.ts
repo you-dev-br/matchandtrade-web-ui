@@ -5,6 +5,8 @@ import { Observable, Subject } from 'rxjs';
 import { Attachment } from '../class/attachment';
 import { KeyValue } from '@angular/common';
 import { AttachmentTransformer } from '../class/transformer/attachment-transformer';
+import { catchError, map } from 'rxjs/operators';
+import { HttpUtil } from '../class/common/http-util';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +15,22 @@ import { AttachmentTransformer } from '../class/transformer/attachment-transform
  * Inspired by this excellent tutorial: https://malcoded.com/posts/angular-file-upload-component-with-express
  */
 export class AttachmentService {
-  attachmentTransformer = new AttachmentTransformer();
+  private attachmentTransformer = new AttachmentTransformer();
 
   constructor(
     private authenticationService: AuthenticationService,
     private http: HttpClient) { }
+
+  public async findAttachmentsByHref(href: string): Promise<Attachment[]> {
+    const authorizationHeaders = await this.authenticationService.obtainAuthorizationHeaders();
+    return this.http
+      .get(href, {headers: authorizationHeaders, observe: 'response'})
+      .pipe(
+        catchError(HttpUtil.httpErrorResponseHandler),
+        map(response => this.attachmentTransformer.toPojos(response))
+      )
+      .toPromise();
+  }
 
   public upload(file: File): Observable<KeyValue<Attachment, number>> {
     // Create a new subject which will be our result
