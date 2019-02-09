@@ -1,8 +1,14 @@
 <div #imagePreviewContainer></div>
 
 <div class="actions-container">
-  <button mat-stroked-button (click)="onPreviewRotateCounterClockWise()" type="button">counter</button>
-  <button mat-flat-button    (click)="onPreviewCrop()" type="button" color="primary">Upload</button>
-  <button mat-stroked-button (click)="onPreviewRotateClockWise()" type="button">clock</button>
+  <div class="action-round-button" (click)="onPreviewRotateCounterClockWise()">
+    <i class="material-icons">rotate_left</i>
+  </div>
+  <div (click)="onPreviewRotateCounterClockWise()">
+    <button mat-flat-button    (click)="onPreviewCrop()" type="button" color="primary">Upload</button>
+  </div>
+  <div class="action-round-button" (click)="onPreviewRotateClockWise()">
+    <i class="material-icons">rotate_right</i>
+  </div>
 </div>
 <p>Progress: {{uploadProgress}}</p>

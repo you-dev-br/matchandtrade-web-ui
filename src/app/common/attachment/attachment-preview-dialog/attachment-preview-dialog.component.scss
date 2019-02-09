@@ -1,7 +1,14 @@
 .actions-container {
-	text-align: center;
+	display: flex;
+	justify-content: center;
 }
 
 button {
 	margin: 0 .5em 0 .5em;
+}
+
+.action-round-button {
+	display: flex;
+	padding: 5px 25px 0px 25px;
+	margin: 0 .25em 0 .25em;
 }
