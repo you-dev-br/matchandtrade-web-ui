@@ -8,6 +8,7 @@ import { AuthenticationService } from './authentication.service';
 import { HttpUtil } from '../class/common/http-util';
 import { Page } from '../class/search/page';
 import { SearchResult } from '../class/search/search-result';
+import { Attachment } from '../class/attachment';
 
 @Injectable({
   providedIn: 'root'
@@ -51,9 +52,9 @@ export class ArticleService {
     return `/matchandtrade-api/v1/articles?_pageNumber=${page.number}&_pageSize=${page.size}`;
   }
 
-  async save(trade: Article): Promise<Article> {
+  async save(article: Article): Promise<Article> {
     const authorizationHeader: HttpHeaders = await this.authenticationService.obtainAuthorizationHeaders();
-    const request: HttpRequest<Article> = this.buildSaveRequest(authorizationHeader, trade);
+    const request: HttpRequest<Article> = this.buildSaveRequest(authorizationHeader, article);
     return this.http
       .request(request)
       .pipe(
@@ -61,5 +62,18 @@ export class ArticleService {
         map(response => this.articleTransformer.toPojo(response))
       )
       .toPromise();
+  }
+
+  async saveAttachments(article: Article, attachments: Attachment[]): Promise<void> {
+    const authorizationHeader: HttpHeaders = await this.authenticationService.obtainAuthorizationHeaders();
+    const attachmentRequests: Promise<void>[] = [];
+    for(let attachment of attachments) {
+      const attachmentRequest = this.http
+      .put<void>(article.getSelfHref() + '/attachments/' + attachment.attachmentId, undefined, {headers: authorizationHeader})
+      .pipe( catchError(HttpUtil.httpErrorResponseHandler) )
+      .toPromise();
+      attachmentRequests.push(attachmentRequest);
+    }
+    await Promise.all(attachmentRequests);
   }
 }

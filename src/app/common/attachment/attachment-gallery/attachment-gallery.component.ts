@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Attachment } from 'src/app/class/attachment';
 import { Link } from 'src/app/class/pojo/link';
 
@@ -9,6 +9,7 @@ import { Link } from 'src/app/class/pojo/link';
 })
 export class AttachmentGalleryComponent implements OnInit {
 
+  @Input()
   attachments: Attachment[] = [];
 
   constructor() { }

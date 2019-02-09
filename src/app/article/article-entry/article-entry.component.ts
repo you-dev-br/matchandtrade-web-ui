@@ -12,6 +12,7 @@ import { SearchCriteria, Field } from '../../class/search/search-criteria';
 import { SearchService } from 'src/app/service/search.service';
 import { ValidatorUtil } from 'src/app/class/common/validator-util';
 import { ValidationError } from 'src/app/class/common/validation-error';
+import { Attachment } from 'src/app/class/attachment';
 
 @Component({
   selector: 'app-article-entry',
@@ -20,6 +21,7 @@ import { ValidationError } from 'src/app/class/common/validation-error';
 })
 export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implements OnInit {
   article: Article = new Article();
+  attachments: Attachment[] = [];
   descriptionFormControl: AbstractControl;
   authenticatedUserIsArticleOwner: boolean = true;
   formGroup: FormGroup;
@@ -95,6 +97,8 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
       this.validate();
       this.loadArticleFromForm();
       this.article = await this.articleService.save(this.article);
+      console.log('saving attachments', this.attachments);
+      await this.articleService.saveAttachments(this.article, this.attachments);
       this.loadArticle();
       this.showInfoMessage('Article saved', 'save');
     } catch (e) {
