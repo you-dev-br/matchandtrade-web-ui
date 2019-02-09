@@ -6,7 +6,7 @@ import * as Croppie from 'croppie';
 import { AttachmentService } from 'src/app/service/attachment.service';
 import { Attachment } from 'src/app/class/attachment';
 
-enum Status { PRESTINE, LOADING, LOADED, CROPPING, UPLOADING, DONE };
+enum Status { PRESTINE, LOADING, LOADED, CROPPING, UPLOADING };
 
 @Component({
   selector: 'app-attachment-preview-dialog',
@@ -14,22 +14,22 @@ enum Status { PRESTINE, LOADING, LOADED, CROPPING, UPLOADING, DONE };
   styleUrls: ['./attachment-preview-dialog.component.scss']
 })
 export class AttachmentPreviewDialogComponent implements OnDestroy, OnInit {
-  attachment: Attachment;
-  croppie: Croppie;
-  croppieOptions: Croppie.CroppieOptions;
+  private attachment: Attachment;
+  private croppie: Croppie;
+  private croppieOptions: Croppie.CroppieOptions;
   @ViewChild('imagePreviewContainer')
-  imagePreviewContainer: ElementRef;
-  status = Status.PRESTINE;
-  uploadProgress: number;
+  private imagePreviewContainer: ElementRef;
+  private status = Status.PRESTINE;
+  uploadProgress: number = 0;
 
   constructor(
         private attachmentService: AttachmentService,
         @Inject(MAT_DIALOG_DATA) private currentFile: File,
         private dialogRef: MatDialogRef<AttachmentPreviewDialogComponent>) {
-    
+    // Opting for the popular 4:3 aspect ratio: 280x210
     this.croppieOptions = {
-      viewport: { width: 280, height: 200 },
-      boundary: { width: 300, height: 220 },
+      viewport: { width: 280, height: 210 },
+      boundary: { width: 300, height: 230 },
       showZoomer: false,
       enableOrientation: true
     };
@@ -46,20 +46,25 @@ export class AttachmentPreviewDialogComponent implements OnDestroy, OnInit {
     this.croppie.destroy();
   }
 
+  classActionsContainer(): string {
+    return this.status >= Status.CROPPING ? 'mt-hide' : 'actions-container';
+  }
+
+  displayProgressBar(): boolean {
+    return this.status >= Status.CROPPING;
+  }
+
   private loadPreviewImage(): void {
     this.status = Status.LOADING;
     let fileReader = new FileReader();
     fileReader.onload = (progressEvent: Event) =>{
       const dataUrl: string = String(fileReader.result);
-      this.croppie.bind({url: dataUrl})
+      this.croppie.bind({url: dataUrl, zoom: 0})
         .then(() => this.status = Status.LOADED)
         .catch(e => console.log('TODO: Catch-me!', e));
     };
     fileReader.readAsDataURL(this.currentFile);
-    
   }
-
-
 
   onPreviewCrop(): void {
     if (this.status != Status.LOADED) {
@@ -68,6 +73,7 @@ export class AttachmentPreviewDialogComponent implements OnDestroy, OnInit {
     }
     this.status = Status.CROPPING;
 
+    // Opting for the popular 4:3 aspect ratio: 1600x1200
     this.croppie.result({
       type: 'blob',
       size: {width: 1600, height: 1200},
@@ -87,8 +93,7 @@ export class AttachmentPreviewDialogComponent implements OnDestroy, OnInit {
         error => console.log('TODO send error message'),
         () => this.dialogRef.close(this.attachment));
       })
-    .catch(e => console.log('TODO Send a message:', e))
-    .finally(() => this.status = Status.DONE);
+    .catch(e => console.log('TODO Send a message:', e));
   }
   
   onPreviewRotateClockWise(): void {

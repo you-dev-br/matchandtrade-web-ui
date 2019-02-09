@@ -1,14 +1,19 @@
-<div #imagePreviewContainer></div>
+<div>
+  <div *ngIf="displayProgressBar()" class="image-preview-overlay"></div>
+  <div #imagePreviewContainer></div>
+</div>
 
-<div class="actions-container">
+<div [class]="classActionsContainer()">
   <div class="action-round-button" (click)="onPreviewRotateCounterClockWise()">
     <i class="material-icons">rotate_left</i>
   </div>
   <div (click)="onPreviewRotateCounterClockWise()">
-    <button mat-flat-button    (click)="onPreviewCrop()" type="button" color="primary">Upload</button>
+    <button mat-flat-button (click)="onPreviewCrop()" type="button" color="primary">Upload</button>
   </div>
   <div class="action-round-button" (click)="onPreviewRotateClockWise()">
     <i class="material-icons">rotate_right</i>
   </div>
 </div>
-<p>Progress: {{uploadProgress}}</p>
+<div *ngIf="displayProgressBar()" class="actions-container">
+  <mat-progress-bar mode="determinate" value="{{uploadProgress}}"></mat-progress-bar>
+</div>

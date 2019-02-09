@@ -1,6 +1,7 @@
 .actions-container {
 	display: flex;
 	justify-content: center;
+	height: 36px;
 }
 
 button {
@@ -8,7 +9,19 @@ button {
 }
 
 .action-round-button {
+	cursor: pointer;
 	display: flex;
-	padding: 5px 25px 0px 25px;
-	margin: 0 .25em 0 .25em;
+	margin: 0 1.5em 0 1.5em;
+	padding: 5px 15px 0px 15px;
 }
+
+.image-preview-overlay {
+	background-color: blueviolet;
+	position: absolute;
+	height: 230px;
+	opacity: 0.25;
+	width: 300px;
+	z-index: 5;
+}
+
+
