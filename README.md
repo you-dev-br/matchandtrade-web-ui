@@ -60,3 +60,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 * Organiser should be able to ban users
 * Support Trades by invitation only
 * Duplicated trade protection
+* [Better custom angular themes](https://blog.thoughtram.io/angular/2017/05/23/custom-themes-with-angular-material.html)
