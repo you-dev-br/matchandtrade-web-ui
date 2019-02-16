@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { Attachment } from 'src/app/class/attachment';
 import { AttachmentService } from 'src/app/service/attachment.service';
+import { AngularMaterialImageOverlayService } from 'angular-material-image-overlay';
 
 @Component({
   selector: 'app-attachment-gallery',
@@ -14,10 +15,9 @@ export class AttachmentGalleryComponent {
   onDeleteError = new EventEmitter<Error>();
   private loadedAttachments: string[] = [];
 
-  constructor(private attachmentService: AttachmentService) { }
+  constructor(private attachmentService: AttachmentService, private imageOverlayService: AngularMaterialImageOverlayService) { }
 
   async onDelete(attachment: Attachment): Promise<void> {
-    console.log('delete', this.loadedAttachments);
     try {
       this.loadedAttachments.splice(this.loadedAttachments.indexOf(attachment.attachmentId), 1);
       await this.attachmentService.delete(attachment.getSelfHref());
@@ -28,7 +28,6 @@ export class AttachmentGalleryComponent {
   }
 
   isAttachmentLoaded(attachment): boolean {
-    console.log('isLoaded', this.loadedAttachments);
     return this.loadedAttachments.includes(attachment.attachmentId);
   }
 
@@ -40,5 +39,10 @@ export class AttachmentGalleryComponent {
     if (attachment) {
       this.attachments.push(attachment);
     }
+  }
+
+  onOpenImageOverlay(): void {
+    const imageUrls: string[] = this.attachments.map(attachment => attachment.getThumbnailHref());
+    this.imageOverlayService.open(imageUrls);
   }
 }

@@ -39,9 +39,10 @@
 }
 
 .attachment-thumbnail {
-	height: 128px;
-	width: 128px;
+	align-items: center;
+	cursor: pointer;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	height: 128px;
+	width: 128px;
 }
