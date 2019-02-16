@@ -3,13 +3,14 @@
 .attachment-actions {
 	display: flex;
 	justify-content: center;
+	height: 27px;
 }
 
 .attachment-action {
 	color: $gray-400;
 	cursor: pointer;
-	margin: -2px;
-	padding: .25em .5em .125em .5em;
+	margin: -5px 0 -3px 0;
+	padding: 7px 10px 0px 10px;
 }
 
 .attachment-container {
@@ -17,6 +18,18 @@
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
+}
+
+.attachment-loading {
+	align-items: center;
+	background-color: white;
+	display: flex;
+	justify-content: center;
+	opacity: .90;
+	height: 128px;
+	position: absolute;
+	width: 128px;
+	z-index: 5;
 }
 
 .attachment-panel {
@@ -28,9 +41,7 @@
 .attachment-thumbnail {
 	height: 128px;
 	width: 128px;
-}
-
-app-attachment-uploader {
-	margin: .125em;
-	width: 128px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

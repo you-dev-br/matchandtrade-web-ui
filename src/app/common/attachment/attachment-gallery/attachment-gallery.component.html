@@ -1,10 +1,13 @@
 <div class="attachment-container">
   <div class="attachment-panel" *ngFor="let attachment of attachments">
     <div class="attachment-thumbnail">
-      <img mat-card-image [src]="attachment.getThumbnailHref()" height="128" width="128"/>
+      <img mat-card-image [src]="attachment.getThumbnailHref()" (load)="onLoadAttachment(attachment)" height="128" width="128"/>
+      <div *ngIf="!isAttachmentLoaded(attachment)" class="attachment-loading">
+        <mat-spinner [diameter]="40" color="accent"></mat-spinner>
+      </div>
     </div>
     <div class="attachment-actions">
-      <span class="attachment-action" (click)="onDelete(attachment)"><mat-icon>delete</mat-icon></span>
+      <span *ngIf="isAttachmentLoaded(attachment)" class="attachment-action" (click)="onDelete(attachment)"><mat-icon>delete</mat-icon></span>
     </div>
   </div>
 </div>
