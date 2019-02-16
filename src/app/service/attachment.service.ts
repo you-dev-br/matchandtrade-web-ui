@@ -21,7 +21,18 @@ export class AttachmentService {
     private authenticationService: AuthenticationService,
     private http: HttpClient) { }
 
-  public async findAttachmentsByHref(href: string): Promise<Attachment[]> {
+  async delete(href: string): Promise<void> {
+    const authorizationHeaders = await this.authenticationService.obtainAuthorizationHeaders();
+    return this.http
+      .delete(href, {headers: authorizationHeaders, observe: 'response'})
+      .pipe(
+        catchError(HttpUtil.httpErrorResponseHandler),
+        map(() => {})
+      )
+      .toPromise();
+  }
+
+  async findAttachmentsByHref(href: string): Promise<Attachment[]> {
     const authorizationHeaders = await this.authenticationService.obtainAuthorizationHeaders();
     return this.http
       .get(href, {headers: authorizationHeaders, observe: 'response'})
@@ -32,7 +43,7 @@ export class AttachmentService {
       .toPromise();
   }
 
-  public upload(file: File): Observable<KeyValue<Attachment, number>> {
+  upload(file: File): Observable<KeyValue<Attachment, number>> {
     // Create a new subject which will be our result
     const progress = new Subject<KeyValue<Attachment, number>>();
     this.authenticationService.obtainAuthorizationHeaders().then(authorizationHeader => {

@@ -98,6 +98,10 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
     return this.attachmentService.findAttachmentsByHref(href);
   }
 
+  onDeleteAttachmentError(error: Error): void {
+    this.showErrorMessage(`Error when deleting attachment: ${error.message}`);
+  }
+
   async onSubmit(): Promise<void> {
     this.loading = true;
     try {

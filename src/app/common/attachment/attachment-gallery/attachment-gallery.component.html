@@ -4,7 +4,7 @@
       <img mat-card-image [src]="attachment.getThumbnailHref()" height="128" width="128"/>
     </div>
     <div class="attachment-actions">
-      <span class="attachment-action"><mat-icon>delete</mat-icon></span>
+      <span class="attachment-action" (click)="onDelete(attachment)"><mat-icon>delete</mat-icon></span>
     </div>
   </div>
 </div>

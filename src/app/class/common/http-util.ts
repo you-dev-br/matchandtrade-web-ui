@@ -16,6 +16,7 @@ export class HttpUtil {
       } else {
         errorText = "Unknown error";
       }
+      // TODO: Maybe we should just use a regular Error
       result = new AppError(errorText, e.status);
     } else {
       result = new AppError(`Client error: ${e.message}`);
