@@ -41,8 +41,8 @@ export class AttachmentGalleryComponent {
     }
   }
 
-  onOpenImageOverlay(): void {
-    const imageUrls: string[] = this.attachments.map(attachment => attachment.getThumbnailHref());
-    this.imageOverlayService.open(imageUrls);
+  onOpenImageOverlay(attachment: Attachment): void {
+    const images: string[] = this.attachments.map(attachment => attachment.getOriginalHref());
+    this.imageOverlayService.open(images, attachment.getOriginalHref());
   }
 }

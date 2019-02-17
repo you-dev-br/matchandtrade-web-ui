@@ -1,6 +1,6 @@
 <div class="attachment-container">
   <div class="attachment-panel" *ngFor="let attachment of attachments">
-    <div class="attachment-thumbnail" (click)="onOpenImageOverlay()">
+    <div class="attachment-thumbnail" (click)="onOpenImageOverlay(attachment)">
       <img mat-card-image [src]="attachment.getThumbnailHref()" (load)="onLoadAttachment(attachment)" height="128" width="128"/>
       <div *ngIf="!isAttachmentLoaded(attachment)" class="attachment-loading">
         <mat-spinner [diameter]="40" color="accent"></mat-spinner>

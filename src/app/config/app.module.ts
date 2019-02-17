@@ -5,8 +5,6 @@ import { AppComponent } from '../app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
-import { AngularMaterialImageOverlayModule } from 'angular-material-image-overlay';
-
 import { MaterialDesignModule } from './material-design.module';
 import { HomeModule } from '../home/home.module';
 
@@ -20,8 +18,7 @@ import { HomeModule } from '../home/home.module';
     BrowserAnimationsModule,
     MaterialDesignModule,
     HttpClientModule,
-    HomeModule,
-    AngularMaterialImageOverlayModule
+    HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
