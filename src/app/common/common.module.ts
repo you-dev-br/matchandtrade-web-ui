@@ -11,6 +11,7 @@ import { MaterialDesignModule } from '../config/material-design.module';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
 import { AttachmentPreviewDialogComponent } from './attachment/attachment-preview-dialog/attachment-preview-dialog.component';
+import { IconicCardComponent } from './iconic-card/iconic-card.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AttachmentPreviewDialogComponent } from './attachment/attachment-previe
     TextEditorComponent,
     AttachmentUploaderComponent,
     AttachmentGalleryComponent,
-    AttachmentPreviewDialogComponent
+    AttachmentPreviewDialogComponent,
+    IconicCardComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +38,8 @@ import { AttachmentPreviewDialogComponent } from './attachment/attachment-previe
     TextEditorComponent,
     AttachmentUploaderComponent,
     AttachmentGalleryComponent,
-    AttachmentPreviewDialogComponent
+    AttachmentPreviewDialogComponent,
+    IconicCardComponent
   ],
   entryComponents: [ AttachmentPreviewDialogComponent ]
 })

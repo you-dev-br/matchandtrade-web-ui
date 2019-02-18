@@ -15,7 +15,9 @@ export class AttachmentGalleryComponent {
   onDeleteError = new EventEmitter<Error>();
   private loadedAttachments: string[] = [];
 
-  constructor(private attachmentService: AttachmentService, private imageOverlayService: AngularMaterialImageOverlayService) { }
+  constructor(
+    private attachmentService: AttachmentService,
+    private imageOverlayService: AngularMaterialImageOverlayService) { }
 
   async onDelete(attachment: Attachment): Promise<void> {
     try {
@@ -35,14 +37,14 @@ export class AttachmentGalleryComponent {
     this.loadedAttachments.push(attachment.attachmentId);
   }
 
+  onOpenImageOverlay(attachment: Attachment): void {
+    const images: string[] = this.attachments.map(attachment => attachment.getOriginalHref());
+    this.imageOverlayService.open(images, attachment.getOriginalHref());
+  }
+
   onUploadComplete(attachment: Attachment): void {
     if (attachment) {
       this.attachments.push(attachment);
     }
-  }
-
-  onOpenImageOverlay(attachment: Attachment): void {
-    const images: string[] = this.attachments.map(attachment => attachment.getOriginalHref());
-    this.imageOverlayService.open(images, attachment.getOriginalHref());
   }
 }

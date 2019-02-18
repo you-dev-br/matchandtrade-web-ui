@@ -1,0 +1,28 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+mat-card {
+  max-width: 500px;
+}
+
+mat-card-content {
+  margin-top: 1.5em;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+}
+
+.card-footer {
+  color: gray;
+  font-size: small;
+  margin-top: 1.5em;
+}
+
+.card-title {
+  font-size: medium;
+  font-weight: 500;
+}
