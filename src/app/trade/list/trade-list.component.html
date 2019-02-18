@@ -6,13 +6,13 @@
 
 <div class="mt-content" *ngIf="!loading">
 	<app-iconic-card 
-		*ngIf="!showTradeList()"
+		*ngIf="!hasTrades()"
 		icon="/assets/icons8-dog-48.png"
 		title="No trades found">
 		<p>Sorry, there are no trades available at the moment</p>
 	</app-iconic-card>
 	
-	<div *ngIf="showTradeList()" class="mt-content">
+	<div *ngIf="hasTrades()">
 		<table mat-table [dataSource]="trades" class="mat-elevation-z3">
 			<ng-container matColumnDef="col-name">
 				<td mat-cell *matCellDef="let trade" (click)="navigateToTrade(trade)">
@@ -34,5 +34,4 @@
 	<div class="mt-content mt-action-panel">
 		<button mat-flat-button color="primary" (click)="navigateToTrade()">Create</button>
 	</div>
-
 </div>

@@ -41,13 +41,13 @@ export class TradeListComponent extends LoadingAndMessageBannerSupport implement
     }
   }
 
+  hasTrades(): boolean {
+    return this.trades.length > 0;
+  }
+
   navigateToTrade(trade?: Trade) {
     const href = trade ? trade.getSelfHref() : null;
     this.navigationService.navigate("trade/entry", {tradeHref: href});
-  }
-
-  showTradeList(): boolean {
-    return !this.loading && this.trades.length > 0;
   }
 
   onPageChange(pageEvent: PageEvent) {

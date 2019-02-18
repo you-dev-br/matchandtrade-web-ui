@@ -4,24 +4,33 @@
 
 <app-spinner [visible]="loading"></app-spinner>
 
-<div [class]="classLoadingContent()">
-  <app-dropdown (onChange)="onSortBy($event)" [values]="obtainSortByValues()"></app-dropdown>
-  <table mat-table [dataSource]="articles" class="mat-elevation-z3">
-    <ng-container matColumnDef="col-name">
-      <td mat-cell *matCellDef="let article" (click)="navigateToArticle(article)">
-        <div class="article-name">{{article.name}}</div>
-        <pre class="article-description">{{article.description}}</pre>
-      </td>
-    </ng-container>
-    <tr class="row" mat-row *matRowDef="let row; columns: ['col-name']"></tr>
-  </table>
-  <mat-paginator
-    [hidePageSize]="true"
-    [length]="pagination.totalEntries"
-    (page)="onPageChange($event)"
-    [pageIndex]="pagination.page.number-1"
-    [pageSize]="pagination.page.size">
-  </mat-paginator>
+<div *ngIf="!loading" class="mt-content">
+  <app-iconic-card 
+    *ngIf="!hasArticles()"
+    icon="/assets/icons8-bumblebee-48.png"
+    title="No articles found">
+    <p>You did not create any article yet</p>
+  </app-iconic-card>
+
+  <div *ngIf="hasArticles()">
+    <app-dropdown (onChange)="onSortBy($event)" [values]="obtainSortByValues()"></app-dropdown>
+    <table mat-table [dataSource]="articles" class="mat-elevation-z3">
+      <ng-container matColumnDef="col-name">
+        <td mat-cell *matCellDef="let article" (click)="navigateToArticle(article)">
+          <div class="article-name">{{article.name}}</div>
+          <pre class="article-description">{{article.description}}</pre>
+        </td>
+      </ng-container>
+      <tr class="row" mat-row *matRowDef="let row; columns: ['col-name']"></tr>
+    </table>
+    <mat-paginator
+      [hidePageSize]="true"
+      [length]="pagination.totalEntries"
+      (page)="onPageChange($event)"
+      [pageIndex]="pagination.page.number-1"
+      [pageSize]="pagination.page.size">
+    </mat-paginator>
+  </div>
 
   <div class="mt-action-panel">
     <button mat-flat-button color="primary" (click)="navigateToArticle()">Create</button>

@@ -9,7 +9,6 @@ import { NavigationService } from 'src/app/service/navigation.service';
 import { Pagination } from 'src/app/class/search/pagination';
 import { SearchService } from '../../service/search.service';
 import { SearchCriteria, Field, SortType } from '../../class/search/search-criteria';
-import { Page } from '../../class/search/page';
 import { Transformer } from '../../class/transformer/transformer';
 
 @Component({
@@ -23,21 +22,17 @@ export class ArticleListComponent extends LoadingAndMessageBannerSupport impleme
   sortBy: string = Field.ARTICLE_NAME;
 
   constructor(
-    private authenticationService: AuthenticationService,
-    private navigationService: NavigationService,
-    private searchService: SearchService) {
+      private authenticationService: AuthenticationService,
+      private navigationService: NavigationService,
+      private searchService: SearchService) {
     super();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.findAll();
   }
 
-  classLoadingContent() {
-    return this.loading ? 'mt-hide' : 'mt-content';
-  }
-  
-  async findAll() {
+  async findAll(): Promise<void> {
     this.loading = true;
     try {
       const userId = await this.authenticationService.obtainUserId();
@@ -54,7 +49,11 @@ export class ArticleListComponent extends LoadingAndMessageBannerSupport impleme
     }
   }
 
-  navigateToArticle(article?: Article) {
+  hasArticles(): boolean {
+    return this.articles.length > 0;
+  }
+
+  navigateToArticle(article?: Article): void {
     const href = article ? article.getSelfHref() : null;
     this.navigationService.navigate("article/entry", {articleHref: href});
   }
@@ -63,12 +62,12 @@ export class ArticleListComponent extends LoadingAndMessageBannerSupport impleme
     return [{key: Field.ARTICLE_NAME, value: 'Name'}, {key: Field.ARTICLE_ID, value: 'Created date'}]
   }
 
-  onPageChange(pageEvent: PageEvent) {
+  onPageChange(pageEvent: PageEvent): void {
     this.pagination.page.number = pageEvent.pageIndex + 1;
     this.findAll();
   }
 
-  onSortBy(sort: string) {
+  onSortBy(sort: string): void {
     this.sortBy = String(Transformer.obtainKeyFromEnumeration(sort, Field));
     this.findAll();
   }
