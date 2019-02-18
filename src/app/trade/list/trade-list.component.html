@@ -4,27 +4,35 @@
 
 <app-spinner [visible]="loading"></app-spinner>
 
-<app-iconic-card class="mt-content" [visible]="!hasTrades()"></app-iconic-card>
+<div class="mt-content" *ngIf="!loading">
+	<app-iconic-card 
+		*ngIf="!showTradeList()"
+		icon="/assets/icons8-dog-48.png"
+		title="No trades found">
+		<p>Sorry, there are no trades available at the moment</p>
+	</app-iconic-card>
+	
+	<div *ngIf="showTradeList()" class="mt-content">
+		<table mat-table [dataSource]="trades" class="mat-elevation-z3">
+			<ng-container matColumnDef="col-name">
+				<td mat-cell *matCellDef="let trade" (click)="navigateToTrade(trade)">
+					<div class="trade-name">{{trade.name}}</div>
+					<pre class="trade-description">{{trade.description}}</pre>
+				</td>
+			</ng-container>
+			<tr class="row" mat-row *matRowDef="let row; columns: ['col-name']"></tr>
+		</table>
+		<mat-paginator
+			[hidePageSize]="true"
+			[length]="pagination.totalEntries"
+			(page)="onPageChange($event)"
+			[pageIndex]="pagination.page.number-1"
+			[pageSize]="pagination.page.size">
+		</mat-paginator>
+	</div>
+	
+	<div class="mt-content mt-action-panel">
+		<button mat-flat-button color="primary" (click)="navigateToTrade()">Create</button>
+	</div>
 
-<div *ngIf="!loading && hasTrades()" class="mt-content">
-	<table mat-table [dataSource]="trades" class="mat-elevation-z3">
-		<ng-container matColumnDef="col-name">
-      <td mat-cell *matCellDef="let trade" (click)="navigateToTrade(trade)">
-        <div class="trade-name">{{trade.name}}</div>
-        <pre class="trade-description">{{trade.description}}</pre>
-      </td>
-    </ng-container>
-    <tr class="row" mat-row *matRowDef="let row; columns: ['col-name']"></tr>
-  </table>
-	<mat-paginator
-		[hidePageSize]="true"
-		[length]="pagination.totalEntries"
-		(page)="onPageChange($event)"
-		[pageIndex]="pagination.page.number-1"
-		[pageSize]="pagination.page.size">
-	</mat-paginator>
-</div>
-
-<div *ngIf="!loading" class="mt-content mt-action-panel">
-	<button mat-flat-button color="primary" (click)="navigateToTrade()">Create</button>
 </div>

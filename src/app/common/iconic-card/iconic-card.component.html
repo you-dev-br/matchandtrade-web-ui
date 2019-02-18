@@ -1,14 +1,16 @@
-<mat-card *ngIf="visible">
+<mat-card>
   <div class="card-header">
-    <img src="/assets/icons8-snail-48.png" alt="Icon by icons8.com" width="48px">
-    <span class="card-title">No trades found</span>
+    <img [src]="icon" alt="Icon by icons8.com" width="48px">
+    <span class="card-title">{{title}}</span>
   </div>
   <mat-card-content>
     <div class="card-content">
-      Sorry, there are no available trades at the moment.
+      <ng-content></ng-content>
     </div>
     <div class="card-footer">
       Icon by <a href="https://icons8.com" target="_blank">icons8</a>
     </div>
   </mat-card-content>
 </mat-card>
+
+

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-iconic-card',
@@ -7,8 +7,10 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class IconicCardComponent implements OnInit {
   @Input()
-  visible: boolean;
-  
+  icon: string = '/assets/icons8-snail-48.png';
+  @Input()
+  title!: string;
+
   constructor() { }
 
   ngOnInit() {
