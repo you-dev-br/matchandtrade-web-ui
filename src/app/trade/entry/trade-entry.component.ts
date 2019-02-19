@@ -106,7 +106,9 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
   snackBarAndNavigateBack(): void {
     const snackBarRef = this.snackBar.open('Trade saved', 'Back', {duration: 3000});
     this.navigationService.back();
-    snackBarRef.onAction().subscribe(() => this.navigationService.forward());
+    snackBarRef.onAction().subscribe(() => 
+      this.navigationService.navigate("trade/entry", {tradeHref: this.trade.getSelfHref()})
+    );
   }
 
   showStatus(): boolean {
