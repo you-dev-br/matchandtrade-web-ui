@@ -19,6 +19,13 @@ export class NavigationService {
   }
 
   /**
+   * Navigates forward (looks at browser history)
+   */
+  public forward() {
+    this.loc.forward();
+  }
+
+  /**
    * Decodes a string generated with encodeToSafeBase64()
    * @param safeBase64
    */

@@ -11,6 +11,7 @@ import { Trade, TradeState, TradeUtil } from '../../class/pojo/trade';
 import { TradeService } from '../../service/trade.service';
 import { ValidatorUtil } from 'src/app/class/common/validator-util';
 import { ValidationError } from 'src/app/class/common/validation-error';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-trade-entry',
@@ -33,6 +34,7 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
     private membershipService: MembershipService,
     private navigationService: NavigationService,
     private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
     private tradeService: TradeService) {
     super();
   }
@@ -101,6 +103,12 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
     this.trade.state = this.stateFormControl.value;
   }
 
+  snackBarAndNavigateBack(): void {
+    const snackBarRef = this.snackBar.open('Trade saved', 'Back', {duration: 3000});
+    this.navigationService.back();
+    snackBarRef.onAction().subscribe(() => this.navigationService.forward());
+  }
+
   showStatus(): boolean {
     return !this.newEntry;
   }
@@ -115,8 +123,7 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
       this.validate();
       this.loadTradeFromForm();
       this.trade = await this.tradeService.save(this.trade);
-      this.loadTrade();
-      this.showInfoMessage('Trade saved', 'save');
+      this.snackBarAndNavigateBack();
     } catch (e) {
       this.showErrorMessage(e);
     } finally {
