@@ -12,6 +12,7 @@ import { TradeService } from '../../service/trade.service';
 import { ValidatorUtil } from 'src/app/class/common/validator-util';
 import { ValidationError } from 'src/app/class/common/validation-error';
 import { MatSnackBar } from '@angular/material';
+import { SnackBarHelper } from 'src/app/src/app/class/common/snack-bar-helper';
 
 @Component({
   selector: 'app-trade-entry',
@@ -26,6 +27,7 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
   membership: Membership;
   stateFormControl: AbstractControl;
   newEntry: boolean = true;
+  snackBarHelper: SnackBarHelper;
   trade: Trade = new Trade();
   tradeFormGroup: FormGroup;
 
@@ -37,6 +39,7 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
     private snackBar: MatSnackBar,
     private tradeService: TradeService) {
     super();
+    this.snackBarHelper = new SnackBarHelper(snackBar, navigationService);
   }
 
   async ngOnInit() {
@@ -103,14 +106,6 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
     this.trade.state = this.stateFormControl.value;
   }
 
-  snackBarAndNavigateBack(): void {
-    const snackBarRef = this.snackBar.open('Trade saved', 'Back', {duration: 3000});
-    this.navigationService.back();
-    snackBarRef.onAction().subscribe(() => 
-      this.navigationService.navigate("trade/entry", {tradeHref: this.trade.getSelfHref()})
-    );
-  }
-
   showStatus(): boolean {
     return !this.newEntry;
   }
@@ -125,7 +120,7 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
       this.validate();
       this.loadTradeFromForm();
       this.trade = await this.tradeService.save(this.trade);
-      this.snackBarAndNavigateBack();
+      this.snackBarHelper.back('Trade saved', 'trade/entry', {tradeHref: this.trade.getSelfHref()})
     } catch (e) {
       this.showErrorMessage(e);
     } finally {

@@ -14,6 +14,8 @@ import { ValidatorUtil } from 'src/app/class/common/validator-util';
 import { ValidationError } from 'src/app/class/common/validation-error';
 import { Attachment } from 'src/app/class/attachment';
 import { AttachmentService } from '../../service/attachment.service';
+import { MatSnackBar } from '@angular/material';
+import { SnackBarHelper } from 'src/app/src/app/class/common/snack-bar-helper';
 
 @Component({
   selector: 'app-article-entry',
@@ -28,17 +30,20 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
   formGroup: FormGroup;
   nameFormControl: AbstractControl;
   newEntry: boolean;
+  snackBarHelper: SnackBarHelper;
 
   constructor(
     private authenticationService: AuthenticationService,
     private articleService: ArticleService,
     private attachmentService: AttachmentService,
     private formBuilder: FormBuilder,
-    private searchService: SearchService,
     private navigationService: NavigationService,
+    private searchService: SearchService,
+    private snackBar: MatSnackBar,
     private route: ActivatedRoute,
   ) {
     super();
+    this.snackBarHelper = new SnackBarHelper(snackBar, navigationService);
   }
 
   async ngOnInit() {
@@ -110,7 +115,7 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
       this.article = await this.articleService.save(this.article);
       await this.articleService.saveAttachments(this.article, this.attachments);
       this.loadArticle();
-      this.showInfoMessage('Article saved', 'save');
+      this.snackBarHelper.back('Article saved', 'article/entry', {articleHref: this.article.getSelfHref()})
     } catch (e) {
       this.showErrorMessage(e);
     } finally {
@@ -121,7 +126,7 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
   showSaveButton(): boolean {
     return !this.formGroup.disabled;
   }
-  
+
   validate(): void {
     if (!this.descriptionFormControl.valid || !this.nameFormControl.valid) {
       throw new ValidationError("Please ensure that the fields below are valid");
