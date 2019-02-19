@@ -1,20 +1,17 @@
-<div *ngIf="errorMessage" class="mt-content error-card">
-  <mat-card>
-    <mat-card-header>
-      <div mat-card-avatar><img src="/assets/icons/icons8-snail-48.png" alt="Internet is annoying sometimes..."></div>
-      <mat-card-title>Authentication failed</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p></p>
-      <p>
-        Something went wrong during your authentication proccess. Here is the error message:
-      </p>
-      <p class="error-messsage">
-        {{errorMessage}}
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-flat-button color="primary" (click)="onTryGain()">Try again</button>
-    </mat-card-actions>
-  </mat-card>
+<div *ngIf="errorMessage">
+  <app-iconic-card
+    icon="/assets/icons/icons8-snail-48.png"
+    title="The internet is annoying sometimes...">
+    <p>
+      Authentication error:
+    </p>
+    <p class="error-messsage">
+      {{errorMessage}}
+    </p>
+  </app-iconic-card>
+  <div class="mt-action-panel">
+    <button mat-flat-button color="primary" (click)="onTryGain()">Try again</button>
+  </div>
 </div>
+
+
