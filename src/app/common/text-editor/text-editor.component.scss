@@ -1,3 +1,14 @@
+@import '../../../styles/variables.scss';
+
 img {
 	position: relative;
+}
+
+.text-editor-container {
+	border-left: solid 2px $primary-color-200;
+}
+
+.text-editor-container.text-editor-disabled {
+	border-top: dotted 1px darkgray;
+	border-left: none;
 }

@@ -22,6 +22,8 @@ declare const Quill: any;
 export class TextEditorComponent implements OnInit, ControlValueAccessor, Validator {
   @ViewChild('editorElement', {read: ElementRef})
   editorElement: ElementRef;
+  @ViewChild('editorContainer', {read: ElementRef})
+  editorContainerElementRef: ElementRef;
   editor: any;
   @Input()
   value: string;
@@ -69,6 +71,19 @@ export class TextEditorComponent implements OnInit, ControlValueAccessor, Valida
 
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
+  }
+
+  setDisabledState(disabled: boolean) {
+    this.editor.enable(!disabled);
+    const editorContainerNativeElement: HTMLElement = this.editorContainerElementRef.nativeElement;
+    const toolbarNativeElement = editorContainerNativeElement.getElementsByClassName('ql-toolbar')[0];
+    if (disabled) {
+      editorContainerNativeElement.classList.add('text-editor-disabled')
+      toolbarNativeElement.classList.add('mt-hide');
+    } else {
+      editorContainerNativeElement.classList.remove('text-editor-disabled')
+      toolbarNativeElement.classList.remove('mt-hide');
+    }
   }
 
   validate(control: AbstractControl): ValidationErrors {

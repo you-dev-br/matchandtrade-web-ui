@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -36,7 +36,7 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
     private membershipService: MembershipService,
     private navigationService: NavigationService,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar,
+    snackBar: MatSnackBar,
     private tradeService: TradeService) {
     super();
     this.snackBarHelper = new SnackBarHelper(snackBar, navigationService);

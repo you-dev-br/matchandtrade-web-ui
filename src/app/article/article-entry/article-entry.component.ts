@@ -39,7 +39,7 @@ export class ArticleEntryComponent extends LoadingAndMessageBannerSupport implem
     private formBuilder: FormBuilder,
     private navigationService: NavigationService,
     private searchService: SearchService,
-    private snackBar: MatSnackBar,
+    snackBar: MatSnackBar,
     private route: ActivatedRoute,
   ) {
     super();

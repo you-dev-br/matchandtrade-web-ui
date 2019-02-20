@@ -110,3 +110,14 @@ body {
 .croppie-container .cr-viewport, .croppie-container .cr-resizer {
   box-shadow: 0 0 2000px 2000px rgba(0, 0, 0, 0.25);
 }
+
+// =====
+// Quill
+// =====
+.ql-container.ql-snown{
+  border-top: 1px dotted darkgray;
+}
+
+.ql-container.ql-disabled {
+  border: 1px dotted darkgray;
+}
