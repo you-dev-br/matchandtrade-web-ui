@@ -34,7 +34,25 @@ export class TextEditorComponent implements OnInit, ControlValueAccessor, Valida
   onTouched: any = () => { };
 
   ngOnInit(): void {
-    this.editor = new Quill(this.editorElement.nativeElement, {theme: 'snow'});
+    const toolbarOptions = [
+      ['bold', 'italic', 'strike'],
+      [{ 'align': [false, 'center'] }, 'link'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'indent': '-1'}, { 'indent': '+1' }],
+      [{ 'size': ['small', false, 'large', 'huge'] }],
+      [{ 'color': [] }, 'code-block'],    
+      ['clean']
+    ];
+
+    const formatOptions = ['bold', 'italic', 'strike', 'align', 'link', 'list', 'indent', 'size', 'color', 'code-block'];
+    let options = {
+      theme: 'snow',
+      formats: formatOptions,
+      modules: {
+        toolbar: toolbarOptions
+      }
+    };
+
+    this.editor = new Quill(this.editorElement.nativeElement, options);
     this.editor.on('text-change', () => {
       const editorContent = JSON.stringify(this.editor.getContents());
       this.onChange(editorContent);
