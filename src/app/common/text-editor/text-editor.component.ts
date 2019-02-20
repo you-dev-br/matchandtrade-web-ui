@@ -26,11 +26,13 @@ export class TextEditorComponent implements OnInit, ControlValueAccessor, Valida
   editorContainerElementRef: ElementRef;
   editor: any;
   @Input()
+  label?: string;
+  @Input()
   value: string;
   @Input()
-  minLength: number;
-  @Input()
   maxLength: number;
+  @Input()
+  minLength: number;
 
   onChange: any = () => { };
   onTouched: any = () => { };
