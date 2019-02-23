@@ -1,0 +1,99 @@
+@import '../../../styles/variables.scss';
+
+$first-color: $primary-color-50;
+$second-color: $accent-color-50;
+$third-color: $info-color-50;
+
+.welcome-title {
+  color: $primary-color;
+  margin: 1em 0 .25em 0;
+  font-size: x-large;
+  font-weight: bold;
+  text-align: center;
+}
+
+.welcome-sub-title {
+  color: $primary-color-400;
+  font-size: medium;
+  margin: 0 0 -.25em 0;
+  text-align: center;
+}
+
+.welcome-content {
+  flex-direction: column;
+  display: flex;
+  margin: auto;
+  max-width: 700px;
+}
+
+.welcome-footer {
+  text-align: center;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bold {
+  font-weight: 500;
+}
+
+.next-step-actions {
+  margin: 4em;
+}
+
+.next-step-description {
+  padding: 2em 0 2em 0;
+  margin: 0;
+}
+
+.next-step-container {
+  text-align: center;
+}
+
+.next-step-banner {
+  padding-bottom: 2em;
+  text-align: center;
+}
+.next-step-banner.first-color {
+  background: $first-color;
+}
+.next-step-banner.second-color {
+  background: $second-color;
+}
+.next-step-banner.third-color {
+  background: $third-color;
+}
+
+.next-step-transition.first-color {
+  background: $first-color;
+}
+.next-step-transition.second-color {
+  background: $second-color;
+}
+.next-step-transition.third-color {
+  background: $third-color;
+}
+
+.next-step-triangle {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 30px 30px 0 30px;
+}
+
+.next-step-triangle.white-color {
+  border-color: white transparent transparent transparent;
+}
+.next-step-triangle.first-color {
+  border-color: $first-color transparent transparent transparent;
+}
+.next-step-triangle.second-color {
+  border-color: $second-color transparent transparent transparent;
+}
+.next-step-triangle.third-color {
+  border-color: $third-color transparent transparent transparent;
+}

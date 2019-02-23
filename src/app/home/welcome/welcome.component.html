@@ -1,3 +1,66 @@
-<p>
-  welcome works!
-</p>
+<div class="welcome-content">
+  <div class="next-step-container">
+    <div class="next-step-banner">
+      <p class="welcome-title">
+        Match &amp; Trade
+      </p>
+      <p class="welcome-sub-title">
+        Got some unwanted stuff?
+      </p>
+    </div>
+    <div class="next-step-transition first-color">
+      <span class="next-step-triangle white-color"></span>
+    </div>
+  </div>
+
+  <div class="next-step-container">
+    <div class="next-step-banner first-color">
+      <p class="next-step-description">
+        <span class="bold">First</span>, list your articles.<br>
+        Maybe you have some video games, books or card games laying around.
+      </p>
+      <img alt="Game Controller" title="Game Controller" width="96px" src="assets/icons/icons8-game-controller-96.png">
+      <img alt="Books" title="Books" width="96px" src="assets/icons/icons8-magazine-96.png">
+      <img alt="Cards" title="Cards" width="96px" src="assets/icons/icons8-cards-96.png">
+    </div>
+    <div class="next-step-transition second-color">
+      <span class="next-step-triangle first-color"></span>
+    </div>
+  </div>
+
+  <div class="next-step-container">
+    <div class="next-step-banner second-color">
+      <p class="next-step-description">
+        <span class="bold">Next</span>, join a trading group.
+      </p>
+      <img alt="Trading Group" title="Trading Group" src="assets/icons/icons8-user-groups-96.png">
+    </div>
+    <div class="next-step-transition third-color">
+      <span class="next-step-triangle second-color"></span>
+    </div>
+  </div>
+
+  <div class="next-step-container">
+    <div class="next-step-banner third-color">
+      <p class="next-step-description">
+        <span class="bold">Then</span>, exchange what you didn't want for something you actually want.
+      </p>
+      <div class="flex-center">      
+        <img alt="Game" title="Game" width="96px" src="assets/icons/game-die.svg">
+        <img alt="Trade" title="Trade" width="48px" height="48px" src="assets/icons/icons8-data-transfer-48.png">
+        <img alt="Books" title="Books" width="96px" src="assets/icons/icons8-magazine-96.png">
+      </div>
+    </div>
+    <div class="next-step-transition white-color">
+      <span class="next-step-triangle third-color"></span>
+    </div>
+  </div>
+
+  <div class="mt-content mt-action-panel next-step-actions">
+    <button mat-flat-button color="primary" (click)="navigateToTrade()">Sign-up</button>
+  </div>
+
+  <div class="mt-content welcome-footer">
+    Icons powered by&nbsp;<a href="https://icons8.com" target="_blank">icons8</a>
+  </div>
+</div>

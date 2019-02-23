@@ -112,6 +112,8 @@ $gray-50: #fafafa;
 $gray-200: #eeeeee;
 $gray-400: #666666; // Confirm this value
 $accent-color: map-get($color-map-accent, 500);
+$accent-color-50: map-get($color-map-accent, 50);
+$accent-color-100: map-get($color-map-accent, 100);
 // TODO: Create an info color-map
 $info-color-50: #E0F2F1;
 $info-color-100: #B2DFDB;
