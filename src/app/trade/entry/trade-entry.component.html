@@ -5,7 +5,7 @@
 <app-spinner [visible]="loading"></app-spinner>
 
 <div [class]="classMainForm()">
-  <form class="mt-form" [formGroup]="tradeFormGroup" (ngSubmit)="onSubmit()">
+  <form #tradeForm class="mt-form" [formGroup]="tradeFormGroup" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <input matInput [formControl]="nameFormControl" placeholder="Name" required>
       <mat-error>Name is mandatory and must contain between 3 and 150 characters</mat-error>
@@ -15,11 +15,15 @@
         <mat-option *ngFor="let state of availableStates" [value]="state.key">{{state.value}}</mat-option>
       </mat-select>
     </mat-form-field>
+
     <app-text-editor
       [formControl]="descriptionFormControl"
+      [form]="tradeForm"
       label="Description"
-      [minLength]="10"
-      [maxLength]="10000">
+      errorMessage="Description is mandatory and must contain between 10 and 11000 characters"
+      required="true"
+      minLength="10"
+      maxLength="11000">
     </app-text-editor>
     <div class="mt-action-panel">
       <button *ngIf="showSaveButton()" mat-flat-button color="primary" type="submit">Save</button>

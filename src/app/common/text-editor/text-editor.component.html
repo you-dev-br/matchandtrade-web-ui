@@ -1,6 +1,9 @@
 <div class="text-editor-label">
   {{label}}
 </div>
-<div #editorContainer class="text-editor-container">
+<div #editorContainer [class]="classEditorContainer()">
   <div #editorElement (click)="onTouched()"></div>
+</div>
+<div *ngIf="showErrorMessage" class="text-editor-label text-editor-label-error">
+  {{errorMessage}}
 </div>

@@ -26,13 +26,18 @@ export class TextEditorComponent implements OnInit, ControlValueAccessor, Valida
   editorContainerElementRef: ElementRef;
   editor: any;
   @Input()
-  label?: string;
+  errorMessage?: string;
   @Input()
-  value: string;
+  form?: HTMLFormElement; // Form associated to this Control, need when required is defined and to support errorMessage display on submit
+  @Input()
+  label?: string;
   @Input()
   maxLength: number;
   @Input()
   minLength: number;
+  showErrorMessage: boolean = false;
+  @Input()
+  value: string;
 
   onChange: any = () => { };
   onTouched: any = () => { };
@@ -57,14 +62,40 @@ export class TextEditorComponent implements OnInit, ControlValueAccessor, Valida
     };
 
     this.editor = new Quill(this.editorElement.nativeElement, options);
+    
+    // Register onChange event
     this.editor.on('text-change', () => {
-      const editorContent = JSON.stringify(this.editor.getContents());
-      this.onChange(editorContent);
+      this.onChange(JSON.stringify(this.editor.getContents()));
     });
+
+    // Register onBlur event
+    this.editor.on('selection-change', (range, oldRange, source) => {
+      if (range === null && oldRange !== null) {
+        this.onBlurOrSubmit();
+      }
+    });
+    
+    // Register on form submit event
+    if (this.form) {
+      this.form.onsubmit = () => this.onBlurOrSubmit();
+    }
+  }
+
+  classEditorContainer(): string {
+    const errorClass = this.showErrorMessage ? 'text-editor-container-error' : '';
+    return `text-editor-container ${errorClass}`;
   }
 
   getText(): string {
     return this.editor.getText();
+  }
+
+  onBlurOrSubmit(): void {
+    if (this.validate(null)) {
+      this.showErrorMessage = true;
+    } else {
+      this.showErrorMessage = false;
+    }
   }
 
   registerOnChange(fn: (v: any) => void): void {

@@ -5,12 +5,22 @@ img {
 }
 
 .text-editor-container {
+	border: solid 1px transparent;
 	border-left: solid 2px $primary-color-200;
+}
+
+.text-editor-container.text-editor-container-error {
+	border: solid 1px $warn-color-500;
+	border-left: solid 2px $warn-color-500;
 }
 
 .text-editor-container.text-editor-disabled {
 	border-top: dotted 1px darkgray;
 	border-left: none;
+}
+
+.text-editor-label.text-editor-label-error {
+	color: $warn-color-500;
 }
 
 .text-editor-label {

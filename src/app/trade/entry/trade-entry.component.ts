@@ -64,7 +64,7 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
   private buildForm(): void {
     this.tradeFormGroup = this.formBuilder.group({
       'name': ['', Validators.compose([Validators.required, ValidatorUtil.minLengthWithTrim(3), ValidatorUtil.maxLengthWithTrim(150)])],
-      'description': ['', Validators.compose([Validators.required])],
+      'description': [ '', {validators: [Validators.required] }],
       'state': []
     });
     this.nameFormControl = this.tradeFormGroup.controls['name'];
@@ -129,7 +129,7 @@ export class TradeEntryComponent extends LoadingAndMessageBannerSupport implemen
   }
 
   private validate(): void {
-    if (this.descriptionFormControl.value.length >= 20000) {
+    if (this.descriptionFormControl.value.length >= 25000) {
       throw new ValidationError('Description is too long');
     }
     if (!this.descriptionFormControl.valid || !this.nameFormControl.valid) {
